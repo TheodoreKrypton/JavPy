@@ -3,6 +3,7 @@ import requests
 import re
 import bs4
 import json
+from embed.decode import decode
 
 
 class JavMostCom(BaseSource):
@@ -47,4 +48,6 @@ class JavMostCom(BaseSource):
         }, verify=False)
 
         json_obj = json.loads(rsp.text)
-        print json_obj["data"][0]
+        url = json_obj["data"][0]
+
+        return decode(url)

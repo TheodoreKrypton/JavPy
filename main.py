@@ -4,4 +4,4 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 src = JavMostCom()
-src.search("JUY-412")
+print src.search("KAWD-654")
