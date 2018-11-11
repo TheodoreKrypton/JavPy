@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="theodorekrypton@mornlngstar.co:22">
+    <serverData>
+      <paths name="mornlngstar.co">
+        <serverdata>
+          <mappings>
+            <mapping deploy="~/projects" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="theodorekrypton@mornlngstar.co:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/theodorekrypton/peojects/JavPy" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

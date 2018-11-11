@@ -5,8 +5,8 @@ import json
 class fembed:
     @staticmethod
     def decode(url):
-        code = url.split("/")[-1]
-        url = "https://www.fembed.com/api/sources/" + code
-        rsp = requests.post(url, verify=False)
+        code = url.split("/")[-1].encode("ascii")
+        url = "http://www.fembed.com/api/source/" + code
+        rsp = requests.post(url)
         json_obj = json.loads(rsp.text)
-        return json_obj["data"][0]["file"]
+        return "http://www.fembed.com" + json_obj["data"][0]["file"]
