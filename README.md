@@ -14,6 +14,7 @@ A python library for searching usable url of japanese AV according to given code
 * [ ] usable magnet link
 * [ ] name translation (jp-zh-en)
 * [ ] uncensored videos
+* [ ] ambiguous search
 
 ## Quick Start
 * Go to the telegram bot father and apply for a bot token
