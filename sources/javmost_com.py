@@ -19,9 +19,15 @@ class JavMostCom(BaseSource):
         url = "https://www5.javmost.com/" + code
         rsp = requests.get(url, verify=False)
         if rsp.status_code != 200:
-            raise SourceException(code + " not found in javmost.com")
+            return None
+        try:
+            img = re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+        except AttributeError:
+            return None
 
-        img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+        # Nov. 13 adding: https://www5.javmost.com/IENE-623/
+        if not img.startswith("http:"):
+            img = "http:" + img
 
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
 

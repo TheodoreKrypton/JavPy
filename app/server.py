@@ -4,6 +4,7 @@ from functions import Functions
 import telegram
 from telegram.utils.request import Request
 import time
+from functions.datastructure import AV
 
 
 request = Request(connect_timeout=1000, read_timeout=5000)
@@ -21,20 +22,29 @@ def search(bot, update, args):
     :param args:
     :return:
     """
-    res = "Sorry, Wrong Usage"
 
     start_time = time.clock()
 
-    if len(args) == 1:
-        res = Functions.search(args[0])
+    if len(args) != 1:
+        bot.send_message(chat_id=update.message.chat_id, text="Sorry, Wrong Usage")
+        return
+
+    res = Functions.search(args[0])
+
+    if res is None:
+        bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
+        return
 
     reply_markup = telegram.InlineKeyboardMarkup([[
         telegram.InlineKeyboardButton(res.code, url=res.video_url)
     ]])
-    # bot.send_video_note(chat_id=update.message.chat_id, video_note=res)
     bot.send_photo(chat_id=update.message.chat_id, photo=res.preview_img_url, reply_markup=reply_markup)
+    # bot.send_video_note(chat_id=update.message.chat_id, video_note=res)
+
     # bot.send_video(chat_id=update.message.chat_id, video=res, request=request, supports_streaming=True, timeout=5000)
     # bot.send_message(chat_id=update.message.chat_id, text="<video><source src=\"" + res +  "\" type=\"video/mp4\"></video>", parse_mode="HTML")
+
+
 
 def run():
     updater = Updater(token=open("token.txt").read())
