@@ -4,6 +4,7 @@ import re
 import bs4
 import json
 from embed.decode import decode
+from functions.datastructure import AV
 
 
 class JavMostCom(BaseSource):
@@ -20,7 +21,10 @@ class JavMostCom(BaseSource):
         if rsp.status_code != 200:
             raise SourceException(code + " not found in javmost.com")
 
+        img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
+
         button = bs.find(name='li', attrs={'class': 'active'})
         params = re.search(self.select_part_regex, button.a.attrs['onclick']).group(1)
         e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
@@ -33,7 +37,7 @@ class JavMostCom(BaseSource):
         rsp = requests.post(url, data={
             "code": value
         }, verify=False)
-        code = rsp.text
+        _code = rsp.text
 
         url = "https://www5.javmost.com/get_source/"
         rsp = requests.post(url, data={
@@ -44,10 +48,17 @@ class JavMostCom(BaseSource):
             "code3": d,
             "value": value,
             "sound": sound,
-            "code4": code
+            "code4": _code
         }, verify=False)
 
         json_obj = json.loads(rsp.text)
         url = json_obj["data"][0]
 
-        return decode(url)
+        url = decode(url)
+
+        av = AV()
+        av.preview_img_url = img
+        av.video_url = url
+        av.code = code
+
+        return av

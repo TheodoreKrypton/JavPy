@@ -9,4 +9,6 @@ class fembed:
         url = "http://www.fembed.com/api/source/" + code
         rsp = requests.post(url)
         json_obj = json.loads(rsp.text)
-        return "http://www.fembed.com" + json_obj["data"][0]["file"]
+        url = "http://www.fembed.com" + json_obj["data"][0]["file"]
+        rsp = requests.get(url, allow_redirects=False)
+        return rsp.headers["Location"]

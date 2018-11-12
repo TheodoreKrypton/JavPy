@@ -1,0 +1,232 @@
+2018-11-11 20:33:12,639 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:33:12,898 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-11 20:33:13,428 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:33:13,692 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:33:13,944 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-11 20:45:55,924 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:45:56,183 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-11 20:45:56,680 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:45:57,010 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 20:45:57,266 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www.fembed.com
+2018-11-11 20:45:57,766 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www.fembed.com
+2018-11-11 20:45:58,337 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2018-11-11 20:45:58,337 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 35, in search
+    bot.send_photo(chat_id=update.message.chat_id, photo=res.preview_img_url, reply_markup=reply_markup)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "/usr/local/lib/python2.7/dist-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/usr/local/lib/python2.7/dist-packages/telegram/utils/request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+BadRequest: Wrong url host
+2018-11-11 21:07:54,450 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 21:07:54,713 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-11 21:07:55,204 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 21:07:55,453 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-11 21:07:55,702 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-11 21:07:57,538 - telegram.ext.dispatcher - WARNING - A TelegramError was raised while processing the Update
+2018-11-11 21:07:57,540 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 35, in search
+  File "/usr/local/lib/python2.7/dist-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/bot.py", line 90, in decorator
+    result = self._request.post(url, data, timeout=kwargs.get('timeout'))
+  File "/usr/local/lib/python2.7/dist-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/usr/local/lib/python2.7/dist-packages/telegram/utils/request.py", line 223, in _request_wrapper
+    raise BadRequest(message)
+BadRequest: Wrong url host
+2018-11-12 00:30:35,217 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 00:30:35,710 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 00:30:35,984 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 00:30:55,861 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 00:30:56,126 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 00:30:57,088 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 00:30:57,341 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 00:30:57,595 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www.fembed.com
+2018-11-12 00:30:57,866 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www.fembed.com
+2018-11-12 01:32:26,679 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 01:32:26,942 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 01:32:27,189 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 01:32:46,261 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 01:32:46,755 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 01:32:47,017 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 02:46:39,157 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:46:39,657 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 02:46:40,742 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:46:41,008 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:46:41,268 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-12 02:49:07,715 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:49:07,982 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 02:49:08,500 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:49:08,985 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 02:49:09,246 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-12 03:59:51,839 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 03:59:52,321 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 03:59:53,482 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 03:59:53,738 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 03:59:53,988 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-12 04:08:43,191 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 32, in search
+AttributeError: 'str' object has no attribute 'code'
+2018-11-12 04:09:01,260 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 32, in search
+AttributeError: 'str' object has no attribute 'code'
+2018-11-12 04:09:37,087 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 32, in search
+AttributeError: 'str' object has no attribute 'code'
+2018-11-12 04:10:07,014 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 04:10:07,529 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 04:10:08,027 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 05:44:51,026 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 05:44:51,287 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 05:44:51,546 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 05:44:57,266 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 05:44:57,727 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 05:44:57,979 - telegram.ext.dispatcher - ERROR - An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/commandhandler.py", line 173, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "/home/theodorekrypton/peojects/JavPy/app/server.py", line 29, in search
+  File "/home/theodorekrypton/peojects/JavPy/functions/__init__.py", line 10, in search
+    return search(code)
+  File "/home/theodorekrypton/peojects/JavPy/functions/search.py", line 10, in search
+    res = src.search(code)
+  File "/home/theodorekrypton/peojects/JavPy/sources/javmost_com.py", line 24, in search
+    img = "http:" + re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
+AttributeError: 'NoneType' object has no attribute 'group'
+2018-11-12 15:10:04,399 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x7f037e32e2d0>, 'Connect timed out. (connect timeout=5.0)')': /bot719173106:AAGTVUeGmOBlmww0zsyeiR-Yd-HJAvtVebs/getUpdates
+2018-11-12 15:21:01,949 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x7f037e32e2d0>, 'Connect timed out. (connect timeout=5.0)')': /bot719173106:AAGTVUeGmOBlmww0zsyeiR-Yd-HJAvtVebs/getUpdates
+2018-11-12 15:49:42,957 - telegram.vendor.ptb_urllib3.urllib3.connectionpool - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x7f037c0e24d0>: Failed to establish a new connection: [Errno 101] Network is unreachable',)': /bot719173106:AAGTVUeGmOBlmww0zsyeiR-Yd-HJAvtVebs/getUpdates
+2018-11-12 16:10:24,777 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 16:10:25,066 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTP connection (1): www5.javmost.com
+2018-11-12 16:10:25,787 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 16:10:26,054 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): www5.javmost.com
+2018-11-12 16:10:26,311 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): avgle.com
+2018-11-12 16:47:17,821 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2018-11-12 16:47:17,844 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 217, in start
+    update = self.update_queue.get(True, 1)
+  File "/usr/lib/python2.7/Queue.py", line 176, in get
+    raise Empty
+Empty
+2018-11-12 16:47:23,443 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2018-11-12 16:47:23,464 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 217, in start
+    update = self.update_queue.get(True, 1)
+  File "/usr/lib/python2.7/Queue.py", line 176, in get
+    raise Empty
+Empty
+2018-11-12 16:47:29,068 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2018-11-12 16:47:29,082 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 217, in start
+    update = self.update_queue.get(True, 1)
+  File "/usr/lib/python2.7/Queue.py", line 176, in get
+    raise Empty
+Empty
+2018-11-12 16:47:34,988 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running (409)
+2018-11-12 16:47:35,000 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/telegram/ext/dispatcher.py", line 217, in start
+    update = self.update_queue.get(True, 1)
+  File "/usr/lib/python2.7/Queue.py", line 176, in get
+    raise Empty
+Empty
