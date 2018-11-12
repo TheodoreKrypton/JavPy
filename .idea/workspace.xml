@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0fbf81f-4798-426b-965c-0a6807a16236" name="Default" comment="avgle supported">
-      <change afterPath="$PROJECT_DIR$/sources/youav_com.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+    <list default="true" id="f0fbf81f-4798-426b-965c-0a6807a16236" name="Default" comment="youav.com supported">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/search.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request.py" beforeDir="false" afterPath="$PROJECT_DIR$/request.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/javmost_com.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/javmost_com.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,21 +59,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="gitignore" value="21" />
           <entry key="md" value="22" />
           <entry key="py" value="1142" />
-          <entry key="txt" value="17" />
+          <entry key="txt" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="22" />
-          <entry key="PLAIN_TEXT" value="17" />
+          <entry key="PLAIN_TEXT" value="58" />
           <entry key="Python" value="1142" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="html" value="1" />
           <entry key="md" value="1" />
           <entry key="out" value="1" />
@@ -91,7 +85,7 @@
         <counts>
           <entry key="HTML" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="PLAIN_TEXT" value="3" />
           <entry key="Python" value="11" />
         </counts>
       </usages-collector>
@@ -132,6 +126,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="847">
+              <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sources/javmost_com.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -144,7 +147,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sources/youav_com.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
@@ -213,6 +216,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="TheodoreKrypton &lt;624722398@qq.com&gt;" />
         <option value="Chen Yonghua &lt;ectheodore@mail.scut.edu.cn&gt;" />
       </list>
     </option>
@@ -238,6 +242,7 @@
         <option value="$PROJECT_DIR$/app/server.py" />
         <option value="$PROJECT_DIR$/sources/javmost_com.py" />
         <option value="$PROJECT_DIR$/sources/youav_com.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -413,7 +418,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541441195887</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="youav.com supported">
+      <created>1542045764082</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1542045764082</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -429,7 +441,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20628998" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20628998" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -510,7 +522,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="avgle supported" />
-    <option name="LAST_COMMIT_MESSAGE" value="avgle supported" />
+    <MESSAGE value="youav.com supported" />
+    <option name="LAST_COMMIT_MESSAGE" value="youav.com supported" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/Anaconda2/Lib/site-packages/requests/models.py" />
@@ -575,13 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-159">
-          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
         </state>
       </provider>
     </entry>
@@ -660,23 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sources/javmost_com.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" column="45" lean-forward="true" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sources/BaseSource.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -719,6 +708,30 @@
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sources/javmost_com.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="45" lean-forward="true" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sources/BaseSource.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="847">
+          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
         </state>
       </provider>
     </entry>
