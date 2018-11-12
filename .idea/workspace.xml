@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0fbf81f-4798-426b-965c-0a6807a16236" name="Default" comment="xopenload_video supported">
+    <list default="true" id="f0fbf81f-4798-426b-965c-0a6807a16236" name="Default" comment="update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,14 +62,14 @@
           <entry key="html" value="24" />
           <entry key="md" value="655" />
           <entry key="py" value="2557" />
-          <entry key="txt" value="102" />
+          <entry key="txt" value="119" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="24" />
           <entry key="Markdown" value="655" />
-          <entry key="PLAIN_TEXT" value="123" />
+          <entry key="PLAIN_TEXT" value="140" />
           <entry key="Python" value="2557" />
         </counts>
       </usages-collector>
@@ -98,7 +97,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="96">
@@ -127,7 +126,7 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -453,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542052326324</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="update readme">
+      <created>1542052430943</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1542052430943</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -467,7 +473,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20628998" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -480,7 +485,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295099" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32899022" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.27361563" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.6102063" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.32899022" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.4580574" side_tool="true" weight="0.32882413" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -557,9 +562,9 @@
     <MESSAGE value="avgle supported" />
     <MESSAGE value="youav.com supported" />
     <MESSAGE value="update gitignore" />
-    <MESSAGE value="update readme" />
     <MESSAGE value="xopenload_video supported" />
-    <option name="LAST_COMMIT_MESSAGE" value="xopenload_video supported" />
+    <MESSAGE value="update readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="update readme" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -809,16 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions/ambiguous_search.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -839,6 +834,16 @@
             <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
