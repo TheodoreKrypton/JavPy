@@ -20,5 +20,9 @@ A python library for searching usable url of japanese AV according to given code
 * Go to the telegram bot father and apply for a bot token
 * Clone this repo and create a new file named "token.txt"
 * Place your bot token into the "token.txt"
-* install node.js `apt install nodejs`
+* install node.js 
+    ```bash
+    sudo curl -sL https://deb.nodesource.com/setup_10.x | bash -
+    apt-get install nodejs -y
+    ```
 * run `python main.py`
