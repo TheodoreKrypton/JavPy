@@ -106,3 +106,4 @@ venv.bak/
 token.txt
 test.html
 nohup.out
+.idea/
