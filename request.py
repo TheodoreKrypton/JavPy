@@ -2,6 +2,7 @@ import requests
 import bs4
 import re
 import os
+from utils.node import exec_node
 
 code = "IENE-623"
 url = "https://www.xopenload.video/search.php?s=" + code
@@ -25,11 +26,14 @@ js = re.search("<script language=\"javascript\">(.+?)</script>", rsp.text, re.S)
 js = js.replace("document", "console")
 js = js.replace("write", "log")
 
-f = open("tmp.js", "w")
-f.write(js)
-f.close()
+# f = open("tmp.js", "w")
+# f.write(js)
+# f.close()
 
-output = os.popen("nodejs tmp.js", 'r')
-res = output.read()
+# output = os.popen("nodejs tmp.js", 'r')
+# res = output.read()
+
+res = exec_node(js)
+
 url = re.findall("https://.+?\"", res)[0][:-1]
 print url

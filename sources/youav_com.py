@@ -24,7 +24,7 @@ class YouAVCom(BaseSource):
             div = bs.find_all(name='div', attrs={'class': 'well-sm'})[1]
             img = div.find(name='img').attrs['src']
 
-        except AttributeError, IndexError:
+        except (AttributeError, IndexError):
             return None
 
         url = "https://www.youav.com" + div.a.attrs['href']
