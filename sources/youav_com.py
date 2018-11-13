@@ -1,4 +1,4 @@
-from sources.BaseSource import BaseSource, SourceException
+from sources.BaseSource import ISearchByCode, SourceException
 import requests
 import re
 import bs4
@@ -7,12 +7,12 @@ from embed.decode import decode
 from functions.datastructure import AV
 
 
-class YouAVCom(BaseSource):
+class YouAVCom(ISearchByCode):
     def __init__(self):
-        BaseSource.__init__(self)
+        pass
 
 
-    def search(self, code):
+    def search_by_code(self, code):
         url = "https://www.youav.com/search/videos?search_query=" + code
 
         response = requests.request("GET", url, verify=False)

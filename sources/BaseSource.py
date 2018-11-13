@@ -1,8 +1,19 @@
-class BaseSource:
-    def __init__(self):
+from abc import ABCMeta, abstractmethod
+
+
+class ISearchByCode:
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def search_by_code(self, code):
         pass
 
-    def search(self, code):
+
+class ISearchByActress:
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def search_by_actress(self, actress, allow_many_actresses, up_to):
         pass
 
 

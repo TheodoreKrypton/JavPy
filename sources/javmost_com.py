@@ -1,4 +1,4 @@
-from sources.BaseSource import BaseSource, SourceException
+from sources.BaseSource import ISearchByCode, SourceException
 import requests
 import re
 import bs4
@@ -7,15 +7,14 @@ from embed.decode import decode
 from functions.datastructure import AV
 
 
-class JavMostCom(BaseSource):
+class JavMostCom(ISearchByCode):
     def __init__(self):
-        BaseSource.__init__(self)
         self.select_part_regex = re.compile(r"select_part\((.+?)\)")
         self.data_regex = re.compile(r"get_source/\",(.+?)\}", re.S)
         self.value_regex = re.compile(r"value: \"(.+?)\",")
         self.sound_regex = re.compile(r"sound: \"(.+?)\",")
 
-    def search(self, code):
+    def search_by_code(self, code):
         url = "https://www5.javmost.com/" + code
         rsp = requests.get(url, verify=False)
         if rsp.status_code != 200:

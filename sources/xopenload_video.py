@@ -1,4 +1,4 @@
-from sources.BaseSource import BaseSource, SourceException
+from sources.BaseSource import ISearchByCode, SourceException
 import requests
 import re
 import bs4
@@ -8,12 +8,12 @@ from functions.datastructure import AV
 import os
 
 
-class XOpenloadVideo(BaseSource):
+class XOpenloadVideo(ISearchByCode):
     def __init__(self):
-        BaseSource.__init__(self)
+        pass
 
 
-    def search(self, code):
+    def search_by_code(self, code):
         url = "https://www.xopenload.video/search.php?s=" + code
         rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
