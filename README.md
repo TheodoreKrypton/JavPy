@@ -6,6 +6,7 @@ A python library for searching usable url of japanese AV according to given code
 
 ### Supported Commands
 * /search \[code\]
+* /search \[actress name\] --many-actresses \[allow/denied\] -upto 20
 
 ## TODO
 
