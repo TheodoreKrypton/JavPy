@@ -102,7 +102,10 @@ def search(bot, update, args):
                 bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Actress Found")
 
             for brief in briefs:
-                bot.send_photo(chat_id=update.message.chat_id, photo=brief.preview_img_url, caption=brief.code + "\n" + brief.title)
+                if brief.preview_img_url:
+                    bot.send_photo(chat_id=update.message.chat_id, photo=brief.preview_img_url, caption=brief.code + "\n" + brief.title)
+                else:
+                    bot.send_message(chat_id=update.message.chat_id, text=brief.code + "\n" + brief.title)
 
         except getopt.GetoptError:
             bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])

@@ -4,6 +4,7 @@ import requests
 from BaseSource import ISearchByActress
 import bs4
 from functions.datastructure import Brief
+from utils.common import try_evaluate
 
 
 class IndexAVCom(ISearchByActress):
@@ -32,8 +33,11 @@ class IndexAVCom(ISearchByActress):
             if not allow_many_actresses and actress_cnt > 1:
                 continue
 
+
+
             title = div.find(name='span', attrs={'class': 'video_title'}).text
-            img = div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel']
+
+            img = try_evaluate(lambda x: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
 
             brief = Brief()
             brief.title = title
