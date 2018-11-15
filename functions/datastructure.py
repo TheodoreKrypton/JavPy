@@ -22,5 +22,8 @@ class Brief:
         return self.__release_date
 
     @release_date.setter
-    def release_date(self, date_str):
-        self.__release_date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    def release_date(self, date):
+        if isinstance(date, datetime.datetime):
+            self.__release_date = date
+        else:
+            self.__release_date = datetime.datetime.strptime(date, "%Y-%m-%d")

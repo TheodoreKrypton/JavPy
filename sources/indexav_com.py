@@ -11,7 +11,8 @@ class IndexAVCom(ISearchByActress):
     def __init__(self):
         pass
 
-    def search_by_actress(self, actress, allow_many_actresses, up_to):
+    @classmethod
+    def search_by_actress(cls, actress, allow_many_actresses, up_to):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
@@ -22,28 +23,14 @@ class IndexAVCom(ISearchByActress):
         cnt = 0
 
         for box in boxes:
-            code = box.find(name='span', attrs={'class': 'video_id'}).text
-            div = box.find(name='div', attrs={'class': 'col-sm-2'})
-            release_date = div.span.text
+            release_date = box.find(name='div', attrs={'class': 'col-sm-2'}).span.text
             if u"予定" in release_date:
                 continue
-            div = box.find(name='div', attrs={'class': 'col-sm-7'})
-            actress_cnt = len(div.find_all(name='div', attrs={'class': 'col-xs-6'}))
 
-            if not allow_many_actresses and actress_cnt > 1:
+            brief = cls.__get_brief_by_box(box)
+
+            if not allow_many_actresses and len(brief.actress.split(", ")) > 1:
                 continue
-
-
-
-            title = div.find(name='span', attrs={'class': 'video_title'}).text
-
-            img = try_evaluate(lambda x: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
-
-            brief = Brief()
-            brief.title = title
-            brief.preview_img_url = img
-            brief.code = code
-            brief.actress = actress
 
             res.append(brief)
             cnt += 1
@@ -52,3 +39,31 @@ class IndexAVCom(ISearchByActress):
                 return res
 
         return res
+
+    @classmethod
+    def get_brief(cls, code):
+        url = "https://indexav.com/search?keyword=" + code
+        rsp = requests.get(url)
+
+        if rsp.status_code != 200:
+            return None
+
+        bs = bs4.BeautifulSoup(rsp.text, "lxml")
+        box = bs.find(name='div', attrs={'class': 'bs-callout'})
+        return cls.__get_brief_by_box(box)
+
+    @staticmethod
+    def __get_brief_by_box(box):
+        code = box.find(name='span', attrs={'class': 'video_id'}).text
+        div = box.find(name='div', attrs={'class': 'col-sm-7'})
+        actress = ", ".join(map(lambda x: x.text, div.find_all(name='div', attrs={'class': 'col-xs-6'})))
+        title = div.find(name='span', attrs={'class': 'video_title'}).text
+        img = try_evaluate(lambda: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
+
+        brief = Brief()
+        brief.title = title
+        brief.preview_img_url = img
+        brief.code = code
+        brief.actress = actress
+
+        return brief

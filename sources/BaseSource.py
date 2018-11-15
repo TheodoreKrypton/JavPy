@@ -4,16 +4,18 @@ from abc import ABCMeta, abstractmethod
 class ISearchByCode:
     __metaclass__ = ABCMeta
 
+    @classmethod
     @abstractmethod
-    def search_by_code(self, code):
+    def search_by_code(cls, code):
         pass
 
 
 class ISearchByActress:
     __metaclass__ = ABCMeta
 
+    @classmethod
     @abstractmethod
-    def search_by_actress(self, actress, allow_many_actresses, up_to):
+    def search_by_actress(cls, actress, allow_many_actresses, up_to):
         pass
 
 

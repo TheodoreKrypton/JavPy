@@ -4,25 +4,23 @@ import re
 import bs4
 import json
 from embed.decode import decode
-from functions.datastructure import AV
+from functions.datastructure import AV, Brief
+from utils.common import try_evaluate
+import datetime
 
 
 class JavMostCom(ISearchByCode):
     def __init__(self):
-        self.select_part_regex = re.compile(r"select_part\((.+?)\)")
-        self.data_regex = re.compile(r"get_source/\",(.+?)\}", re.S)
-        self.value_regex = re.compile(r"value: \"(.+?)\",")
-        self.sound_regex = re.compile(r"sound: \"(.+?)\",")
+        pass
 
-    def search_by_code(self, code):
+    @classmethod
+    def search_by_code(cls, code):
         url = "https://www5.javmost.com/" + code
         rsp = requests.get(url, verify=False)
         if rsp.status_code != 200:
             return None
-        try:
-            img = re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1)
-        except AttributeError:
-            return None
+
+        img = try_evaluate(lambda: re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
 
         # Nov. 13 adding: https://www5.javmost.com/IENE-623/
         if not img.startswith("http:"):
@@ -31,12 +29,12 @@ class JavMostCom(ISearchByCode):
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
 
         button = bs.find(name='li', attrs={'class': 'active'})
-        params = re.search(self.select_part_regex, button.a.attrs['onclick']).group(1)
+        params = re.search(r"select_part\((.+?)\)", button.a.attrs['onclick']).group(1)
         e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
 
-        data = re.search(self.data_regex, rsp.text).group(1)
-        value = re.search(self.value_regex, data).group(1)
-        sound = re.search(self.sound_regex, data).group(1)
+        data = re.search(r"get_source/\",(.+?)\}", rsp.text, re.S).group(1)
+        value = re.search(r"value: \"(.+?)\",", data).group(1)
+        sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 
         url = "https://www5.javmost.com/get_code/"
         rsp = requests.post(url, data={
@@ -67,3 +65,45 @@ class JavMostCom(ISearchByCode):
         av.code = code
 
         return av
+
+    @staticmethod
+    def get_newly_released(allow_many_actresses, up_to):
+        url = "https://www5.javmost.com/release/new/"
+        rsp = requests.get(url)
+        bs = bs4.BeautifulSoup(rsp.text, "lxml")
+        cards = bs.find_all(name='div', attrs={'class': 'card'})
+
+        res = []
+        today = datetime.datetime.today()
+        cnt = 0
+
+        for card in cards:
+            release_date = try_evaluate(
+                lambda: datetime.datetime.strptime(
+                    re.search("\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
+                )
+            )
+            if release_date and release_date > today:
+                continue
+
+            actress = list(map(lambda x: x.text, card.find_all(name='a', attrs={'class': 'btn-danger'})))
+            if not allow_many_actresses and len(actress) > 1:
+                continue
+
+            img = try_evaluate(lambda: card.find(name='img').attrs['src'])
+            if not img.startswith("http:"):
+                img = "http:" + img
+
+            brief = Brief()
+            brief.preview_img_url = img
+            brief.title = card.find(name='h5').text.strip()
+            brief.actress = ", ".join(actress)
+            brief.release_date = release_date
+            brief.code = card.find(name='h4').text.strip()
+            res.append(brief)
+
+            cnt += 1
+            if cnt >= up_to:
+                return res
+
+        return res

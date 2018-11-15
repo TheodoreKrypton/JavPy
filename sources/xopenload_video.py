@@ -12,8 +12,8 @@ class XOpenloadVideo(ISearchByCode):
     def __init__(self):
         pass
 
-
-    def search_by_code(self, code):
+    @classmethod
+    def search_by_code(cls, code):
         url = "https://www.xopenload.video/search.php?s=" + code
         rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")

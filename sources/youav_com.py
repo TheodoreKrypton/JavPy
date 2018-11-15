@@ -11,8 +11,8 @@ class YouAVCom(ISearchByCode):
     def __init__(self):
         pass
 
-
-    def search_by_code(self, code):
+    @classmethod
+    def search_by_code(cls, code):
         url = "https://www.youav.com/search/videos?search_query=" + code
 
         response = requests.request("GET", url, verify=False)
