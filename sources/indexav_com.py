@@ -1,7 +1,9 @@
 # encoding: utf-8
 
+from __future__ import absolute_import, print_function, unicode_literals
+
 import requests
-from BaseSource import ISearchByActress
+from sources.BaseSource import ISearchByActress
 import bs4
 from functions.datastructure import Brief
 from utils.common import try_evaluate

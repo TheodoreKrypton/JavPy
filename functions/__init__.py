@@ -1,7 +1,10 @@
-from search import Search
-from new import New
-from brief import Brief as GetBrief
-from datastructure import AV, Brief
+from __future__ import absolute_import, print_function, unicode_literals
+
+
+from functions.search import Search
+from functions.new import New
+from functions.brief import Brief as GetBrief
+from functions.datastructure import AV, Brief
 
 
 class Functions:

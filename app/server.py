@@ -1,12 +1,13 @@
 # encoding: utf-8
 
+from __future__ import absolute_import, print_function, unicode_literals
+
 import logging
 from telegram.ext import Updater, CommandHandler
 from functions import Functions
 import telegram
 from telegram.utils.request import Request
 import time
-from functions.datastructure import AV
 import getopt
 import re
 
@@ -53,7 +54,6 @@ helps = {
                 /brief ABP-123 -l en
         """,
 }
-
 
 
 def start(bot, update):
@@ -212,7 +212,6 @@ def run():
     updater = Updater(token=open("token.txt").read())
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
 
     handlers = [
         CommandHandler('start', start),
