@@ -23,7 +23,11 @@ A python library for searching usable url of japanese AV according to given code
 * Place your bot token into the "token.txt"
 * install node.js 
     ```bash
-    sudo curl -sL https://deb.nodesource.com/setup_10.x | bash -
+    curl -sL https://deb.nodesource.com/setup_10.x | bash -
     apt-get install nodejs -y
+    ```
+* install libtorrent
+    ```angular2html
+    apt-get install python-libtorrent
     ```
 * run `python main.py`
