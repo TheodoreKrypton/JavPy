@@ -1,3 +1,5 @@
+from __future__ import absolute_import, print_function, unicode_literals
+
 from sources.BaseSource import ISearchByCode, SourceException
 import requests
 import re
@@ -68,42 +70,50 @@ class JavMostCom(ISearchByCode):
 
     @staticmethod
     def get_newly_released(allow_many_actresses, up_to):
-        url = "https://www5.javmost.com/release/new/"
-        rsp = requests.get(url)
-        bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        cards = bs.find_all(name='div', attrs={'class': 'card'})
-
-        res = []
-        today = datetime.datetime.today()
         cnt = 0
+        page = 1
 
-        for card in cards:
-            release_date = try_evaluate(
-                lambda: datetime.datetime.strptime(
-                    re.search("\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
+        while True:
+            url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
+            print(url)
+            rsp = requests.get(url)
+
+            json_obj = json.loads(rsp.text)
+            html = json_obj["data"]
+
+            bs = bs4.BeautifulSoup(html, "lxml")
+            cards = bs.find_all(name='div', attrs={'class': 'card'})
+
+            res = []
+            today = datetime.datetime.today()
+
+            for card in cards:
+                release_date = try_evaluate(
+                    lambda: datetime.datetime.strptime(
+                        re.search("\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
+                    )
                 )
-            )
-            if release_date and release_date > today:
-                continue
+                if release_date and release_date > today:
+                    continue
 
-            actress = list(map(lambda x: x.text, card.find_all(name='a', attrs={'class': 'btn-danger'})))
-            if not allow_many_actresses and len(actress) > 1:
-                continue
+                actress = list(map(lambda x: x.text, card.find_all(name='a', attrs={'class': 'btn-danger'})))
+                if not allow_many_actresses and len(actress) > 1:
+                    continue
 
-            img = try_evaluate(lambda: card.find(name='img').attrs['src'])
-            if not img.startswith("http:"):
-                img = "http:" + img
+                img = try_evaluate(lambda: card.find(name='img').attrs['src'])
+                if not img.startswith("http:"):
+                    img = "http:" + img
 
-            brief = Brief()
-            brief.preview_img_url = img
-            brief.title = card.find(name='h5').text.strip()
-            brief.actress = ", ".join(actress)
-            brief.release_date = release_date
-            brief.code = card.find(name='h4').text.strip()
-            res.append(brief)
+                brief = Brief()
+                brief.preview_img_url = img
+                brief.title = card.find(name='h5').text.strip()
+                brief.actress = ", ".join(actress)
+                brief.release_date = release_date
+                brief.code = card.find(name='h4').text.strip()
+                res.append(brief)
 
-            cnt += 1
-            if cnt >= up_to:
-                return res
+                cnt += 1
+                if cnt >= up_to:
+                    return res
 
-        return res
+            page += 1

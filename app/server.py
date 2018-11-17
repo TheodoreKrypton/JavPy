@@ -139,7 +139,7 @@ def search(bot, update, args):
 
 def get_new(bot, update, args):
     try:
-        options, remainder = getopt.getopt([x.replace(u"—", u"--") for x in args[1:]], 'm:u:',
+        options, remainder = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:',
                                            ['many-actress=', 'upto='])
 
         allow_many_actresses = False
@@ -164,7 +164,7 @@ def get_new(bot, update, args):
         briefs = Functions.get_newly_released(allow_many_actresses, up_to)
 
         if not briefs:
-            bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Actress Found")
+            bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
 
         for brief in briefs:
             if brief.preview_img_url:
