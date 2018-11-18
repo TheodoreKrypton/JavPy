@@ -1,29 +1,50 @@
+import os.path as pt
 import libtorrent as lt
+from time import sleep
+import sys
+import tempfile
+import shutil
 import time
 
 
-link = "magnet:?xt=urn:btih:CEED13C074063BF6F3FECA43E3297416CDD342BB&dn=ipx232&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Fpublic.popcorn-tracker.org%3A6969%2Fannounce"
+def modify_magnet(magnet):
+    pass
 
-params = {
-        "save_path": '.',
-        "duplicate_is_error": True
+
+def get_peers_count_from_magnet(magnet):
+    tempdir = tempfile.mkdtemp()
+
+    session = lt.session()
+
+    params = {
+        'save_path': tempdir,
+        'storage_mode': lt.storage_mode_t(2),
+        'auto_managed': True,
+        'file_priorities': [0] * 5
     }
 
-sess = lt.session()
-sess.add_dht_router('router.bittorrent.com', 6881)
-sess.add_dht_router('router.utorrent.com', 6881)
-sess.add_dht_router('router.bitcomet.com', 6881)
-sess.add_dht_router('dht.transmissionbt.com', 6881)
-sess.start_dht()
+    handle = lt.add_magnet_uri(session, magnet, params)
 
-handle = lt.add_magnet_uri(sess, link, params)
+    print("Downloading Metadata (this may take a while)")
+    while not handle.has_metadata():
+        print "Waiting ... "
+        sleep(1)
 
-# waiting for metadata
-while (not handle.has_metadata()):
-    time.sleep(5)
+    print("Metadata downloaded")
 
-# create a torrent
-torinfo = handle.get_torrent_info()
-torfile = lt.create_torrent(torinfo)
+    peers = set()
+    start = time.time()
 
-print(torinfo)
+    while not handle.is_seed() and time.time()-start < 5:
+        p = handle.get_peer_info()
+        for i in p:
+            peers.add(i.ip)
+
+    session.remove_torrent(handle)
+    shutil.rmtree(tempdir)
+
+    return len(peers)
+
+
+if __name__ == '__main__':
+    print get_peers_count_from_magnet("magnet:?xt=urn:btih:637136C082395A9888A7BFA104C7734608F2842E&dn=ssni00351mp4&tr=udp://tracker.coppersurfer.tk:6969/announce")

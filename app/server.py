@@ -10,6 +10,7 @@ from telegram.utils.request import Request
 import time
 import getopt
 import re
+from app.output import send_brief
 
 
 request = Request(connect_timeout=1000, read_timeout=5000)
@@ -72,9 +73,6 @@ def search(bot, update, args):
     :param args:
     :return:
     """
-
-    start_time = time.clock()
-
     first = args[0]
     if re.search("\d", first):
         # /search ABP-123
@@ -92,9 +90,6 @@ def search(bot, update, args):
             telegram.InlineKeyboardButton(res.code, url=res.video_url)
         ]])
         bot.send_photo(chat_id=update.message.chat_id, photo=res.preview_img_url, reply_markup=reply_markup)
-        # bot.send_video_note(chat_id=update.message.chat_id, video_note=res)
-        # bot.send_video(chat_id=update.message.chat_id, video=res, request=request, supports_streaming=True, timeout=5000)
-        # bot.send_message(chat_id=update.message.chat_id, text="<video><source src=\"" + res +  "\" type=\"video/mp4\"></video>", parse_mode="HTML")
 
     else:
         # /search 桃乃木かな [-m/--many-actresses] [on/off] [-u/--upto] [20]
@@ -106,7 +101,7 @@ def search(bot, update, args):
             up_to = 10
 
             for o, a in options:
-                if o in ("-m","--many-actresses") and a in ("allow", "deny", "1", "0"):
+                if o in ("-m", "--many-actresses") and a in ("allow", "deny", "1", "0"):
                     if a in ("allow", "1"):
                         allow_many_actresses = True
                     continue
@@ -122,15 +117,7 @@ def search(bot, update, args):
                     return
 
             briefs = Functions.search_by_actress(actress, allow_many_actresses, up_to)
-
-            if not briefs:
-                bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Actress Found")
-
-            for brief in briefs:
-                if brief.preview_img_url:
-                    bot.send_photo(chat_id=update.message.chat_id, photo=brief.preview_img_url, caption=brief.code + "\n" + brief.title)
-                else:
-                    bot.send_message(chat_id=update.message.chat_id, text=brief.code + "\n" + brief.title)
+            send_brief(bot, update, briefs)
 
         except getopt.GetoptError:
             bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
@@ -162,16 +149,7 @@ def get_new(bot, update, args):
                 return
 
         briefs = Functions.get_newly_released(allow_many_actresses, up_to)
-
-        if not briefs:
-            bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
-
-        for brief in briefs:
-            if brief.preview_img_url:
-                bot.send_photo(chat_id=update.message.chat_id, photo=brief.preview_img_url,
-                               caption=brief.code + "\n" + brief.release_date.strftime("%Y-%m-%d") + "\n" + brief.title)
-            else:
-                bot.send_message(chat_id=update.message.chat_id, text=brief.code + "\n" + brief.title)
+        send_brief(bot, update, briefs)
 
     except getopt.GetoptError:
         bot.send_message(chat_id=update.message.chat_id, text=helps["get-new"])
@@ -193,19 +171,7 @@ def get_brief(bot, update, args):
         bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
         return
 
-    if res.preview_img_url:
-        bot.send_photo(
-            chat_id=update.message.chat_id, photo=res.preview_img_url,
-            caption=res.code + (
-                ("\n" + res.release_date.strftime("%Y-%m-%d")) if res.release_date else ""
-            ) + "\n" + res.title)
-
-    else:
-        bot.send_message(
-            chat_id=update.message.chat_id, text=res.code + (
-                ("\n" + res.release_date.strftime("%Y-%m-%d")) if res.release_date else ""
-            ) + "\n" + res.title
-        )
+    send_brief(bot, update, res)
 
 
 def run():
