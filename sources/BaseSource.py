@@ -19,6 +19,15 @@ class ISearchByActress:
         pass
 
 
+class ISearchMagnet:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def search_magnet(cls, code):
+        pass
+
+
 class SourceException(Exception):
     def __init__(self, msg):
         Exception.__init__(self, msg)

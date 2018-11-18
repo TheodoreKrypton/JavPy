@@ -5,6 +5,7 @@ from functions.search import Search
 from functions.new import New
 from functions.brief import Brief as GetBrief
 from functions.datastructure import AV, Brief
+from functions.magnet import Magnet
 
 
 class Functions:
@@ -28,3 +29,7 @@ class Functions:
     @staticmethod
     def get_brief(code):
         return GetBrief.get_brief(code)
+
+    @staticmethod
+    def get_magnet(code):
+        return Magnet.get_magnet(code)

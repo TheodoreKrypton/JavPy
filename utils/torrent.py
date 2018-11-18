@@ -8,6 +8,7 @@ import time
 
 
 def modify_magnet(magnet):
+    segments = magnet.split("/")
     pass
 
 

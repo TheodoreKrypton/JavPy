@@ -27,3 +27,10 @@ class Brief:
             self.__release_date = date
         else:
             self.__release_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+
+class Magnet:
+    def __init__(self):
+        self.magnet = ""
+        self.description = ""
+        self.peers = 0

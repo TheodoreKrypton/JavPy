@@ -174,6 +174,20 @@ def get_brief(bot, update, args):
     send_brief(bot, update, res)
 
 
+def get_magnet(bot, update, args):
+    if len(args) != 1:
+        bot.send_message(chat_id=update.message.chat_id, text="Sorry, Wrong Usage")
+        return
+
+    res = Functions.get_magnet(args[0])
+    if not res:
+        bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Magnet Found")
+        return
+
+    for magnet in res:
+        bot.send_message(chat_id=update.message.chat_id, text="[" + magnet.description + "]\n" + magnet.magnet)
+
+
 def run():
     updater = Updater(token=open("token.txt").read())
     dispatcher = updater.dispatcher
@@ -183,7 +197,8 @@ def run():
         CommandHandler('start', start),
         CommandHandler('search', search, pass_args=True),
         CommandHandler('new', get_new, pass_args=True),
-        CommandHandler('brief', get_brief, pass_args=True)
+        CommandHandler('brief', get_brief, pass_args=True),
+        CommandHandler('magnet', get_magnet, pass_args=True),
     ]
 
     for handler in handlers:
