@@ -13,4 +13,4 @@ install:
   - sudo pip install python-telegram-bot 
   
 script: 
-  - python app/server.py
+  - ./travis.sh
