@@ -2,7 +2,7 @@ language: python
 sudo: required
 before_install: 
   - sudo apt-get install python-pip
-  - sudo curl -sL https://deb.nodesource.com/setup_10.x | bash -
+  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
   - sudo apt-get install nodejs -y
   - sudo apt-get install python-libtorrent
 install:
