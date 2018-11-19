@@ -1,4 +1,4 @@
-# JavPy
+# JavPy ![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
 A python library for searching usable url of japanese AV according to given code
 
 ## Telegram Bot
