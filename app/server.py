@@ -3,14 +3,14 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, InlineQueryHandler, MessageHandler, filters
 from functions import Functions
 import telegram
 from telegram.utils.request import Request
 import time
 import getopt
 import re
-from app.output import send_brief
+from app.reply import send_brief, Interactive, inline_query, send_av
 
 
 request = Request(connect_timeout=1000, read_timeout=5000)
@@ -58,7 +58,7 @@ helps = {
 
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    Interactive.start(bot, update)
 
 
 def search(bot, update, args):
@@ -81,21 +81,15 @@ def search(bot, update, args):
             return
 
         res = Functions.search_by_code(first)
-
-        if res is None:
-            bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
-            return
-
-        reply_markup = telegram.InlineKeyboardMarkup([[
-            telegram.InlineKeyboardButton(res.code, url=res.video_url)
-        ]])
-        bot.send_photo(chat_id=update.message.chat_id, photo=res.preview_img_url, reply_markup=reply_markup)
+        send_av(bot, update, res)
 
     else:
         # /search 桃乃木かな [-m/--many-actresses] [on/off] [-u/--upto] [20]
         try:
             actress = first
-            options, remainder = getopt.getopt([x.replace(u"—", u"--") for x in args[1:]], 'm:u:', ['many-actress=', 'upto='])
+            options, remainder = getopt.getopt(
+                [x.replace(u"—", u"--") for x in args[1:]], 'm:u:', ['many-actress=', 'upto=']
+            )
 
             allow_many_actresses = False
             up_to = 10
@@ -188,6 +182,10 @@ def get_magnet(bot, update, args):
         bot.send_message(chat_id=update.message.chat_id, text="[" + magnet.description + "]\n" + magnet.magnet)
 
 
+def callback(bot, update):
+    print(update.message.chat_id, update.callback_query.data)
+
+
 def run():
     updater = Updater(token=open("token.txt").read())
     dispatcher = updater.dispatcher
@@ -199,9 +197,13 @@ def run():
         CommandHandler('new', get_new, pass_args=True),
         CommandHandler('brief', get_brief, pass_args=True),
         CommandHandler('magnet', get_magnet, pass_args=True),
+        MessageHandler(filters.Filters.text, Interactive.message),
+        CallbackQueryHandler(callback),
+        # InlineQueryHandler(inline_query)
     ]
 
     for handler in handlers:
         dispatcher.add_handler(handler)
 
     updater.start_polling(timeout=123)
+    updater.idle()

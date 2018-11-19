@@ -18,7 +18,6 @@ class Search:
                 return res
         return None
 
-
     @staticmethod
     def guess_lang(text):
         if isinstance(text, str):
