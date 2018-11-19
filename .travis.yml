@@ -1,4 +1,6 @@
 language: python
+virtualenv:
+  system_site_packages: true
 sudo: required
 before_install: 
   - sudo apt-get install python-pip
