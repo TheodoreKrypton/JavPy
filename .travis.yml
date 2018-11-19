@@ -10,4 +10,5 @@ install:
   - sudo pip install bs4
   - sudo pip install python-telegram-bot 
   
-script: main.py
+script: 
+  - python app/server.py
