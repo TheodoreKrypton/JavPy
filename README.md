@@ -1,4 +1,7 @@
-# JavPy
+![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
+[![codebeat badge](https://codebeat.co/badges/08449fa3-5997-4b6b-8549-147d144f829d)](https://codebeat.co/projects/github-com-theodorekrypton-javpy-master)
+
+# JavPy 
 A python library for searching usable url of japanese AV according to given code
 
 ## Telegram Bot

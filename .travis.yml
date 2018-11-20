@@ -1,0 +1,16 @@
+language: python
+virtualenv:
+  system_site_packages: true
+sudo: required
+before_install: 
+  - sudo apt-get install python-pip
+  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+  - sudo apt-get install nodejs -y
+  - sudo apt-get install python-libtorrent
+install:
+  - sudo pip install requests
+  - sudo pip install bs4
+  - sudo pip install python-telegram-bot 
+  
+script: 
+  - python travis.py
