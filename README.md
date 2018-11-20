@@ -12,8 +12,12 @@ A python library for searching usable url of japanese AV according to given code
 [https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)
 
 ### Supported Commands
+* /start guided jav trip
 * /search \[code\]
 * /search \[actress name\] --many-actresses \[allow/denied\] -upto 20
+* /new \[--many-actresses\] \[allow/denied\] -upto 20
+* /brief \[code\]
+* /magnet \[code\]
 
 ## TODO
 
