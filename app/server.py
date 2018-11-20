@@ -10,7 +10,7 @@ from telegram.utils.request import Request
 import time
 import getopt
 import re
-from app.reply import send_brief, Interactive, inline_query, send_av
+from app.reply import send_brief, Interactive, inline_query, send_av, send_magnet
 
 
 request = Request(connect_timeout=1000, read_timeout=5000)
@@ -169,17 +169,7 @@ def get_brief(bot, update, args):
 
 
 def get_magnet(bot, update, args):
-    if len(args) != 1:
-        bot.send_message(chat_id=update.message.chat_id, text="Sorry, Wrong Usage")
-        return
-
-    res = Functions.get_magnet(args[0])
-    if not res:
-        bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Magnet Found")
-        return
-
-    for magnet in res:
-        bot.send_message(chat_id=update.message.chat_id, text="[" + magnet.description + "]\n" + magnet.magnet)
+    send_magnet(bot, update, Functions.get_magnet(args[0]))
 
 
 def callback(bot, update):

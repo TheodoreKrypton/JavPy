@@ -72,6 +72,7 @@ class JavMostCom(ISearchByCode):
     def get_newly_released(allow_many_actresses, up_to):
         cnt = 0
         page = 1
+        res = []
 
         while True:
             url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
@@ -84,7 +85,6 @@ class JavMostCom(ISearchByCode):
             bs = bs4.BeautifulSoup(html, "lxml")
             cards = bs.find_all(name='div', attrs={'class': 'card'})
 
-            res = []
             today = datetime.datetime.today()
 
             for card in cards:

@@ -47,6 +47,15 @@ def send_av(bot, update, av):
     bot.send_photo(chat_id=update.message.chat_id, photo=av.preview_img_url, reply_markup=reply_markup)
 
 
+def send_magnet(bot, update, magnets):
+    if magnets is None:
+        bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Magnet Found")
+        return
+
+    for magnet in magnets:
+        bot.send_message(chat_id=update.message.chat_id, text="[" + magnet.description + "]\n" + magnet.magnet)
+
+
 def inline_query(bot, update):
     query = update.inline_query.query
 
@@ -75,67 +84,95 @@ class Interactive:
     __init__ = None
 
     @staticmethod
-    @history.update_history
     def start(bot, update):
-        # reply_markup = telegram.InlineKeyboardMarkup([[
-        #     telegram.InlineKeyboardButton("Search", callback_data='{"jump_to": "search"}')
-        # ]])
+        history.clear_history(update.message.from_user.id)
+
         reply_markup = telegram.ReplyKeyboardMarkup([
             ["Search", "New", "Random"],
             ["Brief", "Magnet"]
         ], resize_keyboard=True)
 
-        bot.send_message(chat_id=update.message.chat_id, text="Hi, what can I help you?", reply_markup=reply_markup)
+        bot.send_message(chat_id=update.message.chat_id, text="Hi, how can I help you?", reply_markup=reply_markup)
 
     @staticmethod
-    @history.update_history
-    def search(bot, update):
-        reply_markup = telegram.ReplyKeyboardRemove(selective=True)
-        bot.send_message(
-            chat_id=update.message.chat_id,
-            text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな",
-            reply_markup=reply_markup,
-            reply_to_message_id=update.message.message_id
-        )
-
-    @staticmethod
-    @history.update_history
-    def new(bot, update):
-        bot.send_message(chat_id=update.message.chat_id, text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな")
-
-    @staticmethod
-    @history.update_history
     def random(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな")
 
     @staticmethod
-    @history.update_history
     def brief(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな")
 
     @staticmethod
-    @history.update_history
     def magnet(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな")
 
     @classmethod
+    @history.update_history
     def message(cls, bot, update):
-        if update.message.text == "Search":
-            cls.search(bot, update)
-        elif update.message.text == "New":
-            cls.new(bot, update)
-        elif update.message.text == "Random":
-            cls.random(bot, update),
-        elif update.message.text == "Brief":
-            cls.brief(bot, update)
-        elif update.message.text == "Magnet":
-            cls.magnet(bot, update)
+        cmd_history = history.history[update.message.from_user.id][0]
 
-        else:
-            last_cmd = history.history[update.message.from_user.id][0][-1]
+        if len(cmd_history) == 1:
+            if cmd_history[-1] == "Search":
+                reply_markup = telegram.ReplyKeyboardRemove(selective=True)
+                bot.send_message(
+                    chat_id=update.message.chat_id,
+                    text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな",
+                    reply_markup=reply_markup,
+                    reply_to_message_id=update.message.message_id
+                )
+            elif cmd_history[-1] == "New":
+                bot.send_message(
+                    chat_id=update.message.chat_id,
+                    text="How many results? [Integer]"
+                )
+            elif cmd_history[-1] == "Random":
+                cls.random(bot, update)
+            elif cmd_history[-1] == "Brief":
+                bot.send_message(
+                    chat_id=update.message.chat_id,
+                    text="Search a code. e.g. ABP-231"
+                )
+            elif cmd_history[-1] == "Magnet":
+                bot.send_message(
+                    chat_id=update.message.chat_id,
+                    text="Search a code. e.g. ABP-231"
+                )
 
-            if last_cmd == "Search":
-                res = Functions.search_by_code(update.message.text)
-                send_av(bot, update, res)
+        elif len(cmd_history) == 2:
+            if cmd_history[-2] == "Search":
+                if re.search("\d", update.message.text):
+                    res = Functions.search_by_code(update.message.text)
+                    send_av(bot, update, res)
+
+                else:
+                    if cmd_history[-2] == "Search":
+                        bot.send_message(
+                            chat_id=update.message.chat_id,
+                            text="How many results? [Integer]"
+                        )
+
+            elif cmd_history[-2] == "New":
+                send_brief(
+                    bot, update, Functions.get_newly_released(False, int(cmd_history[-1]))
+                )
+                history.clear_history(update.message.from_user.id)
+
+            elif cmd_history[-2] == "Brief":
+                send_brief(
+                    bot, update, Functions.get_brief(cmd_history[-1])
+                )
+                history.clear_history(update.message.from_user.id)
+
+            elif cmd_history[-2] == "Magnet":
+                send_magnet(bot, update, Functions.get_magnet(cmd_history[-1]))
+
+        elif len(cmd_history) == 3:
+            if cmd_history[-3] == "Search":
+                send_brief(
+                    bot, update, Functions.search_by_actress(
+                        cmd_history[-2], False, int(cmd_history[-1])
+                    )
+                )
+                history.clear_history(update.message.from_user.id)
 
         return
