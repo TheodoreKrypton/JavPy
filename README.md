@@ -1,6 +1,9 @@
 ![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
 [![codebeat badge](https://codebeat.co/badges/08449fa3-5997-4b6b-8549-147d144f829d)](https://codebeat.co/projects/github-com-theodorekrypton-javpy-master)
-
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:javascript)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:python)
+![](https://sonarcloud.io/api/project_badges/quality_gate?project=TheodoreKrypton_JavPy)
 # JavPy 
 A python library for searching usable url of japanese AV according to given code
 
