@@ -10,7 +10,8 @@ before_install:
 install:
   - sudo pip install requests
   - sudo pip install bs4
-  - sudo pip install python-telegram-bot 
+  - sudo pip install python-telegram-bot
+  - sudo pip install -U urllib3
   
 script: 
   - py.test test_bot/test_bot.py
