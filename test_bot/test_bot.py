@@ -16,8 +16,10 @@ import urllib3
 from utils.node import Node
 import pytest
 
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+try:
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+except AttributeError:
+    pass
 
 
 class MockGlobals:
