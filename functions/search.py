@@ -6,7 +6,7 @@ from sources.indexav_com import IndexAVCom
 
 class Search:
     def __init__(self):
-        self.sources_by_code = [XOpenloadVideo, JavMostCom, YouAVCom]
+        self.sources_by_code = [JavMostCom, YouAVCom]
         self.sources_by_actress = {
             "indexav.com": IndexAVCom
         }

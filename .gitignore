@@ -107,4 +107,5 @@ token.txt
 test.html
 nohup.out
 .idea/
-.scannerwork
+.scannerwork/
+.pytest_cache/
