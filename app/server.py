@@ -5,13 +5,10 @@ from __future__ import absolute_import, print_function, unicode_literals
 import logging
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from functions import Functions
-from telegram.utils.request import Request
 import getopt
 import re
 from app.reply import send_brief, Interactive, send_av, send_magnet
 
-
-request = Request(connect_timeout=1000, read_timeout=5000)
 
 helps = {
     "search-by-actress":
@@ -170,8 +167,8 @@ def get_magnet(bot, update, args):
     send_magnet(bot, update, Functions.get_magnet(args[0]))
 
 
-def callback(bot, update):
-    print(update.message.chat_id, update.callback_query.data)
+# def callback(bot, update):
+#     print(update.message.chat_id, update.callback_query.data)
 
 
 def run():
@@ -186,7 +183,7 @@ def run():
         CommandHandler('brief', get_brief, pass_args=True),
         CommandHandler('magnet', get_magnet, pass_args=True),
         MessageHandler(filters.Filters.text, Interactive.message),
-        CallbackQueryHandler(callback),
+        # CallbackQueryHandler(callback),
         # InlineQueryHandler(inline_query)
     ]
 

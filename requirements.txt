@@ -2,3 +2,4 @@ requests
 python-telegram-bot
 bs4
 urllib3
+pytest

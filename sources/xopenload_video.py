@@ -6,7 +6,7 @@ import json
 from embed.decode import decode
 from functions.datastructure import AV
 import os
-from utils import node
+from utils.node import Node
 
 
 class XOpenloadVideo(ISearchByCode):
@@ -37,7 +37,7 @@ class XOpenloadVideo(ISearchByCode):
             .replace("document", "console")\
             .replace("write", "log")
 
-        res = node.exec_node(js)
+        res = Node.pass_cmd(js)
 
         url = re.findall(r"https://.+?\"", res)[0][:-1]
 

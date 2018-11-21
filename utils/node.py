@@ -1,18 +1,40 @@
 import subprocess
 import os
-
-node = None
-
-
-def start():
-    global node
-    node = subprocess.Popen(['node', os.path.abspath(".")[:os.path.abspath(".").find("JavPy")] + "JavPy/node/app.js"])
+import sys
 
 
-def exec_node(cmd):
-    return node.communicate(cmd)
+class Node:
+    def __init__(self):
+        pass
 
+    node = None
 
-def kill_node():
-    if node:
-        node.kill()
+    @classmethod
+    def start_node(cls):
+        cls.node = subprocess.Popen(
+            ['node', os.path.abspath(".")[:os.path.abspath(".").find("JavPy")] + "JavPy/node/app.js"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=False
+        )
+
+    @classmethod
+    def pass_cmd(cls, cmd):
+        cls.node.stdin.write(cmd)
+        cls.node.stdout.flush()
+        res = cls.node.stdout.readline()
+        return res
+
+    @classmethod
+    def pass_cmd_v3(cls, cmd):
+        cmd = cmd.encode('utf-8')
+        cls.node.stdin.write(cmd)
+        cls.node.stdout.flush()
+        res = cls.node.stdout.readline()
+        return res.decode('utf-8')
+
+    if sys.version_info.major == 3:
+        pass_cmd = pass_cmd_v3
+
+    @classmethod
+    def kill_node(cls):
+        if cls.node:
+            cls.node.kill()

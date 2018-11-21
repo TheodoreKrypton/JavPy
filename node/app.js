@@ -1,7 +1,11 @@
-function doProcess(str) {
-    eval(str);
-}
+var readline = require('readline');
 
-process.stdin.on('data', data => {
-    doProcess(data);
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
+
+rl.on('line', function(line){
+    eval(line);
 });

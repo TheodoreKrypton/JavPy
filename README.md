@@ -3,6 +3,9 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:javascript)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:python)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7854ab72a6692d85b865/maintainability)](https://codeclimate.com/github/TheodoreKrypton/JavPy/maintainability)
+
 
 ![](https://sonarcloud.io/api/project_badges/quality_gate?project=TheodoreKrypton_JavPy)
 # JavPy 
