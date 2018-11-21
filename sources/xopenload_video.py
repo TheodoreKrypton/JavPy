@@ -47,4 +47,3 @@ class XOpenloadVideo(ISearchByCode):
         av.video_url = url
 
         return av
-
