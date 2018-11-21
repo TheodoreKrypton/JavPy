@@ -16,7 +16,7 @@ class IndexAVCom(ISearchByActress):
     @classmethod
     def search_by_actress(cls, actress, allow_many_actresses, up_to):
         url = "https://indexav.com/actor/" + actress
-        rsp = requests.get(url)
+        rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         boxes = bs.find_all(name='div', attrs={'class': 'bs-callout'})
 
@@ -45,7 +45,7 @@ class IndexAVCom(ISearchByActress):
     @classmethod
     def get_brief(cls, code):
         url = "https://indexav.com/search?keyword=" + code
-        rsp = requests.get(url)
+        rsp = requests.get(url, verify=False)
 
         if rsp.status_code != 200:
             return None

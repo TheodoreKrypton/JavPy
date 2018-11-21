@@ -76,8 +76,7 @@ class JavMostCom(ISearchByCode):
 
         while True:
             url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-            print(url)
-            rsp = requests.get(url)
+            rsp = requests.get(url, verify=False)
 
             json_obj = json.loads(rsp.text)
             html = json_obj["data"]
