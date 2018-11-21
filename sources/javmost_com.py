@@ -22,7 +22,7 @@ class JavMostCom(ISearchByCode):
         if rsp.status_code != 200:
             return None
 
-        img = try_evaluate(lambda: re.search("<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
+        img = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
 
         # Nov. 13 adding: https://www5.javmost.com/IENE-623/
         if not img.startswith("http:"):
@@ -90,7 +90,7 @@ class JavMostCom(ISearchByCode):
             for card in cards:
                 release_date = try_evaluate(
                     lambda: datetime.datetime.strptime(
-                        re.search("\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
+                        re.search(r"\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
                     )
                 )
                 if release_date and release_date > today:

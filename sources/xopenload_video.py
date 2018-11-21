@@ -6,6 +6,7 @@ import json
 from embed.decode import decode
 from functions.datastructure import AV
 import os
+from utils import node
 
 
 class XOpenloadVideo(ISearchByCode):
@@ -27,22 +28,18 @@ class XOpenloadVideo(ISearchByCode):
             return None
 
         rsp = requests.get(url, verify=False)
-        _hash = re.search("https://www\.xopenload\.video/links\.php\?hash=(.+?)\"", rsp.text).group(1)
+        _hash = re.search(r"https://www\.xopenload\.video/links\.php\?hash=(.+?)\"", rsp.text).group(1)
         url = "https://www.xopenload.video/links.php?hash=" + _hash
 
         rsp = requests.get(url, verify=False)
 
-        js = re.search("<script language=\"javascript\">(.+?)</script>", rsp.text, re.S).group(1)\
+        js = re.search(r"<script language=\"javascript\">(.+?)</script>", rsp.text, re.S).group(1)\
             .replace("document", "console")\
             .replace("write", "log")
 
-        f = open("tmp.js", "w")
-        f.write(js)
-        f.close()
+        res = node.exec_node(js)
 
-        output = os.popen("nodejs tmp.js", 'r')
-        res = output.read()
-        url = re.findall("https://.+?\"", res)[0][:-1]
+        url = re.findall(r"https://.+?\"", res)[0][:-1]
 
         av = AV()
         av.code = code

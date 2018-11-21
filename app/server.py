@@ -3,14 +3,12 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, InlineQueryHandler, MessageHandler, filters
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from functions import Functions
-import telegram
 from telegram.utils.request import Request
-import time
 import getopt
 import re
-from app.reply import send_brief, Interactive, inline_query, send_av, send_magnet
+from app.reply import send_brief, Interactive, send_av, send_magnet
 
 
 request = Request(connect_timeout=1000, read_timeout=5000)

@@ -41,7 +41,6 @@ class JavBusCom(ISearchMagnet):
         for tr in trs:
             magnet = tr.td.a.attrs['href']
             description = tr.td.next_sibling.next_sibling.a.text.strip()
-
             mgnt = Magnet()
             mgnt.magnet = magnet
             mgnt.description = description
@@ -49,9 +48,3 @@ class JavBusCom(ISearchMagnet):
             res.append(mgnt)
 
         return res
-
-
-
-
-if __name__ == '__main__':
-    print JavBusCom.search_magnet("DOCP-106")
