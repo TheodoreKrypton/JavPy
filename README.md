@@ -10,9 +10,22 @@
 
 ![](https://sonarcloud.io/api/project_badges/quality_gate?project=TheodoreKrypton_JavPy)
 # JavPy 
-A python library for searching usable url of japanese AV according to given code
+This is a Python library for searching related information of Japanese AVs. This project temporarily provide 2 kind of interfaces, a telegram bot for mobile users and a locally hosted web page for PC users.
+
+For both previewing and my testing need, there is a demo for the telegram bot hosted on a really tiny cloud server. Please don't rely on it for the server overloading concerns. If you like it, please clone this repo and host it on your own server.
+
+This library fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
+
+**In brief, there are 4 main instructions concluded below.**
+
+1. **It is for searching Japanese AVs.**
+2. **It provides 2 interfaces: telegram bot and web.**
+3. **Don't rely on the bot presented below. It is hosted on a tiny cloud server.**
+4. **Use VPN if you experience network issues.**
 
 ## Telegram Bot
+### Demo
+
 [https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)
 
 ### Supported Commands
@@ -23,6 +36,35 @@ A python library for searching usable url of japanese AV according to given code
 * /brief \[code\]
 * /magnet \[code\]
 
+### Quick Start
+
+- Go to the telegram bot father and apply for a bot token
+
+- Clone this repo and create a new file named "token.txt"
+
+- Place your bot token into the "token.txt"
+
+- install node.js 
+
+  ```bash
+  curl -sL https://deb.nodesource.com/setup_10.x | bash -
+  apt-get install nodejs -y
+  ```
+
+- install libtorrent
+
+  ```angular2html
+  apt-get install python-libtorrent
+  ```
+
+- run `python main.py`
+
+## Web
+
+### User Guide
+
+### Developer Guide
+
 ## TODO
 
 * [ ] daily recommendations
@@ -31,18 +73,3 @@ A python library for searching usable url of japanese AV according to given code
 * [ ] name translation (jp-zh-en)
 * [ ] uncensored videos
 * [ ] ambiguous search
-
-## Quick Start
-* Go to the telegram bot father and apply for a bot token
-* Clone this repo and create a new file named "token.txt"
-* Place your bot token into the "token.txt"
-* install node.js 
-    ```bash
-    curl -sL https://deb.nodesource.com/setup_10.x | bash -
-    apt-get install nodejs -y
-    ```
-* install libtorrent
-    ```angular2html
-    apt-get install python-libtorrent
-    ```
-* run `python main.py`
