@@ -17,4 +17,4 @@ install:
   - sudo pip install lxml
   
 script: 
-  - py.test test_bot/test_bot.py
+  - python main.py

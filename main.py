@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import urllib3
-from app.server import run
+from app.tgbot.server import run
 from utils.node import Node
 
 

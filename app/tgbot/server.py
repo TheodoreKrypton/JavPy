@@ -3,11 +3,11 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, filters
 from functions import Functions
 import getopt
 import re
-from app.reply import send_brief, Interactive, send_av, send_magnet
+from app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 
 
 helps = {

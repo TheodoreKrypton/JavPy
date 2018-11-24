@@ -38,3 +38,4 @@ class Node:
     def kill_node(cls):
         if cls.node:
             cls.node.kill()
+
