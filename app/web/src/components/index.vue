@@ -1,27 +1,29 @@
 <template>
-    <el-container>
-        <el-header>Header</el-header>
-        <el-container>
-            <el-aside width="200px">Aside</el-aside>
+    <div style="height: 100%">
+        <el-container style="height: 100%">
+            <el-header>Header</el-header>
             <el-container>
-                <el-main>Main</el-main>
-                <el-footer>Footer</el-footer>
+                <sidebar/>
+                <el-container>
+                    <el-main>Main</el-main>
+                </el-container>
             </el-container>
         </el-container>
-    </el-container>
+    </div>
 </template>
 
 <script>
+    import sidebar from './sidebar.vue'
     export default {
         name: 'index',
-        props: {
-            msg: String
+        components: {
+            sidebar
         }
     }
 </script>
 
 <style lang="less" scoped>
-    .el-header, .el-footer {
+    .el-header {
         background-color: #B3C0D1;
         color: #333;
         text-align: center;
@@ -33,6 +35,7 @@
         color: #333;
         text-align: center;
         line-height: 200px;
+        .element::-webkit-scrollbar { width: 0 !important }
     }
 
     .el-main {
@@ -40,10 +43,6 @@
         color: #333;
         text-align: center;
         line-height: 160px;
-    }
-
-    body > .el-container {
-        margin-bottom: 40px;
     }
 
     .el-container:nth-child(5) .el-aside,

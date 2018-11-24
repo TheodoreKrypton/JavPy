@@ -6,10 +6,11 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:python)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7854ab72a6692d85b865/maintainability)](https://codeclimate.com/github/TheodoreKrypton/JavPy/maintainability)
+![](https://sonarcloud.io/api/project_badges/measure?project=TheodoreKrypton_JavPy&metric=alert_status)
 
+![](logo.png)
 
-![](https://sonarcloud.io/api/project_badges/quality_gate?project=TheodoreKrypton_JavPy)
-# JavPy 
+# JavPy
 This is a Python library for searching related information of Japanese AVs. This project temporarily provide 2 kind of interfaces, a telegram bot for mobile users and a locally hosted web page for PC users.
 
 For both previewing and my testing need, there is a demo for the telegram bot hosted on a really tiny cloud server. Please don't rely on it for the server overloading concerns. If you like it, please clone this repo and host it on your own server.
