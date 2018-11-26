@@ -36,17 +36,19 @@ export default {
     },
     methods: {
       search_by_code() {
-        const config = {
-            'origin': 'localhost:8081'
-        }
 
-        axios.get("http://localhost:8081/search", config)
-        .then(function(response){
-            console.log(response);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
+        const data = {
+          'code': this.form.jav_code,
+          'actress': this.form.actress
+        };
+
+        axios.post("http://localhost:8081/search", data)
+            .then(function(response){
+                console.log(response);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
       },
 
       clear() {
