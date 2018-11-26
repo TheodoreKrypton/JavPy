@@ -1,33 +1,36 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.name"></el-input>
+    <el-form ref="form" :model="form" :inline="true" @submit="search_by_code">
+      <el-form-item>
+        <el-input v-model="form.jav_code" placeholder="Jav Code"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search_by_code">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-input v-model="form.actress" placeholder="Actress"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="search_by_code">Search!</el-button>
+        <el-button @click="clear">Clear</el-button>
       </el-form-item>
     </el-form>
+    <preview></preview>
   </div>
 </template>
 
 <script>
 
 import axios from 'axios';
+import preview from './preview';
 
 export default {
+    name: 'search',
+    components: {
+     preview
+    },
     data() {
       return {
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          jav_code: '',
+          actress: ''
         }
       }
     },
@@ -44,6 +47,11 @@ export default {
         .catch(function(error){
             console.log(error);
         });
+      },
+
+      clear() {
+        this.form.jav_code = "";
+        this.form.actress = "";
       }
     }
   }
