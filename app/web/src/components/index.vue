@@ -1,23 +1,27 @@
 <template>
-    <div style="height: 100%">
-        <el-container style="height: 100%">
-            <el-header>Header</el-header>
-            <el-container>
-                <sidebar/>
-                <el-container>
-                    <el-main>Main</el-main>
-                </el-container>
-            </el-container>
+  <div style="height: 100%">
+    <el-container style="height: 100%">
+      <el-header style="background: #F2F6FC">
+        <topbar></topbar>
+      </el-header>
+      <el-container>
+        <sidebar/>
+        <el-container>
+          <el-main>Main</el-main>
         </el-container>
-    </div>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
-    import sidebar from './sidebar.vue'
+    import sidebar from './sidebar.vue';
+    import topbar from './topbar.vue';
     export default {
         name: 'index',
         components: {
-            sidebar
+            sidebar,
+            topbar
         }
     }
 </script>

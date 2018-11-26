@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <index style="height: 100%;"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import index from './components/index.vue'
 
 export default {
   name: 'app',
   components: {
-      // HelloWorld,
       index
   }
 }
