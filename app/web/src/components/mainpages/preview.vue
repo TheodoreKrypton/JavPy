@@ -36,11 +36,6 @@
 <script>
     export default {
         name: 'preview',
-        data(){
-            return {
-                loading: false
-            }
-        },
         props: [
             'av',
             'brief'

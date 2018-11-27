@@ -30,7 +30,7 @@
         <el-button @click="clear">Clear</el-button>
       </el-form-item>
     </el-form>
-    <preview :av="to_be_previewed" :loading="isPreviewLoading"></preview>
+    <preview :av="to_be_previewed"></preview>
   </div>
 </template>
 
@@ -58,7 +58,12 @@
         },
         methods: {
             async onSearch() {
-                this.isPreviewLoading = true;
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
 
                 let rsp = "";
                 if(!this.form.jav_code && this.form.actress){
@@ -74,7 +79,7 @@
                     rsp = await axios.post("http://localhost:8081/search_by_code", data);
                 }
 
-                this.isPreviewLoading = false;
+                loading.close();
 
                 if(!rsp.data){
                     this.to_be_previewed = "";
@@ -82,8 +87,6 @@
                 else{
                     this.to_be_previewed = rsp.data;
                 }
-
-
             },
 
             clear() {
