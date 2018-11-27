@@ -34,6 +34,8 @@
 
 
 <script>
+    import Event from '../../main.js'
+
     export default {
         name: 'preview',
         props: [
@@ -45,9 +47,7 @@
                 window.open(url);
             },
             onSearch(code){
-                this.$parent.clear();
-                this.$parent.form.jav_code = code;
-                this.$parent.onSearch();
+                Event.$emit("search", {jav_code: code});
             }
         }
     }

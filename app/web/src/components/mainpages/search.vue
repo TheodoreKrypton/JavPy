@@ -35,9 +35,9 @@
 </template>
 
 <script>
-
     import axios from 'axios';
     import preview from './preview';
+    import Event from '../../main.js'
 
     export default {
         name: 'search',
@@ -93,6 +93,16 @@
                 this.form.jav_code = "";
                 this.form.actress = "";
             }
+        },
+
+        mounted: function(){
+            Event.$on('search', async function(data){
+                this.$router.push({path: 'search'});
+                const jav_code = data.jav_code;
+                this.clear();
+                this.form.jav_code = jav_code;
+                await this.onSearch();
+            });
         }
     }
 

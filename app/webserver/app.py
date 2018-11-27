@@ -36,3 +36,17 @@ def search_by_actress():
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
+
+
+@app.route("/new", methods=['POST'])
+def new():
+    params = json.loads(request.data)
+    print(params)
+    res = Functions.get_newly_released(False, 30)
+    if res:
+        res = [x.to_dict() for x in res]
+
+    rsp = jsonify(res)
+    rsp.headers["Access-Control-Allow-Origin"] = "*"
+
+    return rsp
