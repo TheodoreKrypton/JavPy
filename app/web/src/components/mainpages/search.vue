@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" :inline="true" @submit="search_by_code">
+    <el-form ref="form" :model="form" :inline="true">
       <el-form-item>
         <el-input v-model="form.jav_code" placeholder="Jav Code"></el-input>
       </el-form-item>
@@ -26,11 +26,11 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="search_by_code">Search!</el-button>
+        <el-button type="primary" @click="onSearch">Search!</el-button>
         <el-button @click="clear">Clear</el-button>
       </el-form-item>
     </el-form>
-    <preview :av="to_be_previewed"></preview>
+    <preview :av="to_be_previewed" :loading="isPreviewLoading"></preview>
   </div>
 </template>
 
@@ -52,18 +52,38 @@
                     allow_many_actresses: false,
                     up_to: 0
                 },
-                to_be_previewed: null
+                to_be_previewed: null,
+                isPreviewLoading: false
             }
         },
         methods: {
-            async search_by_code() {
-                const data = {
-                    'code': this.form.jav_code,
-                    'actress': this.form.actress
-                };
+            async onSearch() {
+                this.isPreviewLoading = true;
 
-                const rsp = await axios.post("http://localhost:8081/search", data);
-                this.to_be_previewed = rsp.data;
+                let rsp = "";
+                if(!this.form.jav_code && this.form.actress){
+                    const data = {
+                      'actress': this.form.actress
+                    };
+                    rsp = await axios.post("http://localhost:8081/search_by_actress", data);
+                }
+                else if(!this.form.actress && this.form.jav_code){
+                    const data = {
+                        'code': this.form.jav_code,
+                    };
+                    rsp = await axios.post("http://localhost:8081/search_by_code", data);
+                }
+
+                this.isPreviewLoading = false;
+
+                if(!rsp.data){
+                    this.to_be_previewed = "";
+                }
+                else{
+                    this.to_be_previewed = rsp.data;
+                }
+
+
             },
 
             clear() {

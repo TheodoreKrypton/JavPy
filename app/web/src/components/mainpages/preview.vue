@@ -1,41 +1,71 @@
 <template>
-  <div>
-    <el-card v-for="(video, i) in av" :key="i" style="width: 20%;" :body-style="{ padding: '0px' }" shadow="hover">
-      <img :src="video.preview_img_url" class="image" alt="preview">
-        <div class="bottom">
-          <table>
-            <tr>
-              <td style="width: 70%; text-align: left">
-                {{video.code}}
-              </td>
-              <td>
-                <el-button type="primary" plain style="float: right;">主要按钮</el-button>
-              </td>
-            </tr>
-          </table>
-        </div>
-    </el-card>
-  </div>
+    <div style="text-align: center">
+        <el-alert v-if="av === ''"
+                title="Sorry, cannot find any result."
+                type="error"
+                description="Please Retry."
+                show-icon>
+        </el-alert>
+        <el-row :gutter="40">
+            <el-col :span="6" v-for="(video, i) in av" :key="i" :offset="1"
+                    style="margin: 0; margin-bottom: 40px;">
+                <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                    <img :src="video.preview_img_url" class="image" alt="preview">
+                    <div class="bottom">
+                        <table>
+                            <tr>
+                                <td style="width: 70%; text-align: left">
+                                    {{video.code}}
+                                </td>
+                                <td v-if="video.video_url">
+                                    <el-button type="primary" plain style="float: right;" @click="onWatch(video.video_url)">Watch</el-button>
+                                </td>
+                                <td v-else>
+                                    <el-button type="primary" plain style="float: right;" @click="onSearch(video.code)">Search</el-button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 
 <script>
-export default {
-    name: 'preview',
-    props: [
-        'av'
-    ]
-}
+    export default {
+        name: 'preview',
+        data(){
+            return {
+                loading: false
+            }
+        },
+        props: [
+            'av',
+            'brief'
+        ],
+        methods:{
+            onWatch(url){
+                window.open(url);
+            },
+            onSearch(code){
+                this.$parent.clear();
+                this.$parent.form.jav_code = code;
+                this.$parent.onSearch();
+            }
+        }
+    }
 </script>
 
 <style lang="less" scoped>
-  .bottom {
-    margin-top: 10px;
-    line-height: 12px;
-  }
+    .bottom {
+        margin-top: 10px;
+        line-height: 12px;
+    }
 
-  .image {
-    width: 100%;
-    display: block;
-  }
+    .image {
+        width: 100%;
+        display: block;
+    }
 </style>

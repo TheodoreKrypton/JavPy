@@ -9,9 +9,9 @@ CORS(app, resources=r'/*')
 
 
 @app.route("/search_by_code", methods=['POST'])
-def search():
+def search_by_code():
     params = json.loads(request.data)
-
+    print(params)
     res = []
 
     if params["code"]:
@@ -23,12 +23,15 @@ def search():
 
 
 @app.route("/search_by_actress", methods=['POST'])
-def search():
+def search_by_actress():
     params = json.loads(request.data)
+    print(params)
     res = []
 
     if params["actress"]:
-        res = [Functions.search_by_actress(params["actress"], False, 30).to_dict()]
+        res = Functions.search_by_actress(params["actress"], False, 30)
+        if res:
+            res = [x.to_dict() for x in res]
 
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
