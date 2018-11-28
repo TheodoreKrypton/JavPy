@@ -34,7 +34,7 @@
 
 
 <script>
-    import Event from '../../main.js'
+    import Event from "../../main.js"
 
     export default {
         name: 'preview',
@@ -47,7 +47,7 @@
                 window.open(url);
             },
             onSearch(code){
-                Event.$emit("search", {jav_code: code});
+                Event.$emit('search_jav_by_code', {jav_code: code});
             }
         }
     }

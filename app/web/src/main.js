@@ -17,7 +17,9 @@ const router = new VueRouter({
 });
 
 const Event = new Vue();
+
 export default Event;
+
 
 new Vue({
   el: "#app",

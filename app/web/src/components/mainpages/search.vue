@@ -37,7 +37,7 @@
 <script>
     import axios from 'axios';
     import preview from './preview';
-    import Event from '../../main.js'
+    import Event from '../../main.js';
 
     export default {
         name: 'search',
@@ -57,52 +57,78 @@
             }
         },
         methods: {
-            async onSearch() {
-                const loading = this.$loading({
+            async onSearch(data=null, instance=this) {
+                if(data && !(data instanceof MouseEvent)){
+                    instance.form.jav_code = data.jav_code;
+                    instance.form.actress = data.actress;
+                }
+                const loading = instance.$loading({
                     lock: true,
                     text: 'Loading',
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
 
-                let rsp = "";
-                if(!this.form.jav_code && this.form.actress){
-                    const data = {
-                      'actress': this.form.actress
-                    };
-                    rsp = await axios.post("http://localhost:8081/search_by_actress", data);
+                let rsp = null;
+                if(!instance.form.jav_code && instance.form.actress){
+                    await axios.post("http://localhost:8081/search_by_actress", {
+                        'actress': instance.form.actress
+                    }).then(function(response){
+                        rsp = response;
+
+                    }).catch(function (){
+                        loading.close();
+                        instance.to_be_previewed = "";
+
+                    });
+                    return;
                 }
-                else if(!this.form.actress && this.form.jav_code){
-                    const data = {
-                        'code': this.form.jav_code,
-                    };
-                    rsp = await axios.post("http://localhost:8081/search_by_code", data);
+                else if(!instance.form.actress && instance.form.jav_code){
+                    await axios.post("http://localhost:8081/search_by_code", {
+                        'code': instance.form.jav_code,
+                    }).then(function(response){
+                        rsp = response;
+
+                    }).catch(function (){
+                        loading.close();
+                        instance.to_be_previewed = "";
+                    });
+                    return;
                 }
 
-                loading.close();
+                if(rsp.statusCode === 200) {
+                    loading.close();
+                    if(!rsp.data){
+                        instance.to_be_previewed = "";
+                    }
+                    else{
+                        instance.to_be_previewed = rsp.data;
+                    }
+                }
 
-                if(!rsp.data){
-                    this.to_be_previewed = "";
+                else {
+                    loading.close();
+                    instance.to_be_previewed = "";
                 }
-                else{
-                    this.to_be_previewed = rsp.data;
-                }
+
             },
 
             clear() {
                 this.form.jav_code = "";
                 this.form.actress = "";
+            },
+
+            processEvent(){
+                let that = this;
+                Event.$on('search_jav_by_code', function(data){
+                    that.$router.push({'path': '/search'});
+                    that.onSearch(data, that);
+                });
             }
         },
 
         mounted: function(){
-            Event.$on('search', async function(data){
-                this.$router.push({path: 'search'});
-                const jav_code = data.jav_code;
-                this.clear();
-                this.form.jav_code = jav_code;
-                await this.onSearch();
-            });
+            this.processEvent();
         }
     }
 

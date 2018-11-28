@@ -7,5 +7,7 @@ from embed.avgle import avgle
 def decode(url):
     if "fembed" in url:
         return fembed.decode(url)
-    else:
+    elif "avgle" in url:
         return avgle.decode(url)
+    else:
+        return url
