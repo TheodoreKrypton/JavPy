@@ -1,11 +1,14 @@
 import requests
 import json
+import six
 
 
 class fembed:
     @staticmethod
     def decode(url):
-        code = url.split("/")[-1].encode("ascii")
+        code = url.split("/")[-1]
+        if six.PY2:
+            code = code.encode("ascii")
         url = "http://www.fembed.com/api/source/" + code
         rsp = requests.post(url)
         json_obj = json.loads(rsp.text)

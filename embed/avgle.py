@@ -1,7 +1,11 @@
 import requests
-import json
 import re
-import urllib
+import six
+
+if six.PY2:
+    import urllib
+elif six.PY3:
+    import urllib.parse as urllib
 
 
 class avgle:

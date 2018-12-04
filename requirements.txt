@@ -4,3 +4,5 @@ bs4
 urllib3
 pytest
 flask
+six
+flask-cors

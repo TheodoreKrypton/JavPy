@@ -2,6 +2,7 @@ from sources.javmost_com import JavMostCom
 from sources.youav_com import YouAVCom
 from sources.xopenload_video import XOpenloadVideo
 from sources.indexav_com import IndexAVCom
+import six
 
 
 class Search:
@@ -20,7 +21,7 @@ class Search:
 
     @staticmethod
     def guess_lang(text):
-        if isinstance(text, str):
+        if six.PY2:
             text = text.decode("utf-8")
 
         if all(map(lambda c: ord(c) < 128, text)):

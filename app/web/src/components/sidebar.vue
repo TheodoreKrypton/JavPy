@@ -12,7 +12,8 @@
             <i class="el-icon-location"></i>
             <span>Internet</span>
           </template>
-          <el-menu-item index="1-1">Search</el-menu-item>
+          <el-menu-item index="1-1" @click="toSearch">Search</el-menu-item>
+          <el-menu-item index="1-1" @click="toNew">New</el-menu-item>
           <el-menu-item index="1-2">Magnet</el-menu-item>
           <el-menu-item index="1-3">Categories</el-menu-item>
         </el-submenu>
@@ -41,6 +42,12 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            toSearch(){
+                this.$router.push({path: '/search'});
+            },
+            toNew(){
+                this.$router.push({path: '/new'});
             }
         }
     }

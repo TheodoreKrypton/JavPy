@@ -8,6 +8,14 @@ class AV:
         self.preview_img_url = ""
         self.actress = ""
 
+    def to_dict(self):
+        return {
+            "code": self.code,
+            "video_url": self.video_url,
+            "preview_img_url": self.preview_img_url,
+            "self.actress": self.actress
+        }
+
 
 class Brief:
     def __init__(self):
@@ -27,6 +35,15 @@ class Brief:
             self.__release_date = date
         else:
             self.__release_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    def to_dict(self):
+        return {
+            "code": self.code,
+            "preview_img_url": self.preview_img_url,
+            "actress": self.actress,
+            "title": self.title,
+            "release_date": self.release_date  # type: datetime.datetime
+        }
 
 
 class Magnet:

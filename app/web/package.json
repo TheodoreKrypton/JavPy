@@ -8,11 +8,16 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
+    "EventHub": "^1.2.4",
     "axios": "^0.18.0",
     "element-ui": "^2.4.5",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
+    "vue-geventbus": "^1.0.2",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {

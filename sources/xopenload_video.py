@@ -3,7 +3,9 @@ import requests
 import re
 import bs4
 from functions.datastructure import AV
-from utils.node import Node
+import subprocess
+import tempfile
+import os
 
 
 class XOpenloadVideo(ISearchByCode):
@@ -34,9 +36,9 @@ class XOpenloadVideo(ISearchByCode):
             .replace("document", "console")\
             .replace("write", "log")
 
-        res = Node.pass_cmd(js)
+        response = subprocess.Popen(["node", "-e", "%s" % js], stdout=subprocess.PIPE).stdout.read().decode()
 
-        url = re.findall(r"https://.+?\"", res)[0][:-1]
+        url = re.findall(r"https://.+?\"", response)[0][:-1]
 
         av = AV()
         av.code = code

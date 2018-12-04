@@ -16,6 +16,11 @@ const router = new VueRouter({
   routes: routers
 });
 
+const Event = new Vue();
+
+export default Event;
+
+
 new Vue({
   el: "#app",
   router,
