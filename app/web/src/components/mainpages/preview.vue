@@ -42,6 +42,11 @@
             'av',
             'brief'
         ],
+        watch: {
+            av (...args) {
+                console.log(args)
+            }
+        },
         methods:{
             onWatch(url){
                 window.open(url);

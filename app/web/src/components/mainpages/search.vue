@@ -79,9 +79,7 @@
                     }).catch(function (){
                         loading.close();
                         instance.to_be_previewed = "";
-
                     });
-                    return;
                 }
                 else if(!instance.form.actress && instance.form.jav_code){
                     await axios.post("http://localhost:8081/search_by_code", {
@@ -91,12 +89,11 @@
 
                     }).catch(function (){
                         loading.close();
-                        instance.to_be_previewed = "";
+                            instance.to_be_previewed = "";
                     });
-                    return;
                 }
-
-                if(rsp.statusCode === 200) {
+                console.log(rsp)
+                if(rsp.status === 200) {
                     loading.close();
                     if(!rsp.data){
                         instance.to_be_previewed = "";
