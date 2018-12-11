@@ -63,9 +63,9 @@ class IndexAVCom(ISearchByActress):
         img = try_evaluate(lambda: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
 
         brief = Brief()
-        brief.title = title
+        brief.title = title.strip()
         brief.preview_img_url = img
-        brief.code = code
-        brief.actress = actress
+        brief.code = code.strip()
+        brief.actress = actress.strip()
 
         return brief

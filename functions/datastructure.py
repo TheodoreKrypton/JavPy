@@ -13,7 +13,7 @@ class AV:
             "code": self.code,
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
-            "self.actress": self.actress
+            "actress": self.actress
         }
 
 

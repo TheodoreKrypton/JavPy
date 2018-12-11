@@ -55,7 +55,7 @@ This library fetches information from various websites, but most of them are blo
 
 - install libtorrent
 
-  ```angular2html
+  ```bash
   apt-get install python-libtorrent
   ```
 
@@ -64,6 +64,10 @@ This library fetches information from various websites, but most of them are blo
 ## Web
 
 ### User Guide
+```
+
+
+```
 
 ### Developer Guide
 
