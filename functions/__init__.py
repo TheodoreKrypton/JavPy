@@ -6,6 +6,7 @@ from functions.new import New
 from functions.brief import Brief as GetBrief
 from functions.datastructure import AV, Brief
 from functions.magnet import Magnet
+import gevent
 
 
 class Functions:
@@ -16,7 +17,19 @@ class Functions:
 
     @classmethod
     def search_by_code(cls, code):
-        return cls.search_service.search_by_code(code)
+        av = gevent.spawn(cls.search_service.search_by_code, code)
+        _brief = gevent.spawn(cls.get_brief, code)
+
+        av.join()
+        _brief.join()
+
+        if av.value:
+            res = av.value
+            if _brief.value:
+                res.actress = _brief.value.actress if _brief.value.actress else ""
+            return res
+        else:
+            return None
 
     @classmethod
     def search_by_actress(cls, actress, allow_many_actresses, up_to):

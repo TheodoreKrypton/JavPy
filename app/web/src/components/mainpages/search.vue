@@ -92,7 +92,7 @@
                             instance.to_be_previewed = "";
                     });
                 }
-                console.log(rsp)
+                console.log(rsp);
                 if(rsp.status === 200) {
                     loading.close();
                     if(!rsp.data){

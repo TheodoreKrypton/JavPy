@@ -7,7 +7,6 @@ import subprocess
 import tempfile
 import os
 
-
 class XOpenloadVideo(ISearchByCode):
     def __init__(self):
         pass

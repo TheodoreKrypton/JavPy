@@ -14,14 +14,14 @@
                     <div class="bottom">
                         <table>
                             <tr>
-                                <td style="width: 70%; text-align: left">
-                                    {{video.code}}
+                                <td v-if="video.actress">
+                                    <el-button type="primary" plain style="float: left;" @click="onSearch({'jav_code': '', 'actress': video.actress})">{{video.actress}}</el-button>
                                 </td>
                                 <td v-if="video.video_url">
-                                    <el-button type="primary" plain style="float: right;" @click="onWatch(video.video_url)">Watch</el-button>
+                                    <el-button type="primary" plain style="float: right;" @click="onWatch(video.video_url)">{{video.code}}</el-button>
                                 </td>
                                 <td v-else>
-                                    <el-button type="primary" plain style="float: right;" @click="onSearch(video.code)">Search</el-button>
+                                    <el-button type="primary" plain style="float: right;" @click="onSearch({'jav_code': video.code, 'actress': ''})">{{video.code}}</el-button>
                                 </td>
                             </tr>
                         </table>
@@ -42,17 +42,12 @@
             'av',
             'brief'
         ],
-        watch: {
-            av (...args) {
-                console.log(args)
-            }
-        },
         methods:{
             onWatch(url){
                 window.open(url);
             },
-            onSearch(code){
-                Event.$emit('search_jav_by_code', {jav_code: code});
+            onSearch(data){
+                Event.$emit('search_jav_by_code', data);
             }
         }
     }
