@@ -7,9 +7,9 @@
       <el-container>
         <sidebar/>
         <el-container>
-          <el-main>
+          <el-main style="height: 100%">
             <keep-alive>
-              <router-view></router-view>
+              <router-view style="height: 100%"></router-view>
             </keep-alive>
           </el-main>
         </el-container>

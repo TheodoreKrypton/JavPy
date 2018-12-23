@@ -1,35 +1,37 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" :inline="true">
-      <el-form-item>
-        <el-input v-model="form.jav_code" placeholder="Jav Code"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-input v-model="form.actress" placeholder="Actress"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-switch
-          v-model="form.allow_many_actresses"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        ></el-switch>
-      </el-form-item>
-      <el-form-item>
-        <el-input-number
-          v-model="form.up_to"
-          controls-position="right"
-          :min="1"
-          label="Count"
-          size="mini"
-          style="width: 80px"
-        ></el-input-number>
-      </el-form-item>
+    <div style="height: 10%">
+      <el-form ref="form" :model="form" :inline="true">
+        <el-form-item>
+          <el-input v-model="form.jav_code" placeholder="Jav Code"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.actress" placeholder="Actress"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+                  v-model="form.allow_many_actresses"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+          ></el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-input-number
+                  v-model="form.up_to"
+                  controls-position="right"
+                  :min="1"
+                  label="Count"
+                  size="mini"
+                  style="width: 80px"
+          ></el-input-number>
+        </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="onSearch">Search!</el-button>
-        <el-button @click="clear">Clear</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form-item>
+          <el-button type="primary" @click="onSearch">Search!</el-button>
+          <el-button @click="clear">Clear</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <preview :av="to_be_previewed"></preview>
   </div>
 </template>
@@ -71,7 +73,7 @@
 
                 let rsp = null;
                 if(!instance.form.jav_code && instance.form.actress){
-                    await axios.post("http://localhost:8081/search_by_actress", {
+                    await axios.post("http://mornlngstar.co:8081/search_by_actress", {
                         'actress': instance.form.actress
                     }).then(function(response){
                         rsp = response;
@@ -82,7 +84,7 @@
                     });
                 }
                 else if(!instance.form.actress && instance.form.jav_code){
-                    await axios.post("http://localhost:8081/search_by_code", {
+                    await axios.post("http://mornlngstar.co:8081/search_by_code", {
                         'code': instance.form.jav_code,
                     }).then(function(response){
                         rsp = response;

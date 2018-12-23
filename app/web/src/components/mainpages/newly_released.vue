@@ -21,7 +21,7 @@
             const data = {
 
             };
-            const rsp = await axios.post("http://localhost:8081/new", data);
+            const rsp = await axios.post("http://mornlngstar.co:8081/new", data);
             if(!rsp.data){
                 this.to_be_previewed = "";
             }
