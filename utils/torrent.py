@@ -28,7 +28,7 @@ def get_peers_count_from_magnet(magnet):
 
     print("Downloading Metadata (this may take a while)")
     while not handle.has_metadata():
-        print "Waiting ... "
+        print("Waiting ... ")
         sleep(1)
 
     print("Metadata downloaded")
@@ -48,4 +48,4 @@ def get_peers_count_from_magnet(magnet):
 
 
 if __name__ == '__main__':
-    print get_peers_count_from_magnet("magnet:?xt=urn:btih:637136C082395A9888A7BFA104C7734608F2842E&dn=ssni00351mp4&tr=udp://tracker.coppersurfer.tk:6969/announce")
+    print(get_peers_count_from_magnet("magnet:?xt=urn:btih:D02454449497A930D41D3E5ABB1537F473AA907A&dn=%5BThZu.Cc%5DABP-813&tr=udp://tracker.coppersurfer.tk:6969/announce"))

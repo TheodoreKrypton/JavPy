@@ -1,7 +1,8 @@
 import mainpage from "./components/mainpage";
 import index from "./components/index";
 import search from "./components/mainpages/search";
-import newly_released from "./components/mainpages/newly_released"
+import newly_released from "./components/mainpages/newly_released";
+import magnet from "./components/mainpages/magnet";
 
 
 const routers = [
@@ -20,6 +21,10 @@ const routers = [
             {
                 path: "new",
                 component: newly_released
+            },
+            {
+                path: "magnet",
+                component: magnet
             }
         ]
     }

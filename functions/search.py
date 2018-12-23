@@ -41,9 +41,6 @@ class Search:
 
     @staticmethod
     def guess_lang(text):
-        if six.PY2:
-            text = text.decode("utf-8")
-
         if all(map(lambda c: ord(c) < 128, text)):
             lang = "en"
 
