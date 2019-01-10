@@ -63,13 +63,20 @@ This library fetches information from various websites, but most of them are blo
 
 ## Web
 
+![](preview.png)
+
 ### User Guide
 ```
-
 
 ```
 
 ### Developer Guide
+```
+cd app/web
+npm install
+npm run serve
+python ../../main.py
+```
 
 ## TODO
 

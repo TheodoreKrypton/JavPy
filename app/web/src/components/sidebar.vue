@@ -14,7 +14,7 @@
           </template>
           <el-menu-item index="1-1" @click="toSearch">Search</el-menu-item>
           <el-menu-item index="1-1" @click="toNew">New</el-menu-item>
-          <el-menu-item index="1-2">Magnet</el-menu-item>
+          <el-menu-item index="1-2" @click="toMagnet">Magnet</el-menu-item>
           <el-menu-item index="1-3">Categories</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
@@ -48,6 +48,9 @@
             },
             toNew(){
                 this.$router.push({path: '/new'});
+            },
+            toMagnet(){
+                this.$router.push({path: '/magnet'});
             }
         }
     }

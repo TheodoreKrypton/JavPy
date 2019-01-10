@@ -51,3 +51,9 @@ class Magnet:
         self.magnet = ""
         self.description = ""
         self.peers = 0
+
+    def to_dict(self):
+        return {
+            "magnet": self.magnet,
+            "description": self.description
+        }

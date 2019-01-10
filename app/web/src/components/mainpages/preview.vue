@@ -18,7 +18,14 @@
                                     <el-button type="primary" plain style="float: left;" @click="onSearch({'jav_code': '', 'actress': video.actress})">{{video.actress}}</el-button>
                                 </td>
                                 <td v-if="video.video_url">
-                                    <el-button type="primary" plain style="float: right;" @click="onWatch(video.video_url)">{{video.code}}</el-button>
+                                    <el-popover
+                                            placement="bottom-end"
+                                            trigger="hover"
+                                    >
+                                        <el-button type="primary" plain @click="onWatch(video.video_url)">Watch</el-button>
+                                        <el-button type="primary" plain @click="onMagnet(video.code)">Magnet</el-button>
+                                        <el-button type="primary" plain slot="reference">{{video.code}}</el-button>
+                                    </el-popover>
                                 </td>
                                 <td v-else>
                                     <el-button type="primary" plain style="float: right;" @click="onSearch({'jav_code': video.code, 'actress': ''})">{{video.code}}</el-button>
@@ -48,6 +55,9 @@
             },
             onSearch(data){
                 Event.$emit('search_jav_by_code', data);
+            },
+            onMagnet(code){
+                Event.$emit('search_magnet_by_code', code);
             }
         }
     }
