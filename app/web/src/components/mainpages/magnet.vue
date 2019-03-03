@@ -43,11 +43,8 @@
                 return '';
             },
 
-            async onSearch(data=null, instance=this) {
-                if(!data || (data instanceof MouseEvent)){
-                    return;
-                }
-                const loading = instance.$loading({
+            async onSearch(data) {
+                const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
                     spinner: 'el-icon-loading',
@@ -57,12 +54,12 @@
                 let rsp = {};
 
                 await axios.post("http://mornlngstar.co:8081/search_magnet_by_code", {
-                    'code': data
+                    'code': data.code
                 }).then(function(response){
                     rsp = response;
                 }).catch(function (){
                     loading.close();
-                    instance.magnet_res = "";
+                    this.magnet_res = "";
                 });
 
                 loading.close();
@@ -74,30 +71,28 @@
                 if(rsp.status === 200) {
                     loading.close();
                     if(!rsp.data){
-                        instance.magnet_res = "";
+                        this.magnet_res = "";
                     }
                     else{
-                        instance.magnet_res = rsp.data;
+                        this.magnet_res = rsp.data;
                     }
                 }
 
                 else {
-                    instance.magnet_res = "";
+                    this.magnet_res = "";
                 }
 
-            },
+            }
+        },
 
-            processEvent(){
-                let that = this;
-                Event.$on('search_magnet_by_code', function(data){
-                    that.$router.push({'path': '/magnet'});
-                    that.onSearch(data, that);
-                });
+        watch: {
+            $route(to, from) {
+                this.onSearch(this.$route.query);
             }
         },
 
         mounted() {
-            this.processEvent();
+
         }
     }
 </script>

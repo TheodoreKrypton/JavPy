@@ -21,6 +21,7 @@
 <script>
     import sidebar from './sidebar.vue';
     import topbar from './topbar.vue';
+
     export default {
         name: 'index',
         components: {

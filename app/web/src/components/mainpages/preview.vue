@@ -9,31 +9,7 @@
         <el-row :gutter="40">
             <el-col :span="6" v-for="(video, i) in av" :key="i" :offset="1"
                     style="margin: 0; margin-bottom: 40px;">
-                <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                    <img :src="video.preview_img_url" class="image" alt="preview">
-                    <div class="bottom">
-                        <table>
-                            <tr>
-                                <td v-if="video.actress">
-                                    <el-button type="primary" plain style="float: left;" @click="onSearch({'jav_code': '', 'actress': video.actress})">{{video.actress}}</el-button>
-                                </td>
-                                <td v-if="video.video_url">
-                                    <el-popover
-                                            placement="bottom-end"
-                                            trigger="hover"
-                                    >
-                                        <el-button type="primary" plain @click="onWatch(video.video_url)">Watch</el-button>
-                                        <el-button type="primary" plain @click="onMagnet(video.code)">Magnet</el-button>
-                                        <el-button type="primary" plain slot="reference">{{video.code}}</el-button>
-                                    </el-popover>
-                                </td>
-                                <td v-else>
-                                    <el-button type="primary" plain style="float: right;" @click="onSearch({'jav_code': video.code, 'actress': ''})">{{video.code}}</el-button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </el-card>
+                <showcard :video=video></showcard>
             </el-col>
         </el-row>
     </div>
@@ -41,36 +17,20 @@
 
 
 <script>
-    import Event from "../../main.js"
+import showcard from './showcard.vue'
 
-    export default {
-        name: 'preview',
-        props: [
-            'av',
-            'brief'
-        ],
-        methods:{
-            onWatch(url){
-                window.open(url);
-            },
-            onSearch(data){
-                Event.$emit('search_jav_by_code', data);
-            },
-            onMagnet(code){
-                Event.$emit('search_magnet_by_code', code);
-            }
-        }
-    }
+export default {
+    name: 'preview',
+    components: {
+        showcard
+    },
+    props: [
+        'av'
+    ]
+}
 </script>
 
-<style lang="less" scoped>
-    .bottom {
-        margin-top: 10px;
-        line-height: 12px;
-    }
 
-    .image {
-        width: 100%;
-        display: block;
-    }
+<style lang="less" scoped>
+
 </style>

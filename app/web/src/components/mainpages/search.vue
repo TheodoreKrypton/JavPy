@@ -59,12 +59,8 @@
             }
         },
         methods: {
-            async onSearch(data=null, instance=this) {
-                if(data && !(data instanceof MouseEvent)){
-                    instance.form.jav_code = data.jav_code;
-                    instance.form.actress = data.actress;
-                }
-                const loading = instance.$loading({
+            async onSearch(data=null) {
+                const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
                     spinner: 'el-icon-loading',
@@ -72,42 +68,42 @@
                 });
 
                 let rsp = null;
-                if(!instance.form.jav_code && instance.form.actress){
+                if(!this.form.jav_code && this.form.actress){
                     await axios.post("http://mornlngstar.co:8081/search_by_actress", {
-                        'actress': instance.form.actress
+                        'actress': this.form.actress
                     }).then(function(response){
                         rsp = response;
 
                     }).catch(function (){
                         loading.close();
-                        instance.to_be_previewed = "";
+                        this.to_be_previewed = "";
                     });
                 }
-                else if(!instance.form.actress && instance.form.jav_code){
+                else if(!this.form.actress && this.form.jav_code){
                     await axios.post("http://mornlngstar.co:8081/search_by_code", {
-                        'code': instance.form.jav_code,
+                        'code': this.form.jav_code,
                     }).then(function(response){
                         rsp = response;
 
                     }).catch(function (){
                         loading.close();
-                            instance.to_be_previewed = "";
+                            this.to_be_previewed = "";
                     });
                 }
                 console.log(rsp);
                 if(rsp.status === 200) {
                     loading.close();
                     if(!rsp.data){
-                        instance.to_be_previewed = "";
+                        this.to_be_previewed = "";
                     }
                     else{
-                        instance.to_be_previewed = rsp.data;
+                        this.to_be_previewed = rsp.data;
                     }
                 }
 
                 else {
                     loading.close();
-                    instance.to_be_previewed = "";
+                    this.to_be_previewed = "";
                 }
 
             },
@@ -115,19 +111,17 @@
             clear() {
                 this.form.jav_code = "";
                 this.form.actress = "";
-            },
-
-            processEvent(){
-                let that = this;
-                Event.$on('search_jav_by_code', function(data){
-                    that.$router.push({'path': '/search'});
-                    that.onSearch(data, that);
-                });
             }
         },
 
         mounted: function(){
-            this.processEvent();
+            
+        },
+
+        watch: {
+            $route(to, from) {
+                this.onSearch(this.$route.query);
+            }
         }
     }
 

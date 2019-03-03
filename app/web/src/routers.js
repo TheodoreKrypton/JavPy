@@ -15,15 +15,15 @@ const routers = [
                 component: search
             },
             {
-                path: "search",
+                path: "/search",
                 component: search
             },
             {
-                path: "new",
+                path: "/new",
                 component: newly_released
             },
             {
-                path: "magnet",
+                path: "/magnet",
                 component: magnet
             }
         ]
