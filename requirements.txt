@@ -7,3 +7,4 @@ flask
 six
 flask-cors
 gevent
+lxml

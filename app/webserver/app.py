@@ -13,7 +13,6 @@ def search_by_code():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
     res = []
-
     if params["code"]:
         res = [Functions.search_by_code(params["code"]).to_dict()]
 
