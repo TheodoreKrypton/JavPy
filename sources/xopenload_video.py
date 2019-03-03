@@ -4,8 +4,7 @@ import re
 import bs4
 from functions.datastructure import AV
 import subprocess
-import tempfile
-import os
+
 
 class XOpenloadVideo(ISearchByCode):
     def __init__(self):

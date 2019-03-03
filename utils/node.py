@@ -1,6 +1,18 @@
 import subprocess
 import os
 import sys
+import tempfile
+
+
+def use_node(script):
+    tmp = tempfile.NamedTemporaryFile('w')
+    try:
+        tmp.write(script)
+        tmp.seek(0)
+        res = subprocess.getoutput("node " + tmp.name)
+    finally:
+        tmp.close()
+    return res
 
 
 class Node:
@@ -15,6 +27,7 @@ class Node:
             ['node', os.path.abspath(".")[:os.path.abspath(".").find("JavPy")] + "JavPy/node/app.js"],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=False
         )
+        cls.node.kill()
 
     @classmethod
     def pass_cmd(cls, cmd):
@@ -39,3 +52,6 @@ class Node:
         if cls.node:
             cls.node.kill()
 
+
+if __name__ == '__main__':
+    print(use_node(open("../test.js").read()))

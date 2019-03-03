@@ -8,6 +8,10 @@ from functions import Functions
 import getopt
 import re
 from app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
+import urllib3
+
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 helps = {
