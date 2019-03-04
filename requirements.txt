@@ -1,7 +1,7 @@
 requests
 python-telegram-bot
 bs4
-urllib3
+urllib3=1.13.1
 pytest
 flask
 six
