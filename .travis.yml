@@ -1,16 +1,19 @@
+dist: xenial
 language: python
 python:
-- '2.7'
-virtualenv:
-  system_site_packages: true
+- '3.5'
+addons:
+  apt:
+    packages:
+      - python3-pip
+      - python-libtorrent
 sudo: required
 before_install:
-  - sudo python -m easy_install --upgrade pyOpenSSL
-  - sudo apt-get update
+  - sudo python3 -m easy_install --upgrade pyOpenSSL
   - sudo apt-get install python-pip
   - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
   - sudo apt-get install nodejs -y
-  - sudo apt-get install python-libtorrent
+  - sudo apt-get install
 install:
   - sudo pip install -r requirements.txt
   
