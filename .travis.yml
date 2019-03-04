@@ -1,10 +1,11 @@
 language: python
 python:
-- '3.6'
+- '2.7'
 virtualenv:
   system_site_packages: true
 sudo: required
 before_install:
+  - sudo python -m easy_install --upgrade pyOpenSSL
   - sudo apt-get update
   - sudo apt-get install python-pip
   - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
