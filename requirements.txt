@@ -1,3 +1,4 @@
+setuptools
 requests
 python-telegram-bot
 bs4
