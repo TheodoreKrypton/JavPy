@@ -60,12 +60,9 @@
         },
         methods: {
             async onSearch(data=null) {
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                });
+                if(!data){
+                    return;
+                }
 
                 let rsp = null;
                 if(!this.form.jav_code && this.form.actress){
@@ -75,7 +72,6 @@
                         rsp = response;
 
                     }).catch(function (){
-                        loading.close();
                         this.to_be_previewed = "";
                     });
                 }
@@ -86,13 +82,11 @@
                         rsp = response;
 
                     }).catch(function (){
-                        loading.close();
-                            this.to_be_previewed = "";
+                        this.to_be_previewed = "";
                     });
                 }
                 console.log(rsp);
                 if(rsp.status === 200) {
-                    loading.close();
                     if(!rsp.data){
                         this.to_be_previewed = "";
                     }
@@ -102,7 +96,6 @@
                 }
 
                 else {
-                    loading.close();
                     this.to_be_previewed = "";
                 }
 
@@ -128,5 +121,5 @@
 </script>
 
 <style lang="less" scoped>
-
+    
 </style>

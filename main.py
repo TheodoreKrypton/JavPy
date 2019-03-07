@@ -12,7 +12,7 @@ from app.webserver import app
 Node.start_node()
 
 # # run telegram bot service
-run()
+# run()
 
 # run web server
-# app.app.run('0.0.0.0', 8081)
+app.app.run('0.0.0.0', 8081)

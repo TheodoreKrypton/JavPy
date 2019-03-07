@@ -44,13 +44,6 @@
             },
 
             async onSearch(data) {
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                });
-
                 let rsp = {};
 
                 await axios.post("http://mornlngstar.co:8081/search_magnet_by_code", {
@@ -58,7 +51,6 @@
                 }).then(function(response){
                     rsp = response;
                 }).catch(function (){
-                    loading.close();
                     this.magnet_res = "";
                 });
 
@@ -69,7 +61,6 @@
                 }
 
                 if(rsp.status === 200) {
-                    loading.close();
                     if(!rsp.data){
                         this.magnet_res = "";
                     }
