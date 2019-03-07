@@ -21,14 +21,10 @@ const Event = new EventBus({
   router
 });
 
+export default Event;
+
 new Vue({
   el: "#app",
   router,
   render: h => h(App)
 }).$mount("#app");
-
-
-
-export default Event;
-
-
