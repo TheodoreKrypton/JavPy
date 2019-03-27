@@ -6,7 +6,7 @@ try:
 except ImportError:
     typing = None
 import requests
-from utils.node import Node
+from utils.history import terminate
 
 
 class MockGlobals:
@@ -78,7 +78,6 @@ mock_globals = MockGlobals()
 mock_user = MockUser(0)
 mock_bot = MockBot()
 mock_chat = MockChat(mock_user, mock_bot)
-Node.start_node()
 
 
 def test_search_by_code():
@@ -136,3 +135,6 @@ def test_new():
     for res in received:
         assert requests.get(res["photo"], verify=False).status_code == 200
 
+
+def end_test():
+    terminate()

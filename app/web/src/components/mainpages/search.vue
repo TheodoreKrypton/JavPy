@@ -3,26 +3,26 @@
     <div style="height: 10%">
       <el-form ref="form" :model="form" :inline="true">
         <el-form-item>
-          <el-input v-model="form.jav_code" placeholder="Jav Code"></el-input>
+          <el-input v-model="form.code" placeholder="Jav Code"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="form.actress" placeholder="Actress"></el-input>
         </el-form-item>
         <el-form-item>
           <el-switch
-                  v-model="form.allow_many_actresses"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
+            v-model="form.allow_many_actresses"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
           ></el-switch>
         </el-form-item>
         <el-form-item>
           <el-input-number
-                  v-model="form.up_to"
-                  controls-position="right"
-                  :min="1"
-                  label="Count"
-                  size="mini"
-                  style="width: 80px"
+            v-model="form.up_to"
+            controls-position="right"
+            :min="1"
+            label="Count"
+            size="mini"
+            style="width: 80px"
           ></el-input-number>
         </el-form-item>
 
@@ -37,102 +37,94 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import preview from './preview';
-    import Event from '../../main.js';
+import axios from "axios";
+import preview from "./preview";
+import Event from "../../main.js";
 
-    export default {
-        name: 'search',
-        components: {
-            preview
-        },
-        data() {
-            return {
-                form: {
-                    jav_code: '',
-                    actress: '',
-                    allow_many_actresses: false,
-                    up_to: 0
-                },
-                to_be_previewed: null,
-                isPreviewLoading: false
-            }
-        },
-        methods: {
-            async onSearch(data=null, instance=this) {
-                if(data && !(data instanceof MouseEvent)){
-                    instance.form.jav_code = data.jav_code;
-                    instance.form.actress = data.actress;
-                }
-                const loading = instance.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                });
+export default {
+  name: "search",
+  components: {
+    preview
+  },
+  data() {
+    return {
+      form: {
+        code: "",
+        actress: "",
+        allow_many_actresses: false,
+        up_to: 0
+      },
+      to_be_previewed: null,
+      isPreviewLoading: false
+    };
+  },
+  methods: {
+    async onSearch(data = null) {
+      if (data instanceof MouseEvent || Object.keys(data).length === 0) {
+        return;
+      }
 
-                let rsp = null;
-                if(!instance.form.jav_code && instance.form.actress){
-                    await axios.post("http://mornlngstar.co:8081/search_by_actress", {
-                        'actress': instance.form.actress
-                    }).then(function(response){
-                        rsp = response;
+      if (data.actress) {
+        this.form.actress = data.actress;
+      }
 
-                    }).catch(function (){
-                        loading.close();
-                        instance.to_be_previewed = "";
-                    });
-                }
-                else if(!instance.form.actress && instance.form.jav_code){
-                    await axios.post("http://mornlngstar.co:8081/search_by_code", {
-                        'code': instance.form.jav_code,
-                    }).then(function(response){
-                        rsp = response;
+      if (data.code) {
+        this.form.code = data.code;
+      }
 
-                    }).catch(function (){
-                        loading.close();
-                            instance.to_be_previewed = "";
-                    });
-                }
-                console.log(rsp);
-                if(rsp.status === 200) {
-                    loading.close();
-                    if(!rsp.data){
-                        instance.to_be_previewed = "";
-                    }
-                    else{
-                        instance.to_be_previewed = rsp.data;
-                    }
-                }
-
-                else {
-                    loading.close();
-                    instance.to_be_previewed = "";
-                }
-
-            },
-
-            clear() {
-                this.form.jav_code = "";
-                this.form.actress = "";
-            },
-
-            processEvent(){
-                let that = this;
-                Event.$on('search_jav_by_code', function(data){
-                    that.$router.push({'path': '/search'});
-                    that.onSearch(data, that);
-                });
-            }
-        },
-
-        mounted: function(){
-            this.processEvent();
+      Event.$emit("begin-loading");
+      let rsp = null;
+      if (!this.form.code && this.form.actress) {
+        await axios
+          .post("http://mornlngstar.co:8081/search_by_actress", {
+            actress: this.form.actress
+          })
+          .then(function(response) {
+            rsp = response;
+          })
+          .catch(function() {
+            this.to_be_previewed = "";
+          });
+      } else if (!this.form.actress && this.form.code) {
+        await axios
+          .post("http://mornlngstar.co:8081/search_by_code", {
+            code: this.form.code
+          })
+          .then(function(response) {
+            rsp = response;
+          })
+          .catch(function() {
+            this.to_be_previewed = "";
+          });
+      } else {
+        Event.$emit("end-loading");
+        return;
+      }
+      if (rsp.status === 200) {
+        if (!rsp.data) {
+          this.to_be_previewed = "";
+        } else {
+          this.to_be_previewed = rsp.data;
         }
-    }
+      } else {
+        this.to_be_previewed = "";
+      }
+      Event.$emit("end-loading");
+    },
 
+    clear() {
+      this.form.code = "";
+      this.form.actress = "";
+    }
+  },
+
+  mounted: function() {
+    this.onSearch(this.$route.query);
+  },
+
+  watch: {}
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>

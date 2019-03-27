@@ -6,6 +6,7 @@ from functions.new import New
 from functions.brief import Brief as GetBrief
 from functions.datastructure import AV, Brief
 from functions.magnet import Magnet
+from utils.common import cache
 import gevent
 
 
@@ -16,6 +17,7 @@ class Functions:
     search_service = Search()
 
     @classmethod
+    @cache
     def search_by_code(cls, code):
         av = gevent.spawn(cls.search_service.search_by_code, code)
         _brief = gevent.spawn(cls.get_brief, code)
@@ -32,6 +34,7 @@ class Functions:
             return None
 
     @classmethod
+    @cache
     def search_by_actress(cls, actress, allow_many_actresses, up_to):
         return cls.search_service.search_by_actress(actress, allow_many_actresses, up_to)
 
@@ -40,9 +43,11 @@ class Functions:
         return New.get_newly_released(allow_many_actresses, up_to)
 
     @staticmethod
+    @cache
     def get_brief(code):
         return GetBrief.get_brief(code)
 
     @staticmethod
+    @cache
     def get_magnet(code):
         return Magnet.get_magnet(code)

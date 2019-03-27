@@ -10,10 +10,9 @@ CORS(app, resources=r'/*')
 
 @app.route("/search_by_code", methods=['POST'])
 def search_by_code():
-    params = json.loads(request.data, encoding='utf-8')
+    params = json.loads(request.data.decode('utf-8'))
     print(params)
     res = []
-
     if params["code"]:
         res = [Functions.search_by_code(params["code"]).to_dict()]
 
@@ -24,7 +23,7 @@ def search_by_code():
 
 @app.route("/search_by_actress", methods=['POST'])
 def search_by_actress():
-    params = json.loads(request.data, encoding='utf-8')
+    params = json.loads(request.data.decode('utf-8'))
     print(params)
     res = []
 
@@ -40,7 +39,7 @@ def search_by_actress():
 
 @app.route("/new", methods=['POST'])
 def new():
-    params = json.loads(request.data, encoding='utf-8')
+    params = json.loads(request.data.decode('utf-8'))
     print(params)
     res = Functions.get_newly_released(False, 30)
     if res:
@@ -54,7 +53,7 @@ def new():
 
 @app.route("/search_magnet_by_code", methods=['POST'])
 def search_magnet_by_code():
-    params = json.loads(request.data, encoding='utf-8')
+    params = json.loads(request.data.decode('utf-8'))
     print(params)
     res = []
 

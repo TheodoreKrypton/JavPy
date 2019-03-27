@@ -6,6 +6,7 @@ import "element-ui/lib/theme-chalk/index.css";
 import "./plugins/element.js";
 import VueRouter from "vue-router";
 import routers from "./routers.js";
+import EventBus from "./components/EventBus.js";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
@@ -16,10 +17,11 @@ const router = new VueRouter({
   routes: routers
 });
 
-const Event = new Vue();
+const Event = new EventBus({
+  router
+});
 
 export default Event;
-
 
 new Vue({
   el: "#app",

@@ -1,3 +1,4 @@
+setuptools
 requests
 python-telegram-bot
 bs4
@@ -7,3 +8,4 @@ flask
 six
 flask-cors
 gevent
+lxml
