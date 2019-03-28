@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="height: 10%">
+    <div>
       <el-form ref="form" :model="form" :inline="true">
         <el-form-item>
           <el-input v-model="form.code" placeholder="Jav Code"></el-input>
@@ -60,10 +60,11 @@ export default {
   },
   methods: {
     async onSearch(data = null) {
-      if (data instanceof MouseEvent || Object.keys(data).length === 0) {
+      console.log(data);
+      if (Object.keys(data).length === 0) {
         return;
       }
-
+      this.to_be_previewed = null;
       if (data.actress) {
         this.form.actress = data.actress;
       }
@@ -98,6 +99,7 @@ export default {
           });
       } else {
         Event.$emit("end-loading");
+        this.clear();
         return;
       }
       if (rsp.status === 200) {
@@ -110,6 +112,7 @@ export default {
         this.to_be_previewed = "";
       }
       Event.$emit("end-loading");
+      this.clear();
     },
 
     clear() {
@@ -122,7 +125,11 @@ export default {
     this.onSearch(this.$route.query);
   },
 
-  watch: {}
+  watch: {
+    $route(to, from) {
+      this.onSearch(this.$route.query);
+    }
+  }
 };
 </script>
 
