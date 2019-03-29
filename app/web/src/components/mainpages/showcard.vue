@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }" shadow="hover">
+  <el-card shadow="hover" style="width: 30%;" body-style="padding: 0">
     <img :src="video.preview_img_url" class="image" alt="preview">
     <div class="bottom">
       <table>
@@ -54,13 +54,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.bottom {
-  margin-top: 10px;
-  line-height: 12px;
-}
-
 .image {
   width: 100%;
-  display: block;
 }
 </style>
