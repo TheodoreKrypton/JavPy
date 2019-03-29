@@ -24,6 +24,9 @@ class JavMostCom(ISearchByCode):
 
         img = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
 
+        if not img:
+            return None
+
         # Nov. 13 adding: https://www5.javmost.com/IENE-623/
         if not img.startswith("http:"):
             img = "http:" + img

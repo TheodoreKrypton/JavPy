@@ -21,6 +21,12 @@ let EventBus = Vue.extend({
           }
         });
       });
+
+      this.$on("load_more", function(from) {
+        const path = from.path;
+        if (path == "/new") {
+        }
+      });
     }
   },
 

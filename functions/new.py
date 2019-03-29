@@ -10,7 +10,7 @@ class New:
     record_date = datetime.datetime.today().date()
 
     @classmethod
-    def get_newly_released(cls, allow_many_actresses, up_to):
+    def get_newly_released(cls, allow_many_actresses, up_to, from_which=None):
         today = datetime.datetime.today().date()
         if cls.record_date < today:
             cls.record_date = today

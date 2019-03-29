@@ -14,7 +14,7 @@
           </td>
           <td v-if="video.video_url">
             <el-popover placement="bottom-end" trigger="hover">
-              <el-button type="primary" plain @click="onWatch(url)">Watch</el-button>
+              <el-button type="primary" plain @click="onWatch(video.video_url)">Watch</el-button>
               <el-button type="primary" plain @click="onMagnet({code: video.code})">Magnet</el-button>
               <el-button type="primary" plain slot="reference">{{video.code}}</el-button>
             </el-popover>

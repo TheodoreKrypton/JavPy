@@ -35,8 +35,8 @@ class Functions:
         return Functions.search_service.search_by_actress(actress, allow_many_actresses, up_to)
 
     @staticmethod
-    def get_newly_released(allow_many_actresses, up_to):
-        return New.get_newly_released(allow_many_actresses, up_to)
+    def get_newly_released(allow_many_actresses, up_to, from_which=None):
+        return New.get_newly_released(allow_many_actresses, up_to, from_which)
 
     @staticmethod
     @cache
