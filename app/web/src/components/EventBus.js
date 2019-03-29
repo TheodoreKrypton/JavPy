@@ -12,13 +12,20 @@ let EventBus = Vue.extend({
         });
       });
 
-      this.$on("search_jav_by_code", function(video) {
+      this.$on("search_jav", function(video) {
         this.$router.push({
           path: "/search",
           query: {
-            code: video.code
+            code: video.code,
+            actress: video.actress
           }
         });
+      });
+
+      this.$on("load_more", function(from) {
+        const path = from.path;
+        if (path == "/new") {
+        }
       });
     }
   },

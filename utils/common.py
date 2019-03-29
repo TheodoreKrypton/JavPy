@@ -1,4 +1,5 @@
 import datetime
+from functools import wraps
 
 
 def try_evaluate(lambda_expression, default=None):
@@ -13,8 +14,9 @@ def try_evaluate(lambda_expression, default=None):
 def cache(func):
     __cache = dict()
 
+    @wraps(func)
     def _wrapped(*args, **kwargs):
-        key = str(args) + "/" + str(kwargs)
+        key = str(args) + "///" + str(kwargs)
 
         if key in __cache:
             if datetime.datetime.now() - __cache[key][0] < datetime.timedelta(hours=1):

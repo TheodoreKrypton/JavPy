@@ -55,7 +55,7 @@ class Search:
     def search_by_actress(self, actress, allow_many_actresses, up_to):
         lang = self.guess_lang(actress)
 
-        if lang == "jp":
+        if lang == "jp" or lang == "zh":
             return self.sources_by_actress["indexav.com"].search_by_actress(actress, allow_many_actresses, up_to)
 
         else:

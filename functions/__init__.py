@@ -11,16 +11,13 @@ import gevent
 
 
 class Functions:
-    def __init__(self):
-        pass
-
     search_service = Search()
 
-    @classmethod
+    @staticmethod
     @cache
-    def search_by_code(cls, code):
-        av = gevent.spawn(cls.search_service.search_by_code, code)
-        _brief = gevent.spawn(cls.get_brief, code)
+    def search_by_code(code):
+        av = gevent.spawn(Functions.search_service.search_by_code, code)
+        _brief = gevent.spawn(Functions.get_brief, code)
 
         av.join()
         _brief.join()
@@ -33,14 +30,13 @@ class Functions:
         else:
             return None
 
-    @classmethod
-    @cache
-    def search_by_actress(cls, actress, allow_many_actresses, up_to):
-        return cls.search_service.search_by_actress(actress, allow_many_actresses, up_to)
+    @staticmethod
+    def search_by_actress(actress, allow_many_actresses, up_to):
+        return Functions.search_service.search_by_actress(actress, allow_many_actresses, up_to)
 
     @staticmethod
-    def get_newly_released(allow_many_actresses, up_to):
-        return New.get_newly_released(allow_many_actresses, up_to)
+    def get_newly_released(allow_many_actresses, up_to, from_which=None):
+        return New.get_newly_released(allow_many_actresses, up_to, from_which)
 
     @staticmethod
     @cache
