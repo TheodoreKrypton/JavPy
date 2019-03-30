@@ -1,5 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
+import config from "../config.js"
 
 let EventBus = Vue.extend({
   methods: {
@@ -28,7 +29,7 @@ let EventBus = Vue.extend({
         const component = from.component;
         if (path === "/new") {
           await axios
-            .post("http://mornlngstar.co:8081/new", {
+            .post(`http://${config.address}:${config.port}/new`, {
               page: component.page + 1
             })
             .then(function(response) {
