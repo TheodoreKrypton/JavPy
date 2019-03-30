@@ -67,20 +67,27 @@ This library fetches information from various websites, but most of them are blo
 
 ### User Guide
 ```
+pip install https://github.com/TheodoreKrypton/JavPy/releases/download/v0.1.0/JavPy-0.1.0-py2.py3-none-any.whl
 
+(in Python console)
+>>> import JavPy
+>>> JavPy.serve()
 ```
+Open http://localhost:8081 and enjoy driving!
+
 
 ### Developer Guide
 ```
+pip install -r requirements.txt
+python main.py
 cd app/web
 npm install
 npm run serve
-python ../../main.py
 ```
 
 ## TODO
 
-* [ ] daily recommendations
+* [x] daily recommendations
 * [ ] top viewed
 * [x] usable magnet link
 * [ ] name translation (jp-zh-en)
