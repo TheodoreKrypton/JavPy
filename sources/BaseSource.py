@@ -15,7 +15,7 @@ class ISearchByActress:
 
     @classmethod
     @abstractmethod
-    def search_by_actress(cls, actress, allow_many_actresses, up_to):
+    def search_by_actress(cls, actress, up_to):
         pass
 
 
