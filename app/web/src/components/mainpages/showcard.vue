@@ -1,5 +1,6 @@
 <template>
   <el-card shadow="hover" style="width: 30%;" body-style="padding: 0">
+    <div slot="header" class="clearfix">{{video.title}}</div>
     <img :src="video.preview_img_url" class="image" alt="preview" @click="action()">
     <div class="bottom">
       <table style="display: inline; float: left">
@@ -15,7 +16,7 @@
                   @click="onSearch({actress: one_actress})"
                   style="display: block"
                 >{{one_actress}}</el-button>
-                <el-button type="primary" plain slot="reference">Expand</el-button>
+                <el-button type="danger" plain slot="reference">Expand</el-button>
               </el-popover>
             </div>
             <el-button

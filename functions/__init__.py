@@ -27,6 +27,7 @@ class Functions:
             if _brief.value:
                 res.actress = _brief.value.actress if _brief.value.actress else ""
                 res.release_date = _brief.value.release_date
+                res.title = _brief.value.title
             return res
         else:
             return None
