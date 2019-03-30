@@ -40,6 +40,7 @@
 import axios from "axios";
 import preview from "./preview";
 import Event from "../../main.js";
+import config from "../../config.js";
 
 export default {
   name: "search",
@@ -60,7 +61,6 @@ export default {
   },
   methods: {
     async onSearch(data = null) {
-      console.log(data);
       if (Object.keys(data).length === 0) {
         return;
       }
@@ -77,7 +77,7 @@ export default {
       let rsp = null;
       if (!this.form.code && this.form.actress) {
         await axios
-          .post("http://mornlngstar.co:8081/search_by_actress", {
+          .post(`http://${config.address}:${config.port}/search_by_actress`, {
             actress: this.form.actress
           })
           .then(function(response) {
@@ -88,7 +88,7 @@ export default {
           });
       } else if (!this.form.actress && this.form.code) {
         await axios
-          .post("http://mornlngstar.co:8081/search_by_code", {
+          .post(`http://${config.address}:${config.port}/search_by_code`, {
             code: this.form.code
           })
           .then(function(response) {
