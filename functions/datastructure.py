@@ -8,6 +8,7 @@ class AV:
         self.preview_img_url = ""
         self.actress = ""
         self.release_date = None
+        self.title = ""
 
     def to_dict(self):
         return {
@@ -15,7 +16,8 @@ class AV:
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
-            "release_date": self.release_date.strftime("%Y-%m-%d")
+            "release_date": self.release_date.strftime("%Y-%m-%d"),
+            "title": self.title
         }
 
 
