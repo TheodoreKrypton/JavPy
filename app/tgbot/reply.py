@@ -170,7 +170,7 @@ class Interactive:
             if cmd_history[-3] == "Search":
                 send_brief(
                     bot, update, Functions.search_by_actress(
-                        cmd_history[-2], False, int(cmd_history[-1])
+                        False, int(cmd_history[-1])
                     )
                 )
                 history.clear_history(update.message.from_user.id)

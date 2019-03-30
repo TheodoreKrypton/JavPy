@@ -26,6 +26,7 @@
           :key="j"
         >
           <showcard
+            style="width:100%;"
             :video="videos[Math.floor(Object.keys(videos).length/item_per_line)*item_per_line+(j-1)]"
           ></showcard>
         </td>

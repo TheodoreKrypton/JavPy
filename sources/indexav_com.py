@@ -14,7 +14,7 @@ class IndexAVCom(ISearchByActress):
         pass
 
     @classmethod
-    def search_by_actress(cls, actress, allow_many_actresses, up_to):
+    def search_by_actress(cls, actress, up_to):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
@@ -30,9 +30,6 @@ class IndexAVCom(ISearchByActress):
                 continue
 
             brief = cls.__get_brief_by_box(box)
-
-            if not allow_many_actresses and len(brief.actress.split(", ")) > 1:
-                continue
 
             res.append(brief)
             cnt += 1
