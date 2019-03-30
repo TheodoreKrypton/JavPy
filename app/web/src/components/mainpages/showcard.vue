@@ -1,7 +1,8 @@
 <template>
   <el-card shadow="hover" style="width: 30%;" body-style="padding: 0">
-    <div slot="header" class="clearfix">{{video.title}}</div>
+    <div style="background-color: #e9eef3; color: teal">{{video.title}}</div>
     <img :src="video.preview_img_url" class="image" alt="preview" @click="action()">
+
     <div class="bottom">
       <table style="display: inline; float: left">
         <tr>
@@ -13,8 +14,9 @@
                   :key="one_actress"
                   type="primary"
                   plain
+                  size="mini"
                   @click="onSearch({actress: one_actress})"
-                  style="display: block"
+                  style="display: block; padding: 5px"
                 >{{one_actress}}</el-button>
                 <el-button type="danger" plain slot="reference">Expand</el-button>
               </el-popover>
@@ -44,7 +46,7 @@
           </td>
         </tr>
       </table>
-      <table style="display: inline; float: right; vertical-align: bottom; bottom: 0">
+      <table style="display: inline; float: right;">
         <tr>
           <el-tag size="mini" type="danger">{{video.release_date}}</el-tag>
         </tr>
@@ -83,7 +85,8 @@ export default {
 
 <style lang="less" scoped>
 .bottom {
-  bottom: 0;
+  background-color: #e9eef3;
+  height: 40px;
 }
 
 .image {
