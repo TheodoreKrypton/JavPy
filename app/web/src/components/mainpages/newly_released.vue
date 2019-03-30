@@ -1,5 +1,5 @@
 <template>
-  <preview :av="to_be_previewed"></preview>
+  <preview :videos_prop="to_be_previewed"></preview>
 </template>
 
 <script>
@@ -19,9 +19,10 @@ export default {
   },
 
   created: async function() {
-    const data = {};
     Event.$emit("begin-loading");
-    const rsp = await axios.post("http://mornlngstar.co:8081/new", data);
+    const rsp = await axios.post("http://mornlngstar.co:8081/new", {
+      page: 0
+    });
     if (!rsp.data) {
       this.to_be_previewed = "";
     } else {

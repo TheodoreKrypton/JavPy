@@ -5,7 +5,21 @@
       <table>
         <tr>
           <td v-if="video.actress">
+            <div v-if="video.actress.indexOf(',') != -1">
+              <el-popover placement="bottom-start" trigger="hover">
+                <el-button
+                  v-for="one_actress in video.actress.split(', ')"
+                  :key="one_actress"
+                  type="primary"
+                  plain
+                  @click="onSearch({actress: one_actress})"
+                  style="display: block"
+                >{{one_actress}}</el-button>
+                <el-button type="primary" plain slot="reference">Many Actresses</el-button>
+              </el-popover>
+            </div>
             <el-button
+              v-else
               type="primary"
               plain
               style="float: left;"
@@ -56,5 +70,9 @@ export default {
 <style lang="less" scoped>
 .image {
   width: 100%;
+}
+
+.el-button {
+  margin-left: 0;
 }
 </style>
