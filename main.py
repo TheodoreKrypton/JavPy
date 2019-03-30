@@ -5,9 +5,6 @@ from app.tgbot.server import run
 from utils.node import Node
 from app.webserver import app
 
-
-
-
 # start node.js subprocess
 Node.start_node()
 
