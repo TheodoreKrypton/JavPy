@@ -11,6 +11,7 @@
 <script>
 import axios from "axios";
 import Event from "../../main.js";
+import config from "../../config.js";
 
 export default {
   name: "magnet",
@@ -38,7 +39,7 @@ export default {
       let rsp = {};
 
       await axios
-        .post("http://mornlngstar.co:8081/search_magnet_by_code", {
+        .post(`http://${config.address}:${config.port}/search_magnet_by_code`, {
           code: data.code
         })
         .then(function(response) {

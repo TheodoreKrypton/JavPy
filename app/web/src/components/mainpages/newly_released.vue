@@ -6,6 +6,7 @@
 import preview from "./preview";
 import axios from "axios";
 import Event from "../../main.js";
+import config from "../../config.js";
 
 export default {
   name: "newly_released",
@@ -20,7 +21,8 @@ export default {
 
   created: async function() {
     Event.$emit("begin-loading");
-    const rsp = await axios.post("http://mornlngstar.co:8081/new", {
+    console.log(`http://${config.address}:${config.port}/new`);
+    const rsp = await axios.post(`http://${config.address}:${config.port}/new`, {
       page: 0
     });
     if (!rsp.data) {

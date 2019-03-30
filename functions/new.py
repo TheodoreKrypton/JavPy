@@ -1,6 +1,9 @@
 from sources.javmost_com import JavMostCom
 import datetime
-from typing import List
+try:
+    from typing import List
+except ImportError:
+    pass
 from functools import reduce
 
 
