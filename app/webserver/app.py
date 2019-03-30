@@ -12,11 +12,14 @@ CORS(app, resources=r'/*')
 def search_by_code():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = []
     if params["code"]:
-        res = [Functions.search_by_code(params["code"]).to_dict()]
-
-    rsp = jsonify(res)
+        try:
+            res = [Functions.search_by_code(params["code"]).to_dict()]
+            rsp = jsonify(res)
+        except AttributeError:
+            rsp = make_response("")
+    else:
+        rsp = make_response("")
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
 
@@ -28,7 +31,7 @@ def search_by_actress():
     res = []
 
     if params["actress"]:
-        res = Functions.search_by_actress(params["actress"], False, 30)
+        res = Functions.search_by_actress(params["actress"].strip(), 30)
         if res:
             res = [x.to_dict() for x in res]
 
@@ -43,11 +46,11 @@ def new():
     print(params)
 
     if "up_to" in params:
-        res = Functions.get_newly_released(False, params["up_to"], False)
+        res = Functions.get_newly_released(params["up_to"], False)
     elif "page" in params:
-        res = Functions.get_newly_released(False, False, params["page"])
+        res = Functions.get_newly_released(False, params["page"])
     else:
-        res = Functions.get_newly_released(False, 30, False)
+        res = Functions.get_newly_released(30, False)
 
     if res:
         res = [x.to_dict() for x in res]

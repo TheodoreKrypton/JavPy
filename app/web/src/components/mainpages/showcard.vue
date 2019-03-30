@@ -1,8 +1,10 @@
 <template>
   <el-card shadow="hover" style="width: 30%;" body-style="padding: 0">
-    <img :src="video.preview_img_url" class="image" alt="preview">
+    <div style="background-color: #e9eef3; color: teal">{{video.title}}</div>
+    <img :src="video.preview_img_url" class="image" alt="preview" @click="action()">
+
     <div class="bottom">
-      <table>
+      <table style="display: inline; float: left">
         <tr>
           <td v-if="video.actress">
             <div v-if="video.actress.indexOf(',') != -1">
@@ -12,10 +14,11 @@
                   :key="one_actress"
                   type="primary"
                   plain
+                  size="mini"
                   @click="onSearch({actress: one_actress})"
-                  style="display: block"
+                  style="display: block; padding: 5px"
                 >{{one_actress}}</el-button>
-                <el-button type="primary" plain slot="reference">Many Actresses</el-button>
+                <el-button type="danger" plain slot="reference">Expand</el-button>
               </el-popover>
             </div>
             <el-button
@@ -43,6 +46,11 @@
           </td>
         </tr>
       </table>
+      <table style="display: inline; float: right;">
+        <tr>
+          <el-tag size="mini" type="danger">{{video.release_date}}</el-tag>
+        </tr>
+      </table>
     </div>
   </el-card>
 </template>
@@ -53,6 +61,7 @@ import Event from "../../main.js";
 export default {
   name: "showcard",
   props: ["video"],
+
   methods: {
     onWatch(url) {
       window.open(url);
@@ -62,17 +71,43 @@ export default {
     },
     onMagnet(video) {
       Event.$emit("search_magnet_by_code", video);
+    },
+    action() {
+      if (this.video.video_url) {
+        this.onWatch(this.video.video_url);
+      } else {
+        this.onSearch({ code: this.video.code });
+      }
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.bottom {
+  background-color: #e9eef3;
+  height: 40px;
+}
+
 .image {
   width: 100%;
 }
 
+.image:hover {
+  cursor: pointer;
+}
+
 .el-button {
   margin-left: 0;
+  padding: 10px;
+}
+
+td {
+  padding: 0;
+}
+
+.el-tag {
+  font-size: 14px;
+  padding: 10;
 }
 </style>

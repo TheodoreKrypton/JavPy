@@ -14,7 +14,7 @@ class IndexAVCom(ISearchByActress):
         pass
 
     @classmethod
-    def search_by_actress(cls, actress, allow_many_actresses, up_to):
+    def search_by_actress(cls, actress, up_to):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
@@ -31,13 +31,10 @@ class IndexAVCom(ISearchByActress):
 
             brief = cls.__get_brief_by_box(box)
 
-            if not allow_many_actresses and len(brief.actress.split(", ")) > 1:
-                continue
-
             res.append(brief)
             cnt += 1
 
-            if cnt >= up_to:
+            if up_to and cnt >= up_to:
                 return res
 
         return res
@@ -61,11 +58,12 @@ class IndexAVCom(ISearchByActress):
         actress = ", ".join(map(lambda x: x.text, div.find_all(name='div', attrs={'class': 'col-xs-6'})))
         title = div.find(name='span', attrs={'class': 'video_title'}).text
         img = try_evaluate(lambda: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
+        release_date = box.find(name='div', attrs={'class': 'col-sm-2'}).span.text
 
         brief = Brief()
         brief.title = title.strip()
         brief.preview_img_url = img
         brief.code = code.strip()
         brief.actress = actress.strip()
-
+        brief.release_date = release_date
         return brief

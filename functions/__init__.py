@@ -26,16 +26,18 @@ class Functions:
             res = av.value
             if _brief.value:
                 res.actress = _brief.value.actress if _brief.value.actress else ""
+                res.release_date = _brief.value.release_date
+                res.title = _brief.value.title
             return res
         else:
             return None
 
     @staticmethod
-    def search_by_actress(actress, allow_many_actresses, up_to):
-        return Functions.search_service.search_by_actress(actress, allow_many_actresses, up_to)
+    def search_by_actress(actress, up_to):
+        return Functions.search_service.search_by_actress(actress, up_to)
 
     @staticmethod
-    def get_newly_released(allow_many_actresses, up_to, which_page=False):
+    def get_newly_released(up_to, which_page=False):
         return New.get_newly_released(up_to, which_page)
 
     @staticmethod

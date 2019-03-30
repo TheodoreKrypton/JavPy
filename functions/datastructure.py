@@ -7,13 +7,17 @@ class AV:
         self.video_url = ""
         self.preview_img_url = ""
         self.actress = ""
+        self.release_date = None
+        self.title = ""
 
     def to_dict(self):
         return {
             "code": self.code,
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
-            "actress": self.actress
+            "actress": self.actress,
+            "release_date": self.release_date.strftime("%Y-%m-%d"),
+            "title": self.title
         }
 
 
@@ -42,7 +46,7 @@ class Brief:
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
             "title": self.title,
-            "release_date": self.release_date  # type: datetime.datetime
+            "release_date": self.release_date.strftime("%Y-%m-%d")  # type: datetime.datetime
         }
 
 
