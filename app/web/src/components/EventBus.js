@@ -1,4 +1,5 @@
 import Vue from "vue";
+import axios from "axios";
 
 let EventBus = Vue.extend({
   methods: {
@@ -22,9 +23,21 @@ let EventBus = Vue.extend({
         });
       });
 
-      this.$on("load_more", function(from) {
-        const path = from.path;
-        if (path == "/new") {
+      this.$on("load_more", async function(from) {
+        const path = location.pathname;
+        const component = from.component;
+        if (path === "/new") {
+          await axios
+            .post("http://mornlngstar.co:8081/new", {
+              page: component.page + 1
+            })
+            .then(function(response) {
+              if (response.status === 200 && response.data) {
+                component.av = component.videos.concat(response.data);
+                component.page += 1;
+              }
+            })
+            .catch(function() {});
         }
       });
     }

@@ -72,50 +72,42 @@ class JavMostCom(ISearchByCode):
         return av
 
     @staticmethod
-    def get_newly_released(allow_many_actresses, up_to):
-        cnt = 0
-        page = 1
-        res = []
+    def get_cards_from_newly_released_page(page):
+        url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
+        rsp = requests.get(url, verify=False)
 
-        while True:
-            url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-            rsp = requests.get(url, verify=False)
+        json_obj = json.loads(rsp.text)
+        html = json_obj["data"]
 
-            json_obj = json.loads(rsp.text)
-            html = json_obj["data"]
+        bs = bs4.BeautifulSoup(html, "lxml")
+        cards = bs.find_all(name='div', attrs={'class': 'card'})
 
-            bs = bs4.BeautifulSoup(html, "lxml")
-            cards = bs.find_all(name='div', attrs={'class': 'card'})
+        return cards
 
-            today = datetime.datetime.today()
+    @staticmethod
+    def get_brief_from_a_card(card_tag):
+        release_date = try_evaluate(
+            lambda: datetime.datetime.strptime(
+                re.search(r"\d\d\d\d-\d\d-\d\d", card_tag.text).group(0), "%Y-%m-%d"
+            )
+        )
 
-            for card in cards:
-                release_date = try_evaluate(
-                    lambda: datetime.datetime.strptime(
-                        re.search(r"\d\d\d\d-\d\d-\d\d", card.text).group(0), "%Y-%m-%d"
-                    )
-                )
-                if release_date and release_date > today:
-                    continue
+        actress = list(map(lambda x: x.text, card_tag.find_all(name='a', attrs={'class': 'btn-danger'})))
 
-                actress = list(map(lambda x: x.text, card.find_all(name='a', attrs={'class': 'btn-danger'})))
-                if not allow_many_actresses and len(actress) > 1:
-                    continue
+        img = try_evaluate(lambda: card_tag.find(name='img').attrs['src'])
+        if not img.startswith("http:"):
+            img = "http:" + img
 
-                img = try_evaluate(lambda: card.find(name='img').attrs['src'])
-                if not img.startswith("http:"):
-                    img = "http:" + img
+        brief = Brief()
+        brief.preview_img_url = img
+        brief.title = card_tag.find(name='h5').text.strip()
+        brief.actress = ", ".join(actress)
+        brief.release_date = release_date
+        brief.code = card_tag.find(name='h4').text.strip()
 
-                brief = Brief()
-                brief.preview_img_url = img
-                brief.title = card.find(name='h5').text.strip()
-                brief.actress = ", ".join(actress)
-                brief.release_date = release_date
-                brief.code = card.find(name='h4').text.strip()
-                res.append(brief)
+        return brief
 
-                cnt += 1
-                if cnt >= up_to:
-                    return res
-
-            page += 1
+    @staticmethod
+    def get_newly_released(which_page):
+        cards = JavMostCom.get_cards_from_newly_released_page(str(which_page))
+        return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))

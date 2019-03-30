@@ -41,7 +41,14 @@ def search_by_actress():
 def new():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = Functions.get_newly_released(False, 30)
+
+    if "up_to" in params:
+        res = Functions.get_newly_released(False, params["up_to"], False)
+    elif "page" in params:
+        res = Functions.get_newly_released(False, False, params["page"])
+    else:
+        res = Functions.get_newly_released(False, 30, False)
+
     if res:
         res = [x.to_dict() for x in res]
 
