@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <preview :videos="to_be_previewed"></preview>
+    <preview :videos_prop="to_be_previewed"></preview>
   </div>
 </template>
 
