@@ -58,11 +58,12 @@ class IndexAVCom(ISearchByActress):
         actress = ", ".join(map(lambda x: x.text, div.find_all(name='div', attrs={'class': 'col-xs-6'})))
         title = div.find(name='span', attrs={'class': 'video_title'}).text
         img = try_evaluate(lambda: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
+        release_date = box.find(name='div', attrs={'class': 'col-sm-2'}).span.text
 
         brief = Brief()
         brief.title = title.strip()
         brief.preview_img_url = img
         brief.code = code.strip()
         brief.actress = actress.strip()
-
+        brief.release_date = release_date
         return brief

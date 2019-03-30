@@ -12,11 +12,14 @@ CORS(app, resources=r'/*')
 def search_by_code():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = []
     if params["code"]:
-        res = [Functions.search_by_code(params["code"]).to_dict()]
-
-    rsp = jsonify(res)
+        try:
+            res = [Functions.search_by_code(params["code"]).to_dict()]
+            rsp = jsonify(res)
+        except AttributeError:
+            rsp = make_response("")
+    else:
+        rsp = make_response("")
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
 
