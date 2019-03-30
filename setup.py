@@ -1,7 +1,15 @@
 # encoding: utf-8
 
 from setuptools import setup, find_packages
+import subprocess
 
+try:
+    output = subprocess.check_output("node --version")
+    assert output.startswith("v")
+except Exception as ex:
+    print(ex)
+    print("please install Node.JS first at https://nodejs.org/en/")
+    exit(0)
 
 setup(
     name='JavPy',
