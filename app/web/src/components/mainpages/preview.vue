@@ -8,11 +8,7 @@
       show-icon
     ></el-alert>
 
-    <table
-      v-if="videos != undefined && Object.keys(videos).length > 0"
-      cellspacing="30"
-      style="width: 100%"
-    >
+    <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30">
       <tr v-for="i in Math.floor(Object.keys(videos).length / item_per_line)" :key="i">
         <td v-for="j in item_per_line" :key="j">
           <showcard style="width:100%;" :video="videos[(i-1)*item_per_line+j-1]"></showcard>
@@ -123,6 +119,7 @@ export default {
 
   mounted() {
     let self = this;
+    this.av = null;
     window.onscroll = function() {
       if (
         self.getScrollHeight() ==
