@@ -34,7 +34,7 @@ class IndexAVCom(ISearchByActress):
             res.append(brief)
             cnt += 1
 
-            if cnt >= up_to:
+            if up_to and cnt >= up_to:
                 return res
 
         return res
