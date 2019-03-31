@@ -1,5 +1,5 @@
 <template>
-  <preview :videos_prop="toBePreviewed"></preview>
+  <preview :videosProp="toBePreviewed"></preview>
 </template>
 
 <script>

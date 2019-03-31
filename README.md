@@ -86,11 +86,8 @@ npm run serve
 ### Quick Start
 
 -   Go to the telegram bot father and apply for a bot token
-
 -   Clone this repo and create a new file named "token.txt"
-
 -   Place your bot token into the "token.txt"
-
 -   install node.js
 
 ```bash
@@ -100,9 +97,9 @@ apt-get install nodejs -y
 
 -   install libtorrent
 
-  ```bash
-  apt-get install python-libtorrent
-  ```
+```bash
+apt-get install python-libtorrent
+```
 
 -   run `python main.py`
 
