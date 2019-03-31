@@ -1,3 +1,5 @@
+<div align=center>
+
 ![](app/web/src/assets/logo.png)
 
 ![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
@@ -7,8 +9,8 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:javascript)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:python)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7854ab72a6692d85b865/maintainability)](https://codeclimate.com/github/TheodoreKrypton/JavPy/maintainability)
 ![](https://sonarcloud.io/api/project_badges/measure?project=TheodoreKrypton_JavPy&metric=alert_status)
+</div>
 
 ## Introduction
 
@@ -25,10 +27,33 @@ This library fetches information from various websites, but most of them are blo
 3. **Don't rely on the bot presented below. It is hosted on a tiny cloud server.**
 4. **Use VPN if you experience network issues.**
 
+## Web
+
+![](preview.png)
+
+### User Guide
+```
+pip install JavPy
+(in Python console)
+>>> import JavPy
+>>> JavPy.serve()
+```
+Open http://localhost:8081 and enjoy driving!
+
+
+### Developer Guide
+```
+pip install -r requirements.txt
+python main.py
+cd app/web
+npm install
+npm run serve
+```
+
 ## Telegram Bot
 ### Demo
 
-[https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)
+[https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)  (TEMPORARILY SHUTDOWN)
 
 ### Supported Commands
 * /start guided jav trip
@@ -60,29 +85,6 @@ This library fetches information from various websites, but most of them are blo
   ```
 
 - run `python main.py`
-
-## Web
-
-![](preview.png)
-
-### User Guide
-```
-pip install JavPy
-(in Python console)
->>> import JavPy
->>> JavPy.serve()
-```
-Open http://localhost:8081 and enjoy driving!
-
-
-### Developer Guide
-```
-pip install -r requirements.txt
-python main.py
-cd app/web
-npm install
-npm run serve
-```
 
 ## TODO
 
