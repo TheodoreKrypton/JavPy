@@ -40,9 +40,13 @@ def send_img(path):
 def search_by_code():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
+    res = {
+        'videos': None,
+        'other': None
+    }
     if params["code"]:
         try:
-            res = [Functions.search_by_code(params["code"]).to_dict()]
+            res['videos'] = [Functions.search_by_code(params["code"]).to_dict()]
             rsp = jsonify(res)
         except AttributeError:
             rsp = make_response("")
@@ -56,12 +60,20 @@ def search_by_code():
 def search_by_actress():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = []
+    res = {
+        'videos': None,
+        'other': None
+    }
 
     if params["actress"]:
-        res = Functions.search_by_actress(params["actress"].strip(), 30)
-        if res:
-            res = [x.to_dict() for x in res]
+        briefs = Functions.search_by_actress(params["actress"].strip(), 30)
+        if briefs:
+            res['videos'] = [x.to_dict() for x in sorted(briefs, key=lambda x: x.release_date, reverse=True)]
+
+        if params["history_name"]:
+            res['other'] = {
+                'history_name': Functions.search_history_names(params['actress'])
+            }
 
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
