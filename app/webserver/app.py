@@ -68,7 +68,7 @@ def search_by_actress():
     if params["actress"]:
         briefs = Functions.search_by_actress(params["actress"].strip(), 30)
         if briefs:
-            res['videos'] = [brief.to_dict() for brief in briefs]
+            res['videos'] = [x.to_dict() for x in sorted(briefs, key=lambda x: x.release_date, reverse=True)]
 
         if params["history_name"]:
             res['other'] = {

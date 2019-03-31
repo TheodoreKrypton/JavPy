@@ -83,10 +83,12 @@ export default {
 
       if (data.actress) {
         this.form.actress = data.actress;
+        this.form.code = "";
       }
 
       if (data.code) {
         this.form.code = data.code;
+        this.form.actress = "";
       }
 
       Event.$emit("begin-loading");
@@ -116,7 +118,6 @@ export default {
           });
       } else {
         Event.$emit("end-loading");
-        this.clear();
         return;
       }
       if (rsp.status === 200) {
@@ -134,7 +135,6 @@ export default {
         this.toBePreviewed = "";
       }
       Event.$emit("end-loading");
-      this.clear();
     },
 
     clear() {
