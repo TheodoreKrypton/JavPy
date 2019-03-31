@@ -1,3 +1,5 @@
+<div align=center>
+
 ![](app/web/src/assets/logo.png)
 
 ![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
@@ -7,28 +9,58 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:javascript)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/TheodoreKrypton/JavPy.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/TheodoreKrypton/JavPy/context:python)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7854ab72a6692d85b865/maintainability)](https://codeclimate.com/github/TheodoreKrypton/JavPy/maintainability)
 ![](https://sonarcloud.io/api/project_badges/measure?project=TheodoreKrypton_JavPy&metric=alert_status)
+</div>
 
-## Introduction
+## 简介/Introduction
+这是一个用来搜索日本AV相关信息的Python库，目前提供2种用户接口，一个为移动设备服务的telegram bot，和一个为桌面个人电脑服务的web页面。
+
+这个Python库从多个网站爬取信息，但多数目标网站在一些特定地区都被禁止访问。为了更好的使用体验，建议将这个库运行在互联网管制较少的地区，如美国，日本等。
+
+总而言之，有三个要点：
+1. **这个库用来搜索日本AV**
+2. **这个库提供两个接口：telegram bot和web**
+3. **如果网络环境不好，请使用VPN**
+
+-----------------
 
 This is a Python library for searching related information of Japanese AVs. This project temporarily provide 2 kind of interfaces, a telegram bot for mobile users and a locally hosted web page for PC users.
 
-For both previewing and my testing need, there is a demo for the telegram bot hosted on a really tiny cloud server. Please don't rely on it for the server overloading concerns. If you like it, please clone this repo and host it on your own server.
-
 This library fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
 
-**In brief, there are 4 main instructions concluded below.**
+**In brief, there are 3 main instructions concluded below.**
 
 1. **It is for searching Japanese AVs.**
 2. **It provides 2 interfaces: telegram bot and web.**
-3. **Don't rely on the bot presented below. It is hosted on a tiny cloud server.**
-4. **Use VPN if you experience network issues.**
+3. **Use VPN if you experience network issues.**
+
+## Web
+
+![](preview.png)
+
+### User Guide
+```
+pip install JavPy
+(in Python console)
+>>> import JavPy
+>>> JavPy.serve()
+```
+Open http://localhost:8081 and enjoy driving!
+
+
+### Developer Guide
+```
+pip install -r requirements.txt
+python main.py
+cd app/web
+npm install
+npm run serve
+```
 
 ## Telegram Bot
 ### Demo
 
-[https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)
+[https://t.me/JavExpert_bot](https://t.me/JavExpert_bot)  (TEMPORARILY SHUTDOWN)
 
 ### Supported Commands
 * /start guided jav trip
@@ -60,29 +92,6 @@ This library fetches information from various websites, but most of them are blo
   ```
 
 - run `python main.py`
-
-## Web
-
-![](preview.png)
-
-### User Guide
-```
-pip install JavPy
-(in Python console)
->>> import JavPy
->>> JavPy.serve()
-```
-Open http://localhost:8081 and enjoy driving!
-
-
-### Developer Guide
-```
-pip install -r requirements.txt
-python main.py
-cd app/web
-npm install
-npm run serve
-```
 
 ## TODO
 
