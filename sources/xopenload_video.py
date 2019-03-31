@@ -13,7 +13,7 @@ class XOpenloadVideo(ISearchByCode):
     @classmethod
     def search_by_code(cls, code):
         url = "https://www.xopenload.video/search.php?s=" + code
-        rsp = requests.get(url, verify=False)
+        rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
 
         try:
@@ -24,11 +24,11 @@ class XOpenloadVideo(ISearchByCode):
         except AttributeError:
             return None
 
-        rsp = requests.get(url, verify=False)
+        rsp = requests.get(url)
         _hash = re.search(r"https://www\.xopenload\.video/links\.php\?hash=(.+?)\"", rsp.text).group(1)
         url = "https://www.xopenload.video/links.php?hash=" + _hash
 
-        rsp = requests.get(url, verify=False)
+        rsp = requests.get(url)
 
         js = re.search(r"<script language=\"javascript\">(.+?)</script>", rsp.text, re.S).group(1)\
             .replace("document", "console")\

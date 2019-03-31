@@ -17,8 +17,8 @@ class JavMostCom(ISearchByCode):
 
     @classmethod
     def search_by_code(cls, code):
-        url = "https://www5.javmost.com/" + code
-        rsp = requests.get(url, verify=False)
+        url = "http://www5.javmost.com/" + code
+        rsp = requests.get(url)
         if rsp.status_code != 200:
             return None
 
@@ -44,7 +44,7 @@ class JavMostCom(ISearchByCode):
         url = "https://www5.javmost.com/get_code/"
         rsp = requests.post(url, data={
             "code": value
-        }, verify=False)
+        })
         _code = rsp.text
 
         url = "https://www5.javmost.com/get_source/"
@@ -57,7 +57,7 @@ class JavMostCom(ISearchByCode):
             "value": value,
             "sound": sound,
             "code4": _code
-        }, verify=False)
+        })
 
         json_obj = json.loads(rsp.text)
         url = json_obj["data"][0]
@@ -74,7 +74,7 @@ class JavMostCom(ISearchByCode):
     @staticmethod
     def get_cards_from_newly_released_page(page):
         url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-        rsp = requests.get(url, verify=False)
+        rsp = requests.get(url)
 
         json_obj = json.loads(rsp.text)
         html = json_obj["data"]

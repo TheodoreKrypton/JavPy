@@ -87,9 +87,8 @@ def test_search_by_code():
         search(mock_bot, mock_update, [code])
         received = mock_user.look_received()
         assert len(received) == 1
-        assert requests.get(received[0]["photo"], verify=False).status_code == 200
-        assert requests.get(received[0]["reply_markup"]["inline_keyboard"][0][0]['url'],
-                            verify=False).status_code == 200
+        assert requests.get(received[0]["photo"]).status_code == 200
+        assert requests.get(received[0]["reply_markup"]["inline_keyboard"][0][0]['url']).status_code == 200
 
 
 def test_search_by_actress():
@@ -101,7 +100,7 @@ def test_search_by_actress():
     readable = 0
 
     for res in received:
-        if requests.get(res["photo"], verify=False).status_code == 200:
+        if requests.get(res["photo"]).status_code == 200:
             readable += 1
 
     assert readable > 0
@@ -114,7 +113,7 @@ def test_brief():
         get_brief(mock_bot, mock_update, [code])
         received = mock_user.look_received()
         assert len(received) == 1
-        assert requests.get(received[0]["photo"], verify=False).status_code == 200
+        assert requests.get(received[0]["photo"]).status_code == 200
 
 
 def test_magnet():
@@ -133,7 +132,7 @@ def test_new():
     received = mock_user.look_received()
     assert len(received) > 0
     for res in received:
-        assert requests.get(res["photo"], verify=False).status_code == 200
+        assert requests.get(res["photo"]).status_code == 200
 
 
 def end_test():

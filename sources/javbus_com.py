@@ -12,7 +12,7 @@ class JavBusCom(ISearchMagnet):
     @classmethod
     def search_magnet(cls, code):
         url = "https://www.javbus.com/" + code
-        rsp = requests.get(url, verify=False)
+        rsp = requests.get(url)
 
         if not rsp.status_code == 200:
             return None
@@ -32,8 +32,7 @@ class JavBusCom(ISearchMagnet):
             'Referer': url
         }
 
-        rsp = requests.get("https://www.javbus.com/ajax/uncledatoolsbyajax.php", headers=headers, params=querystring,
-                           verify=False)
+        rsp = requests.get("https://www.javbus.com/ajax/uncledatoolsbyajax.php", headers=headers, params=querystring)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         trs = bs.find_all(name='tr')
 
