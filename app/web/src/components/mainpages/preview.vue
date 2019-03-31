@@ -52,8 +52,11 @@ export default {
   computed: {
     videos: {
       get() {
-        if (!this.av) return this.videos_prop;
-        else return this.av;
+        if (!this.av) {
+          return this.videos_prop;
+        } else {
+          return this.av;
+        }
       },
       set(val) {
         this.av = val;
@@ -82,7 +85,7 @@ export default {
     },
     getWindowHeight() {
       let windowHeight = 0;
-      if (document.compatMode == "CSS1Compat") {
+      if (document.compatMode === "CSS1Compat") {
         windowHeight = document.documentElement.clientHeight;
       } else {
         windowHeight = this.$refs.whole.clientHeight;
@@ -122,7 +125,7 @@ export default {
     this.av = null;
     window.onscroll = function() {
       if (
-        self.getScrollHeight() ==
+        self.getScrollHeight() ===
         self.getWindowHeight() + self.getDocumentTop()
       ) {
         self.loadMore();

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from sources.BaseSource import ISearchByCode, SourceException
+from sources.BaseSource import ISearchByCode
 import requests
 import re
 import bs4

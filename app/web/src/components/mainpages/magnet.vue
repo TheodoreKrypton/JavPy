@@ -31,7 +31,7 @@ export default {
     },
 
     async onSearch(data) {
-      if (data instanceof MouseEvent || Object.keys(data).length === 0) {
+      if (Object.keys(data).length === 0) {
         return;
       }
       Event.$emit("begin-loading");

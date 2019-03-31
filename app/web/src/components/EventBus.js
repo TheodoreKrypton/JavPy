@@ -1,10 +1,10 @@
 import Vue from "vue";
 import axios from "axios";
-import config from "../config.js"
+import config from "../config.js";
 
 let EventBus = Vue.extend({
   methods: {
-    listen_to_events() {
+    listenToEvents() {
       this.$on("search_magnet_by_code", function(video) {
         this.$router.push({
           path: "/magnet",
@@ -45,7 +45,7 @@ let EventBus = Vue.extend({
   },
 
   created() {
-    this.listen_to_events();
+    this.listenToEvents();
   }
 });
 

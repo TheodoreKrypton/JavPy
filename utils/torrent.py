@@ -1,7 +1,5 @@
-import os.path as pt
 import libtorrent as lt
 from time import sleep
-import sys
 import tempfile
 import shutil
 import time
@@ -9,7 +7,6 @@ import time
 
 def modify_magnet(magnet):
     segments = magnet.split("/")
-    pass
 
 
 def get_peers_count_from_magnet(magnet):

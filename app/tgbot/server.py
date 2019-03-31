@@ -73,7 +73,7 @@ def search(bot, update, args):
     :return:
     """
     first = args[0]
-    if re.search("\d", first):
+    if re.search("\\d", first):
         # /search ABP-123
         if len(args) != 1:
             bot.send_message(chat_id=update.message.chat_id, text="Sorry, Wrong Usage")
@@ -86,7 +86,7 @@ def search(bot, update, args):
         # /search 桃乃木かな [-m/--many-actresses] [on/off] [-u/--upto] [20]
         try:
             actress = first
-            options, remainder = getopt.getopt(
+            options, _ = getopt.getopt(
                 [x.replace(u"—", u"--") for x in args[1:]], 'm:u:', ['many-actress=', 'upto=']
             )
 
@@ -109,7 +109,9 @@ def search(bot, update, args):
                     bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
                     return
 
-            briefs = Functions.search_by_actress(actress, allow_many_actresses, up_to)
+            briefs = Functions.search_by_actress(actress, up_to)
+            if not allow_many_actresses:
+                briefs = list(filter(lambda x: len(x.actress) < 2, briefs))
             send_brief(bot, update, briefs)
 
         except getopt.GetoptError:
@@ -119,7 +121,7 @@ def search(bot, update, args):
 
 def get_new(bot, update, args):
     try:
-        options, remainder = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:',
+        options, _ = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:',
                                            ['many-actress=', 'upto='])
 
         allow_many_actresses = False

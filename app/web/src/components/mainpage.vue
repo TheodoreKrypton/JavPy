@@ -2,10 +2,9 @@
 
 <script>
 export default {
-    name: 'mainpage'
-}
+  name: "mainpage"
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>

@@ -10,14 +10,14 @@
         </el-form-item>
         <el-form-item>
           <el-switch
-            v-model="form.allow_many_actresses"
+            v-model="form.allowManyActresses"
             active-color="#13ce66"
             inactive-color="#ff4949"
           ></el-switch>
         </el-form-item>
         <el-form-item>
           <el-input-number
-            v-model="form.up_to"
+            v-model="form.upTo"
             controls-position="right"
             :min="1"
             label="Count"
@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <preview :videos_prop="to_be_previewed"></preview>
+    <preview :videos_prop="toBePreviewed"></preview>
   </div>
 </template>
 
@@ -52,10 +52,10 @@ export default {
       form: {
         code: "",
         actress: "",
-        allow_many_actresses: false,
-        up_to: 0
+        allowManyActresses: false,
+        upTo: 0
       },
-      to_be_previewed: null,
+      toBePreviewed: null,
       isPreviewLoading: false
     };
   },
@@ -64,7 +64,7 @@ export default {
       if (Object.keys(data).length === 0) {
         return;
       }
-      this.to_be_previewed = null;
+      this.toBePreviewed = null;
       if (data.actress) {
         this.form.actress = data.actress;
       }
@@ -84,7 +84,7 @@ export default {
             rsp = response;
           })
           .catch(function() {
-            this.to_be_previewed = "";
+            this.toBePreviewed = "";
           });
       } else if (!this.form.actress && this.form.code) {
         await axios
@@ -95,7 +95,7 @@ export default {
             rsp = response;
           })
           .catch(function() {
-            this.to_be_previewed = "";
+            this.toBePreviewed = "";
           });
       } else {
         Event.$emit("end-loading");
@@ -104,12 +104,12 @@ export default {
       }
       if (rsp.status === 200) {
         if (!rsp.data) {
-          this.to_be_previewed = "";
+          this.toBePreviewed = "";
         } else {
-          this.to_be_previewed = rsp.data;
+          this.toBePreviewed = rsp.data;
         }
       } else {
-        this.to_be_previewed = "";
+        this.toBePreviewed = "";
       }
       Event.$emit("end-loading");
       this.clear();
