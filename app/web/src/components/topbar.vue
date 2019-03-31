@@ -44,11 +44,11 @@ export default {
 }
 
 .loading-bar {
-  animation: loading 2s infinite linear;
-  -webkit-animation: loading 2s infinite linear;
+  animation: loading 3s infinite linear;
+  -webkit-animation: loading 3s infinite linear;
   width: 20%;
-  height: 2px;
-  background: linear-gradient(to right, #e9eef3, #008080, #e9eef3);
+  height: 60px;
+  background: linear-gradient(to right, #f2f6fc, #ffffff, #f2f6fc);
 }
 
 @keyframes loading {

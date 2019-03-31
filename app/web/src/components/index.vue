@@ -8,8 +8,13 @@
         <sidebar style="margin-top: 60px; position: fixed; height: 100%"></sidebar>
         <el-container>
           <el-main style="margin-top: 60px; margin-left: 200px;">
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 10vmin; right: 5vmin; width: 5vmin; height: 5vmin"
+              circle
+            ></el-button>
             <keep-alive>
-              <router-view style="height: 100%"></router-view>
+              <router-view style="height: 100%;"></router-view>
             </keep-alive>
           </el-main>
         </el-container>
@@ -63,4 +68,5 @@ export default {
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
+
 </style>
