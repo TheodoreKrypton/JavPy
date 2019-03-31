@@ -9,21 +9,21 @@
     ></el-alert>
 
     <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30">
-      <tr v-for="i in Math.floor(Object.keys(videos).length / item_per_line)" :key="i">
-        <td v-for="j in item_per_line" :key="j">
-          <showcard style="width:100%;" :video="videos[(i-1)*item_per_line+j-1]"></showcard>
+      <tr v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)" :key="i">
+        <td v-for="j in itemPerLine" :key="j">
+          <showcard style="width:100%;" :video="videos[(i-1)*itemPerLine+j-1]"></showcard>
         </td>
       </tr>
       <tr
-        v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/item_per_line)*item_per_line"
+        v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
       >
         <td
-          v-for="j in Object.keys(videos).length-Math.floor(Object.keys(videos).length/item_per_line)*item_per_line"
+          v-for="j in Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
           :key="j"
         >
           <showcard
             style="width:100%;"
-            :video="videos[Math.floor(Object.keys(videos).length/item_per_line)*item_per_line+(j-1)]"
+            :video="videos[Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine+(j-1)]"
           ></showcard>
         </td>
       </tr>
@@ -41,19 +41,22 @@ export default {
   components: {
     showcard
   },
-  props: ["videos_prop"],
+  props: ["videosProp"],
   data() {
     return {
       page: 0,
-      item_per_line: 3,
-      av: this.videos_prop
+      itemPerLine: 3,
+      av: this.videosProp
     };
   },
   computed: {
     videos: {
       get() {
-        if (!this.av) return this.videos_prop;
-        else return this.av;
+        if (!this.av) {
+          return this.videosProp;
+        } else {
+          return this.av;
+        }
       },
       set(val) {
         this.av = val;
@@ -82,7 +85,7 @@ export default {
     },
     getWindowHeight() {
       let windowHeight = 0;
-      if (document.compatMode == "CSS1Compat") {
+      if (document.compatMode === "CSS1Compat") {
         windowHeight = document.documentElement.clientHeight;
       } else {
         windowHeight = this.$refs.whole.clientHeight;
@@ -122,7 +125,7 @@ export default {
     this.av = null;
     window.onscroll = function() {
       if (
-        self.getScrollHeight() ==
+        self.getScrollHeight() ===
         self.getWindowHeight() + self.getDocumentTop()
       ) {
         self.loadMore();

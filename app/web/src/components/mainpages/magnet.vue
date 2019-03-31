@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="magnet_res" style="width: 100%;" :row-class-name="tableRowClassName">
+    <el-table :data="magnetRes" style="width: 100%;" :row-class-name="tableRowClassName">
       <el-table-column prop="description" label="Total Size" width="180"></el-table-column>
       <el-table-column prop="peers" label="Detected Peers" width="180"></el-table-column>
       <el-table-column prop="magnet" label="Magnet Link"></el-table-column>
@@ -17,7 +17,7 @@ export default {
   name: "magnet",
   data() {
     return {
-      magnet_res: []
+      magnetRes: []
     };
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
     },
 
     async onSearch(data) {
-      if (data instanceof MouseEvent || Object.keys(data).length === 0) {
+      if (Object.keys(data).length === 0) {
         return;
       }
       Event.$emit("begin-loading");
@@ -46,7 +46,7 @@ export default {
           rsp = response;
         })
         .catch(function() {
-          this.magnet_res = "";
+          this.magnetRes = "";
         });
 
       if (Object.keys(rsp).length === 0) {
@@ -56,12 +56,12 @@ export default {
 
       if (rsp.status === 200) {
         if (!rsp.data) {
-          this.magnet_res = "";
+          this.magnetRes = "";
         } else {
-          this.magnet_res = rsp.data;
+          this.magnetRes = rsp.data;
         }
       } else {
-        this.magnet_res = "";
+        this.magnetRes = "";
       }
       Event.$emit("end-loading");
     }

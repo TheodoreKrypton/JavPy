@@ -2,7 +2,6 @@ from sources.javmost_com import JavMostCom
 from sources.youav_com import YouAVCom
 from sources.xopenload_video import XOpenloadVideo
 from sources.indexav_com import IndexAVCom
-import six
 import gevent
 
 

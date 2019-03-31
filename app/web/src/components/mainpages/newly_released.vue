@@ -1,5 +1,5 @@
 <template>
-  <preview :videos_prop="to_be_previewed"></preview>
+  <preview :videosProp="toBePreviewed"></preview>
 </template>
 
 <script>
@@ -9,26 +9,28 @@ import Event from "../../main.js";
 import config from "../../config.js";
 
 export default {
-  name: "newly_released",
+  name: "newlyReleased",
   components: {
     preview
   },
   data() {
     return {
-      to_be_previewed: null
+      toBePreviewed: null
     };
   },
 
-  created: async function() {
+  async created() {
     Event.$emit("begin-loading");
-    console.log(`http://${config.address}:${config.port}/new`);
-    const rsp = await axios.post(`http://${config.address}:${config.port}/new`, {
-      page: 0
-    });
+    const rsp = await axios.post(
+      `http://${config.address}:${config.port}/new`,
+      {
+        page: 0
+      }
+    );
     if (!rsp.data) {
-      this.to_be_previewed = "";
+      this.toBePreviewed = "";
     } else {
-      this.to_be_previewed = rsp.data;
+      this.toBePreviewed = rsp.data;
     }
     Event.$emit("end-loading");
   }

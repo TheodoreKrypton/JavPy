@@ -9,7 +9,7 @@ to_stop = False
 
 def update_history(func):
     def _wrapper(*args, **kwargs):
-        bot, update = args[-2:]
+        _, update = args[-2:]
         history[update.message.from_user.id][0].append(update.message.text)
         history[update.message.from_user.id][1] = time.time()
         func(*args, **kwargs)

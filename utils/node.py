@@ -5,14 +5,13 @@ import tempfile
 
 
 def use_node(script):
-    tmp = tempfile.NamedTemporaryFile('w')
     try:
-        tmp.write(script)
-        tmp.seek(0)
-        res = subprocess.getoutput("node " + tmp.name)
-    finally:
-        tmp.close()
-    return res
+        with tempfile.NamedTemporaryFile('w') as tmp:
+            tmp.write(script)
+            tmp.seek(0)
+            return subprocess.getoutput("node " + tmp.name)
+    except Exception as ex:
+        print(ex)
 
 
 class Node:

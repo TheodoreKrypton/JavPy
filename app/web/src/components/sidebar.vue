@@ -29,37 +29,33 @@
 </template>
 
 <script>
-    export default {
-        name: 'sidebar',
-        data() {
-            return {
-                isCollapse: true
-            };
-        },
-        methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            toSearch(){
-                this.$router.push({path: '/search'});
-            },
-            toNew(){
-                this.$router.push({path: '/new'});
-            },
-            toMagnet(){
-                this.$router.push({path: '/magnet'});
-            }
-        }
+export default {
+  name: "sidebar",
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {},
+    handleClose(key, keyPath) {},
+    toSearch() {
+      this.$router.push({ path: "/search" });
+    },
+    toNew() {
+      this.$router.push({ path: "/new" });
+    },
+    toMagnet() {
+      this.$router.push({ path: "/magnet" });
     }
+  }
+};
 </script>
 
 <style lang="less" scoped>
-    .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 200px;
-        min-height: 400px;
-        margin: 0;
-    }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+  margin: 0;
+}
 </style>
