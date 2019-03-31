@@ -12,7 +12,7 @@ class YouAVCom(ISearchByCode):
     def search_by_code(cls, code):
         url = "https://www.youav.com/search/videos?search_query=" + code
 
-        response = requests.request("GET", url, verify=False)
+        response = requests.request("GET", url)
 
         bs = bs4.BeautifulSoup(response.text, "lxml")
 
