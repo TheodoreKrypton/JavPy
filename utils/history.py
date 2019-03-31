@@ -6,6 +6,7 @@ import threading
 history = defaultdict(lambda: [[], time.time()])
 to_stop = False
 
+
 def update_history(func):
     def _wrapper(*args, **kwargs):
         bot, update = args[-2:]
@@ -31,9 +32,11 @@ def clear_died_session_thread():
             if now - history[k][1] > 3600:
                 del history[k]
 
+
 def clear_died_session():
     t = threading.Thread(target=clear_died_session_thread)
     t.start()
+
 
 def terminate():
     global to_stop
