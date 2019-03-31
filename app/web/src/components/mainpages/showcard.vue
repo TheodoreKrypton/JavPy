@@ -1,6 +1,6 @@
 <template>
-  <el-card shadow="hover" style="width: 30%;" body-style="padding: 0">
-    <div style="background-color: #e9eef3; color: teal">{{video.title}}</div>
+  <el-card shadow="none" style="width: 30%;" body-style="padding: 0">
+    <div style="background-color: #e9eef3; color: teal; padding-bottom: 10px; font-size: 20px;">{{video.title}}</div>
     <img :src="video.preview_img_url" class="image" alt="preview" @click="action()">
 
     <div class="bottom">
@@ -84,6 +84,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-card:hover {
+  box-shadow: 0 1px 6px 0 rgba(32,33,36,20);
+}
+
 .bottom {
   background-color: #e9eef3;
   height: 40px;

@@ -1,13 +1,13 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%; position:relative; width:100%;">
     <el-container style="height: 100%">
-      <el-header style="background: #F2F6FC">
+      <el-header style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);">
         <topbar></topbar>
       </el-header>
       <el-container>
-        <sidebar/>
+        <sidebar style="margin-top: 60px; position: fixed; height: 100%"></sidebar>
         <el-container>
-          <el-main style="height: 100%">
+          <el-main style="margin-top: 60px; margin-left: 200px;">
             <keep-alive>
               <router-view style="height: 100%"></router-view>
             </keep-alive>

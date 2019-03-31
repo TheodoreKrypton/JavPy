@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="topbar">
     <div style="height: 100%">
       <span style="float: left">
         <img src="../assets/logo.png" alt="logo" style="height: 60px">
@@ -39,6 +39,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.topbar{
+  box-shadow: 0px 12px 8px -12px #000; border-radius:10px; 
+}
+
 .loading-bar {
   animation: loading 2s infinite linear;
   -webkit-animation: loading 2s infinite linear;
