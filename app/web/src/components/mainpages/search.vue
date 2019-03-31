@@ -32,6 +32,11 @@
         </el-form-item>
       </el-form>
     </div>
+    <div v-if="mode.actress && other.history_name && Object.keys(other.history_name).length > 1">
+      <el-steps :active="1000" align-center simple>
+        <el-step v-for="name in other.history_name" :key="name" :title="name" icon="none" @click.native="onSearch({'actress': name})"></el-step>
+      </el-steps>
+    </div>
     <preview :videosProp="toBePreviewed"></preview>
   </div>
 </template>
@@ -56,15 +61,26 @@ export default {
         upTo: 0
       },
       toBePreviewed: null,
-      isPreviewLoading: false
+      other: null,
+      mode: {
+        code: false,
+        actress: false
+      }
     };
   },
   methods: {
+    initPage(){
+      this.toBePreviewed = null;
+      this.mode.actress = false;
+      this.mode.code = false;
+    },
+
     async onSearch(data = null) {
       if (Object.keys(data).length === 0) {
         return;
       }
-      this.toBePreviewed = null;
+      this.initPage();
+
       if (data.actress) {
         this.form.actress = data.actress;
       }
@@ -78,7 +94,8 @@ export default {
       if (!this.form.code && this.form.actress) {
         await axios
           .post(`http://${config.address}:${config.port}/search_by_actress`, {
-            actress: this.form.actress
+            actress: this.form.actress,
+            history_name: !this.mode.actress
           })
           .then(function(response) {
             rsp = response;
@@ -106,7 +123,12 @@ export default {
         if (!rsp.data) {
           this.toBePreviewed = "";
         } else {
-          this.toBePreviewed = rsp.data;
+          this.toBePreviewed = rsp.data.videos;
+          this.other = rsp.data.other;
+          if(this.form.actress){
+            this.other.nowViewing = this.form.actress;
+            this.mode.actress = true;
+          }
         }
       } else {
         this.toBePreviewed = "";
@@ -134,4 +156,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.is-wait {
+  color: teal;
+  border-color: teal;
+}
+
+.el-step:hover{
+  cursor: pointer;
+}
+
 </style>

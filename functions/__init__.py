@@ -6,6 +6,7 @@ from functions.new import New
 from functions.brief import Brief as GetBrief
 from functions.datastructure import AV, Brief
 from functions.magnet import Magnet
+from functions.history_names import HistoryNames
 from utils.common import cache
 import gevent
 
@@ -31,6 +32,10 @@ class Functions:
             return res
         else:
             return None
+
+    @staticmethod
+    def search_history_names(actress):
+        return HistoryNames.get_history_names(actress)
 
     @staticmethod
     def search_by_actress(actress, up_to):

@@ -8,7 +8,7 @@
       style="width: 40%; margin-left:auto; margin-right:auto"
     ></el-alert>
 
-    <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30">
+    <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30" style="margin-left: auto; margin-right: auto">
       <tr v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)" :key="i">
         <td v-for="j in itemPerLine" :key="j">
           <showcard style="width:100%;" :video="videos[(i-1)*itemPerLine+j-1]"></showcard>
