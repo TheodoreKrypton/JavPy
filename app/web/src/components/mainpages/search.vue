@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <preview :videos_prop="toBePreviewed"></preview>
+    <preview :videosProp="toBePreviewed"></preview>
   </div>
 </template>
 
@@ -121,7 +121,7 @@ export default {
     }
   },
 
-  mounted: function() {
+  mounted() {
     this.onSearch(this.$route.query);
   },
 
