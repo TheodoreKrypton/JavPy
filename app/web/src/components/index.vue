@@ -10,8 +10,24 @@
           <el-main style="margin-top: 60px; margin-left: 200px;">
             <el-button
               type="primary"
-              style="position: fixed; bottom: 10vmin; right: 5vmin; width: 5vmin; height: 5vmin"
+              style="position: fixed; bottom: 20vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-caret-top"
               circle
+              @click="backToTop()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 15vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-up"
+              circle
+              @click="prev()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 10vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-down"
+              circle
+              @click="next()"
             ></el-button>
             <keep-alive>
               <router-view style="height: 100%;"></router-view>
@@ -32,6 +48,22 @@ export default {
   components: {
     sidebar,
     topbar
+  },
+  methods: {
+    backToTop(){
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    },
+    prev(){
+      const windowHeight = document.documentElement.clientHeight;
+      const next_loc = document.documentElement.scrollTop - document.documentElement.clientHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = next_loc > 0 ? next_loc : 0;
+    },
+    next(){
+      const windowHeight = document.documentElement.clientHeight;
+      const bottom = document.documentElement.scrollTop + document.documentElement.clientHeight;
+      const next_loc = document.documentElement.scrollTop + document.documentElement.clientHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = next_loc < bottom ? next_loc : bottom;
+    }
   }
 };
 </script>

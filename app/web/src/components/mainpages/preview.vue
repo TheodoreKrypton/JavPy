@@ -4,8 +4,8 @@
       v-if="videos === ''"
       title="Sorry, cannot find any result."
       type="error"
-      description="Please Retry."
       show-icon
+      style="width: 40%; margin-left:auto; margin-right:auto"
     ></el-alert>
 
     <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30">
@@ -70,7 +70,7 @@ export default {
         documentScrollTop = 0;
 
       if (document.body) {
-        bodyScrollTop = this.$refs.whole.scrollTop;
+        bodyScrollTop = document.body.scrollTop;
       }
 
       if (document.documentElement) {
@@ -88,7 +88,7 @@ export default {
       if (document.compatMode === "CSS1Compat") {
         windowHeight = document.documentElement.clientHeight;
       } else {
-        windowHeight = this.$refs.whole.clientHeight;
+        windowHeight = document.body.clientHeight;
       }
 
       return windowHeight;
@@ -100,7 +100,7 @@ export default {
         documentScrollHeight = 0;
 
       if (document.body) {
-        bodyScrollHeight = this.$refs.whole.scrollHeight;
+        bodyScrollHeight = document.body.scrollHeight;
       }
 
       if (document.documentElement) {

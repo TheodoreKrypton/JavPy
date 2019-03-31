@@ -30,3 +30,11 @@ def cache(func):
         return res
 
     return _wrapped
+
+
+def update_object(origin, new):
+    assert type(origin) == type(new)
+    for k in new.__dict__.keys():
+        v = getattr(new, k)
+        if v:
+            setattr(origin, k, v)
