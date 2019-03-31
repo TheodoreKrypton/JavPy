@@ -1,15 +1,36 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%; position:relative; width:100%;">
     <el-container style="height: 100%">
-      <el-header style="background: #F2F6FC">
+      <el-header style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);">
         <topbar></topbar>
       </el-header>
       <el-container>
-        <sidebar/>
+        <sidebar style="margin-top: 60px; position: fixed; height: 100%"></sidebar>
         <el-container>
-          <el-main style="height: 100%">
+          <el-main style="margin-top: 60px; margin-left: 200px;">
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 20vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-caret-top"
+              circle
+              @click="backToTop()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 15vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-up"
+              circle
+              @click="prev()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 10vmin; right: 5vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-down"
+              circle
+              @click="next()"
+            ></el-button>
             <keep-alive>
-              <router-view style="height: 100%"></router-view>
+              <router-view style="height: 100%;"></router-view>
             </keep-alive>
           </el-main>
         </el-container>
@@ -27,6 +48,22 @@ export default {
   components: {
     sidebar,
     topbar
+  },
+  methods: {
+    backToTop(){
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    },
+    prev(){
+      const windowHeight = document.documentElement.clientHeight;
+      const next_loc = document.documentElement.scrollTop - document.documentElement.clientHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = next_loc > 0 ? next_loc : 0;
+    },
+    next(){
+      const windowHeight = document.documentElement.clientHeight;
+      const bottom = document.documentElement.scrollTop + document.documentElement.clientHeight;
+      const next_loc = document.documentElement.scrollTop + document.documentElement.clientHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = next_loc < bottom ? next_loc : bottom;
+    }
   }
 };
 </script>
@@ -63,4 +100,5 @@ export default {
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
+
 </style>

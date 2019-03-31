@@ -1,4 +1,5 @@
 import datetime
+from utils.common import try_evaluate
 
 
 class AV:
@@ -38,7 +39,7 @@ class Brief:
         if isinstance(date, datetime.datetime):
             self.__release_date = date
         else:
-            self.__release_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+            self.__release_date = try_evaluate(lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None)
 
     def to_dict(self):
         return {
@@ -46,7 +47,7 @@ class Brief:
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
             "title": self.title,
-            "release_date": self.release_date.strftime("%Y-%m-%d")  # type: datetime.datetime
+            "release_date": self.release_date.strftime("%Y-%m-%d") if self.release_date else ""
         }
 
 

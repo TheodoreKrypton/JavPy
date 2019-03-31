@@ -1,6 +1,6 @@
 <template>
   <el-row class="tac">
-    <el-col :span="12">
+    <el-col :span="12" style="height: 100%">
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
@@ -55,7 +55,7 @@ export default {
 <style lang="less" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
+  min-height: 100%;
   margin: 0;
 }
 </style>

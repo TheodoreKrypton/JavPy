@@ -11,6 +11,15 @@ except Exception as ex:
     print("please install Node.JS first at https://nodejs.org/en/")
     exit(0)
 
+try:
+    output = subprocess.check_output("lsb_release -a")
+    if "Ubuntu" in output:
+        subprocess.Popen("sudo apt-get install python-libtorrent")
+        subprocess.Popen("sudo apt-get install python3-libtorrent")
+except Exception as ex:
+    print(ex)
+    print("Functions of checking torrents may be incomplete, please install python bindings of libtorrent manually")
+
 setup(
     name='JavPy',
     version='0.1.0',
@@ -32,5 +41,6 @@ setup(
         'flask-cors',
         'gevent',
         'lxml',
-    ]
+    ],
+
 )

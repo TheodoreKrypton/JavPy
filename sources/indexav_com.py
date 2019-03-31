@@ -3,15 +3,13 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import requests
-from sources.BaseSource import ISearchByActress
+from sources.BaseSource import ISearchByActress, IGetBrief
 import bs4
 from functions.datastructure import Brief
 from utils.common import try_evaluate
 
 
-class IndexAVCom(ISearchByActress):
-    def __init__(self):
-        pass
+class IndexAVCom(ISearchByActress, IGetBrief):
 
     @classmethod
     def search_by_actress(cls, actress, up_to):
@@ -49,6 +47,8 @@ class IndexAVCom(ISearchByActress):
 
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         box = bs.find(name='div', attrs={'class': 'bs-callout'})
+        if not box:
+            return None
         return cls.__get_brief_by_box(box)
 
     @staticmethod

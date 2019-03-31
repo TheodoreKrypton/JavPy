@@ -19,6 +19,15 @@ class ISearchByActress:
         pass
 
 
+class IGetBrief:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def get_brief(cls, code):
+        pass
+
+
 class ISearchMagnet:
     __metaclass__ = ABCMeta
 
