@@ -67,8 +67,7 @@ This library fetches information from various websites, but most of them are blo
 
 ### User Guide
 ```
-pip install https://github.com/TheodoreKrypton/JavPy/releases/download/v0.1.0/JavPy-0.1.0-py2.py3-none-any.whl
-
+pip install JavPy
 (in Python console)
 >>> import JavPy
 >>> JavPy.serve()
