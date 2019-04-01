@@ -22,7 +22,7 @@ class JavMostCom(ISearchByCode):
         if rsp.status_code != 200:
             return None
 
-        img = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
+        img, _ = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
 
         if not img:
             return None
@@ -86,7 +86,7 @@ class JavMostCom(ISearchByCode):
 
     @staticmethod
     def get_brief_from_a_card(card_tag):
-        release_date = try_evaluate(
+        release_date, _ = try_evaluate(
             lambda: datetime.datetime.strptime(
                 re.search(r"\d\d\d\d-\d\d-\d\d", card_tag.text).group(0), "%Y-%m-%d"
             )
@@ -94,13 +94,13 @@ class JavMostCom(ISearchByCode):
 
         actress = list(map(lambda x: x.text, card_tag.find_all(name='a', attrs={'class': 'btn-danger'})))
 
-        img = try_evaluate(lambda: card_tag.find(name='img').attrs['src'])
+        img, _ = try_evaluate(lambda: card_tag.find(name='img').attrs['src'])
         if not img.startswith("http:"):
             img = "http:" + img
 
         brief = Brief()
         brief.preview_img_url = img
-        brief.title = try_evaluate(lambda: card_tag.find(name='h5').text.strip(), "")
+        brief.title, _ = try_evaluate(lambda: card_tag.find(name='h5').text.strip(), "")
         brief.actress = ", ".join(actress)
         brief.release_date = release_date
         brief.code = card_tag.find(name='h4').text.strip()

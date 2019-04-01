@@ -133,7 +133,3 @@ def test_new():
     assert len(received) > 0
     for res in received:
         assert requests.get(res["photo"]).status_code == 200
-
-
-def end_test():
-    terminate()

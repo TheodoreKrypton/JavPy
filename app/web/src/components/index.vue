@@ -55,14 +55,14 @@ export default {
     },
     prev(){
       const windowHeight = document.documentElement.clientHeight;
-      const next_loc = document.documentElement.scrollTop - windowHeight;
-      document.body.scrollTop = document.documentElement.scrollTop = next_loc > 0 ? next_loc : 0;
+      const nextLoc = document.documentElement.scrollTop - windowHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = nextLoc > 0 ? nextLoc : 0;
     },
     next(){
       const windowHeight = document.documentElement.clientHeight;
       const bottom = document.documentElement.scrollTop + windowHeight;
-      const next_loc = document.documentElement.scrollTop + windowHeight;
-      document.body.scrollTop = document.documentElement.scrollTop = next_loc < bottom ? next_loc : bottom;
+      const nextLoc = document.documentElement.scrollTop + windowHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = nextLoc < bottom ? nextLoc : bottom;
     }
   }
 };
