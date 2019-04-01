@@ -5,10 +5,10 @@ from functools import wraps
 def try_evaluate(lambda_expression, default=None):
     def evaluate(expression):
         try:
-            return expression()
+            return expression(), None
         except Exception as ex:
             return default, ex
-    return evaluate(lambda_expression), None
+    return evaluate(lambda_expression)
 
 
 def cache(func):

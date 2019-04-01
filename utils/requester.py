@@ -103,7 +103,7 @@ class Task:
         return self
 
 
-class TaskGroup:
+class __TaskGroup:
     def __init__(self, tasks):
         self.tasks = tasks
         self.one_complete_cb = None
@@ -162,8 +162,8 @@ def spawn(target, *args, **kwargs):
 
 
 def spawn_many(tasks):
-    task_group = TaskGroup(tasks)
-    for task in tasks:
+    task_group = __TaskGroup(list(tasks))
+    for task in task_group.tasks:
         Master.wait_for_run(task)
     return task_group
 
