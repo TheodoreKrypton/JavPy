@@ -17,7 +17,7 @@ class AV:
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
-            "release_date": self.release_date.strftime("%Y-%m-%d"),
+            "release_date": self.release_date.strftime("%Y-%m-%d") if self.release_date else "",
             "title": self.title
         }
 
@@ -39,7 +39,7 @@ class Brief:
         if isinstance(date, datetime.datetime):
             self.__release_date = date
         else:
-            self.__release_date = try_evaluate(lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None)
+            self.__release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None)
 
     def to_dict(self):
         return {

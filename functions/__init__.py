@@ -1,6 +1,4 @@
 from __future__ import absolute_import, print_function, unicode_literals
-
-
 from functions.search import Search
 from functions.new import New
 from functions.brief import Brief as GetBrief
@@ -8,7 +6,7 @@ from functions.datastructure import AV, Brief
 from functions.magnet import Magnet
 from functions.history_names import HistoryNames
 from utils.common import cache
-import gevent
+from utils.requester import spawn_many, Task
 
 
 class Functions:
@@ -17,18 +15,16 @@ class Functions:
     @staticmethod
     @cache
     def search_by_code(code):
-        av = gevent.spawn(Functions.search_service.search_by_code, code)
-        _brief = gevent.spawn(Functions.get_brief, code)
-
-        av.join()
-        _brief.join()
-
-        if av.value:
-            res = av.value
-            if _brief.value:
-                res.actress = _brief.value.actress if _brief.value.actress else ""
-                res.release_date = _brief.value.release_date
-                res.title = _brief.value.title
+        av, brief_info = spawn_many((
+            Task(Functions.search_service.search_by_code, code),
+            Task(Functions.get_brief, code)
+        )).wait_for_all_finished()
+        if av:
+            res = av
+            if brief_info:
+                res.actress = brief_info.actress if brief_info.actress else ""
+                res.release_date = brief_info.release_date
+                res.title = brief_info.title
             return res
         else:
             return None

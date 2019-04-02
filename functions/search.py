@@ -2,7 +2,8 @@ from sources.javmost_com import JavMostCom
 from sources.youav_com import YouAVCom
 from sources.xopenload_video import XOpenloadVideo
 from sources.indexav_com import IndexAVCom
-import gevent
+from utils.requester import spawn_many, Task
+from utils.common import sum_up
 
 
 class Search:
@@ -13,30 +14,9 @@ class Search:
         }
 
     def search_by_code(self, code):
-        gls = []
-        for src in self.sources_by_code:
-            gls.append(gevent.Greenlet(src.search_by_code, code))
-            gls[-1].run()
-        res = None
-        while True:
-            ready_cnt = 0
-            for gl in gls:
-                if gl.successful():
-                    if gl.value is not None:
-                        res = gl.value
-                        break
-                    else:
-                        ready_cnt += 1
-                elif gl.ready():
-                    ready_cnt += 1
-            if ready_cnt == len(self.sources_by_code):
-                break
-            elif res:
-                for gl in gls:
-                    gl.kill()
-                break
-
-        return res
+        return sum_up(spawn_many(
+            (Task(source.search_by_code, code) for source in self.sources_by_code)
+        ).wait_until(lambda x: x.preview_img_url))
 
     @staticmethod
     def guess_lang(text):

@@ -47,6 +47,7 @@ def search_by_code():
     if params["code"]:
         try:
             res['videos'] = [Functions.search_by_code(params["code"]).to_dict()]
+            # print(res)
             rsp = jsonify(res)
         except AttributeError:
             rsp = make_response("")

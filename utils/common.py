@@ -1,13 +1,13 @@
 import datetime
-from functools import wraps
+from functools import wraps, reduce
 
 
 def try_evaluate(lambda_expression, default=None):
     def evaluate(expression):
         try:
-            return expression()
-        except Exception:
-            return default
+            return expression(), None
+        except Exception as ex:
+            return default, ex
     return evaluate(lambda_expression)
 
 
@@ -33,8 +33,17 @@ def cache(func):
 
 
 def update_object(origin, new):
-    assert type(origin) == type(new)
     for k in new.__dict__.keys():
         v = getattr(new, k)
         if v:
             setattr(origin, k, v)
+    return origin
+
+
+def sum_up(objects):
+    objects = list(filter(lambda x: x, objects))
+    if len(objects) == 0:
+        return None
+    if len(objects) == 1:
+        return objects[0]
+    return reduce(update_object, objects)
