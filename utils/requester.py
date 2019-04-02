@@ -5,36 +5,63 @@ try:
     from typing import Dict
 except ImportError:
     pass
+import time
+
+"""
+                                       Lifecycle of a Task:
+                                       
+       -------------------------------------------------------
+       | Construct a Task with target function and arguments |------(Task: (target, args, kwargs))
+       -------------------------------------------------------                   ^
+                                v                                                |
+     __task_id_generator   -->  v   Wait for task id generator              [Task Queue]
+                                v                                                |
+                        ------------------                                       v
+                        | Gain a task id |----------------------(Task: (target, args, kwargs), task_id)
+                        ------------------
+                                v
+              MAX_WORKER   -->  v   Wait for len(workers) < MAX_WORKER
+                                v
+               -------------------------------------
+               | Construct a Worker to do the task |--------------(Worker: Task); len(workers) += 1
+               -------------------------------------                             ^
+                                v                                                |
+           remote server   -->  v   Wait for response                            |
+                                v                                         [Worker Dict]
+                       --------------------                                      |
+                       | Get the response |                                      |
+                -----------------------------------                              v
+                | Set task.result, delete worker  |---------------------  len(workers) -= 1
+     ------------------------------------------------------------                
+     [Exception ][ Use rsp through cb ][ Get result through wait]                
+     ------------------------------------------------------------                
+          v                 v                      v                             
+          v                 v                      v                     
+          v                 v                      v
+         catch             then               gather_result
+"""
+
+
+def _get_a_task_id():
+    task_id = 0
+    while True:
+        task_id += 1
+        yield task_id
 
 
 class Master:
-    results = {}
-    __result_lock = Lock()
+    __waiting_for_run = []
+    __q_lock = Lock()
 
     MAX_WORKER = 20
-
-    __task_id = 0
-    __q_lock = Lock()
-    __waiting_for_run = []
-
     workers = {}  # type: Dict[int, Worker]
     __workers_lock = Lock()
 
-    @classmethod
-    def get_result(cls, task_id):
-        with cls.__result_lock:
-            if task_id in cls.results:
-                return cls.results[task_id]
-            else:
-                return None
+    __task_id_generator = _get_a_task_id()
 
     @classmethod
-    def del_result(cls, task_id):
-        with cls.__result_lock:
-            if task_id in cls.results:
-                del cls.results[task_id]
-            else:
-                return
+    def get_a_task_id(cls):
+        return next(cls.__task_id_generator)
 
     @classmethod
     def __spawnable(cls):
@@ -43,14 +70,16 @@ class Master:
     @classmethod
     def wait_for_run(cls, task):
         with cls.__q_lock:
-            cls.__task_id += 1
-            task.id = cls.__task_id
+            task.id = next(cls.__task_id_generator)
             cls.__waiting_for_run.append(task)
 
     @classmethod
     def finish_task(cls, task_id):
         with cls.__workers_lock:
-            del cls.workers[task_id]
+            if task_id in Master.workers:
+                if Master.workers[task_id].is_alive():
+                    Master.workers[task_id].terminate()
+                del cls.workers[task_id]
 
     @classmethod
     def master_thread(cls):
@@ -73,22 +102,29 @@ master.start()
 
 
 class Task:
+    SUCCESS = 0
+    NOT_STARTED = 1
+    FAILED = 2
+    RUNNING = 3
+
     def __init__(self, target, *args, **kwargs):
         self.target = target
         self.args = args
         self.kwargs = kwargs
-        self.completed = False
         self.id = None
         self.then_cb = None
         self.catch_cb = None
         self.on_timeout_cb = None
+        self.result = None
+        self.status = Task.NOT_STARTED
+
+    def finished(self):
+        return not self.status % 2
 
     def wait_for_result(self):
-        while self.id not in Master.results:
+        while not self.finished():
             pass
-        res = Master.get_result(self.id)
-        Master.del_result(self.id)
-        return res
+        return self.result
 
     def then(self, callback):
         self.then_cb = callback
@@ -111,31 +147,36 @@ class __TaskGroup:
         self.catch_cb = None
         self.on_timeout_cb = None
 
-    def __kill_all_threads(self):
-        for task in self.tasks:
-            if task.id in Master.workers and Master.workers[task.id].is_alive():
-                Master.workers[task.id].terminate()
-            if task.id in Master.results:
-                Master.del_result(task.id)
+    def __gather_results(self):
+        res = tuple((task.result for task in self.tasks))
+        return res
 
-    def wait_for_one_complete(self):
+    def __finished_cnt(self):
+        res = sum(map(lambda x: x.finished(), self.tasks))
+        return res
+
+    def __failed_cnt(self):
+        return sum(map(lambda x: x.status == Task.FAILED, self.tasks))
+
+    def wait_for_all_finished(self):
+        while len(self.tasks) != self.__finished_cnt():
+            pass
+        return self.__gather_results()
+
+    def wait_until(self, condition):
         while True:
-            completed = 0
             for task in self.tasks:
-                if task.id in Master.results:
-                    completed += 1
-                    res = Master.get_result(task.id)
-                    if res is not None:
-                        self.__kill_all_threads()
-                        return res
-            if completed == self.tasks:
-                self.__kill_all_threads()
+                if task.status % 2:
+                    continue
+                res = task.result
+                if res is not None and condition(res):
+                    res = self.__gather_results()
+                    return res
+            if self.__failed_cnt() == len(self.tasks):
                 return None
 
-    def wait_for_all_complete(self):
-        while len(self.tasks) != sum(map(lambda x: x.id in Master.results, self.tasks)):
-            pass
-        return tuple(map(lambda x: Master.get_result(x.id), self.tasks))
+    def wait_for_one_finished(self):
+        return self.wait_until(lambda x: True)
 
     def on_one_complete(self, callback):
         for task in self.tasks:
@@ -175,13 +216,20 @@ class Worker(threading.Thread):
         self._stop_event = threading.Event()
 
     def run(self):
-        Master.results[self.task.id], ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
+        self.task.status = Task.RUNNING
+        self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
         Master.finish_task(self.task.id)
         if ex and self.task.catch_cb:
+            raise ex
             self.task.catch_cb(ex)
+            self.task.status = Task.FAILED
         elif self.task.then_cb:
-            res = Master.get_result(self.task.id)
+            res = self.task.result
             self.task.then_cb(res)
+        if self.task.result is not None:
+            self.task.status = Task.SUCCESS
+        else:
+            self.task.status = Task.FAILED
 
     def terminate(self):
         self._stop_event.set()
@@ -199,4 +247,4 @@ if __name__ == '__main__':
 
     spawn_many([Task(requests.get, "http://www.baidu.com") for x in range(0, 100)])\
         .on_one_complete(cb)\
-        .wait_for_all_complete()
+        .wait_for_all_finished()

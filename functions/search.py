@@ -3,6 +3,7 @@ from sources.youav_com import YouAVCom
 from sources.xopenload_video import XOpenloadVideo
 from sources.indexav_com import IndexAVCom
 from utils.requester import spawn_many, Task
+from utils.common import sum_up
 
 
 class Search:
@@ -13,10 +14,9 @@ class Search:
         }
 
     def search_by_code(self, code):
-        res = spawn_many((
-            Task(source.search_by_code, code) for source in self.sources_by_code
-        )).wait_for_one_complete()
-        return res
+        return sum_up(spawn_many(
+            (Task(source.search_by_code, code) for source in self.sources_by_code)
+        ).wait_until(lambda x: x.preview_img_url))
 
     @staticmethod
     def guess_lang(text):

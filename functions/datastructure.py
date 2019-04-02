@@ -17,7 +17,7 @@ class AV:
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
-            "release_date": self.release_date.strftime("%Y-%m-%d"),
+            "release_date": self.release_date.strftime("%Y-%m-%d") if self.release_date else "",
             "title": self.title
         }
 
