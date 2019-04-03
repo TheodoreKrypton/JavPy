@@ -34,6 +34,7 @@ jobs:
 
   - script: |
       pwd
+      ls
       python JavPy/JavPy/test_telegram.py
       python JavPy/JavPy/test_webserver.py
     displayName: 'test'
