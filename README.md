@@ -1,6 +1,6 @@
 <div align=center>
 
-![](javpy/app/web/src/assets/logo.png)
+![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png)
 
 ![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d64d4e093e204f5dbf668a4fcc87dceb)](https://app.codacy.com/app/TheodoreKrypton/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Grade_Dashboard)
@@ -109,6 +109,6 @@ apt-get install python-libtorrent
 
 *This project does not include any stored or static data, and all the data it presents are collected realtime and automatically from the websites below. Internet data are public but messy and collecting them is a tiring work. Appreciate them for their offering precious and high quality data.*
 
-[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)
+[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)
 
 </div>
