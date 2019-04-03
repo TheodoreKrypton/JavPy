@@ -1,8 +1,8 @@
-from sources.BaseSource import ISearchMagnet
+from JavPy.sources.BaseSource import ISearchMagnet
 import requests
 import re
 import bs4
-from functions.datastructure import Magnet
+from JavPy.functions.datastructure import Magnet
 
 
 class JavBusCom(ISearchMagnet):

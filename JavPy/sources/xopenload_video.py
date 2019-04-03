@@ -1,8 +1,8 @@
-from sources.BaseSource import ISearchByCode
+from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import re
 import bs4
-from functions.datastructure import AV
+from JavPy.functions.datastructure import AV
 import subprocess
 
 

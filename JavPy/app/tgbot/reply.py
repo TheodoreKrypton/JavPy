@@ -2,9 +2,9 @@
 
 import telegram
 from uuid import uuid4
-from functions import Functions
+from JavPy.functions import Functions
 import re
-from utils import history
+from JavPy.utils import history
 
 
 def _send_brief(bot, update, brief):

@@ -1,4 +1,4 @@
-from sources.javmost_com import JavMostCom
+from JavPy.sources.javmost_com import JavMostCom
 import datetime
 try:
     from typing import List

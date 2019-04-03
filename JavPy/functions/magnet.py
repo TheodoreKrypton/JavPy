@@ -1,4 +1,4 @@
-from sources.javbus_com import JavBusCom
+from JavPy.sources.javbus_com import JavBusCom
 
 
 class Magnet:

@@ -3,10 +3,10 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import requests
-from sources.BaseSource import ISearchByActress, IGetBrief
+from JavPy.sources.BaseSource import ISearchByActress, IGetBrief
 import bs4
-from functions.datastructure import Brief
-from utils.common import try_evaluate
+from JavPy.functions.datastructure import Brief
+from JavPy.utils.common import try_evaluate
 
 
 class IndexAVCom(ISearchByActress, IGetBrief):

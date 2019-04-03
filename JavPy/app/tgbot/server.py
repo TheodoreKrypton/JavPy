@@ -4,10 +4,10 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, filters
-from functions import Functions
+from JavPy.functions import Functions
 import getopt
 import re
-from app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
+from JavPy.app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 import urllib3
 
 

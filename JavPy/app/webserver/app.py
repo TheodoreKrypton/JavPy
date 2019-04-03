@@ -1,14 +1,24 @@
 from flask import Flask, make_response, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS
-from functions import Functions
+from JavPy.functions import Functions
 import json
 import os
+import threading
+from JavPy.utils.requester import Master
+
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
 web_dist_path = base_path + "/app/web/dist"
 
 app = Flask(__name__, template_folder=web_dist_path)
 CORS(app, resources=r'/*')
+
+
+@app.before_first_request
+def start_master_thread():
+    master = threading.Thread(target=Master.master_thread)
+    master.daemon = True
+    master.start()
 
 
 @app.route("/")

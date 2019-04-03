@@ -1,12 +1,11 @@
 # encoding: utf-8
 
-from app.tgbot.server import search, get_brief, get_magnet, get_new
+from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new
 try:
     import typing
 except ImportError:
     typing = None
 import requests
-from utils.history import terminate
 
 
 class MockGlobals:

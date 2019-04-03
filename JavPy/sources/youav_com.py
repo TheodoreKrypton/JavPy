@@ -1,7 +1,7 @@
-from sources.BaseSource import ISearchByCode
+from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4
-from functions.datastructure import AV
+from JavPy.functions.datastructure import AV
 
 
 class YouAVCom(ISearchByCode):

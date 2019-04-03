@@ -1,9 +1,9 @@
 import requests
 import bs4
-from functions.datastructure import Brief
+from JavPy.functions.datastructure import Brief
 import re
-from utils.common import try_evaluate
-from sources.BaseSource import IGetBrief
+from JavPy.utils.common import try_evaluate
+from JavPy.sources.BaseSource import IGetBrief
 
 
 class AVSoxNet(IGetBrief):

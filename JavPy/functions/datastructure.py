@@ -1,5 +1,5 @@
 import datetime
-from utils.common import try_evaluate
+from JavPy.utils.common import try_evaluate
 
 
 class AV:

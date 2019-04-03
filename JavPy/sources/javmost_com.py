@@ -1,13 +1,13 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from sources.BaseSource import ISearchByCode
+from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import re
 import bs4
 import json
-from embed.decode import decode
-from functions.datastructure import AV, Brief
-from utils.common import try_evaluate
+from JavPy.embed.decode import decode
+from JavPy.functions.datastructure import AV, Brief
+from JavPy.utils.common import try_evaluate
 import datetime
 
 

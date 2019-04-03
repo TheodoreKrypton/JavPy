@@ -1,9 +1,9 @@
-from sources.javmost_com import JavMostCom
-from sources.youav_com import YouAVCom
-from sources.xopenload_video import XOpenloadVideo
-from sources.indexav_com import IndexAVCom
-from utils.requester import spawn_many, Task
-from utils.common import sum_up
+from JavPy.sources.javmost_com import JavMostCom
+from JavPy.sources.youav_com import YouAVCom
+from JavPy.sources.xopenload_video import XOpenloadVideo
+from JavPy.sources.indexav_com import IndexAVCom
+from JavPy.utils.requester import spawn_many, Task
+from JavPy.utils.common import sum_up
 
 
 class Search:

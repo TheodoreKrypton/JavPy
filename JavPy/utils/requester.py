@@ -1,6 +1,6 @@
 import threading
 from threading import Lock
-from utils.common import try_evaluate
+from JavPy.utils.common import try_evaluate
 try:
     from typing import Dict
 except ImportError:
@@ -84,6 +84,7 @@ class Master:
     @classmethod
     def master_thread(cls):
         while True:
+            time.sleep(0.1)
             if not cls.__waiting_for_run:
                 continue
             while not cls.__spawnable():
@@ -94,11 +95,6 @@ class Master:
                     del cls.__waiting_for_run[0]
                 cls.workers[task.id] = Worker(task)
                 cls.workers[task.id].start()
-
-
-master = threading.Thread(target=Master.master_thread)
-master.daemon = True
-master.start()
 
 
 class Task:
@@ -220,7 +216,6 @@ class Worker(threading.Thread):
         self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
         Master.finish_task(self.task.id)
         if ex and self.task.catch_cb:
-            raise ex
             self.task.catch_cb(ex)
             self.task.status = Task.FAILED
         elif self.task.then_cb:

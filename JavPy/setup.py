@@ -5,15 +5,24 @@ import subprocess
 
 try:
     output = subprocess.check_output("node --version")
-    assert output.decode('utf-8').startswith("v")
+    assert output.startswith("v")
 except Exception as ex:
     print(ex)
     print("please install Node.JS first at https://nodejs.org/en/")
     exit(0)
 
+try:
+    output = subprocess.check_output("lsb_release -a")
+    if "Ubuntu" in output:
+        subprocess.Popen("sudo apt-get install python-libtorrent")
+        subprocess.Popen("sudo apt-get install python3-libtorrent")
+except Exception as ex:
+    print(ex)
+    print("Functions of checking torrents may be incomplete, please install python bindings of libtorrent manually")
+
 setup(
     name='JavPy',
-    version='0.2.0',
+    version='0.1.0',
     description=(
         '漂移过弯'
     ),
@@ -33,6 +42,5 @@ setup(
         'gevent',
         'lxml',
     ],
-    include_package_data=True,
-    exclude_package_data={'': ['.gitignore']}
+
 )

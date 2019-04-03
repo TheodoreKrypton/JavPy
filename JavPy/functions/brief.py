@@ -1,7 +1,7 @@
-from sources.indexav_com import IndexAVCom
-from sources.avsox_net import AVSoxNet
-from utils.common import sum_up
-from utils.requester import spawn_many, Task
+from JavPy.sources.indexav_com import IndexAVCom
+from JavPy.sources.avsox_net import AVSoxNet
+from JavPy.utils.common import sum_up
+from JavPy.utils.requester import spawn_many, Task
 
 
 class Brief:

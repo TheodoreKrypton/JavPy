@@ -1,10 +1,11 @@
 # encoding: utf-8
 
-from utils.node import Node
-from app.webserver import app
+from JavPy.utils.node import Node
+from JavPy.app.webserver import app
+
 
 # start node.js subprocess
-Node.start_node()
+# Node.start_node()
 
 # # run telegram bot service
 # run()

@@ -1,7 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from embed.fembed import fembed
-from embed.avgle import avgle
+from JavPy.embed.fembed import fembed
+from JavPy.embed.avgle import avgle
 
 
 def decode(url):

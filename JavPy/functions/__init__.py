@@ -1,12 +1,12 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from functions.search import Search
-from functions.new import New
-from functions.brief import Brief as GetBrief
-from functions.datastructure import AV, Brief
-from functions.magnet import Magnet
-from functions.history_names import HistoryNames
-from utils.common import cache
-from utils.requester import spawn_many, Task
+from JavPy.functions.search import Search
+from JavPy.functions.new import New
+from JavPy.functions.brief import Brief as GetBrief
+from JavPy.functions.datastructure import AV, Brief
+from JavPy.functions.magnet import Magnet
+from JavPy.functions.history_names import HistoryNames
+from JavPy.utils.common import cache
+from JavPy.utils.requester import spawn_many, Task
 
 
 class Functions:

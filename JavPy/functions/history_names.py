@@ -1,4 +1,4 @@
-from sources.etigoya import Etigoya
+from JavPy.sources.etigoya import Etigoya
 
 
 class HistoryNames:
