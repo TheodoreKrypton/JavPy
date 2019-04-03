@@ -36,5 +36,5 @@ jobs:
       ls
       ls JavPy/
       python ./JavPy/test_telegram.py
-      python JavPy/JavPy/test_webserver.py
+      python ./JavPy/test_webserver.py
     displayName: 'test'

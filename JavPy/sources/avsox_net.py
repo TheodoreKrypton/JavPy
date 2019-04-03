@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import requests
 import bs4
 from JavPy.functions.datastructure import Brief
