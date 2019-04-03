@@ -9,10 +9,12 @@ addons:
       - python-libtorrent
 sudo: required
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-  - sudo apt-get install nodejs -y
+      - python -m pip install --upgrade pip && pip install -r requirements.txt
+      - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      - sudo apt-get install nodejs -y
 install:
   - sudo pip3 install -r requirements.txt
   
 script: 
-  - pytest test.py
+  - python ./test_telegram.py
+  - python ./test_webserver.py

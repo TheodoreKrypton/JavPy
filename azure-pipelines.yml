@@ -9,8 +9,6 @@ jobs:
     vmImage: 'Ubuntu-16.04'
   strategy:
     matrix:
-      Python27:
-        python.version: '2.7'
       Python35:
         python.version: '3.5'
       Python36:
@@ -33,8 +31,6 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      ls
-      ls JavPy/
       python ./test_telegram.py
       python ./test_webserver.py
     displayName: 'test'
