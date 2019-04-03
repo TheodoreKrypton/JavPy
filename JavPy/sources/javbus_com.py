@@ -1,3 +1,4 @@
+from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.sources.BaseSource import ISearchMagnet
 import requests
 import re

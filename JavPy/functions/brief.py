@@ -1,3 +1,4 @@
+from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.sources.avsox_net import AVSoxNet
 from JavPy.utils.common import sum_up

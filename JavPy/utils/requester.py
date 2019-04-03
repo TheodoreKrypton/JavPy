@@ -1,3 +1,4 @@
+from __future__ import absolute_import, print_function, unicode_literals
 import threading
 from threading import Lock
 from JavPy.utils.common import try_evaluate

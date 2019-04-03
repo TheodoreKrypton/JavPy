@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from __future__ import absolute_import, print_function, unicode_literals
 import telegram
 from uuid import uuid4
 from JavPy.functions import Functions

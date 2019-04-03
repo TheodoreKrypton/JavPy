@@ -1,9 +1,9 @@
+from __future__ import absolute_import, print_function, unicode_literals
 from flask import Flask, make_response, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-import threading
 from JavPy.utils.requester import start_master_thread
 
 
