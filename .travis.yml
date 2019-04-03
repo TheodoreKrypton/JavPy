@@ -16,6 +16,5 @@ install:
   - sudo pip3 install -r requirements.txt
   
 script: 
-  - python ./test_telegram.py
-  - python ./test_webserver.py
+  - pytest
   - codecov

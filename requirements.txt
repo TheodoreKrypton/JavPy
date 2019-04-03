@@ -9,3 +9,4 @@ flask-cors
 gevent
 lxml
 codecov
+pytest

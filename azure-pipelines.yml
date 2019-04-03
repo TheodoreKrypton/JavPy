@@ -31,7 +31,6 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      python ./test_telegram.py
-      python ./test_webserver.py
+      pytest
       codecov --token=0ee9ff43-ddb6-4f13-9ad3-12eebd6b7506
     displayName: 'test'
