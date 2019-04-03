@@ -100,11 +100,13 @@ apt-get install python-libtorrent
 
 -   run `python main.py`
 
-## TODO
+<div align=center>
+  ##### Acknowledgements
 
--   [x] daily recommendations
--   [ ] top viewed
--   [x] usable magnet link
--   [ ] name translation (jp-zh-en)
--   [ ] uncensored videos
--   [ ] ambiguous search
+This project does not include any stored or static data, and all the data it presents are collected realtime and automatically from the websites below.
+
+Internet data are public but messy and collecting them is a tiring work. Appreciate them for their offering precious and high quality data.
+
+[![JavMost](readme/javmost.png)](https://www5.javmost.com)  [![AVSOX](readme/avsox.png)](https://avsox.net) [AV女優名 変換君](http://etigoya955.blog49.fc2.com/) [![IndexAV](readme/indexav.png)](https://indexav.com)[![JavBus](readme/javbus.png)](https://www.javbus.com) [![xopenload.video](readme/xopenload.png)](https://www.xopenload.video) [![YouAV](readme/youav.png)](https://www.xopenload.video)
+
+</div>
