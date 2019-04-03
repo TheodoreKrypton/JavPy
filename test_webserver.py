@@ -1,12 +1,7 @@
 # encoding: utf-8
 
-import sys
-import os
 import json
 import requests
-
-sys.path.append((os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))))
-
 from JavPy.app.webserver import app
 from JavPy.utils.testing import *
 

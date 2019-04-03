@@ -1,13 +1,6 @@
 # encoding: utf-8
 
-import sys
-import os
 import requests
-
-print(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-
-sys.path.append((os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))))
-
 from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new
 from JavPy.utils.testing import *
 
