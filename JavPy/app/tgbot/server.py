@@ -9,8 +9,9 @@ import getopt
 import re
 from JavPy.app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 import urllib3
+from JavPy.utils.requester import start_master_thread
 
-
+start_master_thread()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -111,7 +112,7 @@ def search(bot, update, args):
 
             briefs = Functions.search_by_actress(actress, up_to)
             if not allow_many_actresses:
-                briefs = list(filter(lambda x: len(x.actress) < 2, briefs))
+                briefs = list(filter(lambda x: "," not in x.actress, briefs))
             send_brief(bot, update, briefs)
 
         except getopt.GetoptError:

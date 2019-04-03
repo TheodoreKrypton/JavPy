@@ -108,5 +108,5 @@ test.html
 nohup.out
 .idea/
 .scannerwork/
-.pytest_cache/
+**/.pytest_cache/
 

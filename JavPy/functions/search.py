@@ -14,9 +14,10 @@ class Search:
         }
 
     def search_by_code(self, code):
-        return sum_up(spawn_many(
+        res = spawn_many(
             (Task(source.search_by_code, code) for source in self.sources_by_code)
-        ).wait_until(lambda x: x.preview_img_url))
+        ).wait_until(lambda x: x.preview_img_url)
+        return sum_up(res)
 
     @staticmethod
     def guess_lang(text):

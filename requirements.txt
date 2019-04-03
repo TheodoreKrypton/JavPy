@@ -3,7 +3,6 @@ requests
 python-telegram-bot
 bs4
 urllib3==1.23
-pytest
 flask
 six
 flask-cors

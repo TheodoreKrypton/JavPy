@@ -33,36 +33,46 @@ class JavMostCom(ISearchByCode):
 
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
 
-        button = bs.find(name='li', attrs={'class': 'active'})
-        params = re.search(r"select_part\((.+?)\)", button.a.attrs['onclick']).group(1)
-        e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
+        buttons = bs.select('.nav-tabs').findall(name='li')[1:-1]
+        success = False
 
-        data = re.search(r"get_source/\",(.+?)\}", rsp.text, re.S).group(1)
-        value = re.search(r"value: \"(.+?)\",", data).group(1)
-        sound = re.search(r"sound: \"(.+?)\",", data).group(1)
+        for button in buttons:
+            params = re.search(r"select_part\((.+?)\)", button.a.attrs['onclick']).group(1)
+            e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
 
-        url = "https://www5.javmost.com/get_code/"
-        rsp = requests.post(url, data={
-            "code": value
-        })
-        _code = rsp.text
+            data = re.search(r"get_source/\",(.+?)\}", rsp.text, re.S).group(1)
+            value = re.search(r"value: \"(.+?)\",", data).group(1)
+            sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 
-        url = "https://www5.javmost.com/get_source/"
-        rsp = requests.post(url, data={
-            "group": t,
-            "part": e,
-            "code": l,
-            "code2": r,
-            "code3": d,
-            "value": value,
-            "sound": sound,
-            "code4": _code
-        })
+            url = "https://www5.javmost.com/get_code/"
+            rsp = requests.post(url, data={
+                "code": value
+            })
+            _code = rsp.text
 
-        json_obj = json.loads(rsp.text)
-        url = json_obj["data"][0]
+            url = "https://www5.javmost.com/get_source/"
+            rsp = requests.post(url, data={
+                "group": t,
+                "part": e,
+                "code": l,
+                "code2": r,
+                "code3": d,
+                "value": value,
+                "sound": sound,
+                "code4": _code
+            })
 
-        url = decode(url)
+            json_obj = json.loads(rsp.text)
+            url = json_obj["data"][0]
+
+            url = decode(url)
+
+            if requests.get(url).status_code == 200:
+                success = True
+                break
+
+        if not success:
+            return None
 
         av = AV()
         av.preview_img_url = img

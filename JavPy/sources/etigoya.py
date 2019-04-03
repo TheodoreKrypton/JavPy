@@ -19,7 +19,6 @@ class Etigoya:
         if "スポンサー広告" in str(li):
             return None
         url = try_evaluate(lambda: re.search(Etigoya.url_pattern, str(li)).group(0))[0]
-        print(url)
         if not url:
             return None
 

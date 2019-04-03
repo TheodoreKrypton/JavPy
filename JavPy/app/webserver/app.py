@@ -4,7 +4,7 @@ from JavPy.functions import Functions
 import json
 import os
 import threading
-from JavPy.utils.requester import Master
+from JavPy.utils.requester import start_master_thread
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -15,10 +15,8 @@ CORS(app, resources=r'/*')
 
 
 @app.before_first_request
-def start_master_thread():
-    master = threading.Thread(target=Master.master_thread)
-    master.daemon = True
-    master.start()
+def master_thread():
+    start_master_thread()
 
 
 @app.route("/")
@@ -57,7 +55,6 @@ def search_by_code():
     if params["code"]:
         try:
             res['videos'] = [Functions.search_by_code(params["code"]).to_dict()]
-            # print(res)
             rsp = jsonify(res)
         except AttributeError:
             rsp = make_response("")
