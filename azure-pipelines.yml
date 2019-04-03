@@ -33,6 +33,7 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      python JavPy/test_telegram.py
-      python JavPy/test_webserver.py
+      pwd
+      python JavPy/JavPy/test_telegram.py
+      python JavPy/JavPy/test_webserver.py
     displayName: 'test'
