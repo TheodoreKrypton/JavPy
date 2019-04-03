@@ -18,3 +18,4 @@ install:
 script: 
   - python ./test_telegram.py
   - python ./test_webserver.py
+  - codecov

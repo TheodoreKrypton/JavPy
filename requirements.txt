@@ -8,3 +8,4 @@ six
 flask-cors
 gevent
 lxml
+codecov
