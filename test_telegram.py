@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import requests
-from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new
+from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, start_master_thread
 from JavPy.utils.testing import *
 
 
@@ -136,6 +136,7 @@ def test_new():
 
 
 if __name__ == '__main__':
+    start_master_thread()
     test_search_by_code()
     test_search_by_actress()
     test_brief()
