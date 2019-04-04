@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, print_function, absolute_import
 try:
     import typing
 except ImportError:
@@ -19,8 +20,9 @@ def testing(*_, **parameters):
                 return
             for which, _ in enumerate(parameters[keys[0]]):
                 parameter = dict(zip(keys, (parameters[key][which] for key in keys)))
-                print("start to test @ " +
-                      str(", ".join(key + "=" + str(parameter[key]) for key in parameter.keys())))
+                print("start to test @ %s" % ", ".join((
+                    key + "=" + str(parameter[key]) for key in parameter.keys()
+                )))
                 func(**parameter)
         return wrapper
     return decorator

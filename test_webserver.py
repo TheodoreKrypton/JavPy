@@ -1,12 +1,25 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals, print_function, absolute_import
 import json
 import requests
-from JavPy.app.webserver import app
+from JavPy.app.webserver.app import app, web_dist_path
 from JavPy.utils.testing import *
+import os
 
-app.app.config['TESTING'] = True
-client = app.app.test_client()
+app.config['TESTING'] = True
+client = app.test_client()
+
+
+@testing()
+def test_static_files():
+    if not os.path.exists(web_dist_path):
+        os.mkdir(web_dist_path)
+    with open(os.path.join(web_dist_path, "test_index.html"), "w") as fp:
+        fp.write("<html></html>")
+    rv = client.get('/test_index.html')
+    assert rv.status_code == 200
+    assert rv.data.decode("utf-8") == "<html></html>"
 
 
 @testing(code=("ABP-231", "ABP-123", "SSNI-351"))
@@ -14,6 +27,7 @@ def test_search_by_code(code):
     rv = client.post('/search_by_code', data=json.dumps({
         'code': code
     }))
+    assert rv.status_code == 200
     rsp = json.loads(rv.data.decode('utf-8'))
     assert rsp
     assert 'videos' in rsp
@@ -27,6 +41,7 @@ def test_search_by_actress(actress):
         'actress': actress,
         'history_name': True
     }))
+    assert rv.status_code == 200
     rsp = json.loads(rv.data.decode('utf-8'))
     assert rsp
     assert 'other' in rsp
@@ -41,13 +56,15 @@ def test_search_magnet_by_code(code):
     rv = client.post('/search_magnet_by_code', data=json.dumps({
         'code': code
     }))
+    assert rv.status_code == 200
     rsp = json.loads(rv.data.decode('utf-8'))
     assert len(rsp) > 0
 
 
-@testing()
-def test_newly_released():
-    rv = client.post('/new', data=json.dumps({}))
+@testing(data=({}, {"up_to": 30}, {"page": 1}))
+def test_newly_released(data):
+    rv = client.post('/new', data=json.dumps(data))
+    assert rv.status_code == 200
     rsp = json.loads(rv.data.decode('utf-8'))
     assert len(rsp) > 0
 
