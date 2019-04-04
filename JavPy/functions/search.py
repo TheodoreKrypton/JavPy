@@ -6,7 +6,6 @@ from JavPy.sources.xopenload_video import XOpenloadVideo
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.utils.requester import spawn_many, Task
 from JavPy.utils.common import sum_up
-import sys
 
 
 class Search:
@@ -17,19 +16,9 @@ class Search:
         }
 
     def search_by_code(self, code):
-        if sys.argv[0] == 'pytest':
-            print("fuck")
-            return self.search_by_code_for_testing(code)
-        else:
-            res = spawn_many(
-                (Task(source.search_by_code, code) for source in self.sources_by_code)
-            ).wait_until(lambda x: x.preview_img_url)
-            return sum_up(res)
-
-    def search_by_code_for_testing(self, code):
         res = spawn_many(
             (Task(source.search_by_code, code) for source in self.sources_by_code)
-        ).wait_for_all_finished()
+        ).wait_until(lambda x: x.preview_img_url)
         return sum_up(res)
 
     @staticmethod
