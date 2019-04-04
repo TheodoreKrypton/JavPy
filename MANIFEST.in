@@ -1,1 +1,1 @@
-recursive-include JavPy/app/web *
+recursive-include JavPy/app/web/dist *
