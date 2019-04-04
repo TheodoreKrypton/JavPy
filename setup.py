@@ -18,6 +18,7 @@ setup(
         '漂移过弯'
     ),
     author='Theodore Krypton',
+    author_email='theodorekrypton@outlook.com',
     license='MIT License',
     packages=find_packages(),
     url='https://github.com/TheodoreKrypton/JavPy',
@@ -34,5 +35,6 @@ setup(
         'lxml',
     ],
     include_package_data=True,
-    exclude_package_data={'': ['.gitignore']}
+    exclude_package_data={'': ['.gitignore']},
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 )
