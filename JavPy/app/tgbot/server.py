@@ -12,6 +12,7 @@ import urllib3
 from JavPy.utils.requester import start_master_thread
 
 start_master_thread()
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -178,8 +179,8 @@ def get_magnet(bot, update, args):
 #     print(update.message.chat_id, update.callback_query.data)
 
 
-def run():
-    updater = Updater(token=open("token.txt").read())
+def run(token):
+    updater = Updater(token)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 

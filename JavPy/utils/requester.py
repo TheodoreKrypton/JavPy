@@ -98,7 +98,14 @@ class Master:
                 cls.workers[task.id].start()
 
 
+__master_thread_started = False
+
+
 def start_master_thread():
+    global __master_thread_started
+    if __master_thread_started:
+        return
+    __master_thread_started = True
     master = threading.Thread(target=Master.master_thread)
     master.daemon = True
     master.start()
