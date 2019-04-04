@@ -180,10 +180,9 @@ class __TaskGroup:
                     continue
                 res = task.result
                 if res is not None and condition(res):
-                    res = self.__gather_results()
-                    return res
-            if self.__failed_cnt() == len(self.tasks):
-                return None
+                    return self.__gather_results()
+            if self.__finished_cnt() == len(self.tasks):
+                return self.__gather_results()
 
     def wait_for_one_finished(self):
         return self.wait_until(lambda x: True)

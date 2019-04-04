@@ -41,6 +41,8 @@ def update_object(origin, new):
 
 
 def sum_up(objects):
+    if objects is None:
+        return None
     objects = list(filter(lambda x: x, objects))
     if len(objects) == 0:
         return None
