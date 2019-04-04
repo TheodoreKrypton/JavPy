@@ -6,7 +6,6 @@ urllib3==1.23
 flask
 six
 flask-cors
-gevent
 lxml
 codecov
 pytest
