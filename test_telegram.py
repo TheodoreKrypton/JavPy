@@ -170,11 +170,11 @@ def test_magnet(code):
     assert len(received) > 0
 
 
-@testing(params=())
-def test_new():
+@testing(params=("-m 1 -u 20".split(),))
+def test_new(params):
     mock_message = MockMessage(mock_user, mock_chat.id, "/new")
     mock_update = MockUpdate(mock_message)
-    get_new(mock_bot, mock_update, "-m 1 -u 20".split())
+    get_new(mock_bot, mock_update, params)
     received = mock_user.look_received()
     for res in received:
         if requests.get(res["photo"]).status_code == 200:

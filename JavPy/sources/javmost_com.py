@@ -18,11 +18,11 @@ class JavMostCom(ISearchByCode):
     @classmethod
     def search_by_code(cls, code):
         url = "http://www5.javmost.com/" + code
-        rsp = requests.get(url)
-        if rsp.status_code != 200:
+        main_rsp = requests.get(url)
+        if main_rsp.status_code != 200:
             return None
 
-        img, _ = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", rsp.text).group(1))
+        img, _ = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", main_rsp.text).group(1))
 
         if not img:
             return None
@@ -31,16 +31,16 @@ class JavMostCom(ISearchByCode):
         if not img.startswith("http:"):
             img = "http:" + img
 
-        bs = bs4.BeautifulSoup(rsp.text, "lxml")
+        bs = bs4.BeautifulSoup(main_rsp.text, "lxml")
 
-        buttons = bs.select('.nav-tabs').findall(name='li')[1:-1]
+        buttons = bs.select('.tab-overflow')[0].find_all(name='li')[1:-1]
         success = False
 
         for button in buttons:
             params = re.search(r"select_part\((.+?)\)", button.a.attrs['onclick']).group(1)
             e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
 
-            data = re.search(r"get_source/\",(.+?)\}", rsp.text, re.S).group(1)
+            data = re.search(r"get_source/\",(.+?)\}", main_rsp.text, re.S).group(1)
             value = re.search(r"value: \"(.+?)\",", data).group(1)
             sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 

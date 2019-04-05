@@ -40,6 +40,10 @@ import time
           v                 v                      v                     
           v                 v                      v
          catch             then               gather_result
+         
+
+    All the requester tasks are owned by the Master thread
+
 """
 
 
@@ -107,7 +111,7 @@ def start_master_thread():
         return
     __master_thread_started = True
     master = threading.Thread(target=Master.master_thread)
-    master.daemon = True
+    master.setDaemon(True)
     master.start()
 
 
@@ -168,6 +172,9 @@ class __TaskGroup:
     def __failed_cnt(self):
         return sum(map(lambda x: x.status == Task.FAILED, self.tasks))
 
+    def __success_cnt(self):
+        return sum(map(lambda x: x.status == Task.SUCCESS, self.tasks))
+
     def wait_for_all_finished(self):
         while len(self.tasks) != self.__finished_cnt():
             pass
@@ -186,6 +193,11 @@ class __TaskGroup:
 
     def wait_for_one_finished(self):
         return self.wait_until(lambda x: True)
+
+    def wait_for(self, success_cnt):
+        while True:
+            if success_cnt == self.__success_cnt() or len(self.tasks) == self.__finished_cnt():
+                return self.__gather_results()
 
     def on_one_complete(self, callback):
         for task in self.tasks:

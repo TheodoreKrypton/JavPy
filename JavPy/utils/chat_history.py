@@ -38,5 +38,5 @@ def start_clear_died_session():
         return
     __clear_died_session_thread_started = True
     t = threading.Thread(target=clear_died_session_thread)
-    t.daemon = True
+    t.setDaemon(True)
     t.start()

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
 import datetime
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import try_evaluate, update_object
 
 
 class AV:
@@ -41,6 +41,19 @@ class Brief:
             self.__release_date = date
         else:
             self.__release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None)
+
+    @staticmethod
+    def reduce_briefs(briefs):
+        res = {}
+        without_code = []
+        for brief in briefs:
+            if not brief.code:
+                without_code.append(brief)
+            elif brief.code in res:
+                update_object(res[brief.code], brief)
+            else:
+                res[brief.code] = brief
+        return res
 
     def to_dict(self):
         return {

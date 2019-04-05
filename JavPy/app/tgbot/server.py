@@ -10,7 +10,7 @@ import re
 from JavPy.app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 import urllib3
 from JavPy.utils.requester import start_master_thread
-from JavPy.utils.history import start_clear_died_session
+from JavPy.utils.chat_history import start_clear_died_session
 
 start_master_thread()
 start_clear_died_session()
