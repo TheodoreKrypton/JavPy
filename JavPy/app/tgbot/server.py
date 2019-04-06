@@ -10,7 +10,6 @@ import re
 from JavPy.app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 import urllib3
 from JavPy.utils.requester import start_master_thread
-import os
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
