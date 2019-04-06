@@ -9,9 +9,6 @@ from functools import reduce
 
 
 class New:
-    def __init__(self):
-        pass
-
     newly_released = []  # type: List[List]
     record_date = datetime.datetime.today().date()
 

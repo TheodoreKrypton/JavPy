@@ -22,14 +22,21 @@ def clear_history(user_id):
 
 def clear_died_session_thread():
     while True:
-        time.sleep(3600)
+        time.sleep(0.5)
         now = time.time()
         for k in history.keys():
             if now - history[k][1] > 3600:
                 del history[k]
 
 
-def clear_died_session():
+__clear_died_session_thread_started = False
+
+
+def start_clear_died_session():
+    global __clear_died_session_thread_started
+    if __clear_died_session_thread_started:
+        return
+    __clear_died_session_thread_started = True
     t = threading.Thread(target=clear_died_session_thread)
-    t.daemon = True
+    t.setDaemon(True)
     t.start()

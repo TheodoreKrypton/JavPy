@@ -10,6 +10,11 @@ import re
 from JavPy.app.tgbot.reply import send_brief, Interactive, send_av, send_magnet
 import urllib3
 from JavPy.utils.requester import start_master_thread
+from JavPy.utils.chat_history import start_clear_died_session
+
+start_master_thread()
+start_clear_died_session()
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -19,10 +24,10 @@ helps = {
         """
             Search by name of an actress
             
-            Usage: /search name [-m|--many-actresses,[allow|deny/1/0]] [-u|--upto,[number]]
+            Usage: /search name [-m|--many-actresses,[on|off/1/0]] [-u|--upto,[number]]
             
             Description
-                -m,--many-actresses Whether a movie of many actresses allowed. "allow", "deny", "1" or "0". default=0
+                -m,--many-actresses Whether a movie of many actresses allowed. "on", "off", "1" or "0". default=0
                 -u,--upto	        Max number of the results. default=10
             
             for example:
@@ -32,10 +37,10 @@ helps = {
         """
             Get newly released videos
 
-            Usage: /new [-m|--many-actresses,[allow|deny/1/0]] [-u|--upto,[number]]
+            Usage: /new [-m|--many-actresses,[on|off/1/0]] [-u|--upto,[number]]
 
             Description
-                -m,--many-actresses Whether a movie of many actresses allowed. "allow", "deny", "1" or "0". default=0
+                -m,--many-actresses Whether a movie of many actresses allowed. "on", "off", "1" or "0". default=0
                 -u,--upto	        Max number of the results. default=10
 
             for example:
@@ -94,8 +99,8 @@ def search(bot, update, args):
             up_to = 10
 
             for o, a in options:
-                if o in ("-m", "--many-actresses") and a in ("allow", "deny", "1", "0"):
-                    if a in ("allow", "1"):
+                if o in ("-m", "--many-actresses") and a in ("on", "off", "1", "0"):
+                    if a in ("on", "1"):
                         allow_many_actresses = True
                     continue
                 if o in ("-u", "--upto"):
@@ -121,15 +126,14 @@ def search(bot, update, args):
 
 def get_new(bot, update, args):
     try:
-        options, _ = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:',
-                                           ['many-actress=', 'upto='])
+        options, _ = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:', ['many-actress=', 'upto='])
 
         allow_many_actresses = False
         up_to = 10
 
         for o, a in options:
-            if o in ("-m", "--many-actresses") and a in ("allow", "deny", "1", "0"):
-                if a in ("allow", "1"):
+            if o in ("-m", "--many-actresses") and a in ("on", "off", "1", "0"):
+                if a in ("on", "1"):
                     allow_many_actresses = True
                 continue
             if o in ("-u", "--upto"):
@@ -178,8 +182,6 @@ def get_magnet(bot, update, args):
 
 
 def run(token):
-    start_master_thread()
-
     updater = Updater(token)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)

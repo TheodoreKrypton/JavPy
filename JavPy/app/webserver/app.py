@@ -9,7 +9,6 @@ from JavPy.utils.requester import start_master_thread
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
 web_dist_path = base_path + "/app/web/dist"
-
 app = Flask(__name__, template_folder=web_dist_path)
 CORS(app, resources=r'/*')
 
@@ -24,24 +23,9 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory(web_dist_path + '/js', path)
-
-
-@app.route('/css/<path:path>')
-def send_css(path):
-    return send_from_directory(web_dist_path + '/css', path)
-
-
-@app.route('/fonts/<path:path>')
-def send_fonts(path):
-    return send_from_directory(web_dist_path + '/fonts', path)
-
-
-@app.route('/img/<path:path>')
-def send_img(path):
-    return send_from_directory(web_dist_path + '/img', path)
+@app.route('/<path:path>')
+def send_static(path):
+    return send_from_directory(web_dist_path, path)
 
 
 @app.route("/search_by_code", methods=['POST'])
