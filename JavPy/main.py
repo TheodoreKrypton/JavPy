@@ -11,4 +11,4 @@ from JavPy.app.webserver import app
 # run()
 
 # run web server
-app.app.run('0.0.0.0', 8081)
+app.app.run('0.0.0.0', 8081, threaded=True)

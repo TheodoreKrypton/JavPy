@@ -10,3 +10,4 @@ lxml
 codecov
 pytest
 pytest-cov
+gevent
