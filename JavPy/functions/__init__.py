@@ -34,20 +34,9 @@ class Functions:
         return HistoryNames.get_history_names(actress)
 
     @staticmethod
-    def search_by_actress(actress, up_to, history_name):
-        res = {}
-        briefs = spawn(Search.search_by_actress, actress, up_to)
-
-        if history_name:
-            names = spawn(Functions.search_history_names, actress)
-            res = {
-                'other': {
-                    'history_name': names.wait_for_result()
-                }
-            }
-
-        res['videos'] = [x.to_dict() for x in briefs.wait_for_result()]
-        return res
+    @cache
+    def search_by_actress(actress, up_to):
+        return Search.search_by_actress(actress, up_to)
 
     @staticmethod
     @cache

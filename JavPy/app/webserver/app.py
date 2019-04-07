@@ -4,7 +4,7 @@ from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import start_master_thread
+from JavPy.utils.requester import start_master_thread, spawn
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -53,16 +53,22 @@ def search_by_actress():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
 
-    if "actress" in params and "history_name" in params:
-        if params['history_name'] == "true":
-            history_name = True
-        else:
-            history_name = False
-        res = Functions.search_by_actress(params["actress"].strip(), 30, history_name)
-        rsp = jsonify(res)
-    else:
-        rsp = make_response("")
+    res = {}
 
+    actress = params['actress']
+    history_name = params['history_name'] == "true"
+    briefs = spawn(Functions.search_by_actress, actress, 30)
+
+    if history_name:
+        names = spawn(Functions.search_history_names, actress)
+        res = {
+            'other': {
+                'history_name': names.wait_for_result()
+            }
+        }
+
+    res['videos'] = [x.to_dict() for x in briefs.wait_for_result()]
+    rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
 

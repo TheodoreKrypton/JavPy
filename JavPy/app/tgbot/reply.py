@@ -63,7 +63,7 @@ def inline_query(bot, update):
     key_word = query.split()[0]
 
     if not re.search(r"\d", key_word):
-        briefs = Functions.search_by_actress(key_word, up_to=20)
+        briefs = Functions.search_by_actress(key_word, 20)
 
     else:
         briefs = [Functions.get_brief(key_word)]
