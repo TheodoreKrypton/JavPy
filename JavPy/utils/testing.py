@@ -10,7 +10,8 @@ def testing(*_, **parameters):
     keys = list(parameters.keys())
     if nargs > 1:
         for i in range(1, nargs):
-            assert len(parameters[keys[0]]) == len(parameters[keys[i]])
+            if len(parameters[keys[0]]) == len(parameters[keys[i]]):
+                raise ValueError
 
     def decorator(func):
         def wrapper():
@@ -26,5 +27,3 @@ def testing(*_, **parameters):
                 func(**parameter)
         return wrapper
     return decorator
-
-

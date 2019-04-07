@@ -51,7 +51,7 @@ helps = {
             Get brief info of a video
 
             Usage: /brief code [-l|--lang,[en/jp/zh]]
-            
+
             Description
                 -l,--lang specify language type of the result. default=en
 
@@ -103,16 +103,13 @@ def search(bot, update, args):
                     if a in ("on", "1"):
                         allow_many_actresses = True
                     continue
-                if o in ("-u", "--upto"):
+                elif o in ("-u", "--upto"):
                     try:
                         up_to = int(a)
                         continue
                     except ValueError:
                         bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
                         return
-                else:
-                    bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
-                    return
 
             briefs = Functions.search_by_actress(actress, up_to)
             if not allow_many_actresses:
@@ -136,16 +133,13 @@ def get_new(bot, update, args):
                 if a in ("on", "1"):
                     allow_many_actresses = True
                 continue
-            if o in ("-u", "--upto"):
+            elif o in ("-u", "--upto"):
                 try:
                     up_to = int(a)
                     continue
                 except ValueError:
                     bot.send_message(chat_id=update.message.chat_id, text=helps["get-new"])
                     return
-            else:
-                bot.send_message(chat_id=update.message.chat_id, text=helps["get-new"])
-                return
 
         briefs = Functions.get_newly_released(allow_many_actresses, up_to)
         send_brief(bot, update, briefs)
