@@ -13,7 +13,7 @@ class HistoryNames:
             Task(AVHelpMemoWiki.get_history_names, actress)
         )).wait_for_all_finished()))
         if len(result) == 0:
-            return None
+            return []
         if len(result) == 1:
             return result[0]
         else:

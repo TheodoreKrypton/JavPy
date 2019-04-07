@@ -34,7 +34,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
             if up_to and cnt >= up_to:
                 return res
-
         return res
 
     @classmethod

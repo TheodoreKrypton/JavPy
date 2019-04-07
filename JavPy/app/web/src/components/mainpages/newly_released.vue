@@ -24,7 +24,7 @@ export default {
     const rsp = await axios.post(
       `http://${config.address}:${config.port}/new`,
       {
-        page: 0
+        page: 1
       }
     );
     if (!rsp.data) {

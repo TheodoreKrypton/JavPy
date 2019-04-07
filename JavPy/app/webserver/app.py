@@ -52,22 +52,17 @@ def search_by_code():
 def search_by_actress():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = {
-        'videos': None,
-        'other': None
-    }
 
-    if params["actress"]:
-        briefs = Functions.search_by_actress(params["actress"].strip(), 30)
-        if briefs:
-            res['videos'] = [x.to_dict() for x in sorted(briefs, key=lambda x: x.release_date, reverse=True)]
+    if "actress" in params and "history_name" in params:
+        if params['history_name'] == "true":
+            history_name = True
+        else:
+            history_name = False
+        res = Functions.search_by_actress(params["actress"].strip(), 30, history_name)
+        rsp = jsonify(res)
+    else:
+        rsp = make_response("")
 
-        if params["history_name"]:
-            res['other'] = {
-                'history_name': Functions.search_history_names(params['actress'])
-            }
-
-    rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
 
@@ -79,7 +74,7 @@ def new():
 
     if "up_to" in params:
         res = Functions.get_newly_released(params["up_to"], False)
-    elif "page" in params:
+    elif "page" in json.loadsparams:
         res = Functions.get_newly_released(False, params["page"])
     else:
         res = Functions.get_newly_released(30, False)

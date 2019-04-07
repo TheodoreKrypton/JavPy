@@ -1,5 +1,8 @@
 <template>
-  <div style="text-align: center;" ref="whole">
+  <div
+    style="text-align: center;"
+    ref="whole"
+  >
     <el-alert
       v-if="videos === ''"
       title="Sorry, cannot find any result."
@@ -8,15 +11,26 @@
       style="width: 40%; margin-left:auto; margin-right:auto"
     ></el-alert>
 
-    <table v-if="videos != undefined && Object.keys(videos).length > 0" cellspacing="30" style="margin-left: auto; margin-right: auto">
-      <tr v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)" :key="i">
-        <td v-for="j in itemPerLine" :key="j">
-          <showcard style="width:100%;" :video="videos[(i-1)*itemPerLine+j-1]"></showcard>
+    <table
+      v-if="videos != undefined && Object.keys(videos).length > 0"
+      cellspacing="30"
+      style="margin-left: auto; margin-right: auto"
+    >
+      <tr
+        v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)"
+        :key="i"
+      >
+        <td
+          v-for="j in itemPerLine"
+          :key="j"
+        >
+          <showcard
+            style="width:100%;"
+            :video="videos[(i-1)*itemPerLine+j-1]"
+          ></showcard>
         </td>
       </tr>
-      <tr
-        v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
-      >
+      <tr v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine">
         <td
           v-for="j in Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
           :key="j"
@@ -44,7 +58,7 @@ export default {
   props: ["videosProp"],
   data() {
     return {
-      page: 0,
+      page: 1,
       itemPerLine: 3,
       av: this.videosProp
     };
