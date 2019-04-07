@@ -1,4 +1,5 @@
 from __future__ import unicode_literals, print_function, absolute_import
+# from functools import wraps
 try:
     import typing
 except ImportError:
@@ -14,6 +15,7 @@ def testing(*_, **parameters):
                 raise ValueError
 
     def decorator(func):
+        # @wraps(func)
         def wrapper():
             print("==========Testing " + func.__name__)
             if not parameters:

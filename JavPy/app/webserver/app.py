@@ -1,10 +1,11 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from flask import Flask, make_response, jsonify, request, render_template, send_from_directory
+from flask import Flask, make_response, jsonify, request, render_template, send_from_directory, abort
 from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import start_master_thread, spawn
+from JavPy.utils.requester import spawn
+from JavPy.utils.buggyauth import check_ip
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -14,18 +15,15 @@ CORS(app, resources=r'/*')
 
 
 @app.before_first_request
-def master_thread():
-    start_master_thread()
+def before_first():
+    pass
 
 
 @app.before_request
 def before_request():
     ip = request.remote_addr
-
-
-@app.after_request
-def after_request():
-    pass
+    if not check_ip(ip):
+        abort(400)
 
 
 @app.route("/")
