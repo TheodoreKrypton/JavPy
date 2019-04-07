@@ -37,6 +37,15 @@ class ISearchMagnet:
         pass
 
 
+class IHistoryNames:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def get_history_names(cls, actress):
+        pass
+
+
 class SourceException(Exception):
     def __init__(self, msg):
         Exception.__init__(self, msg)

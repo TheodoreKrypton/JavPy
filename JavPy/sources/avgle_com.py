@@ -7,7 +7,7 @@ import requests
 class AVGleCom(ISearchByCode):
     @classmethod
     def search_by_code(cls, code):
-        url = "https://api.avgle.com/v1/search/ABP-231/0?limit=1"
+        url = "https://api.avgle.com/v1/search/" + code + "/0?limit=1"
         rsp = json.loads(requests.get(url).text)
         av = AV()
         av.title = rsp['response']['videos'][0]['title']

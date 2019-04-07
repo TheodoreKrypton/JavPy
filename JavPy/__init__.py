@@ -1,5 +1,6 @@
-from .app.webserver.app import app
-from .app.tgbot.server import run
+if __name__ == '__main__':
+    from .app.webserver.app import app
+    from .app.tgbot.server import run
 
 
 print("""

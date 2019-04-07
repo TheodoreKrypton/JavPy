@@ -25,6 +25,7 @@ class Functions:
                 res.actress = brief_info.actress if brief_info.actress else ""
                 res.release_date = brief_info.release_date
                 res.title = brief_info.title
+                res.preview_img_url = brief_info.preview_img_url if brief_info.preview_img_url else ""
             return res
         else:
             return None

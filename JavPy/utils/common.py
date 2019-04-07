@@ -49,3 +49,8 @@ def sum_up(objects):
     if len(objects) == 1:
         return objects[0]
     return reduce(update_object, objects)
+
+
+def urlencode(string, encoding):
+    encoded = string.encode(encoding)
+    return "".join((hex(byte).replace("0x", "%") for byte in encoded))
