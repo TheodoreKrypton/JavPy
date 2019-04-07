@@ -25,7 +25,7 @@ let EventBus = Vue.extend({
         this.$router.push({
           path: "/search/actress",
           query: data
-        })
+        });
       });
 
       this.$on("load_more", async function (from) {

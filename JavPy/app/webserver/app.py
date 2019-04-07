@@ -18,6 +18,16 @@ def master_thread():
     start_master_thread()
 
 
+@app.before_request
+def before_request():
+    ip = request.remote_addr
+
+
+@app.after_request
+def after_request():
+    pass
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
