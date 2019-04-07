@@ -74,7 +74,7 @@ def new():
 
     if "up_to" in params:
         res = Functions.get_newly_released(params["up_to"], False)
-    elif "page" in json.loadsparams:
+    elif "page" in params:
         res = Functions.get_newly_released(False, params["page"])
     else:
         res = Functions.get_newly_released(30, False)
