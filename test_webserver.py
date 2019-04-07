@@ -35,7 +35,7 @@ def test_search_by_code(code):
     assert requests.get(rsp['videos'][0]['video_url']).status_code == 200
 
 
-@testing(actress=(u"川合まゆ",))
+@testing(actress=(u"川合まゆ", u"唯川みさき"))
 def test_search_by_actress(actress):
     rv = client.post('/search_by_actress', data=json.dumps({
         'actress': actress,
