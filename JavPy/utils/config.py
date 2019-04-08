@@ -1,9 +1,10 @@
+# encoding: utf-8
+
 import os
 import json
 
 
 class Config:
-
     user_path = os.path.expanduser("~")
     config_path = os.path.join(user_path, ".JavPy")
     config = {}
@@ -18,7 +19,7 @@ class Config:
     def save_config(cls):
         if not os.path.exists(cls.config_path):
             os.mkdir(cls.config_path)
-        with open(os.path.join(cls.config_path, "config.json"), "w", encoding='utf-8') as fp:
+        with open(os.path.join(cls.config_path, "config.json"), "w") as fp:
             fp.write(json.dumps(cls.config, sort_keys=True, indent=4))
 
     @classmethod
@@ -51,7 +52,8 @@ else:
     Config.config = {
         "permitted-ip": [
             "127.0.0.1",
-            "192.168.0.0/16"
+            "192.168.0.0/16",
+            "操你妈"
         ],
         "password": ""
     }
