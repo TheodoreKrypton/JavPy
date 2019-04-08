@@ -10,7 +10,6 @@ lxml
 codecov
 pytest
 pytest-cov
-pytest-azurepipelines
 gevent
 ipaddr
 pycryptodome
