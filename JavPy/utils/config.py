@@ -12,7 +12,7 @@ class Config:
     @classmethod
     def read_config(cls):
         with open(os.path.join(cls.config_path, "config.json")) as fp:
-            cls.config = json.loads(fp.read())
+            cls.config = json.loads(fp.read().decode('utf-8'))
         return cls.config
 
     @classmethod

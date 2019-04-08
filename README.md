@@ -2,9 +2,6 @@
 
 ![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png)
 
-![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
-[![Build Status](https://theodorekrypton.visualstudio.com/main/_apis/build/status/TheodoreKrypton.JavPy?branchName=master)](https://theodorekrypton.visualstudio.com/main/_build/latest?definitionId=1&branchName=master)
-
 [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2a42b438eade46ae897a727068621ace)](https://www.codacy.com/app/TheodoreKrypton/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d64d4e093e204f5dbf668a4fcc87dceb)](https://app.codacy.com/app/TheodoreKrypton/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Grade_Dashboard)
@@ -17,6 +14,11 @@
 [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
 
 </div>
+
+Environments | Status
+:--- | :---:
+Ubuntu 16.04 |[![Build Status](https://theodorekrypton.visualstudio.com/main/_apis/build/status/TheodoreKrypton.JavPy?branchName=master)](https://theodorekrypton.visualstudio.com/main/_build/latest?definitionId=1&branchName=master)![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
+Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=master)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=master)
 
 ## 简介/Introduction
 
@@ -113,6 +115,6 @@ apt-get install python-libtorrent
 
 *This project does not include any stored or static data, and all the data it presents are collected realtime and automatically from the websites below. Internet data are public but messy and collecting them is a tiring work. Appreciate them for their offering precious and high quality data.*
 
-[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)  [Fembed](https://www.fembed.com)
+[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)  [Fembed](https://www.fembed.com) [素人系AV女優大辞典wiki](https://av-help.memo.wiki/)
 
 </div>
