@@ -31,6 +31,6 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pytest pytest --cov=JavPy --ignore=JavPy/app/web
+      pytest --cov=JavPy --ignore=JavPy/app/web
       codecov --token=0ee9ff43-ddb6-4f13-9ad3-12eebd6b7506
     displayName: 'test'
