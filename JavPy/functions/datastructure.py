@@ -41,7 +41,7 @@ class Brief:
         if isinstance(release_date, datetime.datetime):
             self.release_date = release_date
         else:
-            self.release_date = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
+            self.release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
 
     @staticmethod
     def reduce_briefs(briefs):

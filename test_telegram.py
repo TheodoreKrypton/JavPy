@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals, print_function, absolute_import
 import requests
+from JavPy.app import *
 from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, start, Interactive
 from JavPy.utils.testing import *
 
