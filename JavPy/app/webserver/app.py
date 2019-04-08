@@ -6,7 +6,6 @@ import json
 import os
 from JavPy.utils.requester import spawn
 from JavPy.utils.buggyauth import check_ip
-import Crypto
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
