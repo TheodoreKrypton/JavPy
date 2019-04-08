@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals, print_function, absolute_import
 import requests
-from JavPy.app import *
 from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, start, Interactive
 from JavPy.utils.testing import *
 
@@ -239,8 +238,9 @@ def test_interactive():
 
 
 if __name__ == '__main__':
-    test_search_by_code()
+    # test_search_by_code()
+    # test_search_by_actress()
+    # test_brief()
+    # test_magnet()
+    # test_new()
     test_search_by_actress()
-    test_brief()
-    test_magnet()
-    test_new()
