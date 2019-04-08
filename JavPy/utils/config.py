@@ -19,7 +19,30 @@ class Config:
         if not os.path.exists(cls.config_path):
             os.mkdir(cls.config_path)
         with open(os.path.join(cls.config_path, "config.json"), "w", encoding='utf-8') as fp:
-            fp.write(json.dumps(cls.config))
+            fp.write(json.dumps(cls.config, sort_keys=True, indent=4))
+
+    @classmethod
+    def set_config(cls, key, value):
+        keys = key.split(".")
+        obj = cls.config
+        for key in keys[:-1]:
+            if key in obj:
+                obj = obj[key]
+            else:
+                obj[key] = {}
+                obj = obj[key]
+        obj[keys[-1]] = value
+
+    @classmethod
+    def get_config(cls, key):
+        keys = key.split(".")
+        obj = cls.config
+        for key in keys:
+            if key in obj:
+                obj = obj[key]
+            else:
+                return None
+        return obj
 
 
 if os.path.exists(os.path.join(Config.config_path, "config.json")):

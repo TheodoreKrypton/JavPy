@@ -12,3 +12,4 @@ pytest
 pytest-cov
 gevent
 ipaddr
+pycrypto
