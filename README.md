@@ -2,6 +2,12 @@
 
 ![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png)
 
+Environments | Status
+:---: | :---:
+Ubuntu 16.04 |[![Build Status](https://theodorekrypton.visualstudio.com/main/_apis/build/status/TheodoreKrypton.JavPy?branchName=master)](https://theodorekrypton.visualstudio.com/main/_build/latest?definitionId=1&branchName=master)![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
+Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=master)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=master)
+
+
 [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2a42b438eade46ae897a727068621ace)](https://www.codacy.com/app/TheodoreKrypton/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d64d4e093e204f5dbf668a4fcc87dceb)](https://app.codacy.com/app/TheodoreKrypton/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Grade_Dashboard)
@@ -15,10 +21,6 @@
 
 </div>
 
-Environments | Status
-:--- | :---:
-Ubuntu 16.04 |[![Build Status](https://theodorekrypton.visualstudio.com/main/_apis/build/status/TheodoreKrypton.JavPy?branchName=master)](https://theodorekrypton.visualstudio.com/main/_build/latest?definitionId=1&branchName=master)![](https://travis-ci.org/TheodoreKrypton/JavPy.svg?branch=master)
-Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=master)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=master)
 
 ## 简介/Introduction
 
