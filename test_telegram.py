@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals, print_function, absolute_import
 import requests
-from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, Interactive
+from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, start, Interactive
 from JavPy.utils.testing import *
 
 
@@ -170,7 +170,7 @@ def test_magnet(code):
     assert len(received) > 0
 
 
-@testing(params=("-m 1 -u 20".split(),))
+@testing(params=("-m 1 -u 20".split()))
 def test_new(params):
     mock_message = MockMessage(mock_user, mock_chat.id, "/new")
     mock_update = MockUpdate(mock_message)
@@ -180,6 +180,15 @@ def test_new(params):
         if requests.get(res["photo"]).status_code == 200:
             return
     assert False
+
+
+@testing(param=("-a 1 -b 20".split(), "-m 1 -u 10a".split()))
+def test_new_exception(param):
+    mock_message = MockMessage(mock_user, mock_chat.id, "/new")
+    mock_update = MockUpdate(mock_message)
+    get_new(mock_bot, mock_update, param)
+    received = mock_user.look_received()
+    assert "Get newly released videos" in received[0]['text']
 
 
 @testing()
@@ -194,7 +203,7 @@ def test_interactive():
     # test interactive start
     mock_message = MockMessage(mock_user, mock_chat.id, "/start")
     mock_update = MockUpdate(mock_message)
-    Interactive.start(mock_bot, mock_update)
+    start(mock_bot, mock_update)
     received = mock_user.look_received()
     assert len(received) == 1
     assert received[0]['text'] == 'Hi, how can I help you?'
@@ -229,8 +238,9 @@ def test_interactive():
 
 
 if __name__ == '__main__':
-    test_search_by_code()
+    # test_search_by_code()
+    # test_search_by_actress()
+    # test_brief()
+    # test_magnet()
+    # test_new()
     test_search_by_actress()
-    test_brief()
-    test_magnet()
-    test_new()

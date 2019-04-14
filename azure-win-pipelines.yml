@@ -6,7 +6,7 @@ jobs:
 
 - job: 'Test'
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: 'windows-2019'
   strategy:
     matrix:
       Python27:
@@ -28,8 +28,6 @@ jobs:
 
   - script: |
       python -m pip install --upgrade pip && pip install -r requirements.txt
-      curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-      sudo apt-get install nodejs -y
     displayName: 'Install dependencies'
 
   - script: |

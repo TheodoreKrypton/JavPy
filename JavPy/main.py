@@ -4,11 +4,12 @@ from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.app.webserver import app
 
 
-# start node.js subprocess
-# Node.start_node()
+if __name__ == '__main__':
+    # start node.js subprocess
+    # Node.start_node()
 
-# # run telegram bot service
-# run()
+    # # run telegram bot service
+    # run()
 
-# run web server
-app.app.run('0.0.0.0', 8081)
+    # run web server
+    app.app.run('0.0.0.0', 8081, threaded=True)

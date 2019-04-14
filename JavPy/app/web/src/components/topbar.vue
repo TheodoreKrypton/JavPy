@@ -1,16 +1,24 @@
 <template>
   <div class="topbar">
-    <div style="height: 100%">
-      <span style="float: left">
-        <img src="../assets/logo.png" alt="logo" style="height: 60px">
-      </span>
-      
-      <span style="float: right">
-        <el-button icon="el-icon-setting" circle></el-button>
-      </span>
-    </div>
+    <span style="float: left; height: 60px">
+      <img
+        src="../assets/logo.png"
+        alt="logo"
+        style="height: 60px"
+      >
+    </span>
 
-    <div v-if="loading" class="loading-bar"></div>
+    <span style="float: right">
+      <el-button
+        icon="el-icon-setting"
+        circle
+      ></el-button>
+    </span>
+
+    <div
+      v-if="loading"
+      class="loading-bar"
+    ></div>
   </div>
 </template>
 
@@ -39,8 +47,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.topbar{
-  box-shadow: 0px 12px 8px -12px #000; border-radius:10px; 
+.topbar {
+  box-shadow: 0px 12px 8px -12px #000;
+  border-radius: 10px;
 }
 
 .loading-bar {

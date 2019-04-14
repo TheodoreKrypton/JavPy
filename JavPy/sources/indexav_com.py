@@ -34,7 +34,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
             if up_to and cnt >= up_to:
                 return res
-
         return res
 
     @classmethod
@@ -65,5 +64,5 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         brief.preview_img_url = img
         brief.code = code.strip()
         brief.actress = actress.strip()
-        brief.release_date = release_date
+        brief.set_release_date(release_date)
         return brief

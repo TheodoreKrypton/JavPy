@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from __future__ import print_function, unicode_literals, absolute_import
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
@@ -29,9 +31,10 @@ class AVHelpMemoWiki(IHistoryNames):
             cls.history_name_pattern, pre
         ).group(1).split("／")]
 
-        current_name = re.sub(cls.kana_pattern, "", re.search(cls.current_name_pattern, pre).group(1))
-
-        names.append(current_name)
+        current_name = re.search(cls.current_name_pattern, pre)
+        if current_name:
+            current_name = re.sub(cls.kana_pattern, "", current_name.group(1))
+            names.append(current_name)
 
         return names
 

@@ -12,6 +12,12 @@ class AV:
         self.release_date = None
         self.title = ""
 
+    def set_release_date(self, release_date):
+        if isinstance(release_date, datetime.datetime):
+            self.release_date = release_date
+        else:
+            self.release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
+
     def to_dict(self):
         return {
             "code": self.code,
@@ -29,18 +35,13 @@ class Brief:
         self.preview_img_url = ""
         self.actress = ""
         self.title = ""
-        self.__release_date = None
+        self.release_date = None
 
-    @property
-    def release_date(self):
-        return self.__release_date
-
-    @release_date.setter
-    def release_date(self, date):
-        if isinstance(date, datetime.datetime):
-            self.__release_date = date
+    def set_release_date(self, release_date):
+        if isinstance(release_date, datetime.datetime):
+            self.release_date = release_date
         else:
-            self.__release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None)
+            self.release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
 
     @staticmethod
     def reduce_briefs(briefs):

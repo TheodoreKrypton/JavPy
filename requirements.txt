@@ -10,3 +10,6 @@ lxml
 codecov
 pytest
 pytest-cov
+gevent
+ipaddr
+pycryptodome

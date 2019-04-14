@@ -31,7 +31,7 @@ class AVSoxNet(IGetBrief):
         img = movie.select(".screencap", limit=1)[0].a.img
         brief.title = img.attrs['title']
         brief.preview_img_url = img.attrs['src']
-        brief.release_date, _ = try_evaluate(lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), "")
+        brief.set_release_date(try_evaluate(lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), "")[0])
         brief.actress = ", ".join(x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all('span'))
 
         return brief

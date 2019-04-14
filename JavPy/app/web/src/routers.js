@@ -1,5 +1,6 @@
 import index from "./components/index";
-import search from "./components/mainpages/search";
+import searchvideo from "./components/mainpages/searchvideo";
+import searchactress from "./components/mainpages/searchactress";
 import newlyReleased from "./components/mainpages/newly_released";
 import magnet from "./components/mainpages/magnet";
 
@@ -10,11 +11,19 @@ const routers = [
     children: [
       {
         path: "/",
-        component: search
+        redirect: "/search"
       },
       {
         path: "/search",
-        component: search
+        redirect: "/search/video"
+      },
+      {
+        path: "/search/video",
+        component: searchvideo
+      },
+      {
+        path: "/search/actress",
+        component: searchactress
       },
       {
         path: "/new",

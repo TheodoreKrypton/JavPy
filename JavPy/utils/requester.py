@@ -115,6 +115,9 @@ def start_master_thread():
     master.start()
 
 
+start_master_thread()
+
+
 class Task:
     SUCCESS = 0
     NOT_STARTED = 1

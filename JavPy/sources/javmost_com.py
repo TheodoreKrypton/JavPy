@@ -112,7 +112,7 @@ class JavMostCom(ISearchByCode):
         brief.preview_img_url = img
         brief.title, _ = try_evaluate(lambda: card_tag.find(name='h5').text.strip(), "")
         brief.actress = ", ".join(actress)
-        brief.release_date = release_date
+        brief.set_release_date(release_date)
         brief.code = card_tag.find(name='h4').text.strip()
 
         return brief

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="8" failures="0" name="pytest" skips="0" tests="8" time="52.354"><testcase classname="" file="test_webserver.py" name="test_webserver" time="0"><error message="collection failure">test_webserver.py:6: in &lt;module&gt;
+    from JavPy.app.webserver.app import app, web_dist_path
+JavPy\app\webserver\app.py:8: in &lt;module&gt;
+    from JavPy.utils.buggyauth import check_ip
+JavPy\utils\buggyauth.py:1: in &lt;module&gt;
+    from JavPy.utils.config import Config
+JavPy\utils\config.py:50: in &lt;module&gt;
+    Config.read_config()
+JavPy\utils\config.py:15: in read_config
+    cls.config = json.loads(fp.read().decode(&apos;utf-8&apos;))
+E   AttributeError: &apos;str&apos; object has no attribute &apos;decode&apos;</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/MSVSSettings_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.MSVSSettings_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/common_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.common_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/easy_xml_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.easy_xml_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/input_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.input_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/generator/msvs_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.generator.msvs_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/generator/ninja_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.generator.ninja_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase><testcase classname="" file="JavPy/app/web/node_modules/node-gyp/gyp/pylib/gyp/generator/xcode_test.py" name="JavPy.app.web.node_modules.node-gyp.gyp.pylib.gyp.generator.xcode_test" time="0"><error message="collection failure">C:\ProgramData\Anaconda3\lib\site-packages\_pytest\python.py:450: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+C:\ProgramData\Anaconda3\lib\site-packages\py\_path\local.py:668: in pyimport
+    __import__(modname)
+E     File &quot;D:\JavPy\JavPy\app\web\node_modules\node-gyp\gyp\pylib\gyp\__init__.py&quot;, line 37
+E       print &apos;%s:%s:%d:%s %s&apos; % (mode.upper(), os.path.basename(ctx[0]),
+E                            ^
+E   SyntaxError: invalid syntax</error></testcase></testsuite>

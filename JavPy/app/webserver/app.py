@@ -1,10 +1,11 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from flask import Flask, make_response, jsonify, request, render_template, send_from_directory
+from flask import Flask, make_response, jsonify, request, render_template, send_from_directory, abort
 from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import start_master_thread
+from JavPy.utils.requester import spawn
+from JavPy.utils.buggyauth import check_ip
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -14,8 +15,15 @@ CORS(app, resources=r'/*')
 
 
 @app.before_first_request
-def master_thread():
-    start_master_thread()
+def before_first():
+    pass
+
+
+@app.before_request
+def before_request():
+    ip = request.remote_addr
+    if not check_ip(ip):
+        abort(400)
 
 
 @app.route("/")
@@ -52,21 +60,22 @@ def search_by_code():
 def search_by_actress():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    res = {
-        'videos': None,
-        'other': None
-    }
 
-    if params["actress"]:
-        briefs = Functions.search_by_actress(params["actress"].strip(), 30)
-        if briefs:
-            res['videos'] = [x.to_dict() for x in sorted(briefs, key=lambda x: x.release_date, reverse=True)]
+    res = {}
 
-        if params["history_name"]:
-            res['other'] = {
-                'history_name': Functions.search_history_names(params['actress'])
+    actress = params['actress']
+    history_name = params['history_name'] == "true"
+    briefs = spawn(Functions.search_by_actress, actress, 30)
+
+    if history_name:
+        names = spawn(Functions.search_history_names, actress)
+        res = {
+            'other': {
+                'history_name': names.wait_for_result()
             }
+        }
 
+    res['videos'] = [x.to_dict() for x in briefs.wait_for_result()]
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
