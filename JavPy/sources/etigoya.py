@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from __future__ import absolute_import, print_function, unicode_literals
+from builtins import str, filter
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
 import bs4
@@ -22,7 +23,7 @@ class Etigoya(IHistoryNames):
         main = bs.select("#main")[0]
         lis = main.select("li", limit=1)
 
-        if len(lis) == 1 and "スポンサー広告" in str(lis[0]):
+        if len(lis) == 1 and u"スポンサー広告" in str(lis[0]):
             return []
 
         res = spawn_many((Task(cls.get_history_names_by_li, li) for li in lis)).wait_until(lambda rsp: actress in rsp)

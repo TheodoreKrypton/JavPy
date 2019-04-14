@@ -52,5 +52,9 @@ def sum_up(objects):
 
 
 def urlencode(string, encoding):
-    encoded = string.encode(encoding)
-    return "".join((hex(byte).replace("0x", "%") for byte in encoded))
+    try:
+        from urllib import quote as _urlencode
+    except ImportError:
+        from urllib.parse import quote as _urlencode
+
+    return _urlencode(string.encode(encoding))

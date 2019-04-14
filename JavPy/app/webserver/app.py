@@ -5,7 +5,7 @@ from JavPy.functions import Functions
 import json
 import os
 from JavPy.utils.requester import spawn
-from JavPy.utils.buggyauth import check_ip
+from JavPy.utils.buggyauth import check_ip, check_password, generate_cookie, cookie_exists
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -15,7 +15,7 @@ CORS(app, resources=r'/*')
 
 
 @app.before_first_request
-def before_first():
+def before_first_request():
     pass
 
 
@@ -23,6 +23,22 @@ def before_first():
 def before_request():
     ip = request.remote_addr
     if not check_ip(ip):
+        abort(400)
+
+    if 'userpass' in request.cookies and not cookie_exists(request.cookies['userpass']):
+        abort(400)
+
+
+@app.route("/auth_by_password", methods=['POST'])
+def auth_by_password():
+    params = json.loads(request.data.decode('utf-8'))
+    print(params)
+    if check_password(params['password']):
+        cookie = generate_cookie(request)
+        rsp = make_response("")
+        rsp.set_cookie('userpass', cookie)
+        return rsp
+    else:
         abort(400)
 
 

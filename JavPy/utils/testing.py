@@ -1,5 +1,5 @@
 from __future__ import unicode_literals, print_function, absolute_import
-# from functools import wraps
+from builtins import dict, str
 try:
     import typing
 except ImportError:
@@ -15,7 +15,6 @@ def testing(*_, **parameters):
                 raise ValueError
 
     def decorator(func):
-        # @wraps(func)
         def wrapper():
             print("==========Testing " + func.__name__)
             if not parameters:
@@ -23,9 +22,9 @@ def testing(*_, **parameters):
                 return
             for which, _ in enumerate(parameters[keys[0]]):
                 parameter = dict(zip(keys, (parameters[key][which] for key in keys)))
-                # print("start to test @ %s" % ", ".join((
-                #     key + "=" + str(parameter[key]) for key in parameter.keys()
-                # )))
+                print("start to test @ %s" % ", ".join((
+                    key + "=" + str(parameter[key]) for key in parameter.keys()
+                )))
                 func(**parameter)
         return wrapper
     return decorator

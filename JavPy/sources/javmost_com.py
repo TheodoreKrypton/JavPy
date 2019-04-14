@@ -1,5 +1,5 @@
 from __future__ import absolute_import, print_function, unicode_literals
-
+from builtins import str, map
 from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import re
