@@ -1,4 +1,10 @@
-![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png)
+<div align=center>
+
+![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png) [![PyCharm](pc.svg)](https://www.jetbrains.com/?from=JavPy) [Made with PyCharm](https://www.jetbrains.com/?from=JavPy)
+
+</div>
+
+## Indicators
 
 Indicator|Status
 :---: | :---:
@@ -107,5 +113,3 @@ apt-get install python-libtorrent
 [JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)  [Fembed](https://www.fembed.com) [素人系AV女優大辞典wiki](https://av-help.memo.wiki/)
 
 </div>
-
-[![PyCharm](pc.svg)](https://www.jetbrains.com/?from=JavPy) [Made with PyCharm](https://www.jetbrains.com/?from=JavPy)
