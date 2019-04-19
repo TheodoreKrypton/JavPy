@@ -1,0 +1,16 @@
+setuptools
+requests
+python-telegram-bot
+bs4
+urllib3==1.23
+flask
+six
+flask-cors
+lxml
+codecov
+pytest
+pytest-cov
+gevent
+ipaddr
+pycryptodome
+future

@@ -1,0 +1,104 @@
+<template>
+  <div style="height: 100%; position:relative; width:100%;">
+    <el-container style="height: 100%">
+      <el-header style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);">
+        <topbar></topbar>
+      </el-header>
+      <el-container>
+        <sidebar style="margin-top: 60px; position: fixed; height: 100%"></sidebar>
+        <el-container>
+          <el-main style="margin-top: 60px; margin-left: 200px;">
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 20vmin; right: 4vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-caret-top"
+              circle
+              @click="backToTop()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 15vmin; right: 4vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-up"
+              circle
+              @click="prev()"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="position: fixed; bottom: 10vmin; right: 4vmin; width: 4vmin; height: 4vmin"
+              icon="el-icon-arrow-down"
+              circle
+              @click="next()"
+            ></el-button>
+            <keep-alive>
+              <router-view style="height: 100%;"></router-view>
+            </keep-alive>
+          </el-main>
+        </el-container>
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+import sidebar from "./sidebar.vue";
+import topbar from "./topbar.vue";
+
+export default {
+  name: "index",
+  components: {
+    sidebar,
+    topbar
+  },
+  methods: {
+    backToTop(){
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    },
+    prev(){
+      const windowHeight = document.documentElement.clientHeight;
+      const nextLoc = document.documentElement.scrollTop - windowHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = nextLoc > 0 ? nextLoc : 0;
+    },
+    next(){
+      const windowHeight = document.documentElement.clientHeight;
+      const bottom = document.documentElement.scrollTop + windowHeight;
+      const nextLoc = document.documentElement.scrollTop + windowHeight;
+      document.body.scrollTop = document.documentElement.scrollTop = nextLoc < bottom ? nextLoc : bottom;
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+  .element::-webkit-scrollbar {
+    width: 0 !important;
+  }
+}
+
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  text-align: center;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+</style>
