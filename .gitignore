@@ -111,3 +111,4 @@ nohup.out
 **/.pytest_cache/
 
 .DS_Store
+test-output.xml

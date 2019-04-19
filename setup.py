@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import subprocess
 
 try:
-    output = subprocess.check_output("node --version")
+    output = subprocess.check_output("node --version", shell=True)
     assert output.decode('utf-8').startswith("v")
 except Exception as ex:
     print(ex)
@@ -13,12 +13,12 @@ except Exception as ex:
 
 setup(
     name='JavPy',
-    version='0.2.3',
+    version='0.2.4',
     description=(
         '漂移过弯'
     ),
     author='Theodore Krypton',
-    author_email='theodorekrypton@outlook.com',
+    author_email='wheatcarrier@gmail.com',
     license='MIT License',
     packages=find_packages(),
     url='https://github.com/TheodoreKrypton/JavPy',
@@ -32,6 +32,9 @@ setup(
         'six',
         'flask-cors',
         'lxml',
+        'ipaddr',
+        'pycryptodome',
+        'future'
     ],
     include_package_data=True,
     exclude_package_data={'': ['.gitignore']},
