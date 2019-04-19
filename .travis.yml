@@ -18,3 +18,6 @@ install:
 script: 
   - pytest --cov=JavPy --ignore=JavPy/app/web
   - codecov
+  - export CODACY_PROJECT_TOKEN=e5762cd97aee4be8af85aa13c6867f7e
+  - coverage xml
+  - python-codacy-coverage -r coverage.xml

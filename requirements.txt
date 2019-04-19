@@ -10,6 +10,7 @@ lxml
 codecov
 pytest
 pytest-cov
+codacy-coverage
 gevent
 ipaddr
 pycryptodome
