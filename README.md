@@ -1,5 +1,6 @@
 <div align=center>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e5762cd97aee4be8af85aa13c6867f7e)](https://app.codacy.com/app/TheodoreKrypton_3/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Grade_Dashboard)
 ![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png) [![PyCharm](pc.svg)](https://www.jetbrains.com/?from=JavPy) [Made with PyCharm](https://www.jetbrains.com/?from=JavPy)
 
 </div>
