@@ -1,21 +1,11 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :model="form"
-      :inline="true"
-    >
+    <el-form ref="form" :model="form" :inline="true">
       <el-form-item>
-        <el-input
-          v-model="form.code"
-          placeholder="Jav Code"
-        ></el-input>
+        <el-input v-model="form.code" placeholder="Jav Code"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input
-          v-model="form.actress"
-          placeholder="Actress"
-        ></el-input>
+        <el-input v-model="form.actress" placeholder="Actress"></el-input>
       </el-form-item>
       <el-form-item>
         <el-switch
@@ -36,10 +26,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="onSearch"
-        >Search!</el-button>
+        <el-button type="primary" @click="onSearch">Search!</el-button>
         <el-button @click="clear">Clear</el-button>
       </el-form-item>
     </el-form>

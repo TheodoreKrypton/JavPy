@@ -2,11 +2,7 @@
   <div>
     <searchbar></searchbar>
     <div v-if="other && other.history_name && Object.keys(other.history_name).length > 1">
-      <el-steps
-        :active="1000"
-        align-center
-        simple
-      >
+      <el-steps :active="1000" align-center simple>
         <el-step
           v-for="name in other.history_name"
           :key="name"
@@ -18,14 +14,12 @@
     </div>
     <preview :videosProp="toBePreviewed"></preview>
   </div>
-
 </template>
 <script>
-import axios from "axios";
 import searchbar from "./searchbar";
 import preview from "./preview";
 import Event from "../../main.js";
-import config from "../../config.js";
+import pookie from "../utils.js";
 
 export default {
   name: "searchactress",
@@ -52,18 +46,12 @@ export default {
       }
 
       Event.$emit("begin-loading");
-      let rsp = null;
-      await axios
-        .post(`http://${config.address}:${config.port}/search_by_actress`, {
-          actress: data.actress,
-          history_name: data.historyNameRequired
-        })
-        .then(function(response) {
-          rsp = response;
-        })
-        .catch(function() {
-          this.toBePreviewed = "";
-        });
+      let rsp = await pookie("/search_by_actress", {
+        actress: data.actress,
+        history_name: data.historyNameRequired
+      }).finally(() => {
+        Event.$emit("end-loading");
+      });
       if (rsp.status === 200) {
         if (!rsp.data) {
           this.toBePreviewed = "";
@@ -76,7 +64,6 @@ export default {
       } else {
         this.toBePreviewed = "";
       }
-      Event.$emit("end-loading");
     }
   },
   mounted() {

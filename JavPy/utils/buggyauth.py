@@ -5,7 +5,8 @@ import time
 
 
 sessions = set()
-hashed_password = hashlib.sha256(Config.config['password'].encode('utf-8')).hexdigest()
+password = Config.config['password']
+hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
 white_lists_ranges = [ipaddr.IPv4Network(ip_ranges) for ip_ranges in Config.config['permitted-ip'] if "/" in ip_ranges]
 white_lists_single = [ipaddr.IPAddress(ip_single) for ip_single in Config.config['permitted-ip'] if "/" not in ip_single]
 registered_cookie = set()
@@ -32,8 +33,14 @@ def generate_cookie(request):
     return cookie
 
 
-def cookie_exists(cookie):
-    return cookie in registered_cookie
+def check_request(request):
+    if not check_ip(request.remote_addr):
+        return False
+    if not password:
+        return True
+    if 'userpass' not in request.cookies or request.cookies['userpass'] not in registered_cookie:
+        return False
+    return True
 
 
 if __name__ == '__main__':

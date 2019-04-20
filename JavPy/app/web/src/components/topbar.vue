@@ -1,24 +1,14 @@
 <template>
   <div class="topbar">
     <span style="float: left; height: 60px">
-      <img
-        src="../assets/logo.png"
-        alt="logo"
-        style="height: 60px"
-      >
+      <img src="../assets/logo.png" alt="logo" style="height: 60px">
     </span>
 
     <span style="float: right">
-      <el-button
-        icon="el-icon-setting"
-        circle
-      ></el-button>
+      <el-button icon="el-icon-setting" circle></el-button>
     </span>
 
-    <div
-      v-if="loading"
-      class="loading-bar"
-    ></div>
+    <div v-if="loading" class="loading-bar"></div>
   </div>
 </template>
 

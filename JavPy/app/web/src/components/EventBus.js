@@ -1,6 +1,5 @@
 import Vue from "vue";
-import axios from "axios";
-import config from "../config.js";
+import pookie from "./utils.js";
 
 let EventBus = Vue.extend({
   methods: {
@@ -32,17 +31,14 @@ let EventBus = Vue.extend({
         const path = location.pathname;
         const component = from.component;
         if (path === "/new") {
-          await axios
-            .post(`http://${config.address}:${config.port}/new`, {
-              page: component.page + 1
-            })
-            .then(function (response) {
-              if (response.status === 200 && response.data) {
-                component.av = component.videos.concat(response.data);
-                component.page += 1;
-              }
-            })
-            .catch(function () { });
+          await pookie('/new', {
+            page: component.page + 1
+          }).then(function (response) {
+            if (response.status === 200 && response.data) {
+              component.av = component.videos.concat(response.data);
+              component.page += 1;
+            }
+          });
         }
       });
     }

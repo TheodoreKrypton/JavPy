@@ -1,7 +1,9 @@
 <template>
   <div style="height: 100%; position:relative; width:100%;">
     <el-container style="height: 100%">
-      <el-header style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);">
+      <el-header
+        style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);"
+      >
         <topbar></topbar>
       </el-header>
       <el-container>
@@ -36,33 +38,38 @@
         </el-container>
       </el-container>
     </el-container>
+    <login v-if="!this.$cookies.isKey('userpass')"></login>
   </div>
 </template>
 
 <script>
 import sidebar from "./sidebar.vue";
 import topbar from "./topbar.vue";
+import login from "./popups/login.vue";
 
 export default {
   name: "index",
   components: {
     sidebar,
-    topbar
+    topbar,
+    login
   },
   methods: {
-    backToTop(){
+    backToTop() {
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
-    prev(){
+    prev() {
       const windowHeight = document.documentElement.clientHeight;
       const nextLoc = document.documentElement.scrollTop - windowHeight;
-      document.body.scrollTop = document.documentElement.scrollTop = nextLoc > 0 ? nextLoc : 0;
+      document.body.scrollTop = document.documentElement.scrollTop =
+        nextLoc > 0 ? nextLoc : 0;
     },
-    next(){
+    next() {
       const windowHeight = document.documentElement.clientHeight;
       const bottom = document.documentElement.scrollTop + windowHeight;
       const nextLoc = document.documentElement.scrollTop + windowHeight;
-      document.body.scrollTop = document.documentElement.scrollTop = nextLoc < bottom ? nextLoc : bottom;
+      document.body.scrollTop = document.documentElement.scrollTop =
+        nextLoc < bottom ? nextLoc : bottom;
     }
   }
 };
@@ -100,5 +107,4 @@ export default {
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
-
 </style>

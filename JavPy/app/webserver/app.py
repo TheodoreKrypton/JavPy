@@ -5,7 +5,7 @@ from JavPy.functions import Functions
 import json
 import os
 from JavPy.utils.requester import spawn
-from JavPy.utils.buggyauth import check_ip, check_password, generate_cookie, cookie_exists
+from JavPy.utils.buggyauth import check_ip, check_password, generate_cookie, check_request
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -21,11 +21,9 @@ def before_first_request():
 
 @app.before_request
 def before_request():
-    ip = request.remote_addr
-    if not check_ip(ip):
-        abort(400)
-
-    if 'userpass' in request.cookies and not cookie_exists(request.cookies['userpass']):
+    if request.full_path == '/auth_by_password?':
+        return
+    if not check_request(request):
         abort(400)
 
 
@@ -35,11 +33,9 @@ def auth_by_password():
     print(params)
     if check_password(params['password']):
         cookie = generate_cookie(request)
-        rsp = make_response("")
-        rsp.set_cookie('userpass', cookie)
-        return rsp
+        return cookie
     else:
-        abort(400)
+        return make_response("auth failed"), 400
 
 
 @app.route("/")

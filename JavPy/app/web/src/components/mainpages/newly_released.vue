@@ -4,9 +4,8 @@
 
 <script>
 import preview from "./preview";
-import axios from "axios";
+import pookie from "../utils.js";
 import Event from "../../main.js";
-import config from "../../config.js";
 
 export default {
   name: "newlyReleased",
@@ -21,18 +20,16 @@ export default {
 
   async created() {
     Event.$emit("begin-loading");
-    const rsp = await axios.post(
-      `http://${config.address}:${config.port}/new`,
-      {
-        page: 1
-      }
-    );
+    const rsp = await pookie("/new", {
+      page: 1
+    }).finally(() => {
+      Event.$emit("end-loading");
+    });
     if (!rsp.data) {
       this.toBePreviewed = "";
     } else {
       this.toBePreviewed = rsp.data;
     }
-    Event.$emit("end-loading");
   }
 };
 </script>

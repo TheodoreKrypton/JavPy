@@ -8,11 +8,13 @@ import VueRouter from "vue-router";
 import routers from "./routers.js";
 import EventBus from "./components/EventBus.js";
 import infiniteScroll from "vue-infinite-scroll";
+import VueCookies from "vue-cookies";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
 Vue.use(VueRouter);
 Vue.use(infiniteScroll);
+Vue.use(VueCookies);
 
 const router = new VueRouter({
   mode: "history",

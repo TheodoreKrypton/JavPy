@@ -37,16 +37,12 @@ export default {
       }
 
       Event.$emit("begin-loading");
-      let rsp = null;
-      await axios
+      let rsp = await axios
         .post(`http://${config.address}:${config.port}/search_by_code`, {
           code: data.code
         })
-        .then(function(response) {
-          rsp = response;
-        })
-        .catch(function() {
-          this.toBePreviewed = "";
+        .finally(() => {
+          Event.$emit("end-loading");
         });
       if (rsp.status === 200) {
         if (!rsp.data) {
@@ -58,7 +54,6 @@ export default {
       } else {
         this.toBePreviewed = "";
       }
-      Event.$emit("end-loading");
     }
   },
 
