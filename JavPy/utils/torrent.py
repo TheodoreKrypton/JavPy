@@ -1,12 +1,25 @@
 import libtorrent as lt
-from time import sleep
+import time
 import tempfile
 import shutil
-import time
+from JavPy.utils.requester import spawn
+import requests
+
+__tracker_list_url = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
+__tracker_url = ""
+
+
+def __set_tracker_list(rsp):
+    global __tracker_url
+    __tracker_url = "".join(("&tr=" + url for url in rsp.text.split()))
+
+
+spawn(requests.get, __tracker_list_url).then(__set_tracker_list)
 
 
 def modify_magnet(magnet):
-    segments = magnet.split("/")
+    base_link = magnet.split("&tr=")[0]
+    return base_link + __tracker_url
 
 
 def get_peers_count_from_magnet(magnet):
@@ -26,7 +39,7 @@ def get_peers_count_from_magnet(magnet):
     print("Downloading Metadata (this may take a while)")
     while not handle.has_metadata():
         print("Waiting ... ")
-        sleep(1)
+        time.sleep(1)
 
     print("Metadata downloaded")
 
@@ -45,4 +58,9 @@ def get_peers_count_from_magnet(magnet):
 
 
 if __name__ == '__main__':
-    print(get_peers_count_from_magnet("magnet:?xt=urn:btih:D02454449497A930D41D3E5ABB1537F473AA907A&dn=%5BThZu.Cc%5DABP-813&tr=udp://tracker.coppersurfer.tk:6969/announce"))
+    time.sleep(3)
+    modified_magnet = modify_magnet(
+        "magnet:?xt=urn:btih:D02454449497A930D41D3E5ABB1537F473AA907A&dn=%5BThZu.Cc%5DABP-813&tr=udp://tracker.coppersurfer.tk:6969/announce"
+    )
+    print(modified_magnet)
+    print(get_peers_count_from_magnet(modified_magnet))
