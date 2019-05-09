@@ -1,5 +1,5 @@
 import Vue from "vue";
-import pookie from "./utils.js";
+import utils from "./utils.js";
 
 let EventBus = Vue.extend({
   methods: {
@@ -31,7 +31,7 @@ let EventBus = Vue.extend({
         const path = location.pathname;
         const component = from.component;
         if (path === "/new") {
-          await pookie('/new', {
+          await utils.pookie('/new', {
             page: component.page + 1
           }).then(function (response) {
             if (response.status === 200 && response.data) {

@@ -38,7 +38,7 @@
         </el-container>
       </el-container>
     </el-container>
-    <login v-if="!this.$cookies.isKey('userpass')"></login>
+    <login></login>
   </div>
 </template>
 

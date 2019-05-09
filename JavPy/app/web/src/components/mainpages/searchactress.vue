@@ -19,7 +19,7 @@
 import searchbar from "./searchbar";
 import preview from "./preview";
 import Event from "../../main.js";
-import pookie from "../utils.js";
+import utils from "../utils.js";
 
 export default {
   name: "searchactress",
@@ -46,12 +46,14 @@ export default {
       }
 
       Event.$emit("begin-loading");
-      let rsp = await pookie("/search_by_actress", {
-        actress: data.actress,
-        history_name: data.historyNameRequired
-      }).finally(() => {
-        Event.$emit("end-loading");
-      });
+      let rsp = await utils
+        .pookie("/search_by_actress", {
+          actress: data.actress,
+          history_name: data.historyNameRequired
+        })
+        .finally(() => {
+          Event.$emit("end-loading");
+        });
       if (rsp.status === 200) {
         if (!rsp.data) {
           this.toBePreviewed = "";

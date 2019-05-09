@@ -9,6 +9,7 @@
 
 <script>
 import axios from "axios";
+import utils from "../utils.js";
 import sha256 from "js-sha256";
 import config from "../../config.js";
 
@@ -16,7 +17,7 @@ export default {
   name: "login",
   data() {
     return {
-      visible: true,
+      visible: false,
       message: "",
       password: ""
     };
@@ -31,10 +32,15 @@ export default {
           if (rsp.data === "auth failed") {
             this.$alert("Authentication Failed", "Please Try Again");
           } else {
-            this.$cookies.set("userpass", rsp.data, 0);
+            utils.set_userpass(rsp.data);
             this.visible = false;
           }
         });
+    }
+  },
+  mounted() {
+    if (utils.get_userpass() === null) {
+      this.visible = true;
     }
   }
 };

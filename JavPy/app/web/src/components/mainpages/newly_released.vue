@@ -4,7 +4,7 @@
 
 <script>
 import preview from "./preview";
-import pookie from "../utils.js";
+import utils from "../utils.js";
 import Event from "../../main.js";
 
 export default {
@@ -20,11 +20,13 @@ export default {
 
   async created() {
     Event.$emit("begin-loading");
-    const rsp = await pookie("/new", {
-      page: 1
-    }).finally(() => {
-      Event.$emit("end-loading");
-    });
+    const rsp = await utils
+      .pookie("/new", {
+        page: 1
+      })
+      .finally(() => {
+        Event.$emit("end-loading");
+      });
     if (!rsp.data) {
       this.toBePreviewed = "";
     } else {

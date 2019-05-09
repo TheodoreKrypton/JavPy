@@ -6,11 +6,10 @@
 </template>
 
 <script>
-import axios from "axios";
 import preview from "./preview";
 import searchbar from "./searchbar";
 import Event from "../../main.js";
-import config from "../../config.js";
+import utils from "../utils.js";
 
 export default {
   name: "searchvideo",
@@ -37,8 +36,8 @@ export default {
       }
 
       Event.$emit("begin-loading");
-      let rsp = await axios
-        .post(`http://${config.address}:${config.port}/search_by_code`, {
+      let rsp = await utils.pookie
+        .post("/search_by_code", {
           code: data.code
         })
         .finally(() => {
