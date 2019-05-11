@@ -17,7 +17,7 @@
                   type="primary"
                   plain
                   size="mini"
-                  @click="onSearch({actress: one_actress})"
+                  @click="onSearch({actress: one_actress.trim()})"
                   style="display: block; padding: 5px"
                 >{{one_actress}}</el-button>
                 <el-button type="danger" plain slot="reference">Expand</el-button>
@@ -28,7 +28,7 @@
               type="primary"
               plain
               style="float: left;"
-              @click="onSearch({actress: video.actress})"
+              @click="onSearch({actress: video.actress.trim()})"
             >{{video.actress}}</el-button>
           </td>
           <td v-if="video.video_url">

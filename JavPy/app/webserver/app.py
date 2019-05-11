@@ -5,7 +5,7 @@ from JavPy.functions import Functions
 import json
 import os
 from JavPy.utils.requester import spawn
-from JavPy.utils.buggyauth import check_ip, check_password, generate_cookie, check_request
+from JavPy.utils.buggyauth import check_password, generate_cookie, check_request
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])

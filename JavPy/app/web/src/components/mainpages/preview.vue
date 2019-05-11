@@ -1,13 +1,5 @@
 <template>
   <div style="text-align: center;" ref="whole">
-    <el-alert
-      v-if="videos === ''"
-      title="Sorry, cannot find any result."
-      type="error"
-      show-icon
-      style="width: 40%; margin-left:auto; margin-right:auto"
-    ></el-alert>
-
     <table
       v-if="videos != undefined && Object.keys(videos).length > 0"
       cellspacing="30"
@@ -32,6 +24,15 @@
         </td>
       </tr>
     </table>
+    <div v-else-if="videos != undefined">
+      <el-alert
+        title="Sorry, cannot find any result."
+        type="error"
+        show-icon
+        center
+        style="width: 40%; margin-left:auto; margin-right:auto; margin-top: 20px"
+      ></el-alert>
+    </div>
   </div>
 </template>
 

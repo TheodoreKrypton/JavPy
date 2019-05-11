@@ -31,13 +31,13 @@ export default {
     async onSearch(data) {
       this.initPage();
 
-      if (Object.keys(data).length == 0) {
+      if (Object.keys(data).length === 0) {
         return;
       }
 
       Event.$emit("begin-loading");
-      let rsp = await utils.pookie
-        .post("/search_by_code", {
+      let rsp = await utils
+        .pookie("/search_by_code", {
           code: data.code
         })
         .finally(() => {
