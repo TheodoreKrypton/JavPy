@@ -108,7 +108,6 @@ test.html
 nohup.out
 .idea/
 .scannerwork/
-**/.pytest_cache/
 
 .DS_Store
 test-output.xml
