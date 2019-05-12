@@ -2,7 +2,7 @@
   <div style="height: 100%; position:relative; width:100%;">
     <el-container style="height: 100%">
       <el-header
-        style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9999; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);"
+        style="background: #F2F6FC; position:fixed; margin-top:0; width:100%; z-index:9998; box-shadow: 0 1px 6px 0 rgba(32,33,36,20);"
       >
         <topbar></topbar>
       </el-header>

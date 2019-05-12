@@ -9,7 +9,7 @@
       >
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-discover"></i>
             <span>Internet</span>
           </template>
           <el-menu-item index="1-1" @click="toSearch">Search</el-menu-item>
@@ -19,7 +19,7 @@
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-s-home"></i>
             <span>Local</span>
           </template>
         </el-submenu>

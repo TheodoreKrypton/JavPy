@@ -34,6 +34,7 @@ export default {
           } else {
             utils.set_userpass(rsp.data);
             this.visible = false;
+            location.reload();
           }
         });
     },
