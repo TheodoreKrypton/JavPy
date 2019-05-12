@@ -36,16 +36,16 @@ export default {
       Event.$emit("begin-loading");
 
       let rsp = {};
-
-      await utils.pookie
-        .post("/search_magnet_by_code", {
+      let self = this;
+      await utils
+        .pookie("/search_magnet_by_code", {
           code: data.code
         })
         .then(function(response) {
           rsp = response;
         })
         .catch(function() {
-          this.magnetRes = "";
+          self.magnetRes = "";
         });
 
       if (Object.keys(rsp).length === 0) {
@@ -55,12 +55,12 @@ export default {
 
       if (rsp.status === 200) {
         if (!rsp.data) {
-          this.magnetRes = "";
+          self.magnetRes = "";
         } else {
-          this.magnetRes = rsp.data;
+          self.magnetRes = rsp.data;
         }
       } else {
-        this.magnetRes = "";
+        self.magnetRes = "";
       }
       Event.$emit("end-loading");
     }

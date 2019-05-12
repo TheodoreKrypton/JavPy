@@ -5,7 +5,9 @@ from JavPy.functions import Functions
 import json
 import os
 from JavPy.utils.requester import spawn
-from JavPy.utils.buggyauth import check_ip, check_password, generate_cookie, check_request
+import JavPy.utils.config as config
+import JavPy.utils.buggyauth as auth
+from copy import deepcopy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -23,7 +25,7 @@ def before_first_request():
 def before_request():
     if request.full_path == '/auth_by_password?':
         return
-    if not check_request(request):
+    if not auth.check_request(request):
         abort(400)
 
 
@@ -31,11 +33,39 @@ def before_request():
 def auth_by_password():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-    if check_password(params['password']):
-        cookie = generate_cookie(request)
+    if auth.check_password(params['password']):
+        cookie = auth.generate_cookie(request)
         return cookie
     else:
         return make_response("auth failed"), 400
+
+
+@app.route("/get_config", methods=['POST'])
+def get_config():
+    cfg = deepcopy(config.Config.config)
+    if 'password' in cfg:
+        del cfg['password']
+    return json.dumps(cfg)
+
+
+@app.route("/update_config", methods=['POST'])
+def update_config():
+    data = json.loads(request.data.decode('utf-8'))
+    if data['password']:
+        config.Config.set_config('password', data['password'])
+    config.Config.set_config('ip-blacklist', data['ipBlacklist'])
+    config.Config.set_config('ip-whitelist', data['ipWhitelist'])
+    config.Config.save_config()
+
+    _reload = reload
+    try:
+        import importlib
+        _reload = importlib.reload
+    except (ImportError, AttributeError):
+        pass
+    _reload(config)
+    _reload(auth)
+    return ""
 
 
 @app.route("/")

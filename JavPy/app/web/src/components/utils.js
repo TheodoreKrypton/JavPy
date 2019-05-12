@@ -10,12 +10,20 @@ let get_userpass = () => {
     return Cookie.get("userpass");
 }
 
-let pookie = (url, data) => {
+let pookie = async (url, data) => {
     let userpass = Cookie.get("userpass");
     if (userpass != null) {
-        data.userpass = userpass;
+        if (data) {
+            data.userpass = userpass;
+        } else {
+            data = {
+                userpass: userpass
+            }
+        }
     }
-    return axios.post(`http://${config.address}:${config.port}${url}`, data);
+    return await axios.post(`http://${config.address}:${config.port}${url}`, data).catch(() => {
+        Cookie.remove("userpass");
+    });
 }
 
 let utils = {

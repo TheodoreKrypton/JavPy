@@ -51,4 +51,4 @@ class Functions:
     @staticmethod
     @cache
     def get_magnet(code):
-        return Magnet.get_magnet(code)
+        return spawn(Magnet.get_magnet, code).wait_for_result()

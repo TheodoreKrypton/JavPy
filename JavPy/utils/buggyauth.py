@@ -2,13 +2,22 @@ from JavPy.utils.config import Config
 import hashlib
 import ipaddr
 import time
+import json
 
 
 sessions = set()
 password = Config.config['password']
 hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-white_lists_ranges = [ipaddr.IPv4Network(ip_ranges) for ip_ranges in Config.config['permitted-ip'] if "/" in ip_ranges]
-white_lists_single = [ipaddr.IPAddress(ip_single) for ip_single in Config.config['permitted-ip'] if "/" not in ip_single]
+white_lists_ranges = [
+    ipaddr.IPv4Network(ip_ranges)
+    for ip_ranges in Config.config['ip-whitelist']
+    if "/" in ip_ranges
+]
+white_lists_single = [
+    ipaddr.IPAddress(ip_single)
+    for ip_single in Config.config['ip-whitelist']
+    if "/" not in ip_single
+]
 registered_cookie = set()
 
 
@@ -34,11 +43,14 @@ def generate_cookie(request):
 
 
 def check_request(request):
+    if request.method not in ['POST', 'GET']:
+        return True
     if not check_ip(request.remote_addr):
         return False
     if not password:
         return True
-    if 'userpass' not in request.cookies or request.cookies['userpass'] not in registered_cookie:
+    data = json.loads(request.data.decode('utf-8'))
+    if 'userpass' not in data or data['userpass'] not in registered_cookie:
         return False
     return True
 

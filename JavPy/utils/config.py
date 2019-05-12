@@ -50,10 +50,14 @@ if os.path.exists(os.path.join(Config.config_path, "config.json")):
     Config.read_config()
 else:
     Config.config = {
-        "permitted-ip": [
+        "ip-whitelist": [
             "127.0.0.1",
             "192.168.0.0/16"
+        ],
+        "ip-blacklist": [
+
         ],
         "password": ""
     }
     Config.save_config()
+

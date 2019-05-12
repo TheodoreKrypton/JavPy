@@ -23,7 +23,7 @@ export default {
     };
   },
   methods: {
-    submitPassword: function() {
+    submitPassword() {
       axios
         .post(`http://${config.address}:${config.port}/auth_by_password`, {
           password: sha256.sha256(this.password)
@@ -34,14 +34,19 @@ export default {
           } else {
             utils.set_userpass(rsp.data);
             this.visible = false;
+            location.reload();
           }
         });
+    },
+
+    isLoggedIn() {
+      if (!utils.get_userpass()) {
+        this.visible = true;
+      }
     }
   },
-  mounted() {
-    if (utils.get_userpass() === null) {
-      this.visible = true;
-    }
+  created() {
+    setInterval(this.isLoggedIn, 1000);
   }
 };
 </script>

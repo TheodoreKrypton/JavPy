@@ -5,7 +5,10 @@
     </span>
 
     <span style="float: right">
-      <el-button icon="el-icon-setting" circle></el-button>
+      <el-popover placement="bottom" width="100" trigger="click">
+        <admin style="z-index: 9999"></admin>
+        <el-button icon="el-icon-setting" circle slot="reference"></el-button>
+      </el-popover>
     </span>
 
     <div v-if="loading" class="loading-bar"></div>
@@ -14,13 +17,17 @@
 
 <script>
 import Event from "../main.js";
+import admin from "./popups/admin";
 
 export default {
   name: "topbar",
-
+  components: {
+    admin
+  },
   data() {
     return {
-      loading: false
+      loading: false,
+      gridData: []
     };
   },
 

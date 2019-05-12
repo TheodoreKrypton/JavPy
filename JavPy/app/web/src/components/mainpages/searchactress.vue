@@ -74,7 +74,7 @@ export default {
 
   watch: {
     $route(to, from) {
-      if (to.path == "/search/actress") {
+      if (to.path === "/search/actress") {
         this.onSearch(this.$route.query);
       }
     }
