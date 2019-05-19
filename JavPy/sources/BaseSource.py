@@ -46,6 +46,15 @@ class IHistoryNames:
         pass
 
 
+class ITranslateEn2Jp:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def translate2jp(cls, actress):
+        pass
+
+
 class SourceException(Exception):
     def __init__(self, msg):
         Exception.__init__(self, msg)

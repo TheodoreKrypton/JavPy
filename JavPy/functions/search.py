@@ -7,6 +7,7 @@ from JavPy.sources.xopenload_video import XOpenloadVideo
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.utils.requester import spawn_many, Task
 from JavPy.utils.common import sum_up
+from JavPy.functions.actress_translate import ActressTranslate
 
 
 class Search:
@@ -39,8 +40,11 @@ class Search:
     def search_by_actress(cls, actress, up_to):
         lang = cls.guess_lang(actress)
 
-        if lang == "jp" or lang == "zh":
+        if lang == "en":
+            actress = ActressTranslate.translate2jp(actress)
+        if actress:
             return cls.sources_by_actress["indexav.com"].search_by_actress(actress, up_to)
 
-        else:
-            return None
+
+if __name__ == '__main__':
+    print(Search.search_by_actress("Arina Hashimoto", 30))
