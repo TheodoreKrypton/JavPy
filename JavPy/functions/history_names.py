@@ -3,10 +3,12 @@ from JavPy.sources.etigoya import Etigoya
 from JavPy.sources.avhelp_memo_wiki import AVHelpMemoWiki
 from JavPy.utils.requester import spawn_many, Task
 from functools import reduce
+from JavPy.utils.common import cache
 
 
 class HistoryNames:
     @staticmethod
+    @cache
     def get_history_names(actress):
         result = list(filter(lambda x: x, spawn_many((
             Task(Etigoya.get_history_names, actress),

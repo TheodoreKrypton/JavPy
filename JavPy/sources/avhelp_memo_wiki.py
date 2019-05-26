@@ -43,7 +43,7 @@ class AVHelpMemoWiki(IHistoryNames):
 
         names = [re.sub("[（(].+?[)）]", "", name) for name in names]
 
-        current_name = re.search("名前.+?：(.+?)\n", pre)
+        current_name = re.search("名前.*?：(.+?)\n", pre)
         if current_name:
             current_name = re.sub("[（(].+?[)）]", "", current_name.group(1))
             names.append(current_name)
@@ -60,4 +60,5 @@ class AVHelpMemoWiki(IHistoryNames):
 
 
 if __name__ == '__main__':
-    print(AVHelpMemoWiki.get_history_names("瀬奈まお"))
+    # 瀬奈まお
+    print(AVHelpMemoWiki.get_history_names("深田えいみ"))

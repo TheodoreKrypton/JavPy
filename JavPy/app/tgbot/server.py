@@ -111,7 +111,7 @@ def search(bot, update, args):
                         bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
                         return
 
-            briefs = Functions.search_by_actress(actress, up_to)
+            briefs, _ = Functions.search_by_actress(actress, up_to)
             if not allow_many_actresses:
                 briefs = list(filter(lambda x: "," not in x.actress, briefs))
             send_brief(bot, update, briefs)

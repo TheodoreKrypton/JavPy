@@ -13,7 +13,7 @@ except Exception as ex:
 
 setup(
     name='JavPy',
-    version='0.2.5',
+    version='0.2.6',
     description=(
         '漂移过弯'
     ),

@@ -164,11 +164,10 @@ class Interactive:
 
         elif len(cmd_chat_history) == 3:
             if cmd_chat_history[-3] == "Search":
-                send_brief(
-                    bot, update, Functions.search_by_actress(
-                        cmd_chat_history[-2], int(cmd_chat_history[-1])
-                    )
+                res, _ = Functions.search_by_actress(
+                    cmd_chat_history[-2], int(cmd_chat_history[-1])
                 )
+                send_brief(bot, update, res)
                 chat_history.clear_history(update.message.from_user.id)
 
         return

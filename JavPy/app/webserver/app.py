@@ -102,22 +102,15 @@ def search_by_code():
 def search_by_actress():
     params = json.loads(request.data.decode('utf-8'))
     print(params)
-
-    res = {}
-
     actress = params['actress']
     history_name = params['history_name'] == "true"
-    briefs = spawn(Functions.search_by_actress, actress, 30)
-
-    if history_name:
-        names = spawn(Functions.search_history_names, actress)
-        res = {
-            'other': {
-                'history_name': names.wait_for_result()
-            }
+    briefs, names = spawn(Functions.search_by_actress, actress, 30, history_name).wait_for_result()
+    res = {
+        'videos': [brief.to_dict() for brief in briefs],
+        'other': {
+            'history_name': names
         }
-
-    res['videos'] = [x.to_dict() for x in briefs.wait_for_result()]
+    }
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
