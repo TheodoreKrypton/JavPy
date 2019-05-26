@@ -35,8 +35,8 @@ class Functions:
 
     @staticmethod
     @cache
-    def search_by_actress(actress, up_to):
-        return Search.search_by_actress(actress, up_to)
+    def search_by_actress(actress, up_to, history_name=False):
+        return Search.search_by_actress(actress, up_to, history_name)
 
     @staticmethod
     @cache

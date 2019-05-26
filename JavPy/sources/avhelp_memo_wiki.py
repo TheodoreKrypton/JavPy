@@ -60,4 +60,5 @@ class AVHelpMemoWiki(IHistoryNames):
 
 
 if __name__ == '__main__':
-    print(AVHelpMemoWiki.get_history_names("瀬奈まお"))
+    # 瀬奈まお
+    print(AVHelpMemoWiki.get_history_names("深田えいみ"))
