@@ -71,7 +71,8 @@ def test_newly_released(data):
 
 
 if __name__ == '__main__':
-    # test_search_by_code()
+    test_static_files()
+    test_search_by_code()
     test_search_by_actress()
-    # test_search_magnet_by_code()
-    # test_newly_released()
+    test_search_magnet_by_code()
+    test_newly_released()
