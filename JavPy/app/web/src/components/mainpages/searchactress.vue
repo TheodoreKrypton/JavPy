@@ -41,7 +41,7 @@ export default {
     async onSearch(data = null) {
       this.initPage();
 
-      if (Object.keys(data).length == 0) {
+      if (Object.keys(data).length === 0) {
         return;
       }
 
