@@ -4,6 +4,7 @@ from JavPy.sources.javmost_com import JavMostCom
 from JavPy.sources.youav_com import YouAVCom
 from JavPy.sources.avgle_com import AVGleCom
 from JavPy.sources.xopenload_video import XOpenloadVideo
+from JavPy.sources.javfull_net import JavFullNet
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.utils.requester import spawn, spawn_many, Task
 from JavPy.utils.common import sum_up
@@ -12,7 +13,7 @@ from JavPy.functions.history_names import HistoryNames
 
 
 class Search:
-    sources_by_code = [JavMostCom, XOpenloadVideo, YouAVCom, AVGleCom]
+    sources_by_code = [JavMostCom, XOpenloadVideo, YouAVCom, AVGleCom, JavFullNet]
     sources_by_actress = {
         "indexav.com": IndexAVCom
     }
