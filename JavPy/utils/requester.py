@@ -1,7 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 import threading
 from threading import Lock
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import try_evaluate, get_func_full_name
 try:
     from typing import Dict
 except ImportError:
@@ -45,6 +45,8 @@ import time
     All the requester tasks are owned by the Master thread
 
 """
+
+_debug = True
 
 
 def _get_a_task_id():
@@ -241,7 +243,14 @@ class Worker(threading.Thread):
 
     def run(self):
         self.task.status = Task.RUNNING
+        now = 0
+        if _debug:
+            print("begin ", get_func_full_name(self.task.target),
+                  self.task.args, self.task.kwargs, self.task.result)
         self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
+        if _debug:
+            print(time.clock()-now, get_func_full_name(self.task.target),
+                  self.task.args, self.task.kwargs, self.task.result)
         Master.finish_task(self.task.id)
         if ex and self.task.catch_cb:
             self.task.catch_cb(ex)

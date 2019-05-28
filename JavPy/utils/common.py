@@ -1,5 +1,6 @@
 import datetime
 from functools import wraps, reduce
+import re
 
 
 def try_evaluate(lambda_expression, default=None):
@@ -30,6 +31,16 @@ def cache(func):
         return res
 
     return _wrapped
+
+
+class_name_pattern = re.compile(r"\.(.+?)\s")
+
+
+def get_func_full_name(func):
+    try:
+        return func.__module__ + "." + func.__qualname__
+    except AttributeError:
+        return func.__module__ + re.search(class_name_pattern, func.im_class).group(1) + "." + func.__name__
 
 
 def update_object(origin, new):

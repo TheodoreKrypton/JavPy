@@ -31,6 +31,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
             res.append(brief)
             cnt += 1
+            print(cnt)
 
             if up_to and cnt >= up_to:
                 return res

@@ -10,27 +10,29 @@
         <sidebar style="margin-top: 60px; position: fixed; height: 100%"></sidebar>
         <el-container>
           <el-main style="margin-top: 60px; margin-left: 200px;">
-            <el-button
-              type="primary"
-              style="position: fixed; bottom: 20vmin; right: 4vmin; width: 4vmin; height: 4vmin"
-              icon="el-icon-caret-top"
-              circle
-              @click="backToTop()"
-            ></el-button>
-            <el-button
-              type="primary"
-              style="position: fixed; bottom: 15vmin; right: 4vmin; width: 4vmin; height: 4vmin"
-              icon="el-icon-arrow-up"
-              circle
-              @click="prev()"
-            ></el-button>
-            <el-button
-              type="primary"
-              style="position: fixed; bottom: 10vmin; right: 4vmin; width: 4vmin; height: 4vmin"
-              icon="el-icon-arrow-down"
-              circle
-              @click="next()"
-            ></el-button>
+            <div style="position:fixed; bottom:10vmin; right: 1vmin;">
+              <el-button
+                type="primary"
+                icon="el-icon-caret-top"
+                style="display:block; margin: 5px;"
+                circle
+                @click="backToTop()"
+              />
+              <el-button
+                type="primary"
+                icon="el-icon-arrow-up"
+                style="display:block; margin: 5px;"
+                circle
+                @click="prev()"
+              />
+              <el-button
+                type="primary"
+                icon="el-icon-arrow-down"
+                style="display:block; margin: 5px;"
+                circle
+                @click="next()"
+              />
+            </div>
             <keep-alive>
               <router-view style="height: 100%;"></router-view>
             </keep-alive>

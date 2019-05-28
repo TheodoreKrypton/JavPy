@@ -12,7 +12,7 @@ import Event from "../../main.js";
 import utils from "../utils.js";
 
 export default {
-  name: "searchvideo",
+  name: "searchVideo",
   components: {
     searchbar,
     preview

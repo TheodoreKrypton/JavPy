@@ -1,5 +1,5 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from flask import Flask, make_response, jsonify, request, render_template, send_from_directory, abort
+from flask import Flask, make_response, jsonify, request, render_template, send_from_directory, abort, redirect
 from flask_cors import CORS
 from JavPy.functions import Functions
 import json
@@ -75,7 +75,10 @@ def index():
 
 @app.route('/<path:path>')
 def send_static(path):
-    return send_from_directory(web_dist_path, path)
+    if not os.path.exists(web_dist_path + "/" + path):
+        return render_template("index.html")
+    else:
+        return send_from_directory(web_dist_path, path)
 
 
 @app.route("/search_by_code", methods=['POST'])

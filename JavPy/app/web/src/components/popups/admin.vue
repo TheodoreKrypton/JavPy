@@ -42,10 +42,12 @@ export default {
           h(
             "textarea",
             {
+              disabled: "",
               style: "overflow-y: auto; width: 100%; clear: both",
               ref: "ipBlacklist"
             },
-            ipBlacklist.join("\n")
+            "Under Construction"
+            // ipBlacklist.join("\n")
           ),
           h("br", null, ""),
           h("label", null, "IP Whitelist: "),

@@ -1,8 +1,8 @@
-import index from "./components/index";
-import searchvideo from "./components/mainpages/searchvideo";
-import searchactress from "./components/mainpages/searchactress";
-import newlyReleased from "./components/mainpages/newly_released";
-import magnet from "./components/mainpages/magnet";
+import index from "./components/index.vue";
+import searchVideo from "./components/mainpages/searchvideo.vue";
+import searchActress from "./components/mainpages/searchactress.vue";
+import newlyReleased from "./components/mainpages/newly_released.vue";
+import magnet from "./components/mainpages/magnet.vue";
 
 const routers = [
   {
@@ -19,11 +19,11 @@ const routers = [
       },
       {
         path: "/search/video",
-        component: searchvideo
+        component: searchVideo
       },
       {
         path: "/search/actress",
-        component: searchactress
+        component: searchActress
       },
       {
         path: "/new",
