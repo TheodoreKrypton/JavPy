@@ -243,7 +243,7 @@ class Worker(threading.Thread):
 
     def run(self):
         self.task.status = Task.RUNNING
-        now = 0
+        now = time.clock()
         if _debug:
             print("begin ", get_func_full_name(self.task.target),
                   self.task.args, self.task.kwargs, self.task.result)

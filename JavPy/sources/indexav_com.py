@@ -16,22 +16,25 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        boxes = bs.find_all(name='div', attrs={'class': 'bs-callout'})
+
+        tab_content = bs.select('.tab-content')[-1]
+        boxes = tab_content.children
 
         res = []
 
         cnt = 0
 
         for box in boxes:
-            release_date = box.find(name='div', attrs={'class': 'col-sm-2'}).span.text
-            if u"予定" in release_date:
+            if not isinstance(box, bs4.Tag):
                 continue
+            # release_date = box.select('.col-sm-2')[0].span.text
+            # if u"予定" in release_date:
+            #     continue
 
             brief = cls.__get_brief_by_box(box)
 
             res.append(brief)
             cnt += 1
-            print(cnt)
 
             if up_to and cnt >= up_to:
                 return res
@@ -67,3 +70,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         brief.actress = actress.strip()
         brief.set_release_date(release_date)
         return brief
+
+
+if __name__ == '__main__':
+    print(IndexAVCom.search_by_actress("深田えいみ", 30))

@@ -53,8 +53,8 @@ export default {
   animation: loading 3s infinite linear;
   -webkit-animation: loading 3s infinite linear;
   width: 20%;
-  height: 60px;
-  background: linear-gradient(to right, #f2f6fc, #ffffff, #f2f6fc);
+  height: 3px;
+  background: linear-gradient(to right, #f2f6fc, #008080, #f2f6fc);
 }
 
 @keyframes loading {

@@ -42,7 +42,7 @@ export default {
           h(
             "textarea",
             {
-              disabled: "",
+              disabled: true,
               style: "overflow-y: auto; width: 100%; clear: both",
               ref: "ipBlacklist"
             },
