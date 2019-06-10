@@ -18,6 +18,7 @@ spawn(requests.get, __tracker_list_url).then(__set_tracker_list)
 
 
 def modify_magnet(magnet):
+    return magnet
     base_link = magnet.split("&tr=")[0]
     return base_link + __tracker_url
 
