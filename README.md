@@ -4,6 +4,14 @@
 
 </div>
 
+## Quick Start
+
+```bash
+pip install JavPy
+python -c "import JavPy; JavPy.serve()"
+# open http://localhost:8081 in browser to start your Jav trip
+```
+
 ## Indicators
 
 Indicator|Status
