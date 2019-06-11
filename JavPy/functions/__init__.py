@@ -7,7 +7,7 @@ from JavPy.functions.magnet import Magnet
 from JavPy.functions.history_names import HistoryNames
 from JavPy.utils.common import cache
 from JavPy.utils.requester import spawn_many, Task, spawn
-import time
+
 
 class Functions:
     @staticmethod
@@ -36,13 +36,15 @@ class Functions:
     @staticmethod
     @cache
     def search_by_actress(actress, up_to, history_name=False):
-        print(time.clock())
         return Search.search_by_actress(actress, up_to, history_name)
 
     @staticmethod
     @cache
-    def get_newly_released(up_to, which_page=False):
-        return New.get_newly_released(up_to, which_page)
+    def get_newly_released(up_to, which_page):
+        if which_page:
+            return New.get_newly_released(up_to, which_page)
+        else:
+            return New.get_newly_released(up_to, 0)
 
     @staticmethod
     @cache

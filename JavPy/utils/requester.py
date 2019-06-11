@@ -7,6 +7,7 @@ try:
 except ImportError:
     pass
 import time
+import six
 
 """
                                        Lifecycle of a Task:
@@ -47,6 +48,20 @@ import time
 """
 
 _debug = False
+
+
+def now_time_py2():
+    return time.clock()
+
+
+def now_time_py3():
+    return time.process_time()
+
+
+if six.PY2:
+    now_time = now_time_py2
+else:
+    now_time = now_time_py3
 
 
 def _get_a_task_id():
@@ -243,13 +258,14 @@ class Worker(threading.Thread):
 
     def run(self):
         self.task.status = Task.RUNNING
-        now = time.clock()
+
+        now = now_time()
         if _debug:
             print("begin ", get_func_full_name(self.task.target),
                   self.task.args, self.task.kwargs, self.task.result)
         self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
         if _debug:
-            print(time.clock()-now, get_func_full_name(self.task.target),
+            print(now_time()-now, get_func_full_name(self.task.target),
                   self.task.args, self.task.kwargs, self.task.result)
         Master.finish_task(self.task.id)
         if ex and self.task.catch_cb:

@@ -10,17 +10,15 @@ from JavPy.utils.common import try_evaluate
 
 import time
 
+
 class IndexAVCom(ISearchByActress, IGetBrief):
 
     @classmethod
     def search_by_actress(cls, actress, up_to):
-        print(time.clock())
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        print(time.clock())
         tab_content = bs.select('.tab-content')[-1]
-        print(time.clock())
         boxes = tab_content.children
 
         res = []
@@ -28,7 +26,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         cnt = 0
 
         for box in boxes:
-            print(time.clock())
             if not isinstance(box, bs4.Tag):
                 continue
             # release_date = box.select('.col-sm-2')[0].span.text

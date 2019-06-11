@@ -10,7 +10,6 @@ from JavPy.utils.requester import spawn, spawn_many, Task
 from JavPy.utils.common import sum_up
 from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
-import time
 
 
 class Search:
@@ -45,7 +44,6 @@ class Search:
 
         if lang == "en":
             actress = ActressTranslate.translate2jp(actress)
-            print(time.clock())
         if actress:
             res = spawn(cls.sources_by_actress["indexav.com"].search_by_actress, actress, up_to)
             if history_name:
