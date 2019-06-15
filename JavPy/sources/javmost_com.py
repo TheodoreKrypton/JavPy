@@ -105,7 +105,7 @@ class JavMostCom(ISearchByCode):
         actress = list(map(lambda x: x.text, card_tag.find_all(name='a', attrs={'class': 'btn-danger'})))
 
         img, _ = try_evaluate(lambda: card_tag.find(name='img').attrs['src'])
-        if not img.startswith("http:"):
+        if not img.startswith("http"):
             img = "http:" + img
 
         brief = Brief()
