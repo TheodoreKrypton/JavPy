@@ -7,6 +7,7 @@ try:
 except ImportError:
     pass
 from functools import reduce
+from JavPy.utils.common import try_evaluate
 
 
 class New:
@@ -47,17 +48,19 @@ class New:
 
             return reduce(lambda x, y: x + y, cls.newly_released[:page_cnt])[:up_to]
 
-    source = JavMostCom
+    sources = [JavMostCom, JavLibraryCom]
+    which_source = 0
 
     @classmethod
     def get_newly_released_from_sources(cls, page):
-        try:
-            res = cls.source.get_newly_released(page)
-            if res:
-                return res
-        finally:
-            cls.source = JavLibraryCom
-            return cls.source.get_newly_released(page)  # fallback choice
+        res, ex = try_evaluate(lambda: cls.sources[cls.which_source].get_newly_released(page))
+        if (not res) or ex:
+            cls.which_source += 1
+            if cls.which_source == len(cls.sources):
+                raise Exception("all sources are down")
+            return cls.get_newly_released_from_sources(page)  # fallback choice
+        else:
+            return res
 
     @classmethod
     def merge_results(cls, results):
