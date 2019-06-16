@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
 from future.builtins import str, map
-from JavPy.sources.BaseSource import ISearchByCode
+from JavPy.sources.BaseSource import ISearchByCode, INewlyReleased
 import requests
 import re
 import bs4
@@ -11,7 +11,7 @@ from JavPy.utils.common import try_evaluate
 import datetime
 
 
-class JavMostCom(ISearchByCode):
+class JavMostCom(ISearchByCode, INewlyReleased):
     def __init__(self):
         pass
 
@@ -104,8 +104,8 @@ class JavMostCom(ISearchByCode):
 
         actress = list(map(lambda x: x.text, card_tag.find_all(name='a', attrs={'class': 'btn-danger'})))
 
-        img, _ = try_evaluate(lambda: card_tag.find(name='img').attrs['src'])
-        if not img.startswith("http:"):
+        img, _ = try_evaluate(lambda: card_tag.find(name='img').attrs['data-src'])
+        if not img.startswith("http"):
             img = "http:" + img
 
         brief = Brief()
@@ -117,7 +117,7 @@ class JavMostCom(ISearchByCode):
 
         return brief
 
-    @staticmethod
-    def get_newly_released(which_page):
-        cards = JavMostCom.get_cards_from_newly_released_page(str(which_page))
+    @classmethod
+    def get_newly_released(cls, page):
+        cards = JavMostCom.get_cards_from_newly_released_page(str(page))
         return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))

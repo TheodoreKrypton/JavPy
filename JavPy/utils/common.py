@@ -40,7 +40,10 @@ def get_func_full_name(func):
     try:
         return func.__module__ + "." + func.__qualname__
     except AttributeError:
-        return func.__module__ + re.search(class_name_pattern, func.im_class).group(1) + "." + func.__name__
+        try:
+            return func.__module__ + re.search(class_name_pattern, func.im_class).group(1) + "." + func.__name__
+        except AttributeError:
+            return ""
 
 
 def update_object(origin, new):
@@ -69,3 +72,7 @@ def urlencode(string, encoding):
         from urllib.parse import quote as _urlencode
 
     return _urlencode(string.encode(encoding))
+
+
+def get_code_from_title(title):
+    return re.search(r"\w+-?\d+", title).group(0)

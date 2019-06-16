@@ -15,3 +15,4 @@ gevent
 ipaddr
 pycryptodome
 future
+cfscrape
