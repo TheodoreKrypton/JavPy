@@ -1,6 +1,15 @@
 from abc import ABCMeta, abstractmethod
 
 
+class INewlyReleased:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def get_newly_released(cls, page):
+        pass
+
+
 class ISearchByCode:
     __metaclass__ = ABCMeta
 

@@ -18,8 +18,10 @@ spawn(requests.get, __tracker_list_url).then(__set_tracker_list)
 
 
 def modify_magnet(magnet):
-    return magnet
-    base_link = magnet.split("&tr=")[0]
+    while not __tracker_url:
+        pass
+    frags = magnet.split("&")
+    base_link = "&".join(filter(lambda x: not x.startswith("tr"), frags))
     return base_link + __tracker_url
 
 
@@ -52,6 +54,7 @@ def get_peers_count_from_magnet(magnet):
         for i in p:
             peers.add(i.ip)
 
+    print(peers)
     session.remove_torrent(handle)
     shutil.rmtree(tempdir)
 
@@ -59,7 +62,6 @@ def get_peers_count_from_magnet(magnet):
 
 
 if __name__ == '__main__':
-    time.sleep(3)
     modified_magnet = modify_magnet(
         "magnet:?xt=urn:btih:D02454449497A930D41D3E5ABB1537F473AA907A&dn=%5BThZu.Cc%5DABP-813&tr=udp://tracker.coppersurfer.tk:6969/announce"
     )

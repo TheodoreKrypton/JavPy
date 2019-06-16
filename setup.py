@@ -34,7 +34,8 @@ setup(
         'lxml',
         'ipaddr',
         'pycryptodome',
-        'future'
+        'future',
+        'cfscrape'
     ],
     include_package_data=True,
     exclude_package_data={'': ['.gitignore']},
