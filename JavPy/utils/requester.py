@@ -1,138 +1,71 @@
-from __future__ import absolute_import, print_function, unicode_literals
 import threading
-from threading import Lock
-from JavPy.utils.common import try_evaluate, get_func_full_name
-try:
-    from typing import Dict
-except ImportError:
-    pass
+from threading import Event
+from JavPy.utils.common import try_evaluate
 import time
-import six
-
-"""
-                                       Lifecycle of a Task:
-                                       
-       -------------------------------------------------------
-       | Construct a Task with target function and arguments |------(Task: (target, args, kwargs))
-       -------------------------------------------------------                   ^
-                                v                                                |
-     __task_id_generator   -->  v   Wait for task id generator              [Task Queue]
-                                v                                                |
-                        ------------------                                       v
-                        | Gain a task id |----------------------(Task: (target, args, kwargs), task_id)
-                        ------------------
-                                v
-              MAX_WORKER   -->  v   Wait for len(workers) < MAX_WORKER
-                                v
-               -------------------------------------
-               | Construct a Worker to do the task |--------------(Worker: Task); len(workers) += 1
-               -------------------------------------                             ^
-                                v                                                |
-           remote server   -->  v   Wait for response                            |
-                                v                                         [Worker Dict]
-                       --------------------                                      |
-                       | Get the response |                                      |
-                -----------------------------------                              v
-                | Set task.result, delete worker  |---------------------  len(workers) -= 1
-     ------------------------------------------------------------                
-     [Exception ][ Use rsp through cb ][ Get result through wait]                
-     ------------------------------------------------------------                
-          v                 v                      v                             
-          v                 v                      v                     
-          v                 v                      v
-         catch             then               gather_result
-         
-
-    All the requester tasks are owned by the Master thread
-
-"""
-
-_debug = False
-
-
-def now_time_py2():
-    return time.clock()
-
-
-def now_time_py3():
-    return time.process_time()
-
-
-if six.PY2:
-    now_time = now_time_py2
-else:
-    now_time = now_time_py3
-
-
-def _get_a_task_id():
-    task_id = 0
-    while True:
-        task_id += 1
-        yield task_id
 
 
 class Master:
-    __waiting_for_run = []
-    __q_lock = Lock()
+    def __init__(self, num_threads):
+        self.workers = [Worker(self) for i in range(num_threads)]
+        self.semaphore = threading.BoundedSemaphore(num_threads)
+        for worker in self.workers:
+            worker.start()
 
-    MAX_WORKER = 20
-    workers = {}  # type: Dict[int, Worker]
-    __workers_lock = Lock()
+    def wait_for_run(self, task):
+        self.semaphore.acquire(True)
+        for t in self.workers:
+            if not t.event.is_set():
+                t.do(task)
+                break
+        else:
+            raise Exception("No free worker.")
 
-    __task_id_generator = _get_a_task_id()
+    def spawn(self, target, *args, **kwargs):
+        task = Task(target, *args, **kwargs)
+        self.wait_for_run(task)
+        return task
 
-    @classmethod
-    def get_a_task_id(cls):
-        return next(cls.__task_id_generator)
+    def spawn_many(self, tasks):
+        task_group = _TaskGroup(list(tasks))
+        for task in task_group.tasks:
+            self.wait_for_run(task)
+        return task_group
 
-    @classmethod
-    def __spawnable(cls):
-        return not cls.__workers_lock.locked() and len(cls.workers) <= cls.MAX_WORKER
 
-    @classmethod
-    def wait_for_run(cls, task):
-        with cls.__q_lock:
-            task.id = next(cls.__task_id_generator)
-            cls.__waiting_for_run.append(task)
+class Worker(threading.Thread):
+    def __init__(self, master):
+        threading.Thread.__init__(self)
+        self.event = Event()
+        self.task = None
+        self.master = master
 
-    @classmethod
-    def finish_task(cls, task_id):
-        with cls.__workers_lock:
-            if task_id in Master.workers:
-                if Master.workers[task_id].is_alive():
-                    Master.workers[task_id].terminate()
-                del cls.workers[task_id]
-
-    @classmethod
-    def master_thread(cls):
+    def run(self):
         while True:
-            time.sleep(0.1)
-            if not cls.__waiting_for_run:
-                continue
-            while not cls.__spawnable():
-                pass
-            with cls.__workers_lock:
-                task = cls.__waiting_for_run[0]
-                with cls.__q_lock:
-                    del cls.__waiting_for_run[0]
-                cls.workers[task.id] = Worker(task)
-                cls.workers[task.id].start()
+            self.event.wait()
+            self.task.status = Task.RUNNING
+            self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
+            if ex and self.task.catch_cb:
+                self.task.catch_cb(ex)
+                self.task.status = Task.FAILED
+            elif self.task.then_cb:
+                self.task.then_cb(self.task.result)
+            if self.task.result is not None:
+                self.task.status = Task.SUCCESS
+            else:
+                self.task.status = Task.FAILED
 
+            if self.task.task_group:
+                self.task.task_group.finished_cnt += 1
+                if self.task.status == Task.FAILED:
+                    self.task.task_group.failed_cnt += 1
+                else:
+                    self.task.task_group.success_cnt += 1
+            self.event.clear()
+            self.master.semaphore.release()
 
-__master_thread_started = False
-
-
-def start_master_thread():
-    global __master_thread_started
-    if __master_thread_started:
-        return
-    __master_thread_started = True
-    master = threading.Thread(target=Master.master_thread)
-    master.setDaemon(True)
-    master.start()
-
-
-start_master_thread()
+    def do(self, task):
+        self.task = task
+        self.event.set()
 
 
 class Task:
@@ -151,13 +84,11 @@ class Task:
         self.on_timeout_cb = None
         self.result = None
         self.status = Task.NOT_STARTED
-
-    def finished(self):
-        return not self.status % 2
+        self.task_group = None
 
     def wait_for_result(self):
-        while not self.finished():
-            pass
+        while self.status % 2:
+            time.sleep(0.1)
         return self.result
 
     def then(self, callback):
@@ -173,50 +104,48 @@ class Task:
         return self
 
 
-class __TaskGroup:
+class _TaskGroup:
     def __init__(self, tasks):
         self.tasks = tasks
+
+        for task in self.tasks:
+            task.task_group = self
+
         self.one_complete_cb = None
         self.all_complete_cb = None
         self.catch_cb = None
         self.on_timeout_cb = None
+        self.finished_cnt = 0
+        self.success_cnt = 0
+        self.failed_cnt = 0
+        self.n_tasks = len(self.tasks)
 
     def __gather_results(self):
         res = tuple((task.result for task in self.tasks))
         return res
 
-    def __finished_cnt(self):
-        res = sum(map(lambda x: x.finished(), self.tasks))
-        return res
-
-    def __failed_cnt(self):
-        return sum(map(lambda x: x.status == Task.FAILED, self.tasks))
-
-    def __success_cnt(self):
-        return sum(map(lambda x: x.status == Task.SUCCESS, self.tasks))
-
     def wait_for_all_finished(self):
-        while len(self.tasks) != self.__finished_cnt():
-            pass
+        while self.n_tasks != self.finished_cnt:
+            time.sleep(0.2)
         return self.__gather_results()
 
     def wait_until(self, condition):
-        while True:
+        while not time.sleep(0.1):
             for task in self.tasks:
                 if task.status % 2:
                     continue
                 res = task.result
                 if res is not None and condition(res):
                     return self.__gather_results()
-            if self.__finished_cnt() == len(self.tasks):
+            if self.finished_cnt == self.n_tasks:
                 return self.__gather_results()
 
     def wait_for_one_finished(self):
         return self.wait_until(lambda x: True)
 
     def wait_for(self, success_cnt):
-        while True:
-            if success_cnt == self.__success_cnt() or len(self.tasks) == self.__finished_cnt():
+        while not time.sleep(0.1):
+            if success_cnt == self.success_cnt or self.n_tasks == self.finished_cnt:
                 return self.__gather_results()
 
     def on_one_complete(self, callback):
@@ -237,62 +166,28 @@ class __TaskGroup:
         return self
 
 
-def spawn(target, *args, **kwargs):
-    task = Task(target, *args, **kwargs)
-    Master.wait_for_run(task)
-    return task
+__master_thread_started = False
+__global_master = None
 
 
-def spawn_many(tasks):
-    task_group = __TaskGroup(list(tasks))
-    for task in task_group.tasks:
-        Master.wait_for_run(task)
-    return task_group
+def __master_thread():
+    global __global_master
+    __global_master = Master(20)
 
 
-class Worker(threading.Thread):
-    def __init__(self, task):
-        threading.Thread.__init__(self)
-        self.task = task
-        self._stop_event = threading.Event()
-
-    def run(self):
-        self.task.status = Task.RUNNING
-
-        now = now_time()
-        if _debug:
-            print("begin ", get_func_full_name(self.task.target),
-                  self.task.args, self.task.kwargs, self.task.result)
-        self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
-        if _debug:
-            print(now_time()-now, get_func_full_name(self.task.target),
-                  self.task.args, self.task.kwargs, self.task.result)
-        Master.finish_task(self.task.id)
-        if ex and self.task.catch_cb:
-            self.task.catch_cb(ex)
-            self.task.status = Task.FAILED
-        elif self.task.then_cb:
-            res = self.task.result
-            self.task.then_cb(res)
-        if self.task.result is not None:
-            self.task.status = Task.SUCCESS
-        else:
-            self.task.status = Task.FAILED
-
-    def terminate(self):
-        self._stop_event.set()
+def start_master_thread():
+    global __master_thread_started
+    if __master_thread_started:
+        return
+    __master_thread_started = True
+    master = threading.Thread(target=__master_thread)
+    master.setDaemon(True)
+    master.start()
 
 
-if __name__ == '__main__':
-    import requests
+start_master_thread()
 
-    def cb(res):
-        print(res)
-
-    def err_handler(ex):
-        print(ex)
-        print(ex.with_traceback())
-
-    spawn_many([Task(requests.get, "http://www.baidu.com") for x in range(0, 100)])\
-        .on_one_complete(cb)\
-        .wait_for_all_finished()
+while not __global_master:
+    pass
+spawn = __global_master.spawn
+spawn_many = __global_master.spawn_many

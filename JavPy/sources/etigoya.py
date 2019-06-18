@@ -42,4 +42,8 @@ class Etigoya(IHistoryNames):
 
 
 if __name__ == '__main__':
-    print(Etigoya.get_history_names("水野あき"))
+    import time
+    from JavPy.utils.requester import spawn_many as spawn_many2, Task as Task2
+    t = time.clock()
+    a = spawn_many2([Task2(Etigoya.get_history_names, "水野あき") for _ in range(22)]).wait_for_all_finished()
+    print(time.clock() - t)

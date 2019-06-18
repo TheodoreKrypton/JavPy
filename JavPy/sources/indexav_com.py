@@ -8,9 +8,6 @@ import bs4
 from JavPy.functions.datastructure import Brief
 from JavPy.utils.common import try_evaluate
 
-import time
-
-
 class IndexAVCom(ISearchByActress, IGetBrief):
 
     @classmethod
@@ -38,7 +35,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             cnt += 1
 
             if up_to and cnt >= up_to:
-                print(time.clock())
                 return res
         return res
 
@@ -75,4 +71,5 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
 
 if __name__ == '__main__':
+    print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
     print(IndexAVCom.search_by_actress("深田えいみ", 30))
