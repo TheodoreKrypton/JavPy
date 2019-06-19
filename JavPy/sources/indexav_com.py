@@ -16,15 +16,13 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         tab_content = bs.select('.tab-content')[-1]
-        boxes = tab_content.children
+        boxes = tab_content.select(".bs-callout")
 
         res = []
 
         cnt = 0
 
         for box in boxes:
-            if not isinstance(box, bs4.Tag):
-                continue
             # release_date = box.select('.col-sm-2')[0].span.text
             # if u"予定" in release_date:
             #     continue
