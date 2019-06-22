@@ -33,6 +33,7 @@ def test_search_by_code(code):
     assert rsp
     assert 'videos' in rsp
     assert len(rsp['videos']) == 1
+    print(rsp['videos'][0]['video_url'])
     assert requests.get(rsp['videos'][0]['video_url']).status_code == 200
 
 
