@@ -1,11 +1,12 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" :inline="true">
+    <el-form
+      ref="form"
+      :model="form"
+      :inline="true"
+    >
       <el-form-item>
-        <el-input v-model="form.code" placeholder="Jav Code"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-input v-model="form.actress" placeholder="Actress"></el-input>
+        <el-input v-model="form.keyword"></el-input>
       </el-form-item>
       <el-form-item>
         <el-switch
@@ -26,7 +27,10 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSearch">Search!</el-button>
+        <el-button
+          type="primary"
+          @click="onSearch"
+        >Search!</el-button>
         <el-button @click="clear">Clear</el-button>
       </el-form-item>
     </el-form>
@@ -40,8 +44,7 @@ export default {
   data() {
     return {
       form: {
-        code: "",
-        actress: "",
+        keyword: "",
         allowManyActresses: false,
         upTo: 0
       }
@@ -50,23 +53,20 @@ export default {
 
   methods: {
     onSearch() {
-      if (this.form.code && !this.form.actress) {
+      if (this.form.keyword.includes("-")) {
         Event.$emit("search_by_code", {
-          code: this.form.code
-        });
-      } else if (this.form.actress && !this.form.code) {
-        Event.$emit("search_by_actress", {
-          actress: this.form.actress,
-          historyNameRequired: true
+          code: this.form.keyword
         });
       } else {
-        return;
+        Event.$emit("search_by_actress", {
+          actress: this.form.keyword,
+          historyNameRequired: true
+        });
       }
     },
 
     clear() {
-      this.form.code = "";
-      this.form.actress = "";
+      this.form.keyword = "";
     }
   }
 };
