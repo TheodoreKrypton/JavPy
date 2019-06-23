@@ -9,24 +9,6 @@
         <el-input v-model="form.keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-switch
-          v-model="form.allowManyActresses"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        ></el-switch>
-      </el-form-item>
-      <el-form-item>
-        <el-input-number
-          v-model="form.upTo"
-          controls-position="right"
-          :min="1"
-          label="Count"
-          size="mini"
-          style="width: 80px"
-        ></el-input-number>
-      </el-form-item>
-
-      <el-form-item>
         <el-button
           type="primary"
           @click="onSearch"
@@ -44,9 +26,7 @@ export default {
   data() {
     return {
       form: {
-        keyword: "",
-        allowManyActresses: false,
-        upTo: 0
+        keyword: ""
       }
     };
   },

@@ -7,6 +7,8 @@ from JavPy.functions.magnet import Magnet
 from JavPy.functions.history_names import HistoryNames
 from JavPy.utils.common import cache
 from JavPy.utils.requester import spawn_many, Task, spawn
+import os
+import json
 
 
 class Functions:
@@ -60,3 +62,11 @@ class Functions:
     @cache
     def translate2jp(actress):
         return
+
+    @staticmethod
+    @cache
+    def get_tags():
+        with open(os.path.abspath(__file__) + "../sources/categories.json") as fp:
+            content = fp.read()
+            obj = json.loads(content)
+            return obj["javmost"]
