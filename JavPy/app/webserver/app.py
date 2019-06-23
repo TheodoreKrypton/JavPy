@@ -154,3 +154,15 @@ def search_magnet_by_code():
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
+
+
+@app.route("/get_tags", methods=['POST'])
+def get_tags():
+    params = json.loads(request.data.decode('utf-8'))
+    print(params)
+
+    res = Functions.get_tags()
+
+    rsp = jsonify(res)
+    rsp.headers["Access-Control-Allow-Origin"] = "*"
+    return rsp

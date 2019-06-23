@@ -1,14 +1,15 @@
 <template>
   <div>
     <el-tag
-      :key="tag"
-      v-for="tag in categories"
+      v-for="category in categories"
+      :key="category"
       closable
       :disable-transitions="false"
-      @close="handleClose(tag)"
+      @close="handleClose(category)"
     >
-      {{tag}}
+      {{category}}
     </el-tag>
+
     <el-input
       class="input-new-tag"
       v-if="inputVisible"
@@ -21,13 +22,14 @@
     </el-input>
     <el-popover
       placement="bottom"
-      width="400"
+      width="1300"
     >
       <div v-if="availableCategories != undefined">
         <el-button
           v-for="category in availableCategories"
           :key="category"
           size="mini"
+          @click="addTag(category)"
         >{{category}}</el-button>
       </div>
 
@@ -35,8 +37,10 @@
         class="button-new-tag"
         size="small"
         slot="reference"
+        @click="onNewTag"
       >+ New Tag</el-button>
     </el-popover>
+    <div></div>
     <el-button
       type="primary"
       @click="onSearch"
@@ -65,29 +69,44 @@
 </style>
 
 <script>
+import utils from "../utils.js";
+
 export default {
   data() {
     return {
       categories: [],
-      inputVisible: false
+      inputVisible: false,
+      availableCategories: []
     };
   },
-  computed: {
-    availableCategories: {
-      get() {
-        return [];
-      }
-    }
-  },
+
   methods: {
+    onNewTag() {
+      let self = this;
+      if (this.availableCategories.length === 0) {
+        utils.pookie("/get_tags").then(rsp => {
+          if (rsp && rsp.status === 200) {
+            let set = new Set(rsp.data);
+            this.availableCategories = set.toJSON();
+          }
+        });
+      } else {
+        return;
+      }
+    },
+
+    addTag(tag) {
+      this.categories.push(tag);
+    },
+
     handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      this.categories.splice(this.categories.indexOf(tag), 1);
     },
 
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.dynamicTags.push(inputValue);
+        this.categories.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = "";

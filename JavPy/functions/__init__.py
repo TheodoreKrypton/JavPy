@@ -63,10 +63,15 @@ class Functions:
     def translate2jp(actress):
         return
 
+    tags = None
+
     @staticmethod
     @cache
     def get_tags():
-        with open(os.path.abspath(__file__) + "../sources/categories.json") as fp:
-            content = fp.read()
-            obj = json.loads(content)
-            return obj["javmost"]
+        if not Functions.tags:
+            curdir = os.path.sep.join(os.path.abspath(__file__).split(os.path.sep)[:-1])
+            with open(curdir + "/../sources/categories.json") as fp:
+                content = fp.read()
+                obj = json.loads(content)
+                Functions.tags = obj['javmost']
+        return Functions.tags
