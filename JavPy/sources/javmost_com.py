@@ -1,7 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
 from future.builtins import str, map
 from JavPy.sources.BaseSource import ISearchByCode, INewlyReleased
-import requests
 import re
 import bs4
 import json
@@ -9,16 +8,20 @@ from JavPy.embed.decode import decode
 from JavPy.functions.datastructure import AV, Brief
 from JavPy.utils.common import try_evaluate
 import datetime
+import cfscrape
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
+
+    __client = cfscrape.create_scraper()
+
     def __init__(self):
         pass
 
     @classmethod
     def search_by_code(cls, code):
         url = "http://www5.javmost.com/" + code
-        main_rsp = requests.get(url)
+        main_rsp = cls.__client.get(url)
         if main_rsp.status_code != 200:
             return None
 
@@ -45,13 +48,13 @@ class JavMostCom(ISearchByCode, INewlyReleased):
             sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 
             url = "https://www5.javmost.com/get_code/"
-            rsp = requests.post(url, data={
+            rsp = cls.__client.post(url, data={
                 "code": value
             })
             _code = rsp.text
 
             url = "https://www5.javmost.com/get_source/"
-            rsp = requests.post(url, data={
+            rsp = cls.__client.post(url, data={
                 "group": t,
                 "part": e,
                 "code": l,
@@ -67,7 +70,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
             url = decode(url)
 
-            if requests.get(url).status_code == 200:
+            if cls.__client.get(url).status_code == 200:
                 success = True
                 break
 
@@ -84,7 +87,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     @staticmethod
     def get_cards_from_newly_released_page(page):
         url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-        rsp = requests.get(url)
+        rsp = JavMostCom.__client.get(url)
 
         json_obj = json.loads(rsp.text)
         html = json_obj["data"]
@@ -121,3 +124,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     def get_newly_released(cls, page):
         cards = JavMostCom.get_cards_from_newly_released_page(str(page))
         return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))
+
+
+if __name__ == '__main__':
+    print(JavMostCom.get_newly_released(1))
