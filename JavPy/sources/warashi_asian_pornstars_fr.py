@@ -22,16 +22,30 @@ class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp):
             'recherche_valeur': actress
         })
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        url = "http://warashi-asian-pornstars.fr" + bs.select(".resultat-pornostar")[0].a.attrs['href']
-        rsp = requests.get(url)
-        bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        names = [elem.text.lower() for elem in
-                 bs.find_all(name='span', attrs={'itemprop': 'name'}) +
-                 bs.find_all(attrs={'itemprop': 'additionalName'})]
-        if actress.lower() not in names:
+
+        actress_lower = actress.lower()
+
+        box = bs.select("#bloc-resultats-conteneur-pornostars", limit=1)[0].find(attrs={'class': 'resultat-pornostar'})
+        if actress_lower in box.find(name='p').text.lower():
+            url = "http://warashi-asian-pornstars.fr" + box.a.attrs['href']
+            rsp = requests.get(url)
+            bs = bs4.BeautifulSoup(rsp.text, "lxml")
+            names = [elem.text.lower() for elem in
+                     bs.find_all(name='span', attrs={'itemprop': 'name'}) +
+                     bs.find_all(attrs={'itemprop': 'additionalName'})]
+            if actress_lower not in names:
+                return None
+            return bs.find('h1').text.split(' - ')[1]
+
+        else:
+            box = bs.select("#bloc-resultats-conteneur-castings", limit=1)[0].find(attrs={'class': 'resultat-pornostar'})
+            title = box.find(name='p').text.lower()
+            if actress_lower in title:
+                name = title.split("-")[1].strip()
+                if name:
+                    return name
             return None
-        return bs.find('h1').text.split(' - ')[1]
 
 
 if __name__ == '__main__':
-    print(WarashiAsianPornStarsFr.translate2jp(u'夏目彩春'))
+    print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))

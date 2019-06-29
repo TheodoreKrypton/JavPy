@@ -8,6 +8,7 @@ import bs4
 from JavPy.functions.datastructure import Brief
 from JavPy.utils.common import try_evaluate
 
+
 class IndexAVCom(ISearchByActress, IGetBrief):
 
     @classmethod

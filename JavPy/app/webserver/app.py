@@ -108,6 +108,7 @@ def search_by_actress():
     actress = params['actress']
     history_name = params['history_name'] == "true"
     briefs, names = spawn(Functions.search_by_actress, actress, 30, history_name).wait_for_result()
+
     res = {
         'videos': [brief.to_dict() for brief in briefs],
         'other': {

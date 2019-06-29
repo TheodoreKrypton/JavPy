@@ -51,6 +51,8 @@ class Search:
                 return res.wait_for_result(), names.wait_for_result()
             else:
                 return res.wait_for_result(), None
+        else:
+            return [], None
 
 
 if __name__ == '__main__':
