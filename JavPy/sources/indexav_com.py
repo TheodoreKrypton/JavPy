@@ -16,20 +16,15 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        tab_content = bs.select('.tab-content')[-1]
-        boxes = tab_content.select(".bs-callout")
+        tbody = bs.find(name='tbody')
+        trs = tbody.find_all(name='tr')
 
         res = []
 
         cnt = 0
 
-        for box in boxes:
-            # release_date = box.select('.col-sm-2')[0].span.text
-            # if u"予定" in release_date:
-            #     continue
-
-            brief = cls.__get_brief_by_box(box)
-
+        for tr in trs:
+            brief = cls.__get_brief_by_tr(tr)
             res.append(brief)
             cnt += 1
 
@@ -46,19 +41,22 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             return None
 
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        box = bs.find(name='div', attrs={'class': 'bs-callout'})
-        if not box:
+        tbody = bs.find(name='tbody')
+        if not tbody:
             return None
-        return cls.__get_brief_by_box(box)
+        tr = tbody.find(name='tr')
+        if not tr:
+            return None
+        return cls.__get_brief_by_tr(tr)
 
     @staticmethod
-    def __get_brief_by_box(box):
-        code = box.find(name='span', attrs={'class': 'video_id'}).text
-        div = box.find(name='div', attrs={'class': 'col-sm-7'})
-        actress = ", ".join(map(lambda x: x.text, div.find_all(name='div', attrs={'class': 'col-xs-6'})))
-        title = div.find(name='span', attrs={'class': 'video_title'}).text
-        img, _ = try_evaluate(lambda: div.find(name='span', attrs={'class': 'preview_btn'}).attrs['rel'])
-        release_date = box.find(name='div', attrs={'class': 'col-sm-2'}).span.text
+    def __get_brief_by_tr(tr):
+        code = tr.find(name='span', attrs={'class': 'video_id'}).text
+        actress = ", ".join((x.text for x in tr.select(".video_actor")))
+        a = tr.find(name='a', attrs={'class': 'video_title'})
+        title = a.text
+        img, _ = try_evaluate(lambda: a.attrs['rel'])
+        release_date = tr.td.text
 
         brief = Brief()
         brief.title = title.strip()
