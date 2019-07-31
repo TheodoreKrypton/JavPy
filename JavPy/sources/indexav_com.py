@@ -55,7 +55,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         actress = ", ".join((x.text for x in tr.select(".video_actor")))
         a = tr.find(name='a', attrs={'class': 'video_title'})
         title = a.text
-        img, _ = try_evaluate(lambda: a.attrs['rel'])
+        img, _ = try_evaluate(lambda: a.attrs['rel'][0])
         release_date = tr.td.text
 
         brief = Brief()
