@@ -23,7 +23,7 @@ class MockUser:
     def __init__(self, user_id):
         self.id = user_id
         self.__received_messages = []
-        self.chats = {}  # type: typing.List[MockChat]
+        self.chats = {}  # type: typing.Dict[int, MockChat]
 
     def send_message(self, *_, **kwargs):
         self.chats[kwargs["chat_id"]].bot.receive_message(**kwargs)
@@ -69,7 +69,7 @@ class MockChat:
 
 class MockBot:
     def __init__(self):
-        self.chats = {}  # type: typing.List[MockChat]
+        self.chats = {}  # type: typing.Dict[int, MockChat]
         self.__received_messages = []
         self.send_photo = self.send_message
 
