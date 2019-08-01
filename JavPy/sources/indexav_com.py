@@ -8,6 +8,7 @@ import bs4
 from JavPy.functions.datastructure import Brief
 from JavPy.utils.common import try_evaluate
 
+
 class IndexAVCom(ISearchByActress, IGetBrief):
 
     @classmethod
@@ -15,15 +16,14 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        tbody = bs.find(name='tbody')
-        trs = tbody.find_all(name='tr')
+        cards = bs.select(".card")[:-1]
 
         res = []
 
         cnt = 0
 
-        for tr in trs:
-            brief = cls.__get_brief_by_tr(tr)
+        for card in cards:
+            brief = cls.__get_brief_by_card(card)
             res.append(brief)
             cnt += 1
 
@@ -40,28 +40,25 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             return None
 
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        tbody = bs.find(name='tbody')
-        if not tbody:
+        cards = bs.select(".card")
+        if not cards:
             return None
-        tr = tbody.find(name='tr')
-        if not tr:
-            return None
-        return cls.__get_brief_by_tr(tr)
+        return cls.__get_brief_by_card(cards[0])
 
     @staticmethod
-    def __get_brief_by_tr(tr):
-        code = tr.find(name='span', attrs={'class': 'video_id'}).text
-        actress = ", ".join((x.text for x in tr.select(".video_actor")))
-        a = tr.find(name='a', attrs={'class': 'video_title'})
-        title = a.text
-        img, _ = try_evaluate(lambda: a.attrs['rel'][0])
-        release_date = tr.td.text
+    def __get_brief_by_card(card):
+        columns = card.select(".column")
+        code = columns[4].next.strip()
+        actress = ", ".join((x.text.strip() for x in columns[2].find_all(name='span')))
+        title = columns[3].a.text.strip()
+        img, _ = try_evaluate(lambda: columns[3].a.attrs['rel'][0])
+        release_date = columns[1].text.strip()
 
         brief = Brief()
-        brief.title = title.strip()
+        brief.title = title
         brief.preview_img_url = img
-        brief.code = code.strip()
-        brief.actress = actress.strip()
+        brief.code = code
+        brief.actress = actress
         brief.set_release_date(release_date)
         return brief
 
@@ -69,3 +66,4 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 if __name__ == '__main__':
     print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
     print(IndexAVCom.search_by_actress("深田えいみ", 30))
+    print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())
