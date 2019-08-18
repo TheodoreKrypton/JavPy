@@ -6,6 +6,7 @@ from JavPy.sources.avgle_com import AVGleCom
 from JavPy.sources.xopenload_video import XOpenloadVideo
 from JavPy.sources.javfull_net import JavFullNet
 from JavPy.sources.indexav_com import IndexAVCom
+from JavPy.sources.highporn_net import HighPornNet
 from JavPy.utils.requester import spawn, spawn_many, Task
 from JavPy.utils.common import sum_up
 from JavPy.functions.actress_translate import ActressTranslate
@@ -13,7 +14,7 @@ from JavPy.functions.history_names import HistoryNames
 
 
 class Search:
-    sources_by_code = [JavMostCom, XOpenloadVideo, YouAVCom, AVGleCom, JavFullNet]
+    sources_by_code = [JavMostCom, XOpenloadVideo, YouAVCom, AVGleCom, JavFullNet, HighPornNet]
     sources_by_actress = {
         "indexav.com": IndexAVCom
     }
@@ -56,4 +57,5 @@ class Search:
 
 
 if __name__ == '__main__':
-    print(Search.search_by_actress("Arina Hashimoto", 30))
+    print(Search.search_by_code("DFE-023").to_dict())
+    # print(Search.search_by_actress("Arina Hashimoto", 30))
