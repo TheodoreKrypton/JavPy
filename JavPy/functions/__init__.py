@@ -75,3 +75,8 @@ class Functions:
                 obj = json.loads(content)
                 Functions.tags = obj['javmost']
         return Functions.tags
+
+    @staticmethod
+    @cache
+    def get_actress_info(actress):
+        pass

@@ -1,12 +1,12 @@
 # encoding: utf-8
 
 from __future__ import print_function, unicode_literals, absolute_import
-from JavPy.sources.BaseSource import ISearchByActress, IGetBrief, ITranslateEn2Jp
+from JavPy.sources.BaseSource import ISearchByActress, IGetBrief, ITranslateEn2Jp, IActressInfo
 import requests
 import bs4
 
 
-class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp):
+class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp, IActressInfo):
     @classmethod
     def search_by_actress(cls, actress, up_to):
         pass
@@ -45,6 +45,10 @@ class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp):
                 if name:
                     return name
             return None
+
+    @classmethod
+    def get_actress_info(cls, actress):
+        pass
 
 
 if __name__ == '__main__':

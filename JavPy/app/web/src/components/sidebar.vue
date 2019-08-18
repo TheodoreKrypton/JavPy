@@ -31,6 +31,10 @@
             index="1-3"
             @click="toCategory"
           >Categories</el-menu-item>
+          <el-menu-item
+            index="1-4"
+            @click="toSeries"
+          >Series</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
