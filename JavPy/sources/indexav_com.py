@@ -43,6 +43,8 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         cards = bs.select(".card")
         if not cards:
             return None
+        if "Sad, cannot find any video in database" in cards[0].text:
+            return None
         return cls.__get_brief_by_card(cards[0])
 
     @staticmethod
@@ -50,7 +52,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         columns = card.select(".column")
         code = columns[4].next.strip()
         actress = ", ".join((x.text.strip() for x in columns[2].find_all(name='span')))
-        title = columns[3].a.text.strip()
+        title = columns[3].text.strip()
         img, _ = try_evaluate(lambda: columns[3].a.attrs['rel'][0])
         release_date = columns[1].text.strip()
 
@@ -64,6 +66,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
 
 if __name__ == '__main__':
-    print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
-    print(IndexAVCom.search_by_actress("深田えいみ", 30))
-    print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())
+    # print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
+    print(IndexAVCom.search_by_actress("神宮寺ナオ", None))
+    # print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())

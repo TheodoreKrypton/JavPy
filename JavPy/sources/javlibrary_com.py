@@ -1,12 +1,13 @@
-from JavPy.sources.BaseSource import INewlyReleased
+from JavPy.sources.BaseSource import INewlyReleased, IGetBrief
 import cfscrape
 from JavPy.utils.requester import spawn_many, Task
 import re
-from JavPy.functions.datastructure import AV
+from JavPy.functions.datastructure import AV, Brief
 import datetime
+import bs4
 
 
-class JavLibraryCom(INewlyReleased):
+class JavLibraryCom(INewlyReleased, IGetBrief):
 
     __client = cfscrape.create_scraper()
 
@@ -39,6 +40,26 @@ class JavLibraryCom(INewlyReleased):
             res.append(av)
         return res
 
+    @classmethod
+    def get_brief(cls, code):
+        html = cls.__client.get("http://www.javlibrary.com/ja/vl_searchbyid.php?keyword=" + code).text
+        match = re.search(r"\"og:url\" content=\"//(.+?)\">", html)
+        if not match:
+            return None
+        url = match.group(1)
+        html = cls.__client.get("http://" + url).text
+        brief = Brief()
+        bs = bs4.BeautifulSoup(html, "lxml")
+        brief.title = bs.select(".post-title")[0].text
+        brief.preview_img_url = bs.select("#video_jacket_img")[0].attrs['src']
+        if not brief.preview_img_url.startswith("http"):
+            brief.preview_img_url = "http:" + brief.preview_img_url
+        brief.code = code
+        date = bs.select("#video_date")[0].select("td")[-1].text
+        brief.set_release_date(date)
+        brief.actress = ", ".join((span.text for span in bs.select(".cast")))
+        return brief
+
 
 if __name__ == '__main__':
-    print(JavLibraryCom.get_newly_released(1))
+    JavLibraryCom.get_brief("ABP-123")

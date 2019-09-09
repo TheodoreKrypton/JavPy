@@ -14,6 +14,9 @@ class HighPornNet(ISearchByCode):
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         div = bs.select(".well-sm")[0]
         av = AV()
-        av.preview_img_url = "http:" + div.find(name='img').attrs['src']
+        av.code = code
+        av.preview_img_url = div.find(name='img').attrs['src']
+        if not av.preview_img_url.startswith("http"):
+            av.preview_img_url = "http:" + av.preview_img_url
         av.video_url = div.a.attrs['href']
         return av
