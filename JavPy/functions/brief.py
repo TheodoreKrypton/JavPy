@@ -1,12 +1,13 @@
 from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.sources.avsox_net import AVSoxNet
+from JavPy.sources.javlibrary_com import JavLibraryCom
 from JavPy.utils.common import sum_up
 from JavPy.utils.requester import spawn_many, Task
 
 
 class Brief:
-    sources = [IndexAVCom, AVSoxNet]
+    sources = [IndexAVCom, AVSoxNet, JavLibraryCom]
 
     @staticmethod
     def get_brief(code):

@@ -77,3 +77,10 @@ class Magnet:
             "magnet": self.magnet,
             "description": self.description
         }
+
+
+class Actress:
+    def __init__(self):
+        self.name = ""
+        self.birth_date = None
+        self.img = ""

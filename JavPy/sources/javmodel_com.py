@@ -13,4 +13,4 @@ class JavModelCom(ITranslateEn2Jp):
 
 
 if __name__ == '__main__':
-    print(JavModelCom.translate2jp("Aoi Akane"))
+    print(JavModelCom.translate2jp("Nao Jinguuji"))

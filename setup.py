@@ -37,6 +37,11 @@ setup(
         'future',
         'cfscrape'
     ],
+    entry_points={
+        'console_scripts': [
+            'javpy = JavPy:serve',
+        ],
+    },
     include_package_data=True,
     exclude_package_data={'': ['.gitignore']},
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",

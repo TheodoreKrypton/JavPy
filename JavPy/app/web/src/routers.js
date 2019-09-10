@@ -3,6 +3,7 @@ import searchVideo from "./components/mainpages/searchvideo.vue";
 import searchActress from "./components/mainpages/searchactress.vue";
 import newlyReleased from "./components/mainpages/newly_released.vue";
 import magnet from "./components/mainpages/magnet.vue";
+import categories from "./components/mainpages/categories.vue";
 
 const routers = [
   {
@@ -32,6 +33,10 @@ const routers = [
       {
         path: "/magnet",
         component: magnet
+      },
+      {
+        path: "/categories",
+        component: categories
       }
     ]
   }

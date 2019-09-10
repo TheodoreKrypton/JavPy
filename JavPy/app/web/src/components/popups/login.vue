@@ -1,6 +1,7 @@
 <template>
   <el-dialog title="Password Required" :visible.sync="visible">
     <el-input v-model="password" placeholder="Enter Password" show-password></el-input>
+    <div>Just click "Confirm" if you didn't set a password.</div>
     <div slot="footer" class="dialog-footer">
       <el-button type="primary" @click="submitPassword">Confirm</el-button>
     </div>

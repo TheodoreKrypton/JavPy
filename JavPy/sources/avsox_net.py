@@ -16,11 +16,14 @@ class AVSoxNet(IGetBrief):
 
     @classmethod
     def get_brief(cls, code):
-        url = "https://avsox.net/cn/search/" + code
+        url = "https://avsox.asia/cn/search/" + code
         rsp = requests.get(url)
         html = rsp.text
 
-        url = re.search(cls.__url_pattern, html).group(1)
+        match = re.search(cls.__url_pattern, html)
+        if not match:
+            return None
+        url = match.group(1)
         rsp = requests.get(url)
         html = rsp.text
 
@@ -43,3 +46,7 @@ class AVSoxNet(IGetBrief):
             brief.preview_img_url = img.attrs['src']
 
         return brief
+
+
+if __name__ == '__main__':
+    print(AVSoxNet.get_brief("ABP-123"))

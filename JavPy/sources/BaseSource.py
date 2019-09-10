@@ -64,6 +64,15 @@ class ITranslateEn2Jp:
         pass
 
 
+class IActressInfo:
+    __metaclass__ = ABCMeta
+
+    @classmethod
+    @abstractmethod
+    def get_actress_info(cls, actress):
+        pass
+
+
 class SourceException(Exception):
     def __init__(self, msg):
         Exception.__init__(self, msg)

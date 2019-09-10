@@ -1,8 +1,18 @@
 <template>
   <div>
     <searchbar></searchbar>
+    <div v-if="actressInfo">
+      <img
+        :src="actressInfo.img"
+        alt="Not Found"
+      />
+    </div>
     <div v-if="other && other.history_name && Object.keys(other.history_name).length > 1">
-      <el-steps :active="1000" align-center simple>
+      <el-steps
+        :active="1000"
+        align-center
+        simple
+      >
         <el-step
           v-for="name in other.history_name"
           :key="name"
@@ -30,7 +40,8 @@ export default {
   data() {
     return {
       toBePreviewed: null,
-      other: null
+      other: null,
+      actressInfo: null
     };
   },
   methods: {

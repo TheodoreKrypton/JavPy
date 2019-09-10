@@ -1,1 +1,2 @@
 recursive-include JavPy/app/web/dist *
+include JavPy/sources/categories.json

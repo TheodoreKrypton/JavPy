@@ -107,7 +107,8 @@ def search_by_actress():
     print(params)
     actress = params['actress']
     history_name = params['history_name'] == "true"
-    briefs, names = spawn(Functions.search_by_actress, actress, 30, history_name).wait_for_result()
+    briefs, names = spawn(Functions.search_by_actress, actress, None, history_name).wait_for_result()
+
     res = {
         'videos': [brief.to_dict() for brief in briefs],
         'other': {
@@ -150,6 +151,18 @@ def search_magnet_by_code():
         res = Functions.get_magnet(params["code"])
         if res:
             res = [x.to_dict() for x in res]
+
+    rsp = jsonify(res)
+    rsp.headers["Access-Control-Allow-Origin"] = "*"
+    return rsp
+
+
+@app.route("/get_tags", methods=['POST'])
+def get_tags():
+    params = json.loads(request.data.decode('utf-8'))
+    print(params)
+
+    res = Functions.get_tags()
 
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"

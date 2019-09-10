@@ -8,8 +8,12 @@
 
 ```bash
 pip install JavPy
+javpy
+```
+or
+```bash
+pip install JavPy
 python -c "import JavPy; JavPy.serve()"
-# open http://localhost:8081 in browser to start your Jav trip
 ```
 
 ## Indicators
@@ -52,18 +56,12 @@ This library fetches information from various websites, but most of them are blo
 
 ![](preview.png)
 
-### User Guide
+### Attention!
+**本项目将会在2020年开始永久停止支持Python2版本**
 
-```bash
-pip install JavPy
-```
-```pythonconsole
-# in python console
->>> import JavPy
->>> JavPy.serve()
-```
+----
 
-Open [http://localhost:8081](http://localhost:8081) and enjoy driving!
+**This project will permanently end support for Python 2 in 2020.**
 
 **0.2.5 注意：如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，或者直接**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
 
@@ -72,10 +70,14 @@ Open [http://localhost:8081](http://localhost:8081) and enjoy driving!
 **0.2.5 Note: If you want to run the server on a remote machine** like cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file or just **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top right of tha web page.
 
 ### Developer Guide
-
+Backend:
 ```bash
 pip install -r requirements.txt
 python main.py
+```
+
+Frontend:
+```
 cd app/web
 npm install
 npm run serve
@@ -100,7 +102,7 @@ npm run serve
 
 -   Go to the telegram bot father and apply for a bot token
 -   Clone this repo and create a new file named "token.txt"
--   Place your bot token into the "token.txt"
+-   Copy your bot token into the "token.txt"
 -   install node.js
 
 ```bash
@@ -108,13 +110,11 @@ curl -sL https://deb.nodesource.com/setup_10.x | bash -
 apt-get install nodejs -y
 ```
 
--   install libtorrent
+```python
+from JavPy.app.tgbot.server import run
 
-```bash
-apt-get install python-libtorrent
+run(open("token.txt").read())
 ```
-
--   run `python main.py`
 
 ------------------
 
@@ -125,7 +125,7 @@ apt-get install python-libtorrent
 
 *This project does not include any stored or static data, and all the data it presents are collected realtime and automatically from the websites below. Internet data are public but messy and collecting them is a tiring work. Appreciate them for their offering precious and high quality data.*
 
-[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)  [Fembed](https://www.fembed.com) [素人系AV女優大辞典wiki](https://av-help.memo.wiki/) [JavModel](https://javmodel.com/) [Warashi Asian Pornstars Database](http://warashi-asian-pornstars.fr/en/s-0/wapdb-database-of-asian-pornstars-japanese-av-actresses-and-actors) [JavFull.net](https://javfull.net/) [JavLibrary](http://www.javlibrary.com)
+[JavMost](https://www5.javmost.com)  [AVSOX](https://avsox.net)  [AV女優名 変換君](http://etigoya955.blog49.fc2.com/)  [IndexAV](https://indexav.com)  [JavBus](https://www.javbus.com)  [xopenload.video](https://www.xopenload.video)  [YouAV](https://www.xopenload.video)  [Avgle](https://avgle.com)  [Fembed](https://www.fembed.com) [素人系AV女優大辞典wiki](https://av-help.memo.wiki/) [JavModel](https://javmodel.com/) [Warashi Asian Pornstars Database](http://warashi-asian-pornstars.fr/en/s-0/wapdb-database-of-asian-pornstars-japanese-av-actresses-and-actors) [JavFull.net](https://javfull.net/) [JavLibrary](http://www.javlibrary.com) [XFantasy](https://https://xfantasy.tv)
 
 </div>
 
