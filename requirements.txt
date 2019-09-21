@@ -3,7 +3,7 @@ requests
 python-telegram-bot
 bs4
 urllib3==1.23
-flask
+Flask>=1.1.1
 six
 flask-cors
 lxml
