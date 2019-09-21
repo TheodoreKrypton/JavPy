@@ -1,14 +1,17 @@
 FROM ubuntu:18.04
 
-RUN apt-get update
-RUN apt-get install -y python3.7
-RUN apt-get install -y python3-pip
-RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common && \
+    add-apt-repository -y ppa:jonathonf/python-3.6 && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends python3.6-minimal && \
+    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get install -y --no-install-recommends python3-setuptools && \
+    pip3 install wheel && \
+    pip3 install JavPy && \
+    apt-get remove -y --auto-remove software-properties-common python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL "https://deb.nodesource.com/setup_10.x" | bash -
-RUN apt-get install nodejs -y
-
-RUN pip3 install JavPy
-
-EXPOSE 8081
 ENTRYPOINT ["javpy"]
