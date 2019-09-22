@@ -2,6 +2,8 @@
 
 import os
 import json
+import six
+from JavPy.utils.common import version
 
 
 class Config:
@@ -11,8 +13,27 @@ class Config:
 
     @classmethod
     def read_config(cls):
-        with open(os.path.join(cls.config_path, "config.json")) as fp:
-            cls.config = json.loads(fp.read())
+        if six.PY2:
+            with open(os.path.join(cls.config_path, "config.json")) as fp:
+                cls.config = json.loads(fp.read().decode("utf-8"))
+        else:
+            with open(os.path.join(cls.config_path, "config.json"), encoding='utf-8') as fp:
+                cls.config = json.loads(fp.read())
+
+        if "version" not in cls.config or cls.config["version"] != version:
+            # fix ip address issues
+            if "version" not in cls.config and \
+                    cls.config["ip-whitelist"][0] == "127.0.0.1" and \
+                    cls.config["ip-whitelist"][1] == "192.168.0.0/16":
+                cls.config["ip-whitelist"] = [
+                    "127.0.0.1",
+                    "10.0.0.0/8",
+                    "172.16.0.0/12",
+                    "192.168.0.0/24"
+                ]
+            cls.set_config("version", version)
+            cls.save_config()
+
         return cls.config
 
     @classmethod
@@ -24,6 +45,18 @@ class Config:
 
     @classmethod
     def set_config(cls, key, value):
+        """
+        set dictionary in an easier way:
+
+        cls.set_config("a.b.c", "123")
+        {}  => {
+                    "a": {
+                        "b": {
+                            "c": "123"
+                        }
+                    }
+                }
+        """
         keys = key.split(".")
         obj = cls.config
         for key in keys[:-1]:
@@ -47,7 +80,8 @@ class Config:
 
 
 if os.path.exists(os.path.join(Config.config_path, "config.json")):
-    Config.read_config()
+    config = Config.read_config()
+
 else:
     Config.config = {
         "ip-whitelist": [
@@ -59,7 +93,7 @@ else:
         "ip-blacklist": [
 
         ],
-        "password": ""
+        "password": "",
+        "version": version
     }
     Config.save_config()
-

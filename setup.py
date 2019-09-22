@@ -2,6 +2,7 @@
 
 from setuptools import setup, find_packages
 import subprocess
+from JavPy.utils.common import version
 
 try:
     output = subprocess.check_output("node --version", shell=True)
@@ -13,7 +14,7 @@ except Exception as ex:
 
 setup(
     name='JavPy',
-    version='0.2.16',
+    version=version,
     description=(
         '漂移过弯'
     ),
