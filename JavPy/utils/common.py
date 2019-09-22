@@ -2,6 +2,8 @@ import datetime
 from functools import wraps, reduce
 import re
 
+version = "0.2.16"
+
 
 def try_evaluate(lambda_expression, default=None):
     def evaluate(expression):
