@@ -6,14 +6,28 @@
 
 ## Quick Start
 
+### With pip
 ```bash
-pip install JavPy
-javpy
+$ pip install JavPy
 ```
-or
+then
 ```bash
-pip install JavPy
-python -c "import JavPy; JavPy.serve()"
+$ javpy
+```
+or alternatively,
+```bash
+$ python -c "import JavPy; JavPy.serve()"
+```
+
+### With Docker
+```bash
+$ docker pull wheatcarrier/javpy:latest
+```
+then
+```bash
+$ docker run -p 8081:8081 wheatcarrier/javpy:latest
+
+open http://localhost:8081 in explorer and enjoy driving!
 ```
 
 ## Indicators
