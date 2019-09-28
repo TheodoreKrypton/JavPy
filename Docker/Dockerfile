@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV PYTHONIOENCODING=utf8
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository -y ppa:jonathonf/python-3.6 && \
