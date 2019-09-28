@@ -57,12 +57,11 @@ def update_config():
     config.Config.set_config('ip-whitelist', data['ipWhitelist'])
     config.Config.save_config()
 
-    _reload = reload
     try:
         import importlib
         _reload = importlib.reload
     except (ImportError, AttributeError):
-        pass
+        _reload = reload
     _reload(config)
     _reload(auth)
     return ""
