@@ -1,5 +1,5 @@
 const config = {
-    address: "127.0.0.1",
-    port: 8081
+    address: location.hostname,
+    port: location.port
 };
 export default config;
