@@ -1,6 +1,11 @@
 name: Python package
 
-on: [push]
+on:
+  push:
+    branches:
+      - fix/fixGithubWorkflow
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
