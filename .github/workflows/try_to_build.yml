@@ -36,3 +36,9 @@ jobs:
 
     - name: Test with pytest
       run: pytest --ignore=JavPy/app/web
+    
+    - name: upload coverage
+      uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage.xml
