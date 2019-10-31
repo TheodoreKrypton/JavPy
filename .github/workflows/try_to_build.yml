@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  test-on-*nix:
+  test:
     name: ${{ matrix.python-version }} @ ${{ matrix.platform }}
     strategy:
       max-parallel: 4
