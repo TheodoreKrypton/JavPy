@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: test
+    name: ${{ matrix.python-version }} @ ${{ matrix.platform }}
     strategy:
       max-parallel: 4
       matrix:
@@ -38,9 +38,7 @@ jobs:
       run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml
 
     - name: upload coverage
-      env: 
-        WILL_UPLOAD: ( ${{ matrix.platform }} == ${{ 'ubuntu-latest' }} ) && ( ${{ matrix.python-version }} == ${{ '3.7' }} )
-      if: ${{ WILL_UPLOAD }}
+      if: job.name == '3.7@ubuntu-latest'
       uses: codecov/codecov-action@v1.0.3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
