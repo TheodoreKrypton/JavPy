@@ -38,7 +38,8 @@ jobs:
       run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml
 
     - name: upload coverage
-      env: WILL_UPLOAD = ( ${{ matrix.platform }} == ${{ 'ubuntu-latest' }} ) && ( ${{ matrix.python-version }} == ${{ '3.7' }} )
+      env: 
+        WILL_UPLOAD: ( ${{ matrix.platform }} == ${{ 'ubuntu-latest' }} ) && ( ${{ matrix.python-version }} == ${{ '3.7' }} )
       if: ${{ WILL_UPLOAD }}
       uses: codecov/codecov-action@v1.0.3
       with:
