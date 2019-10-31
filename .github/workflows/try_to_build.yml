@@ -7,8 +7,8 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  build:
-    name: build
+  test:
+    name: test
     strategy:
       max-parallel: 2
       matrix:
