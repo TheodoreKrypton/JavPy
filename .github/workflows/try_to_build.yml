@@ -10,7 +10,7 @@ jobs:
   test:
     name: test
     strategy:
-      max-parallel: 2
+      max-parallel: 4
       matrix:
         platform: [ubuntu-latest, macOS-latest, windows-latest]
         python-version: [2.7, 3.5, 3.6, 3.7]
