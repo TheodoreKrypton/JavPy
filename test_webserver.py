@@ -53,7 +53,7 @@ def test_search_by_actress(actress):
     assert len(rsp['videos']) > 0
 
 
-@testing(code=("ABP-231", "ABP-123", "SSNI-351"))
+@testing(code=("ABP-231", "ABP-123", "SSNI-351", "n0753"))
 def test_search_magnet_by_code(code):
     rv = client.post('/search_magnet_by_code', data=json.dumps({
         'code': code
