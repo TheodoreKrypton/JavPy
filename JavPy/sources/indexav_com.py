@@ -14,7 +14,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
     @classmethod
     def search_by_actress(cls, actress, up_to):
         url = "https://indexav.com/actor/" + actress
-        rsp = requests.get(url)
+        rsp = requests.get(url, verify=False)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         cards = bs.select(".card")[:-1]
 

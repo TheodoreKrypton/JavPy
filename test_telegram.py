@@ -247,7 +247,5 @@ if __name__ == '__main__':
     test_brief_exception()
     test_magnet()
     test_new()
-    test_search_by_actress()
-    test_search_by_actress_exception()
     test_new_exception()
     test_interactive()
