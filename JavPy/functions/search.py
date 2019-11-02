@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from __future__ import absolute_import, print_function, unicode_literals
 from future.builtins import map
 from JavPy.sources.javmost_com import JavMostCom
@@ -56,5 +58,6 @@ class Search:
 
 
 if __name__ == '__main__':
-    print(Search.search_by_code("DFE-023").to_dict())
+    # print(Search.search_by_code("DFE-023").to_dict())
     # print(Search.search_by_actress("Arina Hashimoto", 30))
+    print(Search.search_by_actress("夏目彩春"))

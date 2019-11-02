@@ -82,5 +82,9 @@ class Magnet:
 class Actress:
     def __init__(self):
         self.name = ""
+        self.history_names = []
         self.birth_date = None
         self.img = ""
+        self.height = ""
+        self.weight = ""
+        self.other = {}

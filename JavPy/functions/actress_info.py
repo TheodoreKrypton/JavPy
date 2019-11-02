@@ -11,3 +11,7 @@ class ActressInfo:
         return spawn_many(
             (Task(source.get_actress_info, actress) for source in ActressInfo.sources)
         ).wait_for_one_finished()
+
+
+if __name__ == '__main__':
+    ActressInfo.get_actress_info("Eimi Fukada")
