@@ -3,7 +3,6 @@ from future.builtins import map
 from JavPy.sources.javmost_com import JavMostCom
 from JavPy.sources.youav_com import YouAVCom
 from JavPy.sources.avgle_com import AVGleCom
-from JavPy.sources.xopenload_video import XOpenloadVideo
 from JavPy.sources.javfull_net import JavFullNet
 from JavPy.sources.indexav_com import IndexAVCom
 from JavPy.sources.highporn_net import HighPornNet
@@ -14,7 +13,7 @@ from JavPy.functions.history_names import HistoryNames
 
 
 class Search:
-    sources_by_code = [JavMostCom, XOpenloadVideo, YouAVCom, AVGleCom, JavFullNet, HighPornNet]
+    sources_by_code = [JavMostCom, YouAVCom, AVGleCom, JavFullNet, HighPornNet]
     sources_by_actress = {
         "indexav.com": IndexAVCom
     }
@@ -57,5 +56,5 @@ class Search:
 
 
 if __name__ == '__main__':
-    print(Search.search_by_code("DFE-023").to_dict())
-    # print(Search.search_by_actress("Arina Hashimoto", 30))
+    # print(Search.search_by_code("DFE-023").to_dict())
+    print(Search.search_by_actress("原更紗", 30))

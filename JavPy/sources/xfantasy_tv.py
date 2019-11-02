@@ -13,9 +13,10 @@ class XFantasyTV(ISearchByCode):
         rsp = requests.get(url)
         html = rsp.text
         bs = bs4.BeautifulSoup(html, "lxml")
-        card = bs.find(attrs={'data-stats': 'video:feed:1'})
+        card = bs.select(".MuiGrid-item")
         if not card:
             return None
+        card = card[0].a
         title = card.text
         if code in title:
             return "https://xfantasy.tv" + card.attrs['href']
