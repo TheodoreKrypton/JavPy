@@ -23,4 +23,4 @@ class ActressTranslate:
 
 
 if __name__ == '__main__':
-    print(ActressTranslate.translate2jp('Arina Hashimoto'))
+    print(ActressTranslate.translate2jp('Eimi Fukada'))

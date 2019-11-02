@@ -37,7 +37,7 @@ def test_search_by_code(code):
     assert requests.get(rsp['videos'][0]['video_url']).status_code == 200
 
 
-@testing(actress=(u"川合まゆ", u"唯川みさき", u"瀬奈まお", u"原更紗"))
+@testing(actress=(u"川合まゆ", u"唯川みさき", u"瀬奈まお", u"原更紗", u"Nao Jinguuji", u"Eimi Fukada"))
 def test_search_by_actress(actress):
     rv = client.post('/search_by_actress', data=json.dumps({
         'actress': actress,
@@ -72,8 +72,8 @@ def test_newly_released(data):
 
 
 if __name__ == '__main__':
-    test_static_files()
-    test_search_by_code()
+    # test_static_files()
+    # test_search_by_code()
     test_search_by_actress()
-    test_search_magnet_by_code()
-    test_newly_released()
+    # test_search_magnet_by_code()
+    # test_newly_released()
