@@ -10,10 +10,17 @@ class HistoryNames:
     @staticmethod
     @cache
     def get_history_names(actress):
-        result = list(filter(lambda x: x, spawn_many((
-            Task(Etigoya.get_history_names, actress),
-            Task(AVHelpMemoWiki.get_history_names, actress)
-        )).wait_for_all_finished()))
+        result = list(
+            filter(
+                lambda x: x,
+                spawn_many(
+                    (
+                        Task(Etigoya.get_history_names, actress),
+                        Task(AVHelpMemoWiki.get_history_names, actress),
+                    )
+                ).wait_for_all_finished(),
+            )
+        )
         if len(result) == 0:
             return []
         if len(result) == 1:

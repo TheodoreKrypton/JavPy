@@ -14,11 +14,11 @@ class JavFullNet(ISearchByCode):
 
         av = AV()
         av.code = code
-        av.preview_img_url = item.find(name="img").attrs['src']
-        av.video_url = item.find(name="a").attrs['href']
+        av.preview_img_url = item.find(name="img").attrs["src"]
+        av.video_url = item.find(name="a").attrs["href"]
 
         return av
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(JavFullNet.search_by_code("n1056").to_dict())

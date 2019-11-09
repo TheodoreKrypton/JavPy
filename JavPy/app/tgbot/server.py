@@ -20,8 +20,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 helps = {
-    "search-by-actress":
-        """
+    "search-by-actress": """
             Search by name of an actress
             
             Usage: /search name [-m|--many-actresses,[on|off/1/0]] [-u|--upto,[number]]
@@ -33,8 +32,7 @@ helps = {
             for example:
                 /search 桃乃木かな -m 1 -u 15
         """,
-    "get-new":
-        """
+    "get-new": """
             Get newly released videos
 
             Usage: /new [-m|--many-actresses,[on|off/1/0]] [-u|--upto,[number]]
@@ -46,8 +44,7 @@ helps = {
             for example:
                 /new -m 1 -u 15
         """,
-    "get-brief":
-        """
+    "get-brief": """
             Get brief info of a video
 
             Usage: /brief code [-l|--lang,[en/jp/zh]]
@@ -92,7 +89,9 @@ def search(bot, update, args):
         try:
             actress = first
             options, _ = getopt.getopt(
-                [x.replace(u"—", u"--") for x in args[1:]], 'm:u:', ['many-actress=', 'upto=']
+                [x.replace("—", "--") for x in args[1:]],
+                "m:u:",
+                ["many-actress=", "upto="],
             )
 
             allow_many_actresses = False
@@ -108,7 +107,10 @@ def search(bot, update, args):
                         up_to = int(a)
                         continue
                     except ValueError:
-                        bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
+                        bot.send_message(
+                            chat_id=update.message.chat_id,
+                            text=helps["search-by-actress"],
+                        )
                         return
 
             briefs, _ = Functions.search_by_actress(actress, up_to)
@@ -117,13 +119,17 @@ def search(bot, update, args):
             send_brief(bot, update, briefs)
 
         except getopt.GetoptError:
-            bot.send_message(chat_id=update.message.chat_id, text=helps["search-by-actress"])
+            bot.send_message(
+                chat_id=update.message.chat_id, text=helps["search-by-actress"]
+            )
             return
 
 
 def get_new(bot, update, args):
     try:
-        options, _ = getopt.getopt([x.replace(u"—", u"--") for x in args], 'm:u:', ['many-actress=', 'upto='])
+        options, _ = getopt.getopt(
+            [x.replace("—", "--") for x in args], "m:u:", ["many-actress=", "upto="]
+        )
 
         allow_many_actresses = False
         up_to = 10
@@ -138,7 +144,9 @@ def get_new(bot, update, args):
                     up_to = int(a)
                     continue
                 except ValueError:
-                    bot.send_message(chat_id=update.message.chat_id, text=helps["get-new"])
+                    bot.send_message(
+                        chat_id=update.message.chat_id, text=helps["get-new"]
+                    )
                     return
 
         briefs = Functions.get_newly_released(allow_many_actresses, up_to)
@@ -155,7 +163,10 @@ def get_brief(bot, update, args):
         return
 
     if len(args) == 3:
-        bot.send_message(chat_id=update.message.chat_id, text="Sorry, temporarily only English is supported")
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="Sorry, temporarily only English is supported",
+        )
 
     code = args[0]
     res = Functions.get_brief(code)
@@ -178,14 +189,17 @@ def get_magnet(bot, update, args):
 def run(token):
     updater = Updater(token)
     dispatcher = updater.dispatcher
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=logging.INFO,
+    )
 
     handlers = [
-        CommandHandler('start', start),
-        CommandHandler('search', search, pass_args=True),
-        CommandHandler('new', get_new, pass_args=True),
-        CommandHandler('brief', get_brief, pass_args=True),
-        CommandHandler('magnet', get_magnet, pass_args=True),
+        CommandHandler("start", start),
+        CommandHandler("search", search, pass_args=True),
+        CommandHandler("new", get_new, pass_args=True),
+        CommandHandler("brief", get_brief, pass_args=True),
+        CommandHandler("magnet", get_magnet, pass_args=True),
         MessageHandler(filters.Filters.text, Interactive.message),
         # CallbackQueryHandler(callback),
         # InlineQueryHandler(inline_query)

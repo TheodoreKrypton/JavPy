@@ -12,6 +12,7 @@ def update_history(func):
         history[update.message.from_user.id][0].append(update.message.text)
         history[update.message.from_user.id][1] = time.time()
         func(*args, **kwargs)
+
     return _wrapper
 
 

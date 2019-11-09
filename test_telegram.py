@@ -2,7 +2,14 @@
 
 from __future__ import unicode_literals, print_function, absolute_import
 import requests
-from JavPy.app.tgbot.server import search, get_brief, get_magnet, get_new, start, Interactive
+from JavPy.app.tgbot.server import (
+    search,
+    get_brief,
+    get_magnet,
+    get_new,
+    start,
+    Interactive,
+)
 from JavPy.utils.testing import *
 
 
@@ -97,7 +104,12 @@ def test_search_by_code(code):
     received = mock_user.look_received()
     assert len(received) == 1
     assert requests.get(received[0]["photo"]).status_code == 200
-    assert requests.get(received[0]["reply_markup"]["inline_keyboard"][0][0]['url']).status_code == 200
+    assert (
+        requests.get(
+            received[0]["reply_markup"]["inline_keyboard"][0][0]["url"]
+        ).status_code
+        == 200
+    )
 
 
 @testing(command=("ABP-123 -o".split(),))
@@ -106,7 +118,7 @@ def test_search_by_code_exception(command):
     mock_update = MockUpdate(mock_message)
     search(mock_bot, mock_update, command)
     received = mock_user.look_received()
-    assert 'Sorry, Wrong Usage' in received[0]['text']
+    assert "Sorry, Wrong Usage" in received[0]["text"]
 
 
 @testing(command=("桃乃木かな -m on -u 10".split(),))
@@ -128,8 +140,8 @@ def test_search_by_actress_exception(command):
     mock_update = MockUpdate(mock_message)
     search(mock_bot, mock_update, command)
     received = mock_user.look_received()
-    print(received[0]['text'])
-    assert 'Search by name of an actress' in received[0]['text']
+    print(received[0]["text"])
+    assert "Search by name of an actress" in received[0]["text"]
 
 
 @testing(code=("ABP-231", "ABP-123", "SSNI-351"))
@@ -152,13 +164,15 @@ def test_brief_without_img(code):
     print(received)
 
 
-@testing(command=("ABP-231 -a".split(), "ABP-231 -l jp".split(), "CRAZY-114514".split()))
+@testing(
+    command=("ABP-231 -a".split(), "ABP-231 -l jp".split(), "CRAZY-114514".split())
+)
 def test_brief_exception(command):
     mock_message = MockMessage(mock_user, mock_chat.id, "/brief")
     mock_update = MockUpdate(mock_message)
     get_brief(mock_bot, mock_update, [command])
     received = mock_user.look_received()
-    assert 'Sorry, No Video Found' in received[0]['text']
+    assert "Sorry, No Video Found" in received[0]["text"]
 
 
 @testing(code=("ABP-231", "ABP-123", "SSNI-351"))
@@ -188,7 +202,7 @@ def test_new_exception(param):
     mock_update = MockUpdate(mock_message)
     get_new(mock_bot, mock_update, param)
     received = mock_user.look_received()
-    assert "Get newly released videos" in received[0]['text']
+    assert "Get newly released videos" in received[0]["text"]
 
 
 @testing()
@@ -206,38 +220,67 @@ def test_interactive():
     start(mock_bot, mock_update)
     received = mock_user.look_received()
     assert len(received) == 1
-    assert received[0]['text'] == 'Hi, how can I help you?'
+    assert received[0]["text"] == "Hi, how can I help you?"
 
     # test interactive search by code
-    interactive_assert("Search", lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]['text'])
-    interactive_assert("ABP-123", lambda rcv: len(rcv) == 1 and requests.get(rcv[0]['photo']).status_code == 200)
+    interactive_assert(
+        "Search",
+        lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]["text"],
+    )
+    interactive_assert(
+        "ABP-123",
+        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"]).status_code == 200,
+    )
 
     # test interactive search by actress
-    interactive_assert("Search", lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]['text'])
-    interactive_assert("桃乃木かな", lambda rcv: len(rcv) == 1 and rcv[0]['text'] == "How many results? [Integer]")
     interactive_assert(
-        "5", lambda rcv: len(rcv) > 0 and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0
+        "Search",
+        lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]["text"],
+    )
+    interactive_assert(
+        "桃乃木かな",
+        lambda rcv: len(rcv) == 1 and rcv[0]["text"] == "How many results? [Integer]",
+    )
+    interactive_assert(
+        "5",
+        lambda rcv: len(rcv) > 0
+        and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0,
     )
 
     # test interactive search newly released
-    interactive_assert("New", lambda rcv: len(rcv) == 1 and "How many results? [Integer]" == rcv[0]['text'])
     interactive_assert(
-        "5", lambda rcv: len(rcv) > 0 and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0
+        "New",
+        lambda rcv: len(rcv) == 1 and "How many results? [Integer]" == rcv[0]["text"],
+    )
+    interactive_assert(
+        "5",
+        lambda rcv: len(rcv) > 0
+        and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0,
     )
 
     # test interactive search random
-    interactive_assert("Random", lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]['text'])
+    interactive_assert(
+        "Random",
+        lambda rcv: len(rcv) == 1 and "Search a code or an actress." in rcv[0]["text"],
+    )
 
     # test interactive search magnets
-    interactive_assert("Magnet", lambda rcv: "Search a code. e.g. ABP-231" == rcv[0]['text'])
+    interactive_assert(
+        "Magnet", lambda rcv: "Search a code. e.g. ABP-231" == rcv[0]["text"]
+    )
     interactive_assert("ABP-123", lambda rcv: len(rcv) > 1)
 
     # test interactive search brief
-    interactive_assert("Brief", lambda rcv: "Search a code. e.g. ABP-231" == rcv[0]['text'])
-    interactive_assert("ABP-123", lambda rcv: len(rcv) == 1 and requests.get(rcv[0]['photo']).status_code == 200)
+    interactive_assert(
+        "Brief", lambda rcv: "Search a code. e.g. ABP-231" == rcv[0]["text"]
+    )
+    interactive_assert(
+        "ABP-123",
+        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"]).status_code == 200,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_search_by_code()
     test_search_by_code_exception()
     test_search_by_actress()

@@ -6,7 +6,8 @@ import threading
 import sys
 
 
-print(r"""
+print(
+    r"""
                        __            ____       
                       / /___ __   __/ __ \__  __
                  __  / / __ `/ | / / /_/ / / / /
@@ -23,7 +24,8 @@ print(r"""
     But please get a token from the bot father first
     
     More info: https://github.com/theodorekrypton/JavPy
-""")
+"""
+)
 
 
 def open_browser(port):
@@ -31,7 +33,7 @@ def open_browser(port):
     url = "http://localhost:" + str(port)
 
     if "win32" in sys.platform:
-        os.system("start \"\" \"" + url + "\"")
+        os.system('start "" "' + url + '"')
     elif "linux" in sys.platform:
         os.system("xdg-open " + url)
     else:
@@ -40,7 +42,7 @@ def open_browser(port):
 
 def serve(port=8081):
     threading.Thread(target=open_browser, args=(port,)).start()
-    app.run('0.0.0.0', port, threaded=True)
+    app.run("0.0.0.0", port, threaded=True)
 
 
 def serve_tg(token):

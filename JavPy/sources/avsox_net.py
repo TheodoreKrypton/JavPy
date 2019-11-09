@@ -12,7 +12,7 @@ from JavPy.sources.BaseSource import IGetBrief
 
 class AVSoxNet(IGetBrief):
     __url_pattern = re.compile('movie-box.+?href="(.+?)"')
-    __release_date_pattern = re.compile(u'发行时间:</span> (.+?)</p>')
+    __release_date_pattern = re.compile("发行时间:</span> (.+?)</p>")
 
     @classmethod
     def get_brief(cls, code):
@@ -33,20 +33,26 @@ class AVSoxNet(IGetBrief):
         brief = Brief()
         brief.code = code
         img = movie.select(".screencap", limit=1)[0].a.img
-        brief.title = img.attrs['title']
+        brief.title = img.attrs["title"]
 
-        brief.set_release_date(try_evaluate(lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), "")[0])
-        brief.actress = ", ".join(x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all('span'))
+        brief.set_release_date(
+            try_evaluate(
+                lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), ""
+            )[0]
+        )
+        brief.actress = ", ".join(
+            x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all("span")
+        )
 
-        rsp = requests.get(img.attrs['src'])
+        rsp = requests.get(img.attrs["src"])
         if 300 <= rsp.status_code <= 400:
             if "location" in rsp.headers:
-                brief.preview_img_url = rsp.headers['location']
+                brief.preview_img_url = rsp.headers["location"]
         elif rsp.status_code == 200:
-            brief.preview_img_url = img.attrs['src']
+            brief.preview_img_url = img.attrs["src"]
 
         return brief
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(AVSoxNet.get_brief("ABP-123"))

@@ -17,19 +17,23 @@ class Config:
             with open(os.path.join(cls.config_path, "config.json")) as fp:
                 cls.config = json.loads(fp.read().decode("utf-8"))
         else:
-            with open(os.path.join(cls.config_path, "config.json"), encoding='utf-8') as fp:
+            with open(
+                os.path.join(cls.config_path, "config.json"), encoding="utf-8"
+            ) as fp:
                 cls.config = json.loads(fp.read())
 
         if "version" not in cls.config or cls.config["version"] != version:
             # fix ip address issues
-            if "version" not in cls.config and \
-                    cls.config["ip-whitelist"][0] == "127.0.0.1" and \
-                    cls.config["ip-whitelist"][1] == "192.168.0.0/16":
+            if (
+                "version" not in cls.config
+                and cls.config["ip-whitelist"][0] == "127.0.0.1"
+                and cls.config["ip-whitelist"][1] == "192.168.0.0/16"
+            ):
                 cls.config["ip-whitelist"] = [
                     "127.0.0.1",
                     "10.0.0.0/8",
                     "172.16.0.0/12",
-                    "192.168.0.0/24"
+                    "192.168.0.0/24",
                 ]
             cls.set_config("version", version)
             cls.save_config()
@@ -84,16 +88,9 @@ if os.path.exists(os.path.join(Config.config_path, "config.json")):
 
 else:
     Config.config = {
-        "ip-whitelist": [
-            "127.0.0.1",
-            "10.0.0.0/8",
-            "172.16.0.0/12",
-            "192.168.0.0/24"
-        ],
-        "ip-blacklist": [
-
-        ],
+        "ip-whitelist": ["127.0.0.1", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/24"],
+        "ip-blacklist": [],
         "password": "",
-        "version": version
+        "version": version,
     }
     Config.save_config()

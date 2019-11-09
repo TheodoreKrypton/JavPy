@@ -19,13 +19,13 @@ class YouAVCom(ISearchByCode):
 
         try:
 
-            div = bs.find_all(name='div', attrs={'class': 'well-sm'})[1]
+            div = bs.find_all(name="div", attrs={"class": "well-sm"})[1]
             img = ""  # div.find(name='img').attrs['src']
 
         except (AttributeError, IndexError):
             return None
 
-        url = "https://www.youav.com" + div.a.attrs['href']
+        url = "https://www.youav.com" + div.a.attrs["href"]
 
         av = AV()
         av.code = code
