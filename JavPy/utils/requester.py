@@ -43,7 +43,9 @@ class Worker(threading.Thread):
         while True:
             self.event.wait()
             self.task.status = Task.RUNNING
-            self.task.result, ex = try_evaluate(lambda: self.task.target(*self.task.args, **self.task.kwargs))
+            self.task.result, ex = try_evaluate(
+                lambda: self.task.target(*self.task.args, **self.task.kwargs)
+            )
             if ex and self.task.catch_cb:
                 self.task.catch_cb(ex)
                 self.task.status = Task.FAILED

@@ -11,6 +11,7 @@ def try_evaluate(lambda_expression, default=None):
             return expression(), None
         except Exception as ex:
             return default, ex
+
     return evaluate(lambda_expression)
 
 
@@ -43,7 +44,12 @@ def get_func_full_name(func):
         return func.__module__ + "." + func.__qualname__
     except AttributeError:
         try:
-            return func.__module__ + re.search(class_name_pattern, func.im_class).group(1) + "." + func.__name__
+            return (
+                func.__module__
+                + re.search(class_name_pattern, func.im_class).group(1)
+                + "."
+                + func.__name__
+            )
         except AttributeError:
             return ""
 

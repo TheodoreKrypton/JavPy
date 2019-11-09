@@ -12,5 +12,5 @@ class JavModelCom(ITranslateEn2Jp):
         return re.search(r"<h1 class=\"intro-title mb20\">(.+?)<br>", rsp.text).group(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(JavModelCom.translate2jp("Nao Jinguuji"))

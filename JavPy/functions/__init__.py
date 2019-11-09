@@ -15,17 +15,18 @@ class Functions:
     @staticmethod
     @cache
     def search_by_code(code):
-        av, brief_info = spawn_many((
-            Task(Search.search_by_code, code),
-            Task(Functions.get_brief, code)
-        )).wait_for_all_finished()
+        av, brief_info = spawn_many(
+            (Task(Search.search_by_code, code), Task(Functions.get_brief, code))
+        ).wait_for_all_finished()
         if av:
             res = av
             if brief_info:
                 res.actress = brief_info.actress if brief_info.actress else ""
                 res.set_release_date(brief_info.release_date)
                 res.title = brief_info.title
-                res.preview_img_url = brief_info.preview_img_url if brief_info.preview_img_url else ""
+                res.preview_img_url = (
+                    brief_info.preview_img_url if brief_info.preview_img_url else ""
+                )
             return res
         else:
             return None
@@ -73,7 +74,7 @@ class Functions:
             with open(curdir + "/../sources/categories.json") as fp:
                 content = fp.read()
                 obj = json.loads(content)
-                Functions.tags = obj['javmost']
+                Functions.tags = obj["javmost"]
         return Functions.tags
 
     @staticmethod

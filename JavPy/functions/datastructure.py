@@ -16,7 +16,9 @@ class AV:
         if isinstance(release_date, datetime.datetime):
             self.release_date = release_date
         else:
-            self.release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
+            self.release_date, _ = try_evaluate(
+                lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None
+            )
 
     def to_dict(self):
         return {
@@ -24,8 +26,10 @@ class AV:
             "video_url": self.video_url,
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
-            "release_date": self.release_date.strftime("%Y-%m-%d") if self.release_date else "",
-            "title": self.title
+            "release_date": self.release_date.strftime("%Y-%m-%d")
+            if self.release_date
+            else "",
+            "title": self.title,
         }
 
 
@@ -41,7 +45,9 @@ class Brief:
         if isinstance(release_date, datetime.datetime):
             self.release_date = release_date
         else:
-            self.release_date, _ = try_evaluate(lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None)
+            self.release_date, _ = try_evaluate(
+                lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None
+            )
 
     @staticmethod
     def reduce_briefs(briefs):
@@ -62,7 +68,9 @@ class Brief:
             "preview_img_url": self.preview_img_url,
             "actress": self.actress,
             "title": self.title,
-            "release_date": self.release_date.strftime("%Y-%m-%d") if self.release_date else ""
+            "release_date": self.release_date.strftime("%Y-%m-%d")
+            if self.release_date
+            else "",
         }
 
 
@@ -73,10 +81,7 @@ class Magnet:
         self.peers = 0
 
     def to_dict(self):
-        return {
-            "magnet": self.magnet,
-            "description": self.description
-        }
+        return {"magnet": self.magnet, "description": self.description}
 
 
 class Actress:
