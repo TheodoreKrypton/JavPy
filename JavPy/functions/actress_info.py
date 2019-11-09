@@ -13,5 +13,5 @@ class ActressInfo:
         ).wait_for_one_finished()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ActressInfo.get_actress_info("Eimi Fukada")

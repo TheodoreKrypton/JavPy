@@ -6,13 +6,17 @@ from JavPy.sources.BaseSource import (
     IGetBrief,
     ITranslateEn2Jp,
     IActressInfo,
+    IHistoryNames,
 )
 import requests
 import bs4
+from JavPy.functions.datastructure import Actress
 from JavPy.utils.common import cache
 
 
-class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp, IActressInfo, IHistoryNames):
+class WarashiAsianPornStarsFr(
+    ISearchByActress, IGetBrief, ITranslateEn2Jp, IActressInfo, IHistoryNames
+):
     @classmethod
     def search_by_actress(cls, actress, up_to):
         pass
@@ -61,15 +65,18 @@ class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp, IAct
         image = bs.select("#pornostar-profil-photos")
         if image:
             image = image[0]
-            actress_info.img = "http://warashi-asian-pornstars.fr/" + image.find(name="img").attrs['src']
+            actress_info.img = (
+                "http://warashi-asian-pornstars.fr/"
+                + image.find(name="img").attrs["src"]
+            )
 
         info_field = bs.select("#pornostar-profil-infos")[0]
 
         # get history names
         history_names = set()
 
-        h1 = bs.find(name='h1')[0]
-        main_name = h1.find_all(name='span')[1].text
+        h1 = bs.find(name="h1")[0]
+        main_name = h1.find_all(name="span")[1].text
         history_names.add(main_name)
 
         also_known_as = info_field.select("#pornostar-profil-noms-alternatifs")
@@ -80,11 +87,9 @@ class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp, IAct
         actress_info.history_names = list(history_names)
 
         # get other info
-        ps = info_field.find_all(name='p')
+        ps = info_field.find_all(name="p")
         for p in ps:
             print(p)
-
-
 
     @classmethod
     def get_actress_info(cls, actress):
@@ -92,6 +97,6 @@ class WarashiAsianPornStarsFr(ISearchByActress, IGetBrief, ITranslateEn2Jp, IAct
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
     print(WarashiAsianPornStarsFr.get_actress_info("Eimi Fukada"))
