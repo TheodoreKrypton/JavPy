@@ -12,16 +12,29 @@ from JavPy.utils import chat_history
 def _send_brief(bot, update, brief):
     if brief.preview_img_url:
         bot.send_photo(
-            chat_id=update.message.chat_id, photo=brief.preview_img_url,
-            caption=brief.code + (
-                ("\n" + brief.release_date.strftime("%Y-%m-%d")) if brief.release_date else ""
-            ) + "\n" + brief.title)
+            chat_id=update.message.chat_id,
+            photo=brief.preview_img_url,
+            caption=brief.code
+            + (
+                ("\n" + brief.release_date.strftime("%Y-%m-%d"))
+                if brief.release_date
+                else ""
+            )
+            + "\n"
+            + brief.title,
+        )
 
     else:
         bot.send_message(
-            chat_id=update.message.chat_id, text=brief.code + (
-                ("\n" + brief.release_date.strftime("%Y-%m-%d")) if brief.release_date else ""
-            ) + "\n" + brief.title
+            chat_id=update.message.chat_id,
+            text=brief.code
+            + (
+                ("\n" + brief.release_date.strftime("%Y-%m-%d"))
+                if brief.release_date
+                else ""
+            )
+            + "\n"
+            + brief.title,
         )
 
 
@@ -30,7 +43,7 @@ def send_brief(bot, update, brief):
         bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
         return
 
-    if hasattr(brief, '__iter__'):
+    if hasattr(brief, "__iter__"):
         for b in brief:
             _send_brief(bot, update, b)
 
@@ -43,10 +56,14 @@ def send_av(bot, update, av):
         bot.send_message(chat_id=update.message.chat_id, text="Sorry, No Video Found")
         return
 
-    reply_markup = telegram.InlineKeyboardMarkup([[
-        telegram.InlineKeyboardButton(av.code, url=av.video_url)
-    ]])
-    bot.send_photo(chat_id=update.message.chat_id, photo=av.preview_img_url, reply_markup=reply_markup)
+    reply_markup = telegram.InlineKeyboardMarkup(
+        [[telegram.InlineKeyboardButton(av.code, url=av.video_url)]]
+    )
+    bot.send_photo(
+        chat_id=update.message.chat_id,
+        photo=av.preview_img_url,
+        reply_markup=reply_markup,
+    )
 
 
 def send_magnet(bot, update, magnets):
@@ -55,7 +72,10 @@ def send_magnet(bot, update, magnets):
         return
 
     for magnet in magnets:
-        bot.send_message(chat_id=update.message.chat_id, text="[" + magnet.description + "]\n" + magnet.magnet)
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="[" + magnet.description + "]\n" + magnet.magnet,
+        )
 
 
 def inline_query(bot, update):
@@ -74,9 +94,14 @@ def inline_query(bot, update):
 
     results = [
         telegram.InlineQueryResultPhoto(
-            uuid4(), brief.preview_img_url, brief.preview_img_url,
-            caption="\n".join(filter(lambda x: x, (brief.code, brief.title, brief.actress)))
-        ) for brief in briefs
+            uuid4(),
+            brief.preview_img_url,
+            brief.preview_img_url,
+            caption="\n".join(
+                filter(lambda x: x, (brief.code, brief.title, brief.actress))
+            ),
+        )
+        for brief in briefs
     ]
 
     update.inline_query.answer(results)
@@ -89,16 +114,22 @@ class Interactive:
     def start(bot, update):
         chat_history.clear_history(update.message.from_user.id)
 
-        reply_markup = telegram.ReplyKeyboardMarkup([
-            ["Search", "New", "Random"],
-            ["Brief", "Magnet"]
-        ], resize_keyboard=True)
+        reply_markup = telegram.ReplyKeyboardMarkup(
+            [["Search", "New", "Random"], ["Brief", "Magnet"]], resize_keyboard=True
+        )
 
-        bot.send_message(chat_id=update.message.chat_id, text="Hi, how can I help you?", reply_markup=reply_markup)
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="Hi, how can I help you?",
+            reply_markup=reply_markup,
+        )
 
     @staticmethod
     def random(bot, update):
-        bot.send_message(chat_id=update.message.chat_id, text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな")
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな",
+        )
 
     @classmethod
     @chat_history.update_history
@@ -111,25 +142,22 @@ class Interactive:
                     chat_id=update.message.chat_id,
                     text="Search a code or an actress. e.g. ABP-231 or 桃乃木かな",
                     reply_markup=reply_markup,
-                    reply_to_message_id=update.message.message_id
+                    reply_to_message_id=update.message.message_id,
                 )
             elif cmd_chat_history[-1] == "New":
                 bot.send_message(
-                    chat_id=update.message.chat_id,
-                    text="How many results? [Integer]"
+                    chat_id=update.message.chat_id, text="How many results? [Integer]"
                 )
             elif cmd_chat_history[-1] == "Random":
                 cls.random(bot, update)
                 chat_history.clear_history(update.message.from_user.id)
             elif cmd_chat_history[-1] == "Brief":
                 bot.send_message(
-                    chat_id=update.message.chat_id,
-                    text="Search a code. e.g. ABP-231"
+                    chat_id=update.message.chat_id, text="Search a code. e.g. ABP-231"
                 )
             elif cmd_chat_history[-1] == "Magnet":
                 bot.send_message(
-                    chat_id=update.message.chat_id,
-                    text="Search a code. e.g. ABP-231"
+                    chat_id=update.message.chat_id, text="Search a code. e.g. ABP-231"
                 )
 
         elif len(cmd_chat_history) == 2:
@@ -143,19 +171,19 @@ class Interactive:
                     if cmd_chat_history[-2] == "Search":
                         bot.send_message(
                             chat_id=update.message.chat_id,
-                            text="How many results? [Integer]"
+                            text="How many results? [Integer]",
                         )
 
             elif cmd_chat_history[-2] == "New":
                 send_brief(
-                    bot, update, Functions.get_newly_released(int(cmd_chat_history[-1]), False)
+                    bot,
+                    update,
+                    Functions.get_newly_released(int(cmd_chat_history[-1]), False),
                 )
                 chat_history.clear_history(update.message.from_user.id)
 
             elif cmd_chat_history[-2] == "Brief":
-                send_brief(
-                    bot, update, Functions.get_brief(cmd_chat_history[-1])
-                )
+                send_brief(bot, update, Functions.get_brief(cmd_chat_history[-1]))
                 chat_history.clear_history(update.message.from_user.id)
 
             elif cmd_chat_history[-2] == "Magnet":

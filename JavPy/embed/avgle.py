@@ -14,9 +14,14 @@ class avgle:
         rsp = requests.get(url)
         video_hkey = re.search("video_hkey = '(.+?)';", rsp.text).group(1)
         title = re.search("video_title = '(.+?)'", rsp.text).group(1)
-        url = "https://avgle.com/video/" + video_hkey + "/" + urllib.quote(title.encode('utf-8'))
+        url = (
+            "https://avgle.com/video/"
+            + video_hkey
+            + "/"
+            + urllib.quote(title.encode("utf-8"))
+        )
         return url
 
 
-if __name__ == '__main__':
-    print(avgle.decode('https://avgle.com/embed/350ed1da48ea67fb3535'))
+if __name__ == "__main__":
+    print(avgle.decode("https://avgle.com/embed/f2839fcc751e7f12679c"))

@@ -10,7 +10,6 @@ from JavPy.utils.common import try_evaluate
 
 
 class IndexAVCom(ISearchByActress, IGetBrief):
-
     @classmethod
     def search_by_actress(cls, actress, up_to):
         url = "https://indexav.com/actor/" + actress
@@ -51,9 +50,9 @@ class IndexAVCom(ISearchByActress, IGetBrief):
     def __get_brief_by_card(card):
         columns = card.select(".column")
         code = columns[4].next.strip()
-        actress = ", ".join((x.text.strip() for x in columns[2].find_all(name='span')))
+        actress = ", ".join((x.text.strip() for x in columns[2].find_all(name="span")))
         title = columns[3].text.strip()
-        img, _ = try_evaluate(lambda: columns[3].a.attrs['rel'][0])
+        img, _ = try_evaluate(lambda: columns[3].a.attrs["rel"][0])
         release_date = columns[1].text.strip()
 
         brief = Brief()
@@ -65,7 +64,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         return brief
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
     print(IndexAVCom.search_by_actress("神宮寺ナオ", None))
     # print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())

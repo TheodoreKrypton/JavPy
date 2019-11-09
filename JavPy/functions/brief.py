@@ -11,6 +11,8 @@ class Brief:
 
     @staticmethod
     def get_brief(code):
-        return sum_up(spawn_many(
-            (Task(source.get_brief, code) for source in Brief.sources)
-        ).wait_until(lambda res: res.preview_img_url))
+        return sum_up(
+            spawn_many(
+                (Task(source.get_brief, code) for source in Brief.sources)
+            ).wait_until(lambda res: res.preview_img_url)
+        )

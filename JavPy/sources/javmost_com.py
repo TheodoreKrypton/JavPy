@@ -25,7 +25,11 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         if main_rsp.status_code != 200:
             return None
 
-        img, _ = try_evaluate(lambda: re.search(r"<meta property=\"og:image\" content=\"(.+?)\"", main_rsp.text).group(1))
+        img, _ = try_evaluate(
+            lambda: re.search(
+                r"<meta property=\"og:image\" content=\"(.+?)\"", main_rsp.text
+            ).group(1)
+        )
 
         if not img:
             return None
@@ -36,34 +40,37 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
         bs = bs4.BeautifulSoup(main_rsp.text, "lxml")
 
-        buttons = bs.select('.tab-overflow')[0].find_all(name='li')[1:-1]
+        buttons = bs.select(".tab-overflow")[0].find_all(name="li")[1:-1]
         success = False
 
         for button in buttons:
-            params = re.search(r"select_part\((.+?)\)", button.a.attrs['onclick']).group(1)
-            e, t, a, o, l, r, d = [x.replace("\'", "") for x in params.split(",")]
+            params = re.search(
+                r"select_part\((.+?)\)", button.a.attrs["onclick"]
+            ).group(1)
+            e, t, a, o, l, r, d = [x.replace("'", "") for x in params.split(",")]
 
             data = re.search(r"get_source/\",(.+?)\}", main_rsp.text, re.S).group(1)
             value = re.search(r"value: \"(.+?)\",", data).group(1)
             sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 
             url = "https://www5.javmost.com/get_code/"
-            rsp = cls.__client.post(url, data={
-                "code": value
-            })
+            rsp = cls.__client.post(url, data={"code": value})
             _code = rsp.text
 
             url = "https://www5.javmost.com/get_source/"
-            rsp = cls.__client.post(url, data={
-                "group": t,
-                "part": e,
-                "code": l,
-                "code2": r,
-                "code3": d,
-                "value": value,
-                "sound": sound,
-                "code4": _code
-            })
+            rsp = cls.__client.post(
+                url,
+                data={
+                    "group": t,
+                    "part": e,
+                    "code": l,
+                    "code2": r,
+                    "code3": d,
+                    "value": value,
+                    "sound": sound,
+                    "code4": _code,
+                },
+            )
 
             json_obj = json.loads(rsp.text)
             url = json_obj["data"][0]
@@ -93,7 +100,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         html = json_obj["data"]
 
         bs = bs4.BeautifulSoup(html, "lxml")
-        cards = bs.find_all(name='div', attrs={'class': 'card'})
+        cards = bs.find_all(name="div", attrs={"class": "card"})
 
         return cards
 
@@ -105,18 +112,23 @@ class JavMostCom(ISearchByCode, INewlyReleased):
             )
         )
 
-        actress = list(map(lambda x: x.text, card_tag.find_all(name='a', attrs={'class': 'btn-danger'})))
+        actress = list(
+            map(
+                lambda x: x.text,
+                card_tag.find_all(name="a", attrs={"class": "btn-danger"}),
+            )
+        )
 
-        img, _ = try_evaluate(lambda: card_tag.find(name='img').attrs['data-src'])
+        img, _ = try_evaluate(lambda: card_tag.find(name="img").attrs["data-src"])
         if not img.startswith("http"):
             img = "http:" + img
 
         brief = Brief()
         brief.preview_img_url = img
-        brief.title, _ = try_evaluate(lambda: card_tag.find(name='h5').text.strip(), "")
+        brief.title, _ = try_evaluate(lambda: card_tag.find(name="h5").text.strip(), "")
         brief.actress = ", ".join(actress)
         brief.set_release_date(release_date)
-        brief.code = card_tag.find(name='h4').text.strip()
+        brief.code = card_tag.find(name="h4").text.strip()
 
         return brief
 
@@ -126,5 +138,5 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(JavMostCom.get_newly_released(1))

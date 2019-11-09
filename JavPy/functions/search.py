@@ -16,9 +16,7 @@ from JavPy.functions.history_names import HistoryNames
 
 class Search:
     sources_by_code = [JavMostCom, YouAVCom, AVGleCom, JavFullNet, HighPornNet]
-    sources_by_actress = {
-        "indexav.com": IndexAVCom
-    }
+    sources_by_actress = {"indexav.com": IndexAVCom}
 
     @classmethod
     def search_by_code(cls, code):
@@ -33,7 +31,7 @@ class Search:
             lang = "en"
 
         else:
-            if any(map(lambda c: 0x0800 <= ord(c) <= 0x4e00, text)):
+            if any(map(lambda c: 0x0800 <= ord(c) <= 0x4E00, text)):
                 lang = "jp"
             else:
                 lang = "zh"
@@ -47,7 +45,9 @@ class Search:
         if lang == "en":
             actress = ActressTranslate.translate2jp(actress)
         if actress:
-            res = spawn(cls.sources_by_actress["indexav.com"].search_by_actress, actress, up_to)
+            res = spawn(
+                cls.sources_by_actress["indexav.com"].search_by_actress, actress, up_to
+            )
             if history_name:
                 names = spawn(HistoryNames.get_history_names, actress)
                 return res.wait_for_result(), names.wait_for_result()
@@ -57,7 +57,6 @@ class Search:
             return [], None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # print(Search.search_by_code("DFE-023").to_dict())
-    # print(Search.search_by_actress("Arina Hashimoto", 30))
-    print(Search.search_by_actress("夏目彩春"))
+    print(Search.search_by_actress("原更紗", 30))

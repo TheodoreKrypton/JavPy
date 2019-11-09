@@ -37,7 +37,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Test with pytest
-      run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml
+      run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml tests/test_clients/
 
     - name: upload coverage
       if: job.name == '3.7 @ ubuntu-latest'

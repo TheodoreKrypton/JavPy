@@ -19,9 +19,9 @@ class XFantasyTV(ISearchByCode):
         card = card[0].a
         title = card.text
         if code in title:
-            return "https://xfantasy.tv" + card.attrs['href']
+            return "https://xfantasy.tv" + card.attrs["href"]
         return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(XFantasyTV.search_by_code("n0753"))

@@ -15,8 +15,8 @@ class HighPornNet(ISearchByCode):
         div = bs.select(".well-sm")[0]
         av = AV()
         av.code = code
-        av.preview_img_url = div.find(name='img').attrs['src']
+        av.preview_img_url = div.find(name="img").attrs["src"]
         if not av.preview_img_url.startswith("http"):
             av.preview_img_url = "http:" + av.preview_img_url
-        av.video_url = div.a.attrs['href']
+        av.video_url = div.a.attrs["href"]
         return av
