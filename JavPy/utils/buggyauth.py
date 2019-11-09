@@ -46,7 +46,7 @@ def generate_cookie(request):
 
 
 def check_request(request):
-    if request.method not in ["POST", "GET"]:
+    if request.method != "POST":
         return True
     if not check_ip(request.remote_addr):
         return False
