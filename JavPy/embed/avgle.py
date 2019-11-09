@@ -24,4 +24,4 @@ class avgle:
 
 
 if __name__ == "__main__":
-    print(avgle.decode("https://avgle.com/embed/350ed1da48ea67fb3535"))
+    print(avgle.decode("https://avgle.com/embed/f2839fcc751e7f12679c"))
