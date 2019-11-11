@@ -1,6 +1,7 @@
 import requests
 import re
 import six
+from JavPy.embed.BaseEmbed import BaseEmbed
 
 if six.PY2:
     import urllib
@@ -8,7 +9,7 @@ elif six.PY3:
     import urllib.parse as urllib
 
 
-class avgle:
+class avgle(BaseEmbed):
     @staticmethod
     def decode(url):
         rsp = requests.get(url)
@@ -21,6 +22,12 @@ class avgle:
             + urllib.quote(title.encode("utf-8"))
         )
         return url
+
+    @staticmethod
+    def pattern(url):
+        if "avgle" in url:
+            return True
+        return False
 
 
 if __name__ == "__main__":

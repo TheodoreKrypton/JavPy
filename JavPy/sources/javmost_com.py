@@ -139,4 +139,5 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 
 if __name__ == "__main__":
-    print(JavMostCom.get_newly_released(1))
+    # print(JavMostCom.get_newly_released(1))
+    print(JavMostCom.search_by_code("ABP-123"))

@@ -19,6 +19,8 @@ or alternatively,
 $ python -c "import JavPy; JavPy.serve()"
 ```
 
+and wait up to 5 secs
+
 ### With Docker
 ```bash
 $ docker pull wheatcarrier/javpy:latest
@@ -34,7 +36,7 @@ Indicator|Status
 :---: | :---:
 Ubuntu & Mac OS | ![Build Status](https://github.com/TheodoreKrypton/JavPy/workflows/JavPy%20Build%20Test/badge.svg)
 Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=master)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=master)
-Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/03917c8d1ed94fcca9aff9331a4dfbdc)](https://www.codacy.com/app/TheodoreKrypton_3/JavPy?utm_source=github.com&utm_medium=referral&utm_content=TheodoreKrypton/JavPy&utm_campaign=Badge_Coverage)
+Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
 Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
 Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup)
