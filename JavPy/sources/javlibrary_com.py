@@ -57,8 +57,13 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
             "http://www.javlibrary.com/ja/vl_searchbyid.php?keyword=" + code
         ).text
         match = re.search(r"\"og:url\" content=\"//(.+?)\">", html)
-        if not match:
-            return None
+        if not match:  # like JUFE-114
+            bs = bs4.BeautifulSoup(html, "lxml")
+            url = "http://www.javlibrary.com/ja" + bs.select(".video")[0].a.attrs['href'][1:]
+            rsp = cls.__client.get(url)
+            match = re.search(r"\"og:url\" content=\"//(.+?)\">", rsp.text)
+            if not match:
+                return None
         url = match.group(1)
         html = cls.__client.get("http://" + url).text
         brief = Brief()
@@ -70,9 +75,9 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
         brief.code = code
         date = bs.select("#video_date")[0].select("td")[-1].text
         brief.set_release_date(date)
-        brief.actress = ", ".join((span.text for span in bs.select(".cast")))
+        brief.actress = ", ".join((span.text for span in bs.select("#video_cast")[0].select(".star")))  # like AQSH-035
         return brief
 
 
 if __name__ == "__main__":
-    JavLibraryCom.get_brief("ABP-123")
+    print(JavLibraryCom.get_brief("JUFE-114").actress)
