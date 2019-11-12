@@ -10,8 +10,8 @@ from JavPy.sources.BaseSource import (
 )
 import requests
 import bs4
-from JavPy.functions.datastructure import Actress
-from JavPy.utils.common import cache, try_evaluate
+from JavPy.functions.datastructure import Actress, Brief
+from JavPy.utils.common import try_evaluate
 import datetime
 
 
@@ -139,6 +139,6 @@ class WarashiAsianPornStarsFr(
 
 
 if __name__ == "__main__":
-    # print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
+    print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
     # print(WarashiAsianPornStarsFr.get_actress_info("Eimi Fukada"))
-    print(WarashiAsianPornStarsFr.get_actress_info("Mao Sena").to_dict())
+    # print(WarashiAsianPornStarsFr.get_actress_info("Mao Sena").to_dict())

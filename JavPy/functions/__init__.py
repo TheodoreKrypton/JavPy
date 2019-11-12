@@ -1,5 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from JavPy.functions.search import Search
+from JavPy.functions.search_by_code import SearchByCode
+from JavPy.functions.search_by_actress import SearchByActress
 from JavPy.functions.new import New
 from JavPy.functions.brief import Brief as GetBrief
 from JavPy.functions.datastructure import AV, Brief
@@ -16,7 +17,7 @@ class Functions:
     @cache
     def search_by_code(code):
         av, brief_info = spawn_many(
-            (Task(Search.search_by_code, code), Task(Functions.get_brief, code))
+            (Task(SearchByCode.search, code), Task(Functions.get_brief, code))
         ).wait_for_all_finished()
         if av:
             res = av
@@ -39,7 +40,7 @@ class Functions:
     @staticmethod
     @cache
     def search_by_actress(actress, up_to, history_name=False):
-        return Search.search_by_actress(actress, up_to, history_name)
+        return SearchByActress.search(actress, up_to, history_name)
 
     @staticmethod
     @cache
@@ -81,3 +82,5 @@ class Functions:
     @cache
     def get_actress_info(actress):
         pass
+
+
