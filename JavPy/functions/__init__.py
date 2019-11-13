@@ -6,6 +6,7 @@ from JavPy.functions.brief import Brief as GetBrief
 from JavPy.functions.datastructure import AV, Brief
 from JavPy.functions.magnet import Magnet
 from JavPy.functions.history_names import HistoryNames
+from JavPy.functions.actress_info import ActressInfo
 from JavPy.utils.common import cache
 from JavPy.utils.requester import spawn_many, Task, spawn
 import os
@@ -81,6 +82,7 @@ class Functions:
     @staticmethod
     @cache
     def get_actress_info(actress):
-        pass
+        return ActressInfo.get_actress_info(actress)
+
 
 

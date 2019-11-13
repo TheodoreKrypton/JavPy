@@ -8,7 +8,7 @@ class ActressInfo:
     def get_actress_info(actress):
         return spawn_many(
             (Task(source.get_actress_info, actress) for source in Sources.ActressInfo)
-        ).wait_for_one_finished()
+        ).wait_for_one_finished()[0]
 
 
 if __name__ == "__main__":
