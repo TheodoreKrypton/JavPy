@@ -139,6 +139,7 @@ class WarashiAsianPornStarsFr(
 
 
 if __name__ == "__main__":
-    print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
+    # print(WarashiAsianPornStarsFr.translate2jp(u'Nao Jinguuji'))
+    # print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
     # print(WarashiAsianPornStarsFr.get_actress_info("Eimi Fukada"))
-    # print(WarashiAsianPornStarsFr.get_actress_info("Mao Sena").to_dict())
+    print(WarashiAsianPornStarsFr.get_actress_info("Misa Natsuki").to_dict())

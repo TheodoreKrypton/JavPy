@@ -33,9 +33,7 @@
                 @click="next()"
               />
             </div>
-            <keep-alive>
-              <router-view style="height: 100%;"></router-view>
-            </keep-alive>
+            <router-view style="height: 100%;"></router-view>
           </el-main>
         </el-container>
       </el-container>

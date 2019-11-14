@@ -46,27 +46,12 @@ export default {
   components: {
     videocard
   },
-  props: ["videosProp"],
+  props: ["videos"],
   data() {
     return {
       page: 1,
-      itemPerLine: 3,
-      av: this.videosProp
+      itemPerLine: 3
     };
-  },
-  computed: {
-    videos: {
-      get() {
-        if (!this.av) {
-          return this.videosProp;
-        } else {
-          return this.av;
-        }
-      },
-      set(val) {
-        this.av = val;
-      }
-    }
   },
   methods: {
     getDocumentTop() {

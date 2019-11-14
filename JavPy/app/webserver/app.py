@@ -119,7 +119,7 @@ def search_by_actress():
 
     res = {
         "videos": [brief.to_dict() for brief in briefs],
-        "other": {"history_name": names},
+        "other": {"history_names": names},
     }
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"

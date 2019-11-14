@@ -1,7 +1,7 @@
 <template>
   <div>
     <searchbar></searchbar>
-    <preview :videosProp="toBePreviewed"></preview>
+    <preview :videos="videos"></preview>
   </div>
 </template>
 
@@ -19,18 +19,12 @@ export default {
   },
   data() {
     return {
-      toBePreviewed: null,
+      videos: null,
       other: null
     };
   },
   methods: {
-    initPage() {
-      this.toBePreviewed = null;
-    },
-
     async onSearch(data) {
-      this.initPage();
-
       if (Object.keys(data).length === 0) {
         return;
       }
@@ -45,13 +39,13 @@ export default {
         });
       if (rsp.status === 200) {
         if (!rsp.data) {
-          this.toBePreviewed = "";
+          this.videos = "";
         } else {
-          this.toBePreviewed = rsp.data.videos;
+          this.videos = rsp.data.videos;
           this.other = rsp.data.other;
         }
       } else {
-        this.toBePreviewed = "";
+        this.videos = "";
       }
     }
   },

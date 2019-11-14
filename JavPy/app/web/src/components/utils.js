@@ -2,11 +2,11 @@ import axios from "axios";
 import config from "../config.js";
 import Cookie from "js-cookie";
 
-let set_userpass = (val) => {
+let setUserpass = (val) => {
     Cookie.set("userpass", val);
 }
 
-let get_userpass = () => {
+let getUserpass = () => {
     return Cookie.get("userpass");
 }
 
@@ -28,10 +28,15 @@ let pookie = async (url, data) => {
     });
 }
 
+let globalCache = {
+    searchActress: {}
+}
+
 let utils = {
     pookie,
-    set_userpass,
-    get_userpass
+    setUserpass,
+    getUserpass,
+    globalCache
 }
 
 export default utils;

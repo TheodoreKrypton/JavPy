@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="12">
         <h1>{{name}}</h1>
-        <ul style="text-align: left">
+        <ul v-if="info" style="text-align: left">
           <li>Birthdate: {{info.birth_date}}</li>
           <li>Height: {{info.height}}</li>
           <li>Weight: {{info.weight}}</li>

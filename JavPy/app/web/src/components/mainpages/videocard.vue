@@ -71,8 +71,7 @@ export default {
     onSearch(video) {
       if (video.actress) {
         Event.$emit("search_by_actress", {
-          actress: video.actress,
-          historyNameRequired: "true"
+          actress: video.actress
         });
       } else if (video.code) {
         Event.$emit("search_by_code", {
