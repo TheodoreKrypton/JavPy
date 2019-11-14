@@ -15,7 +15,7 @@ except Exception as ex:
 setup(
     name="JavPy",
     version=version,
-    description=("漂移过弯"),
+    description="漂移过弯",
     author="Theodore Krypton",
     author_email="wheatcarrier@gmail.com",
     license="MIT License",
