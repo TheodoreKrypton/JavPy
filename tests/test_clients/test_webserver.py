@@ -39,7 +39,7 @@ def test_search_by_code(code):
 def test_search_by_actress(actress):
     rv = client.post(
         "/search_by_actress",
-        data=json.dumps({"actress": actress, "history_names": "true"}),
+        data=json.dumps({"actress": actress, "history_name": "true"}),
     )
     assert rv.status_code == 200
     rsp = json.loads(rv.data.decode("utf-8"))
