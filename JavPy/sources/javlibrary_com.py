@@ -12,6 +12,10 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
     __client = cfscrape.create_scraper()
 
     @classmethod
+    def priority(cls):
+        return 1
+
+    @classmethod
     def get_newly_released(cls, page):
         major_info_req = Task(
             cls.__client.get,

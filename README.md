@@ -1,9 +1,4 @@
-<div align=center>
-
-![logo](https://github.com/TheodoreKrypton/JavPy/raw/master/JavPy/app/web/src/assets/logo.png) [![PyCharm](pc.svg)](https://www.jetbrains.com/?from=JavPy) [Made with PyCharm](https://www.jetbrains.com/?from=JavPy)
-
-</div>
-
+![banner](https://i.imgur.com/KjqLjdA.png)
 ## Quick Start
 
 ### With pip

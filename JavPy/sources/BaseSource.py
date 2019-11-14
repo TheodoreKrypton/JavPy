@@ -1,74 +1,78 @@
-from abc import ABCMeta, abstractmethod
+from six import with_metaclass
+from JavPy.functions.sources import Sources
 
 
-class INewlyReleased:
-    __metaclass__ = ABCMeta
+class RegisterInterface(type):
+    def __init__(cls, name, bases, clsdict):
+        for base in bases:
+            if base is INewlyReleased:
+                Sources.NewlyReleased.append(cls)
+            elif base is ISearchByCode:
+                Sources.SearchByCode.append(cls)
+            elif base is ISearchByActress:
+                Sources.SearchByActress.append(cls)
+            elif base is IGetBrief:
+                Sources.Brief.append(cls)
+            elif base is ISearchMagnet:
+                Sources.Magnet.append(cls)
+            elif base is IHistoryNames:
+                Sources.HistoryNames.append(cls)
+            elif base is ITranslateEn2Jp:
+                Sources.TranslateEn2Jp.append(cls)
+            elif base is IActressInfo:
+                Sources.ActressInfo.append(cls)
 
+        super(RegisterInterface, cls).__init__(name, bases, clsdict)
+
+
+class INewlyReleased(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def get_newly_released(cls, page):
         pass
 
-
-class ISearchByCode:
-    __metaclass__ = ABCMeta
-
     @classmethod
-    @abstractmethod
+    def priority(cls):
+        pass
+
+
+class ISearchByCode(with_metaclass(RegisterInterface)):
+    @classmethod
     def search_by_code(cls, code):
         pass
 
 
-class ISearchByActress:
-    __metaclass__ = ABCMeta
-
+class ISearchByActress(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def search_by_actress(cls, actress, up_to):
         pass
 
 
-class IGetBrief:
-    __metaclass__ = ABCMeta
-
+class IGetBrief(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def get_brief(cls, code):
         pass
 
 
-class ISearchMagnet:
-    __metaclass__ = ABCMeta
-
+class ISearchMagnet(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def search_magnet(cls, code):
         pass
 
 
-class IHistoryNames:
-    __metaclass__ = ABCMeta
-
+class IHistoryNames(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def get_history_names(cls, actress):
         pass
 
 
-class ITranslateEn2Jp:
-    __metaclass__ = ABCMeta
-
+class ITranslateEn2Jp(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def translate2jp(cls, actress):
         pass
 
 
-class IActressInfo:
-    __metaclass__ = ABCMeta
-
+class IActressInfo(with_metaclass(RegisterInterface)):
     @classmethod
-    @abstractmethod
     def get_actress_info(cls, actress):
         pass
 

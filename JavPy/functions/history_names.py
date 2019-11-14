@@ -1,9 +1,10 @@
+# encoding: utf-8
+
 from __future__ import absolute_import, print_function, unicode_literals
-from JavPy.sources.etigoya import Etigoya
-from JavPy.sources.avhelp_memo_wiki import AVHelpMemoWiki
 from JavPy.utils.requester import spawn_many, Task
 from functools import reduce
 from JavPy.utils.common import cache
+from JavPy.functions.sources import Sources
 
 
 class HistoryNames:
@@ -15,8 +16,8 @@ class HistoryNames:
                 lambda x: x,
                 spawn_many(
                     (
-                        Task(Etigoya.get_history_names, actress),
-                        Task(AVHelpMemoWiki.get_history_names, actress),
+                        Task(source.get_history_names, actress)
+                        for source in Sources.HistoryNames
                     )
                 ).wait_for_all_finished(),
             )
@@ -27,3 +28,7 @@ class HistoryNames:
             return result[0]
         else:
             return list(reduce(lambda x, y: x.union(y), map(lambda z: set(z), result)))
+
+
+if __name__ == '__main__':
+    print(HistoryNames.get_history_names("天海こころ"))

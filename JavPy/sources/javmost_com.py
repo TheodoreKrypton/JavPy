@@ -12,11 +12,11 @@ import cfscrape
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
-
     __client = cfscrape.create_scraper()
 
-    def __init__(self):
-        pass
+    @classmethod
+    def priority(cls):
+        return 0
 
     @classmethod
     def search_by_code(cls, code):
@@ -140,3 +140,4 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 if __name__ == "__main__":
     print(JavMostCom.get_newly_released(1))
+    # print(JavMostCom.search_by_code("ABP-123"))

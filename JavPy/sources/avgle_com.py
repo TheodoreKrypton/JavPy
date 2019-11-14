@@ -18,4 +18,4 @@ class AVGleCom(ISearchByCode):
 
 
 if __name__ == "__main__":
-    AVGleCom.search_by_code("ABP-231")
+    print(AVGleCom.search_by_code("ABP-871"))

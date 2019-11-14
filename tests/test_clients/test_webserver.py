@@ -45,8 +45,8 @@ def test_search_by_actress(actress):
     rsp = json.loads(rv.data.decode("utf-8"))
     assert rsp
     assert "other" in rsp
-    assert "history_name" in rsp["other"]
-    assert len(rsp["other"]["history_name"]) > 0
+    assert "history_names" in rsp["other"]
+    assert len(rsp["other"]["history_names"]) > 0
     assert "videos" in rsp
     assert len(rsp["videos"]) > 0
 

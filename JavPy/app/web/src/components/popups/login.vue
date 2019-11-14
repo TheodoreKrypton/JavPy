@@ -33,7 +33,7 @@ export default {
           if (rsp.data === "auth failed") {
             this.$alert("Authentication Failed", "Please Try Again");
           } else {
-            utils.set_userpass(rsp.data);
+            utils.setUserpass(rsp.data);
             this.visible = false;
             location.reload();
           }
@@ -41,7 +41,7 @@ export default {
     },
 
     isLoggedIn() {
-      if (!utils.get_userpass()) {
+      if (!utils.getUserpass()) {
         this.visible = true;
       }
     }

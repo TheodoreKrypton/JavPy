@@ -119,7 +119,7 @@ def search_by_actress():
 
     res = {
         "videos": [brief.to_dict() for brief in briefs],
-        "other": {"history_name": names},
+        "other": {"history_names": names},
     }
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
@@ -171,5 +171,18 @@ def get_tags():
     res = Functions.get_tags()
 
     rsp = jsonify(res)
+    rsp.headers["Access-Control-Allow-Origin"] = "*"
+    return rsp
+
+
+@app.route("/actress_info", methods=["POST"])
+def actress_info():
+    params = json.loads(request.data.decode("utf-8"))
+    print(params)
+
+    res = Functions.get_actress_info(params["actress"])
+
+    rsp = jsonify(res.to_dict())
+    print(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp

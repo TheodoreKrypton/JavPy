@@ -86,6 +86,19 @@ class Magnet:
 
 class Actress:
     def __init__(self):
-        self.name = ""
+        self.history_names = []
         self.birth_date = None
         self.img = ""
+        self.height = ""
+        self.weight = ""
+        self.other = {}
+
+    def to_dict(self):
+        return {
+            "history_names": self.history_names,
+            "birth_date": self.birth_date,
+            "img": self.img,
+            "height": self.height,
+            "weight": self.weight,
+            "other": self.other,
+        }

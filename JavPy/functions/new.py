@@ -1,6 +1,5 @@
 from __future__ import absolute_import, print_function, unicode_literals
-from JavPy.sources.javmost_com import JavMostCom
-from JavPy.sources.javlibrary_com import JavLibraryCom
+from JavPy.functions.sources import Sources
 import datetime
 
 try:
@@ -9,6 +8,8 @@ except ImportError:
     pass
 from functools import reduce
 from JavPy.utils.common import try_evaluate
+
+Sources.NewlyReleased.sort(key=lambda x: x.priority())
 
 
 class New:
@@ -55,17 +56,16 @@ class New:
 
             return reduce(lambda x, y: x + y, cls.newly_released[:page_cnt])[:up_to]
 
-    sources = [JavMostCom, JavLibraryCom]
     which_source = 0
 
     @classmethod
     def get_newly_released_from_sources(cls, page):
         res, ex = try_evaluate(
-            lambda: cls.sources[cls.which_source].get_newly_released(page)
+            lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page)
         )
         if (not res) or ex:
             cls.which_source += 1
-            if cls.which_source == len(cls.sources):
+            if cls.which_source == len(Sources.NewlyReleased):
                 raise Exception("all sources are down")
             return cls.get_newly_released_from_sources(page)  # fallback choice
         else:
