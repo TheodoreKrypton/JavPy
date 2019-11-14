@@ -4,7 +4,7 @@ import requests
 import re
 
 
-class JavModelCom(ITranslateEn2Jp):
+class JavModelCom():
     @classmethod
     def translate2jp(cls, actress):
         url = "https://javmodel.com/jav/" + "-".join(re.split(r"\s+", actress)).lower()

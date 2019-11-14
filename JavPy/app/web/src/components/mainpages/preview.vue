@@ -1,36 +1,26 @@
 <template>
-  <div
-    style="text-align: center;"
-    ref="whole"
-  >
+  <div style="text-align: center;" ref="whole">
     <table
       v-if="videos != undefined && Object.keys(videos).length > 0"
       cellspacing="30"
       style="margin-left: auto; margin-right: auto"
     >
-      <tr
-        v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)"
-        :key="i"
-      >
-        <td
-          v-for="j in itemPerLine"
-          :key="j"
-        >
-          <showcard
-            style="width:100%;"
-            :video="videos[(i-1)*itemPerLine+j-1]"
-          ></showcard>
+      <tr v-for="i in Math.floor(Object.keys(videos).length / itemPerLine)" :key="i">
+        <td v-for="j in itemPerLine" :key="j">
+          <videocard style="width:100%;" :video="videos[(i-1)*itemPerLine+j-1]"></videocard>
         </td>
       </tr>
-      <tr v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine">
+      <tr
+        v-if="Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
+      >
         <td
           v-for="j in Object.keys(videos).length-Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine"
           :key="j"
         >
-          <showcard
+          <videocard
             style="width:100%;"
             :video="videos[Math.floor(Object.keys(videos).length/itemPerLine)*itemPerLine+(j-1)]"
-          ></showcard>
+          ></videocard>
         </td>
       </tr>
     </table>
@@ -48,35 +38,20 @@
 
 
 <script>
-import showcard from "./showcard.vue";
+import videocard from "./videocard.vue";
 import Event from "../../main.js";
 
 export default {
   name: "preview",
   components: {
-    showcard
+    videocard
   },
-  props: ["videosProp"],
+  props: ["videos"],
   data() {
     return {
       page: 1,
-      itemPerLine: 3,
-      av: this.videosProp
+      itemPerLine: 3
     };
-  },
-  computed: {
-    videos: {
-      get() {
-        if (!this.av) {
-          return this.videosProp;
-        } else {
-          return this.av;
-        }
-      },
-      set(val) {
-        this.av = val;
-      }
-    }
   },
   methods: {
     getDocumentTop() {

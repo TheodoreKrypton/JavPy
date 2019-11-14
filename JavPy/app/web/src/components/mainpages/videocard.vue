@@ -3,7 +3,7 @@
     <div
       style="background-color: #e9eef3; color: teal; padding-bottom: 10px; font-size: 20px;"
     >{{video.title}}</div>
-    <img :src="video.preview_img_url" class="image" alt="preview" @click="action()">
+    <el-image :src="video.preview_img_url" class="image" alt="preview" @click="action()" lazy></el-image>
 
     <div class="bottom">
       <table style="display: inline; float: left">
@@ -61,7 +61,7 @@
 import Event from "../../main.js";
 
 export default {
-  name: "showcard",
+  name: "videocard",
   props: ["video"],
 
   methods: {
@@ -71,8 +71,7 @@ export default {
     onSearch(video) {
       if (video.actress) {
         Event.$emit("search_by_actress", {
-          actress: video.actress,
-          historyNameRequired: "true"
+          actress: video.actress
         });
       } else if (video.code) {
         Event.$emit("search_by_code", {

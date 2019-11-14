@@ -1,5 +1,5 @@
 <template>
-  <preview :videosProp="toBePreviewed"></preview>
+  <preview :videos="videos"></preview>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
   },
   data() {
     return {
-      toBePreviewed: null
+      videos: null
     };
   },
 
@@ -28,9 +28,9 @@ export default {
         Event.$emit("end-loading");
       });
     if (!rsp.data) {
-      this.toBePreviewed = "";
+      this.videos = "";
     } else {
-      this.toBePreviewed = rsp.data;
+      this.videos = rsp.data;
     }
   }
 };
