@@ -2,7 +2,7 @@ import datetime
 from functools import wraps, reduce
 import re
 
-version = "0.2.24"
+version = "0.3.0"
 
 
 def try_evaluate(lambda_expression, default=None):
