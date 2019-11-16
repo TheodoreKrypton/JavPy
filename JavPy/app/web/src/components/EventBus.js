@@ -35,7 +35,7 @@ let EventBus = Vue.extend({
             page: component.page + 1
           }).then(function (response) {
             if (response.status === 200 && response.data) {
-              component.$set(component, "av", component.videos.concat(response.data));
+              component.$set(component, "videos", component.videos.concat(response.data));
               component.$set(component, "page", component.page + 1);
               // component.av = component.videos.concat(response.data);
               // component.page += 1;
