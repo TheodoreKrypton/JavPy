@@ -1,7 +1,7 @@
 <template>
   <div class="topbar">
     <span style="float: left; height: 60px">
-      <img src="../assets/logo.png" alt="logo" style="height: 60px">
+      <img src="../assets/logo.png" alt="logo" style="height: 60px" />
     </span>
 
     <span style="float: right">
