@@ -67,12 +67,6 @@ This library fetches information from various websites, but most of them are blo
 ![](preview.png)
 
 ### Attention!
-**本项目将会在2020年开始永久停止支持Python2版本**
-
-----
-
-**This project will permanently end support for Python 2 in 2020.**
-
 **0.2.5 注意：如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，或者直接**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
 
 ----
