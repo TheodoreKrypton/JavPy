@@ -34,7 +34,7 @@ Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/
 Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
 Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
-Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup)
+Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/JavPy-official/community)
 
 This project will continue supporting Python2 until it retire in 2020.
 
@@ -67,12 +67,6 @@ This library fetches information from various websites, but most of them are blo
 ![](preview.png)
 
 ### Attention!
-**本项目将会在2020年开始永久停止支持Python2版本**
-
-----
-
-**This project will permanently end support for Python 2 in 2020.**
-
 **0.2.5 注意：如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，或者直接**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
 
 ----

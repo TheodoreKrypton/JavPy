@@ -8,11 +8,11 @@ from JavPy.embed.decode import decode
 from JavPy.functions.datastructure import AV, Brief
 from JavPy.utils.common import try_evaluate
 import datetime
-import cfscrape
+import cloudscraper
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
-    __client = cfscrape.create_scraper()
+    __client = cloudscraper.create_scraper()
 
     @classmethod
     def priority(cls):

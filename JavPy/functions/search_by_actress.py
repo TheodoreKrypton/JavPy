@@ -43,4 +43,4 @@ class SearchByActress:
 
 
 if __name__ == '__main__':
-    print(SearchByActress.search("Eimi Fukada", None, True))
+    print(SearchByActress.search("飯岡かなこ", None, True))

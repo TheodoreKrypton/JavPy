@@ -1,5 +1,5 @@
 from JavPy.sources.BaseSource import INewlyReleased, IGetBrief
-import cfscrape
+import cloudscraper
 from JavPy.utils.requester import spawn_many, Task
 import re
 from JavPy.functions.datastructure import AV, Brief
@@ -9,7 +9,7 @@ import bs4
 
 class JavLibraryCom(INewlyReleased, IGetBrief):
 
-    __client = cfscrape.create_scraper()
+    __client = cloudscraper.create_scraper()
 
     @classmethod
     def priority(cls):
