@@ -11,7 +11,7 @@ import datetime
 import cfscrape
 
 
-class JavMostCom(ISearchByCode):
+class JavMostCom(ISearchByCode, INewlyReleased):
     __client = cfscrape.create_scraper()
 
     @classmethod
