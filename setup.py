@@ -34,7 +34,7 @@ setup(
         "ipaddr",
         "pycryptodome",
         "future",
-        "cfscrape",
+        "cloudscraper",
     ],
     entry_points={"console_scripts": ["javpy = JavPy:serve"]},
     include_package_data=True,
