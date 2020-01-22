@@ -190,6 +190,7 @@ def actress_info():
     return rsp
 
 
+# dmm.co.jp blocks direct image request. so use this proxy when there is a loading error.
 @app.route("/img")
 def img():
     src = request.args['src']
