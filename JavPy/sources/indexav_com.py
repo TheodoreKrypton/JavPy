@@ -23,8 +23,9 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
         for card in cards:
             brief = cls.__get_brief_by_card(card)
-            res.append(brief)
-            cnt += 1
+            if brief:
+                res.append(brief)
+                cnt += 1
 
             if up_to and cnt >= up_to:
                 return res
@@ -49,6 +50,8 @@ class IndexAVCom(ISearchByActress, IGetBrief):
     @staticmethod
     def __get_brief_by_card(card):
         columns = card.select(".column")
+        if not columns:  # like 飯岡かなこ
+            return None
         code = columns[4].next.strip()
         actress = ", ".join((x.text.strip() for x in columns[2].find_all(name="span")))
         title = columns[3].text.strip()
@@ -66,5 +69,5 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
 if __name__ == "__main__":
     # print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
-    print(IndexAVCom.search_by_actress("神宮寺ナオ", None))
+    print(IndexAVCom.search_by_actress("飯岡かなこ", None))
     # print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())

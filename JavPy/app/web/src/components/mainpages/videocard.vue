@@ -3,7 +3,16 @@
     <div
       style="background-color: #e9eef3; color: teal; padding-bottom: 10px; font-size: 20px;"
     >{{video.title}}</div>
-    <el-image :src="video.preview_img_url" class="image" alt="preview" @click="action()" lazy></el-image>
+    <el-image :src="video.preview_img_url" class="image" alt="preview" @click="action()" lazy>
+      <el-image
+        slot="error"
+        :src="`http://${config.address}:${config.port}/img?src=${video.preview_img_url}`"
+        class="image"
+        alt="preview"
+        @click="action()"
+        lazy
+      ></el-image>
+    </el-image>
 
     <div class="bottom">
       <table style="display: inline; float: left">
@@ -59,11 +68,16 @@
 
 <script>
 import Event from "../../main.js";
+import config from "../../config";
 
 export default {
   name: "videocard",
   props: ["video"],
-
+  data() {
+    return {
+      config: config
+    };
+  },
   methods: {
     onWatch(url) {
       window.open(url);

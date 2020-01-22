@@ -8,6 +8,7 @@ from flask import (
     send_from_directory,
     abort,
     redirect,
+    Response,
 )
 from flask_cors import CORS
 from JavPy.functions import Functions
@@ -17,6 +18,7 @@ from JavPy.utils.requester import spawn
 import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
 from copy import deepcopy
+import requests
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -186,3 +188,17 @@ def actress_info():
     print(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
+
+
+# dmm.co.jp blocks direct image request. so use this proxy when there is a loading error.
+@app.route("/img")
+def img():
+    src = request.args['src']
+    content = requests.get(src).content
+    if src.endswith("jpg") or src.endswith("jpeg"):
+        return Response(content, mimetype="image/jpeg")
+    if src.endswith("png"):
+        return Response(content, mimetype="image/png")
+    if src.endswith("bmp"):
+        return Response(content, mimetype="image/bmp")
+    return Response(content)

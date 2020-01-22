@@ -34,7 +34,7 @@ Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/
 Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
 Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
-Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup)
+Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/JavPy-official/community)
 
 This project will continue supporting Python2 until it retire in 2020.
 
