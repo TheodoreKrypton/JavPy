@@ -1,10 +1,25 @@
 ![banner](https://i.imgur.com/KjqLjdA.png)
 ## Quick Start
 
+**Make sure you've installed nodejs first**
+
+* Linux, Mac OS:
+```bash
+curl -sL https://deb.nodesource.com/setup_10.x | bash -
+apt-get install nodejs -y
+```
+
+* Windows:
+https://nodejs.org/en/download/
+
 ### With pip
 ```bash
 $ pip install JavPy
+
+# or download the JavPy whl release in the release page
+$ pip install JavPy-x.x.x-py2.py3-none-any.whl
 ```
+
 then
 ```bash
 $ javpy
@@ -27,6 +42,14 @@ $ docker run -p 8081:8081 wheatcarrier/javpy:latest
 open http://localhost:8081 in explorer and enjoy driving!
 ```
 
+### With Git
+```bash
+git clone https://github.com/TheodoreKrypton/JavPy.git
+cd JavPy
+python3 setup.py install
+```
+
+
 Indicator|Status
 :---: | :---:
 Ubuntu & Mac OS | ![Build Status](https://github.com/TheodoreKrypton/JavPy/workflows/JavPy%20Build%20Test/badge.svg)
@@ -34,9 +57,7 @@ Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/
 Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/master/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
 pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
 Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
-Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/JavPy-official/community)
-
-This project will continue supporting Python2 until it retire in 2020.
+Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) 
 
 ## 简介/Introduction
 
@@ -52,7 +73,7 @@ This project will continue supporting Python2 until it retire in 2020.
 
 ---
 
-This is a Python library for searching related information of Japanese AVs. This project temporarily provide 2 kind of interfaces, a telegram bot for mobile users and a locally hosted web page for PC users.
+This is a Python library for searching Japanese AVs related information. This project temporarily provides both a telegram bot and a locally hosted web page, correspondingly for mobile users and for PC users as interfaces.
 
 This library fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
 
@@ -67,24 +88,28 @@ This library fetches information from various websites, but most of them are blo
 ![](preview.png)
 
 ### Attention!
-**0.2.5 注意：如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，或者直接**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
+**0.2.5 注意：如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，并**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
 
 ----
 
-**0.2.5 Note: If you want to run the server on a remote machine** like cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file or just **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top right of tha web page.
+**0.2.5 Note: If you want to run the server on a remote machine** like a cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file and **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top right of tha web page.
 
-### Developer Guide
+### Contributor Guide
 Backend:
 ```bash
-pip install -r requirements.txt
-python main.py
+$ pip install -r requirements.txt
+$ python main.py
 ```
 
 Frontend:
+```bash
+$ cd app/web
+$ npm install
 ```
-cd app/web
-npm install
-npm run serve
+Modify the port to 8081 in `config.js` when debugging and make sure you have recovered it before releasing. 
+
+```bash
+$ npm run serve
 ```
 
 ## Telegram Bot
@@ -107,12 +132,6 @@ npm run serve
 -   Go to the telegram bot father and apply for a bot token
 -   Clone this repo and create a new file named "token.txt"
 -   Copy your bot token into the "token.txt"
--   install node.js
-
-```bash
-curl -sL https://deb.nodesource.com/setup_10.x | bash -
-apt-get install nodejs -y
-```
 
 ```python
 from JavPy.app.tgbot.server import run
