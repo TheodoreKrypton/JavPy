@@ -95,15 +95,19 @@ This library fetches information from various websites, but most of them are blo
 **0.2.5 Note: If you want to run the server on a remote machine** like a cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file and **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top right of tha web page.
 
 ### Contributor Guide
+```bash
+$ git clone https://github.com/TheodoreKrypton/JavPy.git
+```
+
 Backend:
 ```bash
-$ pip install -r requirements.txt
-$ python main.py
+$ pip3 install -r requirements.txt
+$ python3 main.py
 ```
 
 Frontend:
 ```bash
-$ cd app/web
+$ cd JavPy/app/web
 $ npm install
 ```
 Modify the port to 8081 in `config.js` when debugging and make sure you have recovered it before releasing. 
