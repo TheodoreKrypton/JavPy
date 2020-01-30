@@ -1,12 +1,13 @@
 dist: xenial
 language: python
 python:
-- '3.5'
+- '3.6'
 addons:
   apt:
     packages:
       - python3-pip
       - python-libtorrent
+      - python3-setuptools
 sudo: required
 before_install:
       - python -m pip install --upgrade pip && pip install -r requirements.txt
