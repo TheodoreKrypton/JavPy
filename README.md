@@ -38,17 +38,17 @@ $ docker pull wheatcarrier/javpy:latest
 then
 ```bash
 $ docker run -p 8081:8081 wheatcarrier/javpy:latest
-
-open http://localhost:8081 in explorer and enjoy driving!
 ```
+open http://localhost:8081 in explorer and enjoy driving!
 
 ### With Git
 ```bash
-git clone https://github.com/TheodoreKrypton/JavPy.git
-cd JavPy
-python3 setup.py install
+$ git clone https://github.com/TheodoreKrypton/JavPy.git
+$ cd JavPy
+$ python3 setup.py install
+$ javpy
 ```
-
+and wait up to 5 secs to start driving
 
 Indicator|Status
 :---: | :---:
