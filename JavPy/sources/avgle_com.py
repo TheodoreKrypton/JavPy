@@ -2,13 +2,14 @@ from JavPy.sources.BaseSource import ISearchByCode
 import json
 from JavPy.functions.datastructure import AV
 import requests
+from JavPy.utils.config import proxy
 
 
 class AVGleCom(ISearchByCode):
     @classmethod
     def search_by_code(cls, code):
         url = "https://api.avgle.com/v1/search/" + code + "/0?limit=1"
-        rsp = json.loads(requests.get(url).text)
+        rsp = json.loads(requests.get(url, proxies=proxy).text)
         av = AV()
         av.title = rsp["response"]["videos"][0]["title"]
         av.video_url = rsp["response"]["videos"][0]["video_url"]

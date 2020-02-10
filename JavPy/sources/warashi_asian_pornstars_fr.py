@@ -13,6 +13,7 @@ import bs4
 from JavPy.functions.datastructure import Actress, Brief
 from JavPy.utils.common import try_evaluate
 import datetime
+from JavPy.utils.config import proxy
 
 
 class WarashiAsianPornStarsFr(
@@ -49,6 +50,7 @@ class WarashiAsianPornStarsFr(
         rsp = requests.post(
             "http://warashi-asian-pornstars.fr/en/s-12/search",
             {"recherche_critere": "f", "recherche_valeur": actress},
+            proxies=proxy
         )
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
 
@@ -77,7 +79,7 @@ class WarashiAsianPornStarsFr(
 
     @classmethod
     def __parse_detail_page(cls, url):
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         actress_info = Actress()
 

@@ -1,30 +1,14 @@
-import subprocess
-import re
-import platform
-import os
-
-devnull = open(os.devnull, "w")
+import requests
+from JavPy.utils.requester import Task, spawn_many
 
 
-def ping(host, n=1):
-    if platform.platform().startswith("Windows"):
-        p = subprocess.Popen(
-            ["ping", "-n", str(n), host], stdout=subprocess.PIPE, stderr=devnull
-        )
-        stdout, _ = p.communicate()
-        if b"=" not in stdout:
-            return None
-        return int(re.findall(r"\d+", str(stdout))[-1])
-    else:
-        p = subprocess.Popen(
-            ["ping", "-c", str(n), host], stdout=subprocess.PIPE, stderr=devnull
-        )
-        stdout, _ = p.communicate()
-        if not stdout:
-            return None
-        last_line = str(stdout).split("\\n")[-2]
-        return int(float(last_line.split("=")[1].split("/")[1]))
+def ping(url, n=1):
+    latencies = list(map(lambda rsp: rsp.elapsed.microseconds, filter(
+        lambda rsp: rsp.status_code == 200, spawn_many(
+            (Task(requests.head, url) for _ in range(n))).wait_for_all_finished()
+    )))
+    return 0 if not latencies else sum(latencies) / len(latencies)
 
 
 if __name__ == "__main__":
-    print(ping("www.google.com"))
+    print(ping("http://www.google.com", 5))

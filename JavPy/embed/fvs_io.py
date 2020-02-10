@@ -1,18 +1,19 @@
 import requests
 from JavPy.utils.ping import ping
+from JavPy.utils.config import proxy
 
 
 class fvs_io:
     @staticmethod
     def decode(url):
         retry = 5
-        best_latency = 99999
+        best_latency = 99999999
         best_server = ""
         while retry:
             retry -= 1
-            rsp = requests.get(url, verify=False, allow_redirects=False)
+            rsp = requests.get(url, verify=False, allow_redirects=False, proxies=proxy)
             location = rsp.headers['Location']
-            latency = ping(location.split("//")[1].split("/")[0])
+            latency = ping(location)
             if latency < best_latency:
                 best_latency = latency
                 best_server = location

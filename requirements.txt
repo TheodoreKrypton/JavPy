@@ -1,3 +1,4 @@
+packaging
 setuptools
 requests
 python-telegram-bot
@@ -16,3 +17,4 @@ ipaddr
 pycryptodome
 future
 cloudscraper
+pysocks

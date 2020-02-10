@@ -2,6 +2,7 @@ import requests
 import re
 import six
 from JavPy.embed.BaseEmbed import BaseEmbed
+from JavPy.utils.config import proxy
 
 if six.PY2:
     import urllib
@@ -12,8 +13,11 @@ elif six.PY3:
 class avgle(BaseEmbed):
     @staticmethod
     def decode(url):
-        rsp = requests.get(url)
-        video_hkey = re.search("video_hkey = '(.+?)';", rsp.text).group(1)
+        rsp = requests.get(url, proxies=proxy)
+        matched = re.search("video_hkey = '(.+?)';", rsp.text)
+        if not matched:
+            return None
+        video_hkey = matched.group(1)
         title = re.search("video_title = '(.+?)'", rsp.text).group(1)
         url = (
             "https://avgle.com/video/"

@@ -69,7 +69,10 @@ export default {
     },
     toCategory() {
       this.$router.push({ path: "/categories" });
-    }
+    },
+    toSeries(){
+
+    },
   }
 };
 </script>

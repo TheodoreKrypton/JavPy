@@ -4,6 +4,7 @@ import tempfile
 import shutil
 from JavPy.utils.requester import spawn
 import requests
+from JavPy.utils.config import proxy
 
 __tracker_list_url = (
     "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
@@ -16,7 +17,7 @@ def __set_tracker_list(rsp):
     __tracker_url = "".join(("&tr=" + url for url in rsp.text.split()))
 
 
-spawn(requests.get, __tracker_list_url).then(__set_tracker_list)
+spawn(requests.get, __tracker_list_url, proxies=proxy).then(__set_tracker_list)
 
 
 def modify_magnet(magnet):
