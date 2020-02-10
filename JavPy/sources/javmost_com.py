@@ -21,7 +21,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
     @classmethod
     def search_by_code(cls, code):
-        url = "http://www5.javmost.com/" + code
+        url = "http://www5.javmost.com/" + code + "/"
         main_rsp = cls.__client.get(url, proxies=proxy)
         if main_rsp.status_code != 200:
             return None
@@ -141,5 +141,6 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 
 if __name__ == "__main__":
-    print(JavMostCom.get_newly_released(1))
+    # print(JavMostCom.get_newly_released(1))
     # print(JavMostCom.search_by_code("ABP-123"))
+    print(JavMostCom.search_by_code("SSNI-351"))
