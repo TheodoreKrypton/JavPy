@@ -9,6 +9,8 @@ from JavPy.functions.datastructure import AV, Brief
 from JavPy.utils.common import try_evaluate
 import datetime
 import cloudscraper
+from JavPy.utils.config import proxy
+from urllib.parse import urlencode, quote_plus
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
@@ -20,8 +22,8 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
     @classmethod
     def search_by_code(cls, code):
-        url = "http://www5.javmost.com/" + code
-        main_rsp = cls.__client.get(url)
+        url = "http://www5.javmost.com/" + code + "/"
+        main_rsp = cls.__client.get(url, proxies=proxy)
         if main_rsp.status_code != 200:
             return None
 
@@ -43,33 +45,36 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         buttons = bs.select(".tab-overflow")[0].find_all(name="li")[1:-1]
         success = False
 
+        var_value = re.search("'value':(.+?),", main_rsp.text).group(1)
+        value = re.search("var %s = '(.+?)'" % var_value, main_rsp.text).group(1)
+
         for button in buttons:
             params = re.search(
                 r"select_part\((.+?)\)", button.a.attrs["onclick"]
             ).group(1)
-            e, t, a, o, l, r, d = [x.replace("'", "") for x in params.split(",")]
+            tokens = params.split(",")
+            group = tokens[1].replace("'", "")
+            part = tokens[0].replace("'", "")
+            _code = tokens[4].replace("'", "")
+            code2 = tokens[5].replace("'", "")
+            code3 = tokens[6].replace("'", "")
+            sound = re.search("'sound':'(.+?)'", main_rsp.text).group(1)
 
-            data = re.search(r"get_source/\",(.+?)\}", main_rsp.text, re.S).group(1)
-            value = re.search(r"value: \"(.+?)\",", data).group(1)
-            sound = re.search(r"sound: \"(.+?)\",", data).group(1)
+            data = urlencode({
+                'group': group,
+                'part': part,
+                'code': _code,
+                'code2': code2,
+                'code3': code3,
+                'value': value,
+                'sound': sound
+            }, quote_via=quote_plus)
 
-            url = "https://www5.javmost.com/get_code/"
-            rsp = cls.__client.post(url, data={"code": value})
-            _code = rsp.text
-
-            url = "https://www5.javmost.com/get_source/"
             rsp = cls.__client.post(
-                url,
-                data={
-                    "group": t,
-                    "part": e,
-                    "code": l,
-                    "code2": r,
-                    "code3": d,
-                    "value": value,
-                    "sound": sound,
-                    "code4": _code,
-                },
+                "https://www5.javmost.com/get_movie_source/",
+                headers={'content-type': "application/x-www-form-urlencoded; charset=UTF-8"},
+                data=data,
+                proxies=proxy
             )
 
             json_obj = json.loads(rsp.text)
@@ -77,7 +82,10 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
             url = decode(url)
 
-            if cls.__client.get(url).status_code == 200:
+            if not url:
+                continue
+
+            if cls.__client.get(url, proxies=proxy).status_code == 200:
                 success = True
                 break
 
@@ -94,7 +102,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     @staticmethod
     def get_cards_from_newly_released_page(page):
         url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-        rsp = JavMostCom.__client.get(url)
+        rsp = JavMostCom.__client.get(url, proxies=proxy)
 
         json_obj = json.loads(rsp.text)
         html = json_obj["data"]
@@ -139,5 +147,6 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 
 if __name__ == "__main__":
-    print(JavMostCom.get_newly_released(1))
+    # print(JavMostCom.get_newly_released(1))
     # print(JavMostCom.search_by_code("ABP-123"))
+    print(JavMostCom.search_by_code("SSNI-351"))

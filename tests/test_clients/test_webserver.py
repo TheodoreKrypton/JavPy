@@ -7,6 +7,7 @@ import requests
 from JavPy.app.webserver.app import app, web_dist_path
 from JavPy.utils.testing import testing
 import os
+from JavPy.utils.config import proxy
 
 app.config["TESTING"] = True
 client = app.test_client()
@@ -32,14 +33,14 @@ def test_search_by_code(code):
     assert "videos" in rsp
     assert len(rsp["videos"]) == 1
     print(rsp["videos"][0]["video_url"])
-    assert requests.get(rsp["videos"][0]["video_url"]).status_code == 200
+    assert requests.get(rsp["videos"][0]["video_url"], proxies=proxy).status_code == 200
 
 
 @testing(actress=("川合まゆ", "唯川みさき", "瀬奈まお", "原更紗", "Nao Jinguuji", "Eimi Fukada"))
 def test_search_by_actress(actress):
     rv = client.post(
         "/search_by_actress",
-        data=json.dumps({"actress": actress, "history_name": "true"}),
+        data=json.dumps({"actress": actress, "history_name": "true"})
     )
     assert rv.status_code == 200
     rsp = json.loads(rv.data.decode("utf-8"))

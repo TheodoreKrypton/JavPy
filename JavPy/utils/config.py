@@ -3,7 +3,8 @@
 import os
 import json
 import six
-from JavPy.utils.common import version
+from JavPy.utils.common import version as javpy_version
+from packaging import version
 
 
 class Config:
@@ -22,7 +23,7 @@ class Config:
             ) as fp:
                 cls.config = json.loads(fp.read())
 
-        if "version" not in cls.config or cls.config["version"] != version:
+        if "version" not in cls.config or version.parse(cls.config["version"]) <= version.parse("0.2.19"):
             # fix ip address issues
             if (
                 "version" not in cls.config
@@ -35,7 +36,12 @@ class Config:
                     "172.16.0.0/12",
                     "192.168.0.0/24",
                 ]
-            cls.set_config("version", version)
+            cls.set_config("version", javpy_version)
+            cls.save_config()
+
+        if "version" not in cls.config or version.parse(cls.config["version"]) <= version.parse("0.3.3"):
+            cls.config["proxy"] = ""
+            cls.set_config("version", javpy_version)
             cls.save_config()
 
         return cls.config
@@ -91,6 +97,15 @@ else:
         "ip-whitelist": ["127.0.0.1", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/24"],
         "ip-blacklist": [],
         "password": "",
-        "version": version,
+        "proxy": "",
+        "version": javpy_version,
     }
     Config.save_config()
+
+if Config.config["proxy"]:
+    proxy = {
+        'http': Config.config["proxy"],
+        'https': Config.config["proxy"]
+    }
+else:
+    proxy = None

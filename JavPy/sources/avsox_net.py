@@ -8,6 +8,7 @@ from JavPy.functions.datastructure import Brief
 import re
 from JavPy.utils.common import try_evaluate
 from JavPy.sources.BaseSource import IGetBrief
+from JavPy.utils.config import proxy
 
 
 class AVSoxNet(IGetBrief):
@@ -17,14 +18,14 @@ class AVSoxNet(IGetBrief):
     @classmethod
     def get_brief(cls, code):
         url = "https://avsox.asia/cn/search/" + code
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
         html = rsp.text
 
         match = re.search(cls.__url_pattern, html)
         if not match:
             return None
         url = match.group(1)
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
         html = rsp.text
 
         bs = bs4.BeautifulSoup(html, "lxml")
@@ -44,7 +45,7 @@ class AVSoxNet(IGetBrief):
             x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all("span")
         )
 
-        rsp = requests.get(img.attrs["src"])
+        rsp = requests.get(img.attrs["src"], proxies=proxy)
         if 300 <= rsp.status_code <= 400:
             if "location" in rsp.headers:
                 brief.preview_img_url = rsp.headers["location"]

@@ -4,6 +4,7 @@
       ref="form"
       :model="form"
       :inline="true"
+      @submit.native.prevent="onSearch"
     >
       <el-form-item>
         <el-input v-model="form.keyword"></el-input>
