@@ -45,7 +45,7 @@ export default {
           rsp = response;
         })
         .catch(function() {
-          self.magnetRes = "";
+          self.magnetRes = [];
         });
 
       if (Object.keys(rsp).length === 0) {
@@ -55,12 +55,12 @@ export default {
 
       if (rsp.status === 200) {
         if (!rsp.data) {
-          self.magnetRes = "";
+          self.magnetRes = [];
         } else {
           self.magnetRes = rsp.data;
         }
       } else {
-        self.magnetRes = "";
+        self.magnetRes = [];
       }
       Event.$emit("end-loading");
     }
