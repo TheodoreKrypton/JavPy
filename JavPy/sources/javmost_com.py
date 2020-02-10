@@ -9,6 +9,7 @@ from JavPy.functions.datastructure import AV, Brief
 from JavPy.utils.common import try_evaluate
 import datetime
 import cloudscraper
+from JavPy.utils.config import proxy
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
@@ -21,7 +22,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     @classmethod
     def search_by_code(cls, code):
         url = "http://www5.javmost.com/" + code
-        main_rsp = cls.__client.get(url)
+        main_rsp = cls.__client.get(url, proxies=proxy)
         if main_rsp.status_code != 200:
             return None
 
@@ -54,7 +55,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
             sound = re.search(r"sound: \"(.+?)\",", data).group(1)
 
             url = "https://www5.javmost.com/get_code/"
-            rsp = cls.__client.post(url, data={"code": value})
+            rsp = cls.__client.post(url, data={"code": value}, proxies=proxy)
             _code = rsp.text
 
             url = "https://www5.javmost.com/get_source/"
@@ -70,6 +71,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
                     "sound": sound,
                     "code4": _code,
                 },
+                proxies=proxy
             )
 
             json_obj = json.loads(rsp.text)
@@ -77,7 +79,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
             url = decode(url)
 
-            if cls.__client.get(url).status_code == 200:
+            if cls.__client.get(url, proxies=proxy).status_code == 200:
                 success = True
                 break
 
@@ -94,7 +96,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     @staticmethod
     def get_cards_from_newly_released_page(page):
         url = "http://www5.javmost.com/showlist/new/" + str(page) + "/release"
-        rsp = JavMostCom.__client.get(url)
+        rsp = JavMostCom.__client.get(url, proxies=proxy)
 
         json_obj = json.loads(rsp.text)
         html = json_obj["data"]

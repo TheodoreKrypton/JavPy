@@ -1,6 +1,7 @@
 from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4
+from JavPy.utils.config import proxy
 
 
 class XFantasyTV(ISearchByCode):
@@ -10,7 +11,7 @@ class XFantasyTV(ISearchByCode):
     @classmethod
     def search_by_code(cls, code):
         url = "https://xfantasy.tv/search/" + code
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
         html = rsp.text
         bs = bs4.BeautifulSoup(html, "lxml")
         card = bs.select(".MuiGrid-item")

@@ -3,6 +3,7 @@ from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4
 from JavPy.functions.datastructure import AV
+from JavPy.utils.config import proxy
 
 
 class YouAVCom(ISearchByCode):
@@ -13,7 +14,7 @@ class YouAVCom(ISearchByCode):
     def search_by_code(cls, code):
         url = "https://www.youav.com/search/videos?search_query=" + code
 
-        response = requests.request("GET", url)
+        response = requests.get(url, proxies=proxy)
 
         bs = bs4.BeautifulSoup(response.text, "lxml")
 

@@ -11,6 +11,7 @@ from JavPy.app.tgbot.server import (
     Interactive,
 )
 from JavPy.utils.testing import *
+from JavPy.utils.config import proxy
 
 
 class MockGlobals:
@@ -103,10 +104,11 @@ def test_search_by_code(code):
     search(mock_bot, mock_update, [code])
     received = mock_user.look_received()
     assert len(received) == 1
-    assert requests.get(received[0]["photo"]).status_code == 200
+    assert requests.get(received[0]["photo"], proxies=proxy).status_code == 200
     assert (
         requests.get(
-            received[0]["reply_markup"]["inline_keyboard"][0][0]["url"]
+            received[0]["reply_markup"]["inline_keyboard"][0][0]["url"],
+            proxies=proxy
         ).status_code
         == 200
     )
@@ -129,7 +131,7 @@ def test_search_by_actress(command):
     received = mock_user.look_received()
     assert len(received) > 0
     for res in received:
-        if requests.get(res["photo"]).status_code == 200:
+        if requests.get(res["photo"], proxies=proxy).status_code == 200:
             return
     assert False
 
@@ -151,7 +153,7 @@ def test_brief(code):
     get_brief(mock_bot, mock_update, [code])
     received = mock_user.look_received()
     assert len(received) == 1
-    assert requests.get(received[0]["photo"]).status_code == 200
+    assert requests.get(received[0]["photo"], proxies=proxy).status_code == 200
 
 
 @testing(code=("3408371-dirty-nun-fucks-the-gardener",))
@@ -191,7 +193,7 @@ def test_new(params):
     get_new(mock_bot, mock_update, params)
     received = mock_user.look_received()
     for res in received:
-        if requests.get(res["photo"]).status_code == 200:
+        if requests.get(res["photo"], proxies=proxy).status_code == 200:
             return
     assert False
 
@@ -229,7 +231,7 @@ def test_interactive():
     )
     interactive_assert(
         "ABP-123",
-        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"]).status_code == 200,
+        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"], proxies=proxy).status_code == 200,
     )
 
     # test interactive search by actress
@@ -244,7 +246,7 @@ def test_interactive():
     interactive_assert(
         "5",
         lambda rcv: len(rcv) > 0
-        and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0,
+        and sum(map(lambda y: requests.get(y["photo"], proxies=proxy).status_code == 200, rcv)) > 0,
     )
 
     # test interactive search newly released
@@ -255,7 +257,7 @@ def test_interactive():
     interactive_assert(
         "5",
         lambda rcv: len(rcv) > 0
-        and sum(map(lambda y: requests.get(y["photo"]).status_code == 200, rcv)) > 0,
+        and sum(map(lambda y: requests.get(y["photo"], proxies=proxy).status_code == 200, rcv)) > 0,
     )
 
     # test interactive search random
@@ -276,7 +278,7 @@ def test_interactive():
     )
     interactive_assert(
         "ABP-123",
-        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"]).status_code == 200,
+        lambda rcv: len(rcv) == 1 and requests.get(rcv[0]["photo"], proxies=proxy).status_code == 200,
     )
 
 

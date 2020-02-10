@@ -4,6 +4,7 @@ import requests
 import re
 import bs4
 from JavPy.functions.datastructure import Magnet
+from JavPy.utils.config import proxy
 
 
 class JavBusCom(ISearchMagnet):
@@ -13,7 +14,7 @@ class JavBusCom(ISearchMagnet):
     @classmethod
     def search_magnet(cls, code):
         url = "https://www.javbus.com/" + code
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
 
         if not rsp.status_code == 200:
             return None
@@ -30,6 +31,7 @@ class JavBusCom(ISearchMagnet):
             "https://www.javbus.com/ajax/uncledatoolsbyajax.php",
             headers=headers,
             params=querystring,
+            proxies=proxy
         )
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         trs = bs.find_all(name="tr")

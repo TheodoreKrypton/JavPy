@@ -7,6 +7,7 @@ import requests
 from JavPy.utils.common import urlencode
 import re
 import bs4
+from JavPy.utils.config import proxy
 
 
 class AVHelpMemoWiki(IHistoryNames):
@@ -35,7 +36,7 @@ class AVHelpMemoWiki(IHistoryNames):
             content_block_1 = content_block_1[0]
             moved_to = re.search('<span.+?href="(.+?)".+?へ移動する', str(content_block_1), re.S)
             moved_to = moved_to.group(1)
-            rsp = requests.get(moved_to)
+            rsp = requests.get(moved_to, proxies=proxy)
             pre = re.search(r"<pre.+?</pre>", rsp.text, re.S).group(0)
 
         else:
@@ -61,7 +62,7 @@ class AVHelpMemoWiki(IHistoryNames):
         names = set()
         names.add(actress)
         url = "https://av-help.memo.wiki/d/" + urlencode(actress, "EUC-JP")
-        rsp = requests.get(url)
+        rsp = requests.get(url, proxies=proxy)
         html = rsp.text
         names.update(cls.match_history_names(html))
         return list(names)

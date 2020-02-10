@@ -19,6 +19,7 @@ import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
 from copy import deepcopy
 import requests
+from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
@@ -194,7 +195,7 @@ def actress_info():
 @app.route("/img")
 def img():
     src = request.args['src']
-    content = requests.get(src).content
+    content = requests.get(src, proxies=proxy).content
     if src.endswith("jpg") or src.endswith("jpeg"):
         return Response(content, mimetype="image/jpeg")
     if src.endswith("png"):

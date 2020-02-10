@@ -8,6 +8,7 @@ import bs4
 import re
 from JavPy.utils.common import try_evaluate
 from JavPy.utils.requester import Task, spawn_many
+from JavPy.utils.config import proxy
 
 
 class Etigoya(IHistoryNames):
@@ -20,7 +21,7 @@ class Etigoya(IHistoryNames):
     @classmethod
     def get_history_names(cls, actress):
         url = "http://etigoya955.blog49.fc2.com/?q=" + actress + "&charset=utf-8"
-        html = requests.get(url).text
+        html = requests.get(url, proxies=proxy).text
         bs = bs4.BeautifulSoup(html, "lxml")
         main = bs.select("#main")[0]
         lis = main.select("li", limit=1)
@@ -40,7 +41,7 @@ class Etigoya(IHistoryNames):
         url = try_evaluate(lambda: re.search(Etigoya.url_pattern, str(li)).group(0))[0]
         if not url:
             return []
-        html = requests.get(url).text
+        html = requests.get(url, proxies=proxy).text
         names = [
             re.sub(Etigoya.purify_pattern, "", s).strip()
             for s in re.findall(Etigoya.name_pattern, html)

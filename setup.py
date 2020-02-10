@@ -12,6 +12,10 @@ except Exception as ex:
     print("please install Node.JS first at https://nodejs.org/en/")
     exit(0)
 
+with open("requirements.txt") as f:
+    requires = f.read().splitlines()
+
+
 setup(
     name="JavPy",
     version=version,
@@ -21,21 +25,7 @@ setup(
     license="MIT License",
     packages=find_packages(),
     url="https://github.com/TheodoreKrypton/JavPy",
-    install_requires=[
-        "requests",
-        "bs4",
-        "python-telegram-bot",
-        "urllib3==1.23",
-        "pytest",
-        "flask",
-        "six",
-        "flask-cors",
-        "lxml",
-        "ipaddr",
-        "pycryptodome",
-        "future",
-        "cloudscraper",
-    ],
+    install_requires=requires,
     entry_points={"console_scripts": ["javpy = JavPy:serve"]},
     include_package_data=True,
     exclude_package_data={"": [".gitignore"]},
