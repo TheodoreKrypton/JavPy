@@ -11,7 +11,7 @@ class YouAVCom(ISearchByCode):
 
     @classmethod
     def search_by_code(cls, code):
-        url = "https://www.youav.com/search/videos?search_query=" + code
+        url = "https://www.youav.com/search/videos/" + code
 
         response = requests.request("GET", url)
 
@@ -19,8 +19,11 @@ class YouAVCom(ISearchByCode):
 
         try:
 
-            div = bs.find_all(name="div", attrs={"class": "well-sm"})[1]
-            img = ""  # div.find(name='img').attrs['src']
+            divs = bs.find_all(name="div", attrs={"class": "content-row"})[-1].find_all(name='div')
+            if not divs:
+                return None
+            div = divs[0]
+            img = div.find(name='img').attrs['src']
 
         except (AttributeError, IndexError):
             return None
@@ -33,3 +36,7 @@ class YouAVCom(ISearchByCode):
         av.preview_img_url = img
 
         return av
+
+
+if __name__ == '__main__':
+    print(YouAVCom.search_by_code("SSNI-351").to_dict())
