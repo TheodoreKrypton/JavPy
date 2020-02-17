@@ -1,7 +1,4 @@
-# encoding: utf-8
-
 from JavPy.utils.requester import spawn_many, Task
-from future.builtins import filter
 from JavPy.utils.common import cache
 from JavPy.functions.sources import Sources
 

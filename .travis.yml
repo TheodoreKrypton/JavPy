@@ -16,5 +16,5 @@ install:
   - sudo pip3 install -r requirements.txt
   
 script: 
-  - pytest --cov=JavPy --ignore=JavPy/app/web tests/test_clients/
+  - pytest --cov=JavPy --ignore=JavPy/app/web JavPy/tests/test_clients/
   - codecov

@@ -81,10 +81,15 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
             brief.preview_img_url = "http:" + brief.preview_img_url
         brief.code = code
         date = bs.select("#video_date")[0].select("td")[-1].text
-        brief.set_release_date(date)
+        brief.release_date = date
         brief.actress = ", ".join((span.text for span in bs.select("#video_cast")[0].select(".star")))  # like AQSH-035
         return brief
 
+    @classmethod
+    def test(cls):
+        cls.test_get_brief("JUFE-114")
+        cls.test_newly_released()
+
 
 if __name__ == "__main__":
-    print(JavLibraryCom.get_brief("JUFE-114").actress)
+    JavLibraryCom.test()

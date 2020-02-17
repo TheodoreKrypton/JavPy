@@ -2,7 +2,6 @@ import JavPy.sources
 from JavPy.functions.sources import Sources
 from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
-from future.builtins import map
 from JavPy.utils.requester import spawn, Task, spawn_many
 
 

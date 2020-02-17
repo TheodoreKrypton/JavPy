@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
-from future.builtins import str, map
 from JavPy.sources.BaseSource import ISearchByCode, INewlyReleased
 import re
 import bs4
@@ -135,7 +133,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         brief.preview_img_url = img
         brief.title, _ = try_evaluate(lambda: card_tag.find(name="h5").text.strip(), "")
         brief.actress = ", ".join(actress)
-        brief.set_release_date(release_date)
+        brief.release_date = release_date
         brief.code = card_tag.find(name="h4").text.strip()
 
         return brief
@@ -145,8 +143,11 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         cards = JavMostCom.get_cards_from_newly_released_page(str(page))
         return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))
 
+    @classmethod
+    def test(cls):
+        cls.test_newly_released()
+        cls.test_search_by_code("SSNI-351")
+
 
 if __name__ == "__main__":
-    # print(JavMostCom.get_newly_released(1))
-    # print(JavMostCom.search_by_code("ABP-123"))
-    print(JavMostCom.search_by_code("SSNI-351"))
+    JavMostCom.test()
