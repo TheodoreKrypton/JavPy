@@ -24,7 +24,7 @@ class New:
                     which_page + 1 - len(cls.newly_released)
                 )
             if not cls.newly_released[which_page]:
-                cls.newly_released[which_page] = cls.get_newly_released_from_sources(
+                cls.newly_released[which_page] = cls.__get_newly_released_from_sources(
                     which_page
                 )
             return cls.newly_released[which_page]
@@ -83,4 +83,4 @@ class New:
 
 
 if __name__ == "__main__":
-    print(New.get_newly_released(None, 1))
+    print(New.get_newly_released(None, 2))
