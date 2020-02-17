@@ -21,3 +21,11 @@ class HighPornNet(ISearchByCode):
             av.preview_img_url = "http:" + av.preview_img_url
         av.video_url = div.a.attrs["href"]
         return av
+
+    @classmethod
+    def test(cls):
+        cls.test_search_by_code("ABP-123")
+
+
+if __name__ == '__main__':
+    HighPornNet.test()

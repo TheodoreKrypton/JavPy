@@ -12,6 +12,10 @@ class JavModelCom():
         rsp = requests.get(url, proxies=proxy)
         return re.search(r"<h1 class=\"intro-title mb20\">(.+?)<br>", rsp.text).group(1)
 
+    @classmethod
+    def test(cls):
+        cls.test_translate_en2jp("Nao Jinguuji")
+
 
 if __name__ == "__main__":
-    print(JavModelCom.translate2jp("Nao Jinguuji"))
+    JavModelCom.test()

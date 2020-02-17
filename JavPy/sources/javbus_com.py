@@ -48,3 +48,11 @@ class JavBusCom(ISearchMagnet):
             res.append(mgnt)
 
         return res
+
+    @classmethod
+    def test(cls):
+        cls.test_search_magnet("ABP-123")
+
+
+if __name__ == '__main__':
+    JavBusCom.test()

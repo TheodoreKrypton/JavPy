@@ -17,6 +17,10 @@ class AVGleCom(ISearchByCode):
         av.preview_img_url = rsp["response"]["videos"][0]["preview_url"]
         return av
 
+    @classmethod
+    def test(cls):
+        super().test_search_by_code("ABP-871")
+
 
 if __name__ == "__main__":
-    print(AVGleCom.search_by_code("ABP-871"))
+    AVGleCom.test()

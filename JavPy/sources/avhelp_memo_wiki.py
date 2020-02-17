@@ -67,10 +67,14 @@ class AVHelpMemoWiki(IHistoryNames):
         names.update(cls.match_history_names(html))
         return list(names)
 
+    @classmethod
+    def test(cls):
+        super().test_history_names("唯川みさき")
+        super().test_history_names("原更紗")
+        super().test_history_names("瀬奈まお")
+        super().test_history_names("天海こころ")
+        super().test_history_names("笹倉杏")
+
 
 if __name__ == "__main__":
-    # 瀬奈まお
-    # print(AVHelpMemoWiki.get_history_names("瀬奈まお"))
-    # print(AVHelpMemoWiki.get_history_names("原更紗"))
-    # print(AVHelpMemoWiki.get_history_names("天海こころ"))
-    print(AVHelpMemoWiki.get_history_names("笹倉杏"))
+    AVHelpMemoWiki.test()

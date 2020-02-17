@@ -5,8 +5,7 @@ from JavPy.sources.BaseSource import (
     ISearchByActress,
     IGetBrief,
     ITranslateEn2Jp,
-    IActressInfo,
-    IHistoryNames,
+    IActressInfo
 )
 import requests
 import bs4
@@ -16,9 +15,7 @@ import datetime
 from JavPy.utils.config import proxy
 
 
-class WarashiAsianPornStarsFr(
-    ISearchByActress, IGetBrief, ITranslateEn2Jp, IActressInfo, IHistoryNames
-):
+class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
     __actress_detail_url = {}
 
     @classmethod
@@ -139,9 +136,11 @@ class WarashiAsianPornStarsFr(
             return None
         return cls.__parse_detail_page(cls.__actress_detail_url[actress])
 
+    @classmethod
+    def test(cls):
+        cls.test_actress_info("Riana Yuzuki")
+        cls.test_translate_en2jp("Eimi Fukada")
+
 
 if __name__ == "__main__":
-    # print(WarashiAsianPornStarsFr.translate2jp(u'Nao Jinguuji'))
-    # print(WarashiAsianPornStarsFr.translate2jp(u'Riana Yuzuki'))
-    # print(WarashiAsianPornStarsFr.get_actress_info("Eimi Fukada"))
-    print(WarashiAsianPornStarsFr.get_actress_info("Misa Natsuki").to_dict())
+    WarashiAsianPornStarsFr.test()

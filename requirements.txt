@@ -3,8 +3,8 @@ setuptools
 requests
 python-telegram-bot
 bs4
-urllib3==1.23
-Flask>=1.1.1
+urllib3
+Flask
 six
 flask-cors
 lxml

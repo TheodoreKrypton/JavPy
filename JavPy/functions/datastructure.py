@@ -1,6 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 import datetime
 from JavPy.utils.common import try_evaluate, update_object
+from typing import Union, Optional, List
 
 
 class AV:
@@ -9,15 +10,20 @@ class AV:
         self.video_url = ""
         self.preview_img_url = ""
         self.actress = ""
-        self.release_date = None
+        self.__release_date: Optional[datetime.datetime] = None
         self.title = ""
 
-    def set_release_date(self, release_date):
-        if isinstance(release_date, datetime.datetime):
-            self.release_date = release_date
+    @property
+    def release_date(self) -> datetime.datetime:
+        return self.__release_date
+
+    @release_date.setter
+    def release_date(self, date: Union[str, datetime.datetime]):
+        if isinstance(date, datetime.datetime):
+            self.__release_date = date
         else:
-            self.release_date, _ = try_evaluate(
-                lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None
+            self.__release_date, _ = try_evaluate(
+                lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None
             )
 
     def to_dict(self):
@@ -39,18 +45,23 @@ class Brief:
         self.preview_img_url = ""
         self.actress = ""
         self.title = ""
-        self.release_date = None
+        self.__release_date = None
 
-    def set_release_date(self, release_date):
-        if isinstance(release_date, datetime.datetime):
-            self.release_date = release_date
+    @property
+    def release_date(self) -> datetime.datetime:
+        return self.__release_date
+
+    @release_date.setter
+    def release_date(self, date: Union[str, datetime.datetime]):
+        if isinstance(date, datetime.datetime):
+            self.__release_date = date
         else:
-            self.release_date, _ = try_evaluate(
-                lambda: datetime.datetime.strptime(release_date, "%Y-%m-%d"), None
+            self.__release_date, _ = try_evaluate(
+                lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None
             )
 
     @staticmethod
-    def reduce_briefs(briefs):
+    def reduce_briefs(briefs: List['Brief']) -> 'Brief':
         res = {}
         without_code = []
         for brief in briefs:
