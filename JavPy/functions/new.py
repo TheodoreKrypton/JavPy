@@ -20,13 +20,9 @@ class New:
 
         if not up_to:
             if not len(cls.newly_released) >= which_page + 1:
-                cls.newly_released += [None] * (
-                    which_page + 1 - len(cls.newly_released)
-                )
+                cls.newly_released += [None] * (which_page + 1 - len(cls.newly_released))
             if not cls.newly_released[which_page]:
-                cls.newly_released[which_page] = cls.__get_newly_released_from_sources(
-                    which_page
-                )
+                cls.newly_released[which_page] = cls.__get_newly_released_from_sources(which_page)
             return cls.newly_released[which_page]
 
         else:
@@ -43,9 +39,7 @@ class New:
                 if len(cls.newly_released) < page_cnt + 1:
                     cls.newly_released.append([])
                 if not cls.newly_released[page_cnt]:
-                    cls.newly_released[page_cnt] = cls.__get_newly_released_from_sources(
-                        which_page
-                    )
+                    cls.newly_released[page_cnt] = cls.__get_newly_released_from_sources(page_cnt)
                 lack -= len(cls.newly_released[page_cnt])
                 page_cnt += 1
 
@@ -56,9 +50,7 @@ class New:
     @classmethod
     def __find_usable_source(cls, page):
         for i, source in enumerate(Sources.NewlyReleased):
-            res, ex = try_evaluate(
-                lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page)
-            )
+            res, ex = try_evaluate(lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page))
             if (not res) or ex:
                 continue
             else:
@@ -69,11 +61,10 @@ class New:
     @classmethod
     def __get_newly_released_from_sources(cls, page):
         if cls.which_source != -1:
-            res, ex = try_evaluate(
-                lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page)
-            )
+            res, ex = try_evaluate(lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page))
             if (not res) or ex:
                 return cls.__find_usable_source(page)
+            return res
         else:
             return cls.__find_usable_source(page)
 
@@ -83,4 +74,4 @@ class New:
 
 
 if __name__ == "__main__":
-    print(New.get_newly_released(None, 2))
+    print(New.get_newly_released(30, 2))
