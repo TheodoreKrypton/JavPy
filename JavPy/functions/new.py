@@ -8,7 +8,7 @@ Sources.NewlyReleased.sort(key=lambda x: x.priority())
 
 
 class New:
-    newly_released: List[List] = []
+    newly_released = []  # type: List[List]
     record_date = datetime.datetime.today().date()
 
     @classmethod

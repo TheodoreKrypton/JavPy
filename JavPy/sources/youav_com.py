@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4

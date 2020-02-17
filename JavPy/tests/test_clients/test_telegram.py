@@ -1,6 +1,3 @@
-# encoding: utf-8
-
-from __future__ import unicode_literals, print_function, absolute_import
 import requests
 from JavPy.app.tgbot.server import (
     search,

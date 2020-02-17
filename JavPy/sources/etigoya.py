@@ -1,7 +1,3 @@
-# encoding: utf-8
-
-from __future__ import absolute_import, print_function, unicode_literals
-from future.builtins import str, filter
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
 import bs4

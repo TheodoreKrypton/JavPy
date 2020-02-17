@@ -1,7 +1,5 @@
-# encoding: utf-8
 
-from __future__ import print_function, unicode_literals, absolute_import
-from future.builtins import str
+
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
 from JavPy.utils.common import urlencode

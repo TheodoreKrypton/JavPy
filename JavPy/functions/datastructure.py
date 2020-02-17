@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 import datetime
 from JavPy.utils.common import try_evaluate, update_object
 from typing import Union, Optional, List
@@ -10,7 +9,7 @@ class AV:
         self.video_url = ""
         self.preview_img_url = ""
         self.actress = ""
-        self.__release_date: Optional[datetime.datetime] = None
+        self.__release_date = None  # type: Optional[datetime.datetime]
         self.title = ""
 
     @property

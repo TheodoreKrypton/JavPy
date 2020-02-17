@@ -1,5 +1,4 @@
 from JavPy.sources.BaseSource import ISearchByCode
-import requests
 import bs4
 from JavPy.functions.datastructure import AV
 from JavPy.utils.config import proxy

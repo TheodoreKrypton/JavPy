@@ -1,4 +1,3 @@
-from __future__ import print_function, unicode_literals, absolute_import
 from JavPy.sources.BaseSource import ITranslateEn2Jp
 import requests
 import re

@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 from flask import (
     Flask,
     make_response,
@@ -69,14 +68,9 @@ def update_config():
     config.Config.set_config("ip-whitelist", data["ipWhitelist"])
     config.Config.save_config()
 
-    try:
-        import importlib
-
-        _reload = importlib.reload
-    except (ImportError, AttributeError):
-        _reload = reload
-    _reload(config)
-    _reload(auth)
+    import importlib
+    importlib.reload(config)
+    importlib.reload(auth)
     return ""
 
 
