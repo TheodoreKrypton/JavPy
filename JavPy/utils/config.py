@@ -1,6 +1,5 @@
 import os
 import json
-import six
 from JavPy.utils.common import version as javpy_version
 from packaging import version
 
@@ -12,14 +11,8 @@ class Config:
 
     @classmethod
     def read_config(cls):
-        if six.PY2:
-            with open(os.path.join(cls.config_path, "config.json")) as fp:
-                cls.config = json.loads(fp.read().decode("utf-8"))
-        else:
-            with open(
-                os.path.join(cls.config_path, "config.json"), encoding="utf-8"
-            ) as fp:
-                cls.config = json.loads(fp.read())
+        with open(os.path.join(cls.config_path, "config.json"), encoding="utf-8") as fp:
+            cls.config = json.loads(fp.read())
 
         if "version" not in cls.config or version.parse(cls.config["version"]) <= version.parse("0.2.19"):
             # fix ip address issues

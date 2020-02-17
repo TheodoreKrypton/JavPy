@@ -1,113 +1,130 @@
-from six import with_metaclass
 from JavPy.functions.sources import Sources
 from JavPy.functions.datastructure import *
+from abc import ABCMeta, abstractmethod
 
 
 class RegisterInterface(type):
     def __init__(cls, name, bases, cls_dict):
         for base in bases:
-            if base is INewlyReleased:
+            if base.__name__ == 'INewlyReleased':
                 Sources.NewlyReleased.append(cls)
-            elif base is ISearchByCode:
+            elif base.__name__ == 'ISearchByCode':
                 Sources.SearchByCode.append(cls)
-            elif base is ISearchByActress:
+            elif base.__name__ == 'ISearchByActress':
                 Sources.SearchByActress.append(cls)
-            elif base is IGetBrief:
+            elif base.__name__ == 'IGetBrief':
                 Sources.Brief.append(cls)
-            elif base is ISearchMagnet:
+            elif base.__name__ == 'ISearchMagnet':
                 Sources.Magnet.append(cls)
-            elif base is IHistoryNames:
+            elif base.__name__ == 'IHistoryNames':
                 Sources.HistoryNames.append(cls)
-            elif base is ITranslateEn2Jp:
+            elif base.__name__ == 'ITranslateEn2Jp':
                 Sources.TranslateEn2Jp.append(cls)
-            elif base is IActressInfo:
+            elif base.__name__ == 'IActressInfo':
                 Sources.ActressInfo.append(cls)
 
         super(RegisterInterface, cls).__init__(name, bases, cls_dict)
 
 
-class INewlyReleased(with_metaclass(RegisterInterface)):
+class INewlyReleased(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def get_newly_released(cls, page: int) -> List[Brief]:
+    @abstractmethod
+    def get_newly_released(mcs, page: int) -> List[Brief]:
         pass
 
     @classmethod
-    def priority(cls) -> int:
+    @abstractmethod
+    def priority(mcs) -> int:
         pass
 
     @classmethod
-    def test_newly_released(cls):
-        assert cls.get_newly_released(2)
+    @abstractmethod
+    def test_newly_released(mcs):
+        assert mcs.get_newly_released(2)
 
 
-class ISearchByCode(with_metaclass(RegisterInterface)):
+class ISearchByCode(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def search_by_code(cls, code: str) -> Optional[AV]:
+    @abstractmethod
+    def search_by_code(mcs, code: str) -> Optional[AV]:
         pass
 
     @classmethod
-    def test_search_by_code(cls, code: str):
-        assert cls.search_by_code(code).video_url
+    @abstractmethod
+    def test_search_by_code(mcs, code: str):
+        assert mcs.search_by_code(code).video_url
 
 
-class ISearchByActress(with_metaclass(RegisterInterface)):
+class ISearchByActress(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def search_by_actress(cls, actress: str, up_to: Optional[int]) -> List[Actress]:
+    @abstractmethod
+    def search_by_actress(mcs, actress: str, up_to: Optional[int]) -> List[Actress]:
         pass
 
     @classmethod
-    def test_search_by_actress(cls, actress: str, up_to: Optional[int]):
-        assert cls.search_by_actress(actress, up_to)
+    @abstractmethod
+    def test_search_by_actress(mcs, actress: str, up_to: Optional[int]):
+        assert mcs.search_by_actress(actress, up_to)
 
 
-class IGetBrief(with_metaclass(RegisterInterface)):
+class IGetBrief(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def get_brief(cls, code: str) -> Optional[Brief]:
+    @abstractmethod
+    def get_brief(mcs, code: str) -> Optional[Brief]:
         pass
 
     @classmethod
-    def test_get_brief(cls, code: str):
-        assert cls.get_brief(code).title
+    @abstractmethod
+    def test_get_brief(mcs, code: str):
+        assert mcs.get_brief(code).title
 
 
-class ISearchMagnet(with_metaclass(RegisterInterface)):
+class ISearchMagnet(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def search_magnet(cls, code: str) -> List[Magnet]:
+    @abstractmethod
+    def search_magnet(mcs, code: str) -> List[Magnet]:
         pass
 
     @classmethod
-    def test_search_magnet(cls, code: str):
-        assert cls.search_magnet(code)
+    @abstractmethod
+    def test_search_magnet(mcs, code: str):
+        assert mcs.search_magnet(code)
 
 
-class IHistoryNames(with_metaclass(RegisterInterface)):
+class IHistoryNames(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def get_history_names(cls, actress: str) -> List[str]:
+    @abstractmethod
+    def get_history_names(mcs, actress: str) -> List[str]:
         pass
 
     @classmethod
-    def test_history_names(cls, actress: str):
-        assert cls.get_history_names(actress)
+    @abstractmethod
+    def test_history_names(mcs, actress: str):
+        assert mcs.get_history_names(actress)
 
 
-class ITranslateEn2Jp(with_metaclass(RegisterInterface)):
+class ITranslateEn2Jp(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def translate2jp(cls, actress: str) -> Optional[str]:
+    @abstractmethod
+    def translate2jp(mcs, actress: str) -> Optional[str]:
         pass
 
     @classmethod
-    def test_translate_en2jp(cls, actress: str):
-        assert cls.translate2jp(actress)
+    @abstractmethod
+    def test_translate_en2jp(mcs, actress: str):
+        assert mcs.translate2jp(actress)
 
 
-class IActressInfo(with_metaclass(RegisterInterface)):
+class IActressInfo(ABCMeta, metaclass=RegisterInterface):
     @classmethod
-    def get_actress_info(cls, actress: str) -> Optional[Actress]:
+    @abstractmethod
+    def get_actress_info(mcs, actress: str) -> Optional[Actress]:
         pass
 
     @classmethod
-    def test_actress_info(cls, actress: str):
-        assert cls.get_actress_info(actress).height
+    @abstractmethod
+    def test_actress_info(mcs, actress: str):
+        assert mcs.get_actress_info(actress).height
 
 
 class SourceException(Exception):
