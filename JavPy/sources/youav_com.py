@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4
@@ -38,6 +37,10 @@ class YouAVCom(ISearchByCode):
 
         return av
 
+    @classmethod
+    def test(cls):
+        cls.test_search_by_code("SSNI-351")
+
 
 if __name__ == '__main__':
-    print(YouAVCom.search_by_code("SSNI-351").to_dict())
+    YouAVCom.test()

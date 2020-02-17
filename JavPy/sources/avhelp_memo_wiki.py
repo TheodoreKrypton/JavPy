@@ -1,7 +1,5 @@
-# encoding: utf-8
 
-from __future__ import print_function, unicode_literals, absolute_import
-from future.builtins import str
+
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
 from JavPy.utils.common import urlencode
@@ -67,10 +65,14 @@ class AVHelpMemoWiki(IHistoryNames):
         names.update(cls.match_history_names(html))
         return list(names)
 
+    @classmethod
+    def test(cls):
+        super().test_history_names("唯川みさき")
+        super().test_history_names("原更紗")
+        super().test_history_names("瀬奈まお")
+        super().test_history_names("天海こころ")
+        super().test_history_names("笹倉杏")
+
 
 if __name__ == "__main__":
-    # 瀬奈まお
-    # print(AVHelpMemoWiki.get_history_names("瀬奈まお"))
-    # print(AVHelpMemoWiki.get_history_names("原更紗"))
-    # print(AVHelpMemoWiki.get_history_names("天海こころ"))
-    print(AVHelpMemoWiki.get_history_names("笹倉杏"))
+    AVHelpMemoWiki.test()

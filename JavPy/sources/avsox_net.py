@@ -1,7 +1,3 @@
-# encoding: utf-8
-
-from __future__ import absolute_import, print_function, unicode_literals
-from future.builtins import str
 import requests
 import bs4
 from JavPy.functions.datastructure import Brief
@@ -17,7 +13,7 @@ class AVSoxNet(IGetBrief):
 
     @classmethod
     def get_brief(cls, code):
-        url = "https://avsox.asia/cn/search/" + code
+        url = "https://avsox.host/cn/search/" + code
         rsp = requests.get(url, proxies=proxy)
         html = rsp.text
 
@@ -36,11 +32,10 @@ class AVSoxNet(IGetBrief):
         img = movie.select(".screencap", limit=1)[0].a.img
         brief.title = img.attrs["title"]
 
-        brief.set_release_date(
-            try_evaluate(
-                lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), ""
-            )[0]
-        )
+        brief.release_date = try_evaluate(
+            lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), ""
+        )[0]
+
         brief.actress = ", ".join(
             x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all("span")
         )
@@ -54,6 +49,10 @@ class AVSoxNet(IGetBrief):
 
         return brief
 
+    @classmethod
+    def test(cls):
+        cls.test_get_brief("123118_790")
+
 
 if __name__ == "__main__":
-    print(AVSoxNet.get_brief("ABP-123"))
+    AVSoxNet.test()

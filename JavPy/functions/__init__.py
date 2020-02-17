@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.functions.search_by_code import SearchByCode
 from JavPy.functions.search_by_actress import SearchByActress
 from JavPy.functions.new import New
@@ -24,7 +23,7 @@ class Functions:
             res = av
             if brief_info:
                 res.actress = brief_info.actress if brief_info.actress else ""
-                res.set_release_date(brief_info.release_date)
+                res.release_date = brief_info.release_date
                 res.title = brief_info.title
                 res.preview_img_url = (
                     brief_info.preview_img_url if brief_info.preview_img_url else ""

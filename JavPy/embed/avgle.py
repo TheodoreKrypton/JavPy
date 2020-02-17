@@ -1,13 +1,8 @@
 import requests
 import re
-import six
 from JavPy.embed.BaseEmbed import BaseEmbed
 from JavPy.utils.config import proxy
-
-if six.PY2:
-    import urllib
-elif six.PY3:
-    import urllib.parse as urllib
+import urllib.parse
 
 
 class avgle(BaseEmbed):
@@ -23,7 +18,7 @@ class avgle(BaseEmbed):
             "https://avgle.com/video/"
             + video_hkey
             + "/"
-            + urllib.quote(title.encode("utf-8"))
+            + urllib.parse.quote(title.encode("utf-8"))
         )
         return url
 

@@ -2,6 +2,7 @@ from JavPy.sources.BaseSource import ISearchByCode
 import requests
 import bs4
 from JavPy.utils.config import proxy
+from JavPy.functions.datastructure import AV
 
 
 class XFantasyTV(ISearchByCode):
@@ -20,9 +21,17 @@ class XFantasyTV(ISearchByCode):
         card = card[0].a
         title = card.text
         if code in title:
-            return "https://xfantasy.tv" + card.attrs["href"]
+            av = AV()
+            av.code = code
+            av.preview_img_url = card.img.attrs['src']
+            av.video_url = "https://xfantasy.tv" + card.attrs["href"]
+            return av
         return None
+
+    @classmethod
+    def test(cls):
+        XFantasyTV.test_search_by_code("n0753")
 
 
 if __name__ == "__main__":
-    print(XFantasyTV.search_by_code("n0753"))
+    XFantasyTV.test()

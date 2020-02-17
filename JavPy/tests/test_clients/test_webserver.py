@@ -1,7 +1,3 @@
-# encoding: utf-8
-
-from __future__ import unicode_literals, print_function, absolute_import
-from future.builtins import str
 import json
 import requests
 from JavPy.app.webserver.app import app, web_dist_path

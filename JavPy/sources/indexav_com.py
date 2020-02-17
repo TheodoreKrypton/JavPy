@@ -1,7 +1,3 @@
-# encoding: utf-8
-
-from __future__ import absolute_import, print_function, unicode_literals
-from future.builtins import map
 import requests
 from JavPy.sources.BaseSource import ISearchByActress, IGetBrief
 import bs4
@@ -64,11 +60,14 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         brief.preview_img_url = img
         brief.code = code
         brief.actress = actress
-        brief.set_release_date(release_date)
+        brief.release_date = release_date
         return brief
+
+    @classmethod
+    def test(cls):
+        cls.test_get_brief("JUY-805")
+        cls.test_search_by_actress("飯岡かなこ", None)
 
 
 if __name__ == "__main__":
-    # print(try_evaluate(lambda: IndexAVCom.get_brief("JUY-805")))
-    print(IndexAVCom.search_by_actress("飯岡かなこ", None))
-    # print(IndexAVCom.search_by_actress("深田えいみ", 30)[0].to_dict())
+    IndexAVCom.test()

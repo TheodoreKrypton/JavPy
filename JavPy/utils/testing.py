@@ -1,12 +1,3 @@
-from __future__ import unicode_literals, print_function, absolute_import
-from future.builtins import dict, str
-
-try:
-    import typing
-except ImportError:
-    pass
-
-
 def testing(*_, **parameters):
     nargs = len(parameters)
     keys = list(parameters.keys())

@@ -1,4 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
 from JavPy.functions.sources import Sources
 from JavPy.utils.requester import spawn_many, Task
 
