@@ -15,7 +15,7 @@ class Etigoya(IHistoryNames):
     purify_pattern = re.compile("<.+?>")
 
     @classmethod
-    def get_history_names(cls, actress):
+    def get_history_names(mcs, actress):
         url = "http://etigoya955.blog49.fc2.com/?q=" + actress + "&charset=utf-8"
         html = requests.get(url, proxies=proxy).text
         bs = bs4.BeautifulSoup(html, "lxml")
@@ -26,14 +26,14 @@ class Etigoya(IHistoryNames):
             return []
 
         res = spawn_many(
-            (Task(cls.get_history_names_by_li, li) for li in lis)
+            (Task(mcs.get_history_names_by_li, li) for li in lis)
         ).wait_until(lambda rsp: actress in rsp)
         res = next(filter(lambda names: names and actress in names, res))
 
         return res
 
     @classmethod
-    def get_history_names_by_li(cls, li):
+    def get_history_names_by_li(mcs, li):
         url = try_evaluate(lambda: re.search(Etigoya.url_pattern, str(li)).group(0))[0]
         if not url:
             return []
@@ -45,8 +45,8 @@ class Etigoya(IHistoryNames):
         return names
 
     @classmethod
-    def test(cls):
-        cls.test_history_names("水野あき")
+    def test(mcs):
+        mcs.test_history_names("水野あき")
 
 
 if __name__ == "__main__":

@@ -9,9 +9,9 @@ class JavFullNet(ISearchByCode):
     __client = cloudscraper.create_scraper()
 
     @classmethod
-    def search_by_code(cls, code):
+    def search_by_code(mcs, code):
         url = "https://javfull.net/?s=" + code
-        html = cls.__client.get(url, proxies=proxy).text
+        html = mcs.__client.get(url, proxies=proxy).text
         bs = bs4.BeautifulSoup(html, "lxml")
         item = bs.select(".item")[0]
 
@@ -23,8 +23,8 @@ class JavFullNet(ISearchByCode):
         return av
 
     @classmethod
-    def test(cls):
-        cls.test_search_by_code("n1056")
+    def test(mcs):
+        mcs.test_search_by_code("n1056")
 
 
 if __name__ == "__main__":

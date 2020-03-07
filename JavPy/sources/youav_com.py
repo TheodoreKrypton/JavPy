@@ -6,11 +6,8 @@ from JavPy.utils.config import proxy
 
 
 class YouAVCom(ISearchByCode):
-    def __init__(self):
-        pass
-
     @classmethod
-    def search_by_code(cls, code):
+    def search_by_code(mcs, code):
         url = "https://www.youav.com/search/videos/" + code
 
         response = requests.get(url, proxies=proxy)
@@ -38,8 +35,8 @@ class YouAVCom(ISearchByCode):
         return av
 
     @classmethod
-    def test(cls):
-        cls.test_search_by_code("SSNI-351")
+    def test(mcs):
+        mcs.test_search_by_code("SSNI-351")
 
 
 if __name__ == '__main__':

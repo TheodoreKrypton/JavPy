@@ -26,7 +26,7 @@ export default {
   methods: {
     submitPassword() {
       axios
-        .post(`http://${config.address}:${config.port}/auth_by_password`, {
+        .post(`${config.address}:${config.port}/auth_by_password`, {
           password: sha256.sha256(this.password)
         })
         .then(rsp => {

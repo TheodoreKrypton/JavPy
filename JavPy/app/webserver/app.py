@@ -197,3 +197,9 @@ def img():
     if src.endswith("bmp"):
         return Response(content, mimetype="image/bmp")
     return Response(content)
+
+
+# avoid the main window being redirect to annoying ads pages.
+@app.route("/redirect_to")
+def open_url():
+    return redirect(request.args['url'])

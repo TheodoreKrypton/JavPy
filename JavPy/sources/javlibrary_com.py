@@ -13,25 +13,25 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
     __client = cloudscraper.create_scraper()
 
     @classmethod
-    def priority(cls):
+    def priority(mcs):
         return 1
 
     @classmethod
-    def get_newly_released(cls, page):
+    def get_newly_released(mcs, page):
         major_info_req = Task(
-            cls.__client.get,
+            mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?mode=2&page=%d" % page,
             proxies=proxy
         )
         dates_req = Task(
-            cls.__client.get,
+            mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?list&mode=2&page=%d" % page,
             proxies=proxy
         )
         major_info_rsp, dates_rsp = spawn_many(
             (major_info_req, dates_req)
         ).wait_for_all_finished()
-        major_info = cls.parse_major_info(major_info_rsp)
+        major_info = mcs.parse_major_info(major_info_rsp)
         dates = map(
             lambda d: datetime.datetime.strptime(d, "%Y-%m-%d"),
             filter(lambda x: "-" in x, re.findall("<td>(.+?)</td>", dates_rsp.text)),
@@ -59,20 +59,20 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
         return res
 
     @classmethod
-    def get_brief(cls, code):
-        html = cls.__client.get(
+    def get_brief(mcs, code):
+        html = mcs.__client.get(
             "http://www.javlibrary.com/ja/vl_searchbyid.php?keyword=" + code, proxies=proxy
         ).text
         match = re.search(r"\"og:url\" content=\"//(.+?)\">", html)
         if not match:  # like JUFE-114
             bs = bs4.BeautifulSoup(html, "lxml")
             url = "http://www.javlibrary.com/ja" + bs.select(".video")[0].a.attrs['href'][1:]
-            rsp = cls.__client.get(url, proxies=proxy)
+            rsp = mcs.__client.get(url, proxies=proxy)
             match = re.search(r"\"og:url\" content=\"//(.+?)\">", rsp.text)
             if not match:
                 return None
         url = match.group(1)
-        html = cls.__client.get("http://" + url, proxies=proxy).text
+        html = mcs.__client.get("http://" + url, proxies=proxy).text
         brief = Brief()
         bs = bs4.BeautifulSoup(html, "lxml")
         brief.title = bs.select(".post-title")[0].text
@@ -86,9 +86,9 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
         return brief
 
     @classmethod
-    def test(cls):
-        cls.test_get_brief("JUFE-114")
-        cls.test_newly_released()
+    def test(mcs):
+        mcs.test_get_brief("JUFE-114")
+        mcs.test_newly_released()
 
 
 if __name__ == "__main__":

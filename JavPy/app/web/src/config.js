@@ -1,5 +1,5 @@
 const config = {
-    address: location.hostname,
+    address: `${location.protocol}//${location.hostname}`,
     port: location.port
     // port: 8081
 };

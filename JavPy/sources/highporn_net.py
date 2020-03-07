@@ -7,7 +7,7 @@ from JavPy.utils.config import proxy
 
 class HighPornNet(ISearchByCode):
     @classmethod
-    def search_by_code(cls, code):
+    def search_by_code(mcs, code):
         url = "https://highporn.net/search/videos?search_query=" + code.lower()
         rsp = requests.get(url, proxies=proxy)
         if "No Videos Found." in rsp.text:
@@ -23,8 +23,8 @@ class HighPornNet(ISearchByCode):
         return av
 
     @classmethod
-    def test(cls):
-        cls.test_search_by_code("ABP-123")
+    def test(mcs):
+        mcs.test_search_by_code("ABP-123")
 
 
 if __name__ == '__main__':
