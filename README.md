@@ -28,11 +28,6 @@ then
 ```bash
 $ javpy
 ```
-or alternatively,
-```bash
-$ python -c "import JavPy; JavPy.serve()"
-```
-
 and wait up to 5 secs
 
 ### With Docker
