@@ -1,4 +1,2 @@
 tasks:
-  - init: javpy
-image:
-  file: .gitpod.Dockerfile
+  - init: python3 setup.py install && javpy
