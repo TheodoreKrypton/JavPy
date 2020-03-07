@@ -27,6 +27,7 @@ setup(
     packages=find_packages(),
     url="https://github.com/TheodoreKrypton/JavPy",
     install_requires=install_req,
+    setup_requires=install_req,
     test_requires=test_req,
     entry_points={"console_scripts": ["javpy = JavPy.serve:serve"]},
     include_package_data=True,
