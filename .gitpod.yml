@@ -1,2 +1,7 @@
 tasks:
-  - init: python3 setup.py install && javpy
+  - init: python3 setup.py install
+  - command: javpy
+
+ports:
+  - port: 8080
+    onOpen: open-browser
