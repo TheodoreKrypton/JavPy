@@ -13,7 +13,7 @@ except Exception as ex:
 with open("requirements.txt") as f:
     install_req = f.read().splitlines()
 
-with open("test_requirements.txt") as f:
+with open("test-requirements.txt") as f:
     test_req = f.read().splitlines()
 
 

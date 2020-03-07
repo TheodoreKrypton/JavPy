@@ -1,6 +1,6 @@
 tasks:
   - init: python3 setup.py install
-  - command: javpy
+  - command: python3 -m javpy
 
 ports:
   - port: 8080
