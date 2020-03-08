@@ -12,12 +12,12 @@ class AVSoxNet(IGetBrief):
     __release_date_pattern = re.compile("发行时间:</span> (.+?)</p>")
 
     @classmethod
-    def get_brief(cls, code):
+    def get_brief(mcs, code):
         url = "https://avsox.host/cn/search/" + code
         rsp = requests.get(url, proxies=proxy)
         html = rsp.text
 
-        match = re.search(cls.__url_pattern, html)
+        match = re.search(mcs.__url_pattern, html)
         if not match:
             return None
         url = match.group(1)
@@ -33,7 +33,7 @@ class AVSoxNet(IGetBrief):
         brief.title = img.attrs["title"]
 
         brief.release_date = try_evaluate(
-            lambda: re.search(cls.__release_date_pattern, str(movie)).group(1), ""
+            lambda: re.search(mcs.__release_date_pattern, str(movie)).group(1), ""
         )[0]
 
         brief.actress = ", ".join(
@@ -50,8 +50,8 @@ class AVSoxNet(IGetBrief):
         return brief
 
     @classmethod
-    def test(cls):
-        cls.test_get_brief("123118_790")
+    def test(mcs):
+        mcs.test_get_brief("123118_790")
 
 
 if __name__ == "__main__":

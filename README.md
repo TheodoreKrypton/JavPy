@@ -1,4 +1,8 @@
 ![banner](https://i.imgur.com/KjqLjdA.png)
+
+## Online Demo
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy) 
+
 ## Quick Start
 
 **Make sure you've installed nodejs first**
@@ -24,11 +28,6 @@ then
 ```bash
 $ javpy
 ```
-or alternatively,
-```bash
-$ python -c "import JavPy; JavPy.serve()"
-```
-
 and wait up to 5 secs
 
 ### With Docker
@@ -46,6 +45,13 @@ open http://localhost:8081 in explorer and enjoy driving!
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
 $ cd JavPy
 $ python3 setup.py install
+
+$ cd JavPy/app/web/
+$ sudo npm install -g @vue/cli
+$ npm install
+$ npm run build
+
+$ source ~/.bashrc
 $ javpy
 ```
 and wait up to 5 secs to start driving

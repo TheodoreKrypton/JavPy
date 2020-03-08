@@ -16,15 +16,15 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
     __actress_detail_url = {}
 
     @classmethod
-    def search_by_actress(cls, actress, up_to):
+    def search_by_actress(mcs, actress, up_to):
         pass
 
     @classmethod
-    def get_brief(cls, code):
+    def get_brief(mcs, code):
         pass
 
     @classmethod
-    def __check_name_in_box(cls, name, box):
+    def __check_name_in_box(mcs, name, box):
         if name not in box.text.lower():
             return None
         title = box.find(name="p").text.lower()
@@ -35,12 +35,12 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
         # cache for later parsing actress info, None for no url
         url, _ = try_evaluate(lambda: box.a.attrs["href"])
         detail_url = "http://warashi-asian-pornstars.fr/%s" % url
-        cls.__actress_detail_url[name] = detail_url
-        cls.__actress_detail_url[jp_name] = detail_url
+        mcs.__actress_detail_url[name] = detail_url
+        mcs.__actress_detail_url[jp_name] = detail_url
         return jp_name
 
     @classmethod
-    def translate2jp(cls, actress):
+    def translate2jp(mcs, actress):
         rsp = requests.post(
             "http://warashi-asian-pornstars.fr/en/s-12/search",
             {"recherche_critere": "f", "recherche_valeur": actress},
@@ -53,26 +53,26 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
         box = bs.select(".bloc-resultats", limit=1)
         if box:
             box = box[0]
-            name = cls.__check_name_in_box(actress_lower, box)
+            name = mcs.__check_name_in_box(actress_lower, box)
             if name:
                 return name
 
         box = bs.select("#bloc-resultats-conteneur-pornostars", limit=1)[0].find(
             attrs={"class": "resultat-pornostar"}
         )
-        name = cls.__check_name_in_box(actress_lower, box)
+        name = mcs.__check_name_in_box(actress_lower, box)
         if name:
             return name
         box = bs.select("#bloc-resultats-conteneur-castings", limit=1)[0].find(
             attrs={"class": "resultat-pornostar"}
         )
-        name = cls.__check_name_in_box(actress_lower, box)
+        name = mcs.__check_name_in_box(actress_lower, box)
         if not name:  # actress not found
-            cls.__actress_detail_url[name] = None
+            mcs.__actress_detail_url[name] = None
         return name
 
     @classmethod
-    def __parse_detail_page(cls, url):
+    def __parse_detail_page(mcs, url):
         rsp = requests.get(url, proxies=proxy)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         actress_info = Actress()
@@ -125,18 +125,18 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
         return actress_info
 
     @classmethod
-    def get_actress_info(cls, actress):
+    def get_actress_info(mcs, actress):
         actress = actress.lower()
-        if actress not in cls.__actress_detail_url:
-            cls.translate2jp(actress)
-        if cls.__actress_detail_url[actress] is None:
+        if actress not in mcs.__actress_detail_url:
+            mcs.translate2jp(actress)
+        if mcs.__actress_detail_url[actress] is None:
             return None
-        return cls.__parse_detail_page(cls.__actress_detail_url[actress])
+        return mcs.__parse_detail_page(mcs.__actress_detail_url[actress])
 
     @classmethod
-    def test(cls):
-        cls.test_actress_info("Riana Yuzuki")
-        cls.test_translate_en2jp("Eimi Fukada")
+    def test(mcs):
+        mcs.test_actress_info("Riana Yuzuki")
+        mcs.test_translate_en2jp("Eimi Fukada")
 
 
 if __name__ == "__main__":

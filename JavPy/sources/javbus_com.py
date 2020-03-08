@@ -7,11 +7,8 @@ from JavPy.utils.config import proxy
 
 
 class JavBusCom(ISearchMagnet):
-    def __init__(self):
-        pass
-
     @classmethod
-    def search_magnet(cls, code):
+    def search_magnet(mcs, code):
         url = "https://www.javbus.com/" + code
         rsp = requests.get(url, proxies=proxy)
 
@@ -49,8 +46,8 @@ class JavBusCom(ISearchMagnet):
         return res
 
     @classmethod
-    def test(cls):
-        cls.test_search_magnet("ABP-123")
+    def test(mcs):
+        mcs.test_search_magnet("ABP-123")
 
 
 if __name__ == '__main__':

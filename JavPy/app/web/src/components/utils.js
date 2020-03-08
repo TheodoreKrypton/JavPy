@@ -21,7 +21,7 @@ let pookie = async (url, data) => {
             }
         }
     }
-    return await axios.post(`http://${config.address}:${config.port}${url}`, data).catch((err) => {
+    return await axios.post(`${config.address}:${config.port}${url}`, data).catch((err) => {
         if (err.response.status === 400) {
             Cookie.remove("userpass");
         }

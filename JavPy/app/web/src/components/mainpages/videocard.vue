@@ -6,7 +6,7 @@
     <el-image :src="video.preview_img_url" class="image" alt="preview" @click="action()" lazy>
       <el-image
         slot="error"
-        :src="`http://${config.address}:${config.port}/img?src=${video.preview_img_url}`"
+        :src="`${config.address}:${config.port}/img?src=${video.preview_img_url}`"
         class="image"
         alt="preview"
         @click="action()"
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     onWatch(url) {
-      window.open(url);
+      window.open(`${config.address}:${config.port}/redirect_to?url=${url}`);
     },
     onSearch(video) {
       if (video.actress) {
