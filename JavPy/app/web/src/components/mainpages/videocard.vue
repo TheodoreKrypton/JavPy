@@ -3,13 +3,13 @@
     <div
       style="background-color: #e9eef3; color: teal; padding-bottom: 10px; font-size: 20px;"
     >{{video.title}}</div>
-    <el-image :src="video.preview_img_url" class="image" alt="preview" @click="action()" lazy>
+    <el-image :src="video.preview_img_url" class="image" alt="preview" @click="proceed()" lazy>
       <el-image
         slot="error"
         :src="`${config.address}:${config.port}/img?src=${video.preview_img_url}`"
         class="image"
         alt="preview"
-        @click="action()"
+        @click="proceed()"
         lazy
       ></el-image>
     </el-image>
@@ -26,7 +26,7 @@
                   type="primary"
                   plain
                   size="mini"
-                  @click="onSearch({actress: one_actress.trim()})"
+                  @click="guider.search({actress: one_actress.trim()})"
                   style="display: block; padding: 5px"
                 >{{one_actress}}</el-button>
                 <el-button type="danger" plain slot="reference">Expand</el-button>
@@ -37,13 +37,13 @@
               type="primary"
               plain
               style="float: left;"
-              @click="onSearch({actress: video.actress.trim()})"
+              @click="guider.search({actress: video.actress.trim()})"
             >{{video.actress}}</el-button>
           </td>
           <td v-if="video.video_url">
             <el-popover placement="bottom-end" trigger="hover">
-              <el-button type="primary" plain @click="onWatch(video.video_url)">Watch</el-button>
-              <el-button type="primary" plain @click="onMagnet({code: video.code})">Magnet</el-button>
+              <el-button type="primary" plain @click="proceed()">Watch</el-button>
+              <el-button type="primary" plain @click="guider.magnet({code: video.code})">Magnet</el-button>
               <el-button type="primary" plain slot="reference">{{video.code}}</el-button>
             </el-popover>
           </td>
@@ -67,40 +67,26 @@
 </template>
 
 <script>
-import Event from "../../main.js";
 import config from "../../config";
+import guider from "../guider";
 
 export default {
   name: "videocard",
   props: ["video"],
   data() {
     return {
-      config: config
+      config: config,
+      guider: guider
     };
   },
   methods: {
-    onWatch(url) {
-      window.open(`${config.address}:${config.port}/redirect_to?url=${url}`);
-    },
-    onSearch(video) {
-      if (video.actress) {
-        Event.$emit("search_by_actress", {
-          actress: video.actress
-        });
-      } else if (video.code) {
-        Event.$emit("search_by_code", {
-          code: video.code
-        });
-      }
-    },
-    onMagnet(video) {
-      Event.$emit("search_magnet_by_code", video);
-    },
-    action() {
+    proceed() {
       if (this.video.video_url) {
-        this.onWatch(this.video.video_url);
+        window.open(
+          `${config.address}:${config.port}/redirect_to?url=${this.video.video_url}`
+        );
       } else {
-        this.onSearch({ code: this.video.code });
+        guider.search({ code: this.video.code });
       }
     }
   }

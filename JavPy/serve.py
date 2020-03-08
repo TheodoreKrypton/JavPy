@@ -1,5 +1,5 @@
-from .app.webserver.app import app
-from .app.tgbot.server import run
+from JavPy.app.webserver.app import app
+from JavPy.app.tgbot.server import run
 import os
 import time
 import threading
@@ -13,7 +13,7 @@ print(
                 / /_/ / /_/ /| |/ / ____/ /_/ / 
                 \____/\__,_/ |___/_/    \__, /  
                                        /____/   
-"""
+    """
 )
 
 

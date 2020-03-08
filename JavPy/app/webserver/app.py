@@ -164,9 +164,7 @@ def search_magnet_by_code():
 def get_tags():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
-
     res = Functions.get_tags()
-
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
@@ -176,11 +174,8 @@ def get_tags():
 def actress_info():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
-
     res = Functions.get_actress_info(params["actress"])
-
     rsp = jsonify(res.to_dict())
-    print(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
 
@@ -202,4 +197,6 @@ def img():
 # avoid the main window being redirect to annoying ads pages.
 @app.route("/redirect_to")
 def open_url():
-    return redirect(request.args['url'])
+    rsp = redirect(request.args['url'])
+    rsp.headers["origin"] = ""
+    return rsp
