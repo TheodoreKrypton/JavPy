@@ -8,7 +8,7 @@ from JavPy.utils.config import proxy
 
 class IndexAVCom(ISearchByActress, IGetBrief):
     @classmethod
-    def search_by_actress(cls, actress, up_to):
+    def search_by_actress(mcs, actress, up_to):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url, verify=False, proxies=proxy)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
@@ -19,7 +19,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         cnt = 0
 
         for card in cards:
-            brief = cls.__get_brief_by_card(card)
+            brief = mcs.__get_brief_by_card(card)
             if brief:
                 res.append(brief)
                 cnt += 1
@@ -29,7 +29,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         return res
 
     @classmethod
-    def get_brief(cls, code):
+    def get_brief(mcs, code):
         url = "https://indexav.com/search?keyword=" + code
         rsp = requests.get(url, verify=False, proxies=proxy)
 
@@ -42,7 +42,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             return None
         if "Sad, cannot find any video in database" in cards[0].text:
             return None
-        return cls.__get_brief_by_card(cards[0])
+        return mcs.__get_brief_by_card(cards[0])
 
     @staticmethod
     def __get_brief_by_card(card):
@@ -64,9 +64,9 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         return brief
 
     @classmethod
-    def test(cls):
-        cls.test_get_brief("JUY-805")
-        cls.test_search_by_actress("飯岡かなこ", None)
+    def test(mcs):
+        mcs.test_get_brief("JUY-805")
+        mcs.test_search_by_actress("飯岡かなこ", None)
 
 
 if __name__ == "__main__":

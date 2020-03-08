@@ -8,10 +8,10 @@ Flask
 flask-cors
 lxml
 codecov
-pytest
-pytest-cov
 codacy-coverage
 ipaddr
 pycryptodome
 cloudscraper
 pysocks
+pytest
+pytest-cov

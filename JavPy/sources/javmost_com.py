@@ -15,13 +15,13 @@ class JavMostCom(ISearchByCode, INewlyReleased):
     __client = cloudscraper.create_scraper()
 
     @classmethod
-    def priority(cls):
+    def priority(mcs):
         return 0
 
     @classmethod
-    def search_by_code(cls, code):
+    def search_by_code(mcs, code):
         url = "http://www5.javmost.com/" + code + "/"
-        main_rsp = cls.__client.get(url, proxies=proxy)
+        main_rsp = mcs.__client.get(url, proxies=proxy)
         if main_rsp.status_code != 200:
             return None
 
@@ -68,7 +68,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
                 'sound': sound
             }, quote_via=quote_plus)
 
-            rsp = cls.__client.post(
+            rsp = mcs.__client.post(
                 "https://www5.javmost.com/get_movie_source/",
                 headers={'content-type': "application/x-www-form-urlencoded; charset=UTF-8"},
                 data=data,
@@ -76,14 +76,14 @@ class JavMostCom(ISearchByCode, INewlyReleased):
             )
 
             json_obj = json.loads(rsp.text)
-            url = json_obj["data"][0]
+            url = json_obj["data"][0].strip()
 
             url = decode(url)
 
             if not url:
                 continue
 
-            if cls.__client.get(url, proxies=proxy).status_code == 200:
+            if mcs.__client.get(url, proxies=proxy).status_code == 200:
                 success = True
                 break
 
@@ -139,14 +139,14 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         return brief
 
     @classmethod
-    def get_newly_released(cls, page):
+    def get_newly_released(mcs, page):
         cards = JavMostCom.get_cards_from_newly_released_page(str(page))
         return list(map(lambda x: JavMostCom.get_brief_from_a_card(x), cards))
 
     @classmethod
-    def test(cls):
-        cls.test_newly_released()
-        cls.test_search_by_code("SSNI-351")
+    def test(mcs):
+        mcs.test_newly_released()
+        mcs.test_search_by_code("SSNI-351")
 
 
 if __name__ == "__main__":

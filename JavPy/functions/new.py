@@ -19,11 +19,11 @@ class New:
             cls.newly_released = []
 
         if not up_to:
-            if not len(cls.newly_released) >= which_page + 1:
-                cls.newly_released += [None] * (which_page + 1 - len(cls.newly_released))
-            if not cls.newly_released[which_page]:
-                cls.newly_released[which_page] = cls.__get_newly_released_from_sources(which_page)
-            return cls.newly_released[which_page]
+            if not len(cls.newly_released) >= which_page:
+                cls.newly_released += [None] * (which_page - len(cls.newly_released))
+            if not cls.newly_released[which_page - 1]:
+                cls.newly_released[which_page - 1] = cls.__get_newly_released_from_sources(which_page)
+            return cls.newly_released[which_page - 1]
 
         else:
             total_len = 0
@@ -39,7 +39,7 @@ class New:
                 if len(cls.newly_released) < page_cnt + 1:
                     cls.newly_released.append([])
                 if not cls.newly_released[page_cnt]:
-                    cls.newly_released[page_cnt] = cls.__get_newly_released_from_sources(page_cnt)
+                    cls.newly_released[page_cnt] = cls.__get_newly_released_from_sources(page_cnt + 1)
                 lack -= len(cls.newly_released[page_cnt])
                 page_cnt += 1
 
@@ -49,6 +49,7 @@ class New:
 
     @classmethod
     def __find_usable_source(cls, page):
+        cls.which_source = 0
         for i, source in enumerate(Sources.NewlyReleased):
             res, ex = try_evaluate(lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page))
             if (not res) or ex:

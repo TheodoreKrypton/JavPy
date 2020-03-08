@@ -6,11 +6,8 @@ from JavPy.functions.datastructure import AV
 
 
 class XFantasyTV(ISearchByCode):
-    def __init__(self):
-        pass
-
     @classmethod
-    def search_by_code(cls, code):
+    def search_by_code(mcs, code):
         url = "https://xfantasy.tv/search/" + code
         rsp = requests.get(url, proxies=proxy)
         html = rsp.text
@@ -29,7 +26,7 @@ class XFantasyTV(ISearchByCode):
         return None
 
     @classmethod
-    def test(cls):
+    def test(mcs):
         XFantasyTV.test_search_by_code("n0753")
 
 

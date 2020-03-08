@@ -7,3 +7,4 @@ class Sources:
     TranslateEn2Jp = []
     Magnet = []
     ActressInfo = []
+    Embeds = []

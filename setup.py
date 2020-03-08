@@ -11,7 +11,10 @@ except Exception as ex:
     exit(0)
 
 with open("requirements.txt") as f:
-    requires = f.read().splitlines()
+    install_req = f.read().splitlines()
+
+with open("test-requirements.txt") as f:
+    test_req = f.read().splitlines()
 
 
 setup(
@@ -23,8 +26,10 @@ setup(
     license="MIT License",
     packages=find_packages(),
     url="https://github.com/TheodoreKrypton/JavPy",
-    install_requires=requires,
-    entry_points={"console_scripts": ["javpy = JavPy:serve"]},
+    install_requires=install_req,
+    setup_requires=install_req,
+    test_requires=test_req,
+    entry_points={"console_scripts": ["javpy = JavPy.serve:serve"]},
     include_package_data=True,
     exclude_package_data={"": [".gitignore"]},
     python_requires=">=3.5",

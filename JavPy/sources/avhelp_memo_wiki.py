@@ -10,7 +10,7 @@ from JavPy.utils.config import proxy
 
 class AVHelpMemoWiki(IHistoryNames):
     @classmethod
-    def match_history_names(cls, html):
+    def match_history_names(mcs, html):
         bs = bs4.BeautifulSoup(html, "lxml")
         # like 川合まゆ
         table = bs.select("table#content_block_2")
@@ -56,17 +56,17 @@ class AVHelpMemoWiki(IHistoryNames):
         return names
 
     @classmethod
-    def get_history_names(cls, actress):
+    def get_history_names(mcs, actress):
         names = set()
         names.add(actress)
         url = "https://av-help.memo.wiki/d/" + urlencode(actress, "EUC-JP")
         rsp = requests.get(url, proxies=proxy)
         html = rsp.text
-        names.update(cls.match_history_names(html))
+        names.update(mcs.match_history_names(html))
         return list(names)
 
     @classmethod
-    def test(cls):
+    def test(mcs):
         super().test_history_names("唯川みさき")
         super().test_history_names("原更紗")
         super().test_history_names("瀬奈まお")
