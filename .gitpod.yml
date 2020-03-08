@@ -1,7 +1,6 @@
 tasks:
-  - init: python3 setup.py install
-  - command: python3 -m javpy
+  - command: pip3 install JavPy && source ~/.bashrc && javpy
 
 ports:
-  - port: 8080
+  - port: 8081
     onOpen: open-browser

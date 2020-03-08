@@ -45,6 +45,13 @@ open http://localhost:8081 in explorer and enjoy driving!
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
 $ cd JavPy
 $ python3 setup.py install
+
+$ cd JavPy/app/web/
+$ sudo npm install -g @vue/cli
+$ npm install
+$ npm run build
+
+$ source ~/.bashrc
 $ javpy
 ```
 and wait up to 5 secs to start driving
