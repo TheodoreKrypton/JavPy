@@ -2,7 +2,7 @@ import datetime
 import functools
 import re
 
-version = "0.3.6"
+version = "0.3.8"
 
 
 def try_evaluate(lambda_expression, default=None):
@@ -15,23 +15,24 @@ def try_evaluate(lambda_expression, default=None):
     return evaluate(lambda_expression)
 
 
-def cache(f):
-    """
-    from https://gist.github.com/Morreski/c1d08a3afa4040815eafd3891e16b945
-    """
-    update_delta = datetime.timedelta(hours=1)
-    next_update = datetime.datetime.now() - update_delta
-    # Apply @lru_cache to f with no cache size limit
-    f = functools.lru_cache(None)(f)
+def cache(func):
+    __cache = dict()
 
-    @functools.wraps(f)
+    @functools.wraps(func)
     def _wrapped(*args, **kwargs):
-        nonlocal next_update
-        now = datetime.datetime.now()
-        if now >= next_update:
-            f.cache_clear()
-            next_update = now + update_delta
-        return f(*args, **kwargs)
+        key = str(args) + "///" + str(kwargs)
+
+        if key in __cache:
+            if datetime.datetime.now() - __cache[key][0] < datetime.timedelta(hours=1):
+                return __cache[key][1]
+
+        res = func(*args, **kwargs)
+
+        if res:
+            __cache[key] = (datetime.datetime.now(), res)
+
+        return res
+
     return _wrapped
 
 
