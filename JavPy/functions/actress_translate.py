@@ -1,6 +1,6 @@
 from JavPy.utils.requester import spawn_many, Task
-from JavPy.utils.common import cache
 from JavPy.functions.sources import Sources
+from JavPy.utils.common import cache
 
 
 class ActressTranslate:

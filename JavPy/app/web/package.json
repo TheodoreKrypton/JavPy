@@ -8,26 +8,28 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "element-ui": "^2.12.0",
-    "js-cookie": "^2.2.0",
+    "axios": "^0.19.2",
+    "element-ui": "^2.13.0",
+    "js-cookie": "^2.2.1",
     "js-sha256": "^0.9.0",
-    "less": "^3.9.0",
+    "less": "^3.11.1",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.6.6",
-    "vue-async-computed": "^3.7.0",
-    "vue-router": "^3.0.2"
+    "node-sass": "^4.13.1",
+    "sass-loader": "^7.3.1",
+    "video.js": "^7.6.6",
+    "videojs-hlsjs": "^1.4.8",
+    "vue": "^2.6.11",
+    "vue-async-computed": "^3.8.2",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.8.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-service": "^4.2.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -38,7 +40,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

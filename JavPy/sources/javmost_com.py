@@ -2,7 +2,7 @@ from JavPy.sources.BaseSource import ISearchByCode, INewlyReleased
 import re
 import bs4
 import json
-from JavPy.embed.decode import decode
+from JavPy.embed import decode
 from JavPy.functions.datastructure import AV, Brief
 from JavPy.utils.common import try_evaluate
 import datetime

@@ -1,5 +1,5 @@
 import datetime
-from functools import wraps, reduce
+import functools
 import re
 
 version = "0.3.6"
@@ -15,28 +15,27 @@ def try_evaluate(lambda_expression, default=None):
     return evaluate(lambda_expression)
 
 
-def cache(func):
-    __cache = dict()
+def cache(f):
+    """
+    from https://gist.github.com/Morreski/c1d08a3afa4040815eafd3891e16b945
+    """
+    update_delta = datetime.timedelta(hours=1)
+    next_update = datetime.datetime.now() - update_delta
+    # Apply @lru_cache to f with no cache size limit
+    f = functools.lru_cache(None)(f)
 
-    @wraps(func)
+    @functools.wraps(f)
     def _wrapped(*args, **kwargs):
-        key = str(args) + "///" + str(kwargs)
-
-        if key in __cache:
-            if datetime.datetime.now() - __cache[key][0] < datetime.timedelta(hours=1):
-                return __cache[key][1]
-
-        res = func(*args, **kwargs)
-
-        if res:
-            __cache[key] = (datetime.datetime.now(), res)
-
-        return res
-
+        nonlocal next_update
+        now = datetime.datetime.now()
+        if now >= next_update:
+            f.cache_clear()
+            next_update = now + update_delta
+        return f(*args, **kwargs)
     return _wrapped
 
 
-class_name_pattern = re.compile(r"\.(.+?)\s")
+_class_name_pattern = re.compile(r"\.(.+?)\s")
 
 
 def get_func_full_name(func):
@@ -46,7 +45,7 @@ def get_func_full_name(func):
         try:
             return (
                 func.__module__
-                + re.search(class_name_pattern, func.im_class).group(1)
+                + re.search(_class_name_pattern, func.im_class).group(1)
                 + "."
                 + func.__name__
             )
@@ -54,7 +53,7 @@ def get_func_full_name(func):
             return ""
 
 
-def update_object(origin, new):
+def assign(origin, new):
     for k in new.__dict__.keys():
         v = getattr(new, k)
         if v:
@@ -62,7 +61,7 @@ def update_object(origin, new):
     return origin
 
 
-def sum_up(objects):
+def conclude(objects):
     if objects is None:
         return None
     objects = list(filter(lambda x: x, objects))
@@ -70,16 +69,17 @@ def sum_up(objects):
         return None
     if len(objects) == 1:
         return objects[0]
-    return reduce(update_object, objects)
+    return functools.reduce(assign, objects)
 
 
 def urlencode(string, encoding):
-    try:
-        from urllib import quote as _urlencode
-    except ImportError:
-        from urllib.parse import quote as _urlencode
+    from urllib.parse import quote
+    return quote(string.encode(encoding))
 
-    return _urlencode(string.encode(encoding))
+
+def urldecode(string, encoding):
+    from urllib.parse import unquote
+    return unquote(string, encoding)
 
 
 def get_code_from_title(title):

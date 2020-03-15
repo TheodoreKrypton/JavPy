@@ -16,6 +16,7 @@ import os
 from JavPy.utils.requester import spawn
 import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
+from JavPy.utils.common import urldecode
 from copy import deepcopy
 import requests
 from JavPy.utils.config import proxy
@@ -23,7 +24,7 @@ from JavPy.utils.config import proxy
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
 web_dist_path = base_path + "/app/web/dist"
-app = Flask(__name__, template_folder=web_dist_path)
+app = Flask(__name__, template_folder="templates")
 CORS(app, resources=r"/*")
 
 
@@ -76,13 +77,13 @@ def update_config():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return send_static("index.html")
 
 
 @app.route("/<path:path>")
 def send_static(path):
     if not os.path.exists(web_dist_path + "/" + path):
-        return render_template("index.html")
+        return send_from_directory(web_dist_path, "index.html")
     else:
         return send_from_directory(web_dist_path, path)
 
@@ -200,3 +201,9 @@ def open_url():
     rsp = redirect(request.args['url'])
     rsp.headers["origin"] = ""
     return rsp
+
+
+@app.route("/render_in_iframe")
+def render_in_iframe():
+    print(urldecode(request.args['url'], 'utf-8'))
+    return render_template("iframe.html", video_url=urldecode(request.args['url'], 'utf-8'))

@@ -6,10 +6,13 @@ from JavPy.functions.datastructure import AV, Brief
 from JavPy.functions.magnet import Magnet
 from JavPy.functions.history_names import HistoryNames
 from JavPy.functions.actress_info import ActressInfo
-from JavPy.utils.common import cache
 from JavPy.utils.requester import spawn_many, Task, spawn
 import os
 import json
+from JavPy.utils.common import cache
+from functools import lru_cache
+
+LRU_CACHE_MAX_SIZE = None
 
 
 class Functions:
@@ -65,23 +68,16 @@ class Functions:
     def translate2jp(actress):
         return
 
-    tags = None
-
     @staticmethod
-    @cache
+    @lru_cache(maxsize=None)
     def get_tags():
-        if not Functions.tags:
-            curdir = os.path.sep.join(os.path.abspath(__file__).split(os.path.sep)[:-1])
-            with open(curdir + "/../sources/categories.json") as fp:
-                content = fp.read()
-                obj = json.loads(content)
-                Functions.tags = obj["javmost"]
-        return Functions.tags
+        pwd = os.path.sep.join(os.path.abspath(__file__).split(os.path.sep)[:-1])
+        with open(pwd + "/../sources/categories.json") as fp:
+            content = fp.read()
+        obj = json.loads(content)
+        return obj["javmost"]
 
     @staticmethod
     @cache
     def get_actress_info(actress):
         return ActressInfo.get_actress_info(actress)
-
-
-

@@ -3,19 +3,17 @@ import requests
 import bs4
 from JavPy.functions.datastructure import AV
 from JavPy.utils.config import proxy
+from JavPy.embed.youav_com import youav_com
 
 
 class YouAVCom(ISearchByCode):
     @classmethod
     def search_by_code(mcs, code):
         url = "https://www.youav.com/search/videos/" + code
-
         response = requests.get(url, proxies=proxy)
-
         bs = bs4.BeautifulSoup(response.text, "lxml")
 
         try:
-
             divs = bs.find_all(name="div", attrs={"class": "content-row"})[-1].find_all(name='div')
             if not divs:
                 return None
@@ -26,6 +24,7 @@ class YouAVCom(ISearchByCode):
             return None
 
         url = "https://www.youav.com" + div.a.attrs["href"]
+        url = youav_com.decode(url)
 
         av = AV()
         av.code = code

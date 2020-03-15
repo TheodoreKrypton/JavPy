@@ -82,9 +82,13 @@ export default {
   methods: {
     proceed() {
       if (this.video.video_url) {
-        window.open(
-          `${config.address}:${config.port}/redirect_to?url=${this.video.video_url}`
-        );
+        if (this.video.video_url.endsWith(".m3u8")) {
+          window.open(`/videoplayer?video_url=${this.video.video_url}`);
+        } else {
+          window.open(
+            `${config.address}:${config.port}/redirect_to?url=${this.video.video_url}`
+          );
+        }
       } else {
         guider.search({ code: this.video.code });
       }
