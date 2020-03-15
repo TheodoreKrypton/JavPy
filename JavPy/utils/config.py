@@ -14,22 +14,6 @@ class Config:
         with open(os.path.join(cls.config_path, "config.json"), encoding="utf-8") as fp:
             cls.config = json.loads(fp.read())
 
-        if "version" not in cls.config or version.parse(cls.config["version"]) <= version.parse("0.2.19"):
-            # fix ip address issues
-            if (
-                "version" not in cls.config
-                and cls.config["ip-whitelist"][0] == "127.0.0.1"
-                and cls.config["ip-whitelist"][1] == "192.168.0.0/16"
-            ):
-                cls.config["ip-whitelist"] = [
-                    "127.0.0.1",
-                    "10.0.0.0/8",
-                    "172.16.0.0/12",
-                    "192.168.0.0/24",
-                ]
-            cls.set_config("version", javpy_version)
-            cls.save_config()
-
         if "version" not in cls.config or version.parse(cls.config["version"]) <= version.parse("0.3.3"):
             cls.config["proxy"] = ""
             cls.set_config("version", javpy_version)
@@ -85,7 +69,7 @@ if os.path.exists(os.path.join(Config.config_path, "config.json")):
 
 else:
     Config.config = {
-        "ip-whitelist": ["127.0.0.1", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/24"],
+        "ip-whitelist": ["127.0.0.1", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"],
         "ip-blacklist": [],
         "password": "",
         "proxy": "",

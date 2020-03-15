@@ -1,7 +1,17 @@
 ![banner](https://i.imgur.com/KjqLjdA.png)
 
-## Online Demo
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy) 
+Indicator|Status
+:---: | :---:
+Online Demo | [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy) 
+Ubuntu & Mac OS | ![Build Status](https://github.com/TheodoreKrypton/JavPy/workflows/JavPy%20Build%20Test/badge.svg)
+Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=release)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=release)
+Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/release/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
+pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
+Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
+Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) 
+
+
+**Attention**: This project has dropped support for Python2, and all `python` command below refer to Python3.5 or higher
 
 ## Quick Start
 
@@ -19,15 +29,15 @@ https://nodejs.org/en/download/
 ### With pip
 ```bash
 $ pip install JavPy
-
-# or download the JavPy whl release in the release page
-$ pip install JavPy-x.x.x-py2.py3-none-any.whl
-```
-
-then
-```bash
 $ javpy
 ```
+
+```bash
+# or download the JavPy whl release in the release page, and
+$ pip install JavPy-x.x.x-py2.py3-none-any.whl
+$ javpy
+```
+
 and wait up to 5 secs
 
 ### With Docker
@@ -43,27 +53,40 @@ open http://localhost:8081 in explorer and enjoy driving!
 ### With Git
 ```bash
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
-$ cd JavPy
-$ python3 setup.py install
 
-$ cd JavPy/app/web/
+$ cd JavPy/JavPy/app/web/
 $ sudo npm install -g @vue/cli
 $ npm install
 $ npm run build
 
+$ python setup.py install
 $ source ~/.bashrc
+
 $ javpy
 ```
-and wait up to 5 secs to start driving
 
-Indicator|Status
-:---: | :---:
-Ubuntu & Mac OS | ![Build Status](https://github.com/TheodoreKrypton/JavPy/workflows/JavPy%20Build%20Test/badge.svg)
-Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=release)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=release)
-Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/release/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
-pypi |[![Python Version](https://img.shields.io/pypi/pyversions/JavPy.svg)](https://pypi.org/project/JavPy/) [![Latest Version](https://pypip.in/version/JavPy/badge.svg?text=version)](https://pypi.python.org/pypi/JavPy/) [![Downloads](https://pypip.in/download/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/) [![Wheel Status](https://pypip.in/wheel/JavPy/badge.svg)](https://pypi.python.org/pypi/JavPy/)
-Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Build](https://img.shields.io/docker/cloud/build/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy) [![Docker Pull](https://img.shields.io/docker/pulls/wheatcarrier/javpy)](https://hub.docker.com/r/wheatcarrier/javpy)
-Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) 
+### Contributors:
+```bash
+$ git clone https://github.com/TheodoreKrypton/JavPy.git
+
+$ cd JavPy/JavPy/app/web/
+$ sudo npm install -g @vue/cli
+$ npm install
+```
+
+Back End:
+```
+$ cd JavPy
+$ PYTHONPATH=. python JavPy/develop.py
+```
+
+Front End:
+```
+$ cd JavPy/JavPy/app/web/
+$ npm run serve
+```
+
+**Attention**: Contributors are advised to modify the port to 8081 in `config.js` **when debugging** and make sure they recover it before releasing. 
 
 ## 简介/Introduction
 
@@ -93,7 +116,7 @@ This library fetches information from various websites, but most of them are blo
 
 ![](preview.png)
 
-### Configuration
+### Configurations
 #### `ip-whitelist` and `password`
 
 **如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，并**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
@@ -113,28 +136,6 @@ This library fetches information from various websites, but most of them are blo
 If you need to use a proxy, simply set the `proxy` field in the `~/.JavPy/config.json`. Currently both socks5 and http proxies are supported.
 
 Example: `proxy: "http://127.0.0.1:1080"`
-
-### Contributor Guide
-```bash
-$ git clone https://github.com/TheodoreKrypton/JavPy.git
-```
-
-Backend:
-```bash
-$ pip3 install -r requirements.txt
-$ python3 main.py
-```
-
-Frontend:
-```bash
-$ cd JavPy/app/web
-$ npm install
-```
-Modify the port to 8081 in `config.js` when debugging and make sure you have recovered it before releasing. 
-
-```bash
-$ npm run serve
-```
 
 ## Telegram Bot
 

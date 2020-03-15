@@ -15,16 +15,11 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         cards = bs.select(".card")[:-1]
 
         res = []
-
-        cnt = 0
-
         for card in cards:
             brief = mcs.__get_brief_by_card(card)
             if brief:
                 res.append(brief)
-                cnt += 1
-
-            if up_to and cnt >= up_to:
+            if up_to and len(res) >= up_to:
                 return res
         return res
 

@@ -14,11 +14,11 @@ export default {
   },
   methods: {
     async authenticationSettings() {
-      let ipBlacklist = [];
+      // let ipBlacklist = [];
       let ipWhitelist = [];
       await utils.pookie("/get_config").then(rsp => {
         if (rsp.status === 200) {
-          ipBlacklist = rsp.data["ip-blacklist"];
+          // ipBlacklist = rsp.data["ip-blacklist"];
           ipWhitelist = rsp.data["ip-whitelist"];
         }
       });

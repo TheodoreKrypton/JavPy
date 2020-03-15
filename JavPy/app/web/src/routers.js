@@ -4,6 +4,7 @@ import searchActress from "./components/mainpages/searchactress.vue";
 import newlyReleased from "./components/mainpages/newly_released.vue";
 import magnet from "./components/mainpages/magnet.vue";
 import categories from "./components/mainpages/categories.vue";
+import videoplayer from "./components/mainpages/videoplayer.vue"
 
 const routers = [
   {
@@ -39,6 +40,10 @@ const routers = [
         component: categories
       }
     ]
+  },
+  {
+    path: "/videoplayer",
+    component: videoplayer
   }
 ];
 

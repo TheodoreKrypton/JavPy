@@ -9,11 +9,14 @@ import routers from "./routers.js";
 import EventBus from "./components/EventBus.js";
 import "./components/utils";
 import AsyncComputed from 'vue-async-computed';
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
 Vue.use(VueRouter);
 Vue.use(AsyncComputed)
+Vue.prototype.$video = Video
 
 const router = new VueRouter({
   mode: "history",
@@ -31,3 +34,4 @@ new Vue({
   router,
   render: (h) => h(App)
 }).$mount("#app");
+

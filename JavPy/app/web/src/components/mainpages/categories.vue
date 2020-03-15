@@ -6,9 +6,7 @@
       closable
       :disable-transitions="false"
       @close="handleClose(category)"
-    >
-      {{category}}
-    </el-tag>
+    >{{category}}</el-tag>
 
     <el-input
       class="input-new-tag"
@@ -18,12 +16,8 @@
       size="small"
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
-    >
-    </el-input>
-    <el-popover
-      placement="bottom"
-      width="1300"
-    >
+    ></el-input>
+    <el-popover placement="bottom" width="1300">
       <div v-if="availableCategories != undefined">
         <el-button
           v-for="category in availableCategories"
@@ -33,21 +27,11 @@
         >{{category}}</el-button>
       </div>
 
-      <el-button
-        class="button-new-tag"
-        size="small"
-        slot="reference"
-        @click="onNewTag"
-      >+ New Tag</el-button>
+      <el-button class="button-new-tag" size="small" slot="reference" @click="onNewTag">+ New Tag</el-button>
     </el-popover>
     <div></div>
-    <el-button
-      type="primary"
-      @click="onSearch"
-      style="margin-left: 5px"
-    >Search</el-button>
+    <el-button type="primary" @click="onSearch" style="margin-left: 5px">Search</el-button>
   </div>
-
 </template>
 
 <style>
@@ -82,7 +66,6 @@ export default {
 
   methods: {
     onNewTag() {
-      let self = this;
       if (this.availableCategories.length === 0) {
         utils.pookie("/get_tags").then(rsp => {
           if (rsp && rsp.status === 200) {

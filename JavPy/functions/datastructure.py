@@ -1,9 +1,11 @@
 import datetime
-from JavPy.utils.common import try_evaluate, update_object
+from JavPy.utils.common import try_evaluate, assign
 from typing import Union, Optional, List
 
 
 class AV:
+    __slots__ = ['code', 'video_url', 'preview_img_url', 'actress', '__release_date', 'title']
+
     def __init__(self):
         self.code = ""
         self.video_url = ""
@@ -39,6 +41,8 @@ class AV:
 
 
 class Brief:
+    __slots__ = ['code', 'preview_img_url', 'actress', 'title', '__release_date']
+
     def __init__(self):
         self.code = ""
         self.preview_img_url = ""
@@ -60,14 +64,14 @@ class Brief:
             )
 
     @staticmethod
-    def reduce_briefs(briefs: List['Brief']) -> 'Brief':
+    def reduce_briefs(briefs: List['Brief']) -> dict:
         res = {}
         without_code = []
         for brief in briefs:
             if not brief.code:
                 without_code.append(brief)
             elif brief.code in res:
-                update_object(res[brief.code], brief)
+                assign(res[brief.code], brief)
             else:
                 res[brief.code] = brief
         return res
@@ -85,6 +89,8 @@ class Brief:
 
 
 class Magnet:
+    __slots__ = ['magnet', 'description', 'peers']
+
     def __init__(self):
         self.magnet = ""
         self.description = ""
@@ -95,6 +101,8 @@ class Magnet:
 
 
 class Actress:
+    __slots__ = ['history_names', 'birth_date', 'img', 'height', 'weight', 'other']
+
     def __init__(self):
         self.history_names = []
         self.birth_date = None

@@ -2,15 +2,15 @@ import axios from "axios";
 import config from "../config.js";
 import Cookie from "js-cookie";
 
-let setUserpass = (val) => {
+function setUserpass(val) {
     Cookie.set("userpass", val);
 }
 
-let getUserpass = () => {
+function getUserpass() {
     return Cookie.get("userpass");
 }
 
-let pookie = async (url, data) => {
+async function pookie(url, data) {
     let userpass = Cookie.get("userpass");
     if (userpass != null) {
         if (data) {
