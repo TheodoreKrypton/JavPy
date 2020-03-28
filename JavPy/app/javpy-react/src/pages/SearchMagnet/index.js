@@ -12,6 +12,11 @@ import styles from './styles';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+import Clipboard from 'clipboard';
+
+
+new Clipboard('.btn');
+
 
 export default () => {
   const query = utils.useQuery();
@@ -34,13 +39,15 @@ export default () => {
               <styles.StyledTableRow key={row.name}>
                 <styles.StyledTableCell align="left">{row.description}</styles.StyledTableCell>
                 <styles.StyledTableCell align="left">
-                  <Button size="small" color="secondary" onClick={() => { navigator.clipboard.writeText(row.magnet) }}>COPY LINK</Button>
+                  <Button className="btn" size="small" color="secondary" data-clipboard-text={row.magnet}>
+                    COPY LINK
+                  </Button>
                 </styles.StyledTableCell>
               </styles.StyledTableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer >
     );
   }
 

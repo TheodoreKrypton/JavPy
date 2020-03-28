@@ -5,11 +5,9 @@ import Async from 'react-async';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default (props) => {
-  const [page] = React.useState(1);
 
   return (
-
-    <Async promiseFn={api.getNewlyReleased} page={page}>
+    <Async promiseFn={api.getNewlyReleased} page={1}>
       <Async.Pending>
         <LinearProgress color="secondary" />
       </Async.Pending>
