@@ -47,7 +47,7 @@ export default () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer >
+      </TableContainer>
     );
   }
 
@@ -61,7 +61,7 @@ export default () => {
           {data => (renderTable(data))}
         </Async.Fulfilled>
         <Async.Rejected>
-          {() => "Sorry. Nothing was found."}
+          Sorry. Nothing was found.
         </Async.Rejected>
       </Async>
     </>

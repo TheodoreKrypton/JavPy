@@ -4,6 +4,6 @@ export default makeStyles(theme => ({
   spacing: 8,
   root: {
     paddingLeft: "5%",
-    paddingRight: "5%"
+    paddingRight: "5%",
   }
 }));
