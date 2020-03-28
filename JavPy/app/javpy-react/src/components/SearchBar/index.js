@@ -10,6 +10,9 @@ export default () => {
   const classes = useStyles();
 
   function handleSearch() {
+    if (input.trim() === "") {
+      return
+    }
     window.location.href = input.includes("-") ?
       `/search/video?code=${input.trim()}` :
       `/search/actress?actress=${input.trim()}&history_name=true`;
@@ -23,7 +26,12 @@ export default () => {
 
   return (
     <Paper className={classes.root}>
-      <IconButton aria-label="home" component="span" className={classes.iconButton} onClick={() => { handleGoHome() }}>
+      <IconButton
+        aria-label="home"
+        component="span"
+        className={classes.iconButton}
+        onClick={() => { handleGoHome() }}
+      >
         <HomeIcon />
       </IconButton>
       <InputBase
@@ -32,6 +40,11 @@ export default () => {
         inputProps={{ 'aria-label': 'search' }}
         value={input}
         onChange={event => { setInput(event.target.value); }}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            handleSearch()
+          }
+        }}
       />
       <IconButton className={classes.iconButton} aria-label="search" onClick={() => handleSearch()}>
         <SearchIcon />
