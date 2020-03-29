@@ -6,5 +6,11 @@ function useQuery() {
 
 let globalCache = {};
 
+function assignState(originalState, updateFields) {
+  let newState = Object.assign({}, originalState);
+  Object.assign(newState, updateFields);
+  return newState;
+}
 
-export default { useQuery, globalCache };
+
+export default { useQuery, globalCache, assignState };

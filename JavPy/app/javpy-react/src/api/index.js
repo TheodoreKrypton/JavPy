@@ -50,12 +50,12 @@ async function getNewlyReleased({ page }) {
   }
 }
 
-async function searchByActress({ actress, historyName }) {
-  const rsp = await pookie("/search_by_actress", { actress, history_name: historyName });
+async function searchByActress({ actress, withHistoryName }) {
+  const rsp = await pookie("/search_by_actress", { actress, history_name: withHistoryName });
   if (rsp.status === 200 && rsp.data) {
     return {
       videos: rsp.data.videos,
-      others: rsp.data.others
+      other: rsp.data.other
     }
   } else {
     return null;

@@ -70,7 +70,7 @@ export default props => {
 
   }
 
-  if (videos) {
+  if (!loadNextPage) {
     return renderPage(videos)
   }
 

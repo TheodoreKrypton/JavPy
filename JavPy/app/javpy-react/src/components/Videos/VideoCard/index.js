@@ -30,7 +30,7 @@ export default props => {
   };
 
   const handleActressClick = (actress) => {
-    history.push(`/search/actress?actress=${actress}&history_name=true`);
+    history.push(`/search/actress?actress=${actress}`);
   }
 
   const handleVideoClick = (video) => {

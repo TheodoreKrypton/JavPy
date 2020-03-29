@@ -52,7 +52,7 @@ export default () => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <Async promiseFn={api.searchMagnet} code={query.get("code")} >
         <Async.Pending>
           <LinearProgress color="secondary" />
@@ -64,6 +64,6 @@ export default () => {
           Sorry. Nothing was found.
         </Async.Rejected>
       </Async>
-    </>
+    </React.Fragment>
   )
 }

@@ -22,6 +22,10 @@ export default (props) => {
 
   const { name, info } = props;
 
+  if (!info) {
+    return <></>
+  }
+
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
