@@ -6,7 +6,7 @@ import sha256 from 'js-sha256';
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
 // only for developement
-address = `${window.location.protocol}//${window.location.hostname}:8081`;
+// address = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 
 function setUserpass(val) {

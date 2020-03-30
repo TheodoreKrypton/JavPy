@@ -23,7 +23,8 @@ from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-web_dist_path = base_path + "/app/web/dist"
+# web_dist_path = base_path + "/app/web/dist"
+web_dist_path = base_path + "/app/javpy-react/build/"
 app = Flask(__name__, template_folder="templates")
 CORS(app, resources=r"/*")
 
@@ -70,6 +71,7 @@ def update_config():
     config.Config.save_config()
 
     import importlib
+
     importlib.reload(config)
     importlib.reload(auth)
     return ""
@@ -82,10 +84,21 @@ def index():
 
 @app.route("/<path:path>")
 def send_static(path):
+    print(path)
     if not os.path.exists(web_dist_path + "/" + path):
         return send_from_directory(web_dist_path, "index.html")
     else:
         return send_from_directory(web_dist_path, path)
+
+
+@app.route("/static/css/<path:path>")
+def send_css(path):
+    return send_from_directory(web_dist_path + "/static/css", path)
+
+
+@app.route("/static/js/<path:path>")
+def send_js(path):
+    return send_from_directory(web_dist_path + "/static/js", path)
 
 
 @app.route("/search_by_code", methods=["POST"])
@@ -186,7 +199,7 @@ def actress_info():
 # dmm.co.jp blocks direct image request. so use this proxy when there is a loading error.
 @app.route("/img")
 def img():
-    src = request.args['src']
+    src = request.args["src"]
     content = requests.get(src, proxies=proxy).content
     if src.endswith("jpg") or src.endswith("jpeg"):
         return Response(content, mimetype="image/jpeg")
@@ -200,12 +213,14 @@ def img():
 # avoid the main window being redirect to annoying ads pages.
 @app.route("/redirect_to")
 def open_url():
-    rsp = redirect(request.args['url'])
+    rsp = redirect(request.args["url"])
     rsp.headers["origin"] = ""
     return rsp
 
 
 @app.route("/render_in_iframe")
 def render_in_iframe():
-    print(urldecode(request.args['url'], 'utf-8'))
-    return render_template("iframe.html", video_url=urldecode(request.args['url'], 'utf-8'))
+    print(urldecode(request.args["url"], "utf-8"))
+    return render_template(
+        "iframe.html", video_url=urldecode(request.args["url"], "utf-8")
+    )

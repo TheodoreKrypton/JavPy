@@ -69,8 +69,7 @@ $ javpy
 ```bash
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
 
-$ cd JavPy/JavPy/app/web/
-$ sudo npm install -g @vue/cli
+$ cd JavPy/JavPy/app/javpy-react/
 $ npm install
 ```
 
@@ -86,7 +85,7 @@ $ cd JavPy/JavPy/app/web/
 $ npm run serve
 ```
 
-**Attention**: Contributors are advised to modify the port to 8081 in `config.js` **when debugging** and make sure they recover it before releasing. 
+**Attention**: Contributors are advised to modify the port to 8081 in `src/api/index.js` **when debugging** and make sure they recover it before releasing. 
 
 ## 简介/Introduction
 
