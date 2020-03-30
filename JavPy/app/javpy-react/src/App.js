@@ -13,12 +13,14 @@ import {
 import SearchVideo from './pages/SearchVideo';
 import SearchActress from './pages/SearchActress';
 import SearchMagnet from './pages/SearchMagnet';
+import Login from './pages/Login';
 
 class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
         <div>
+          <Login></Login>
           <SearchBar></SearchBar>
           <BrowserRouter>
             <div>
@@ -40,7 +42,7 @@ class App extends React.Component {
             </div>
           </BrowserRouter>
         </div>
-      </ThemeProvider>
+      </ThemeProvider >
     );
   }
 }

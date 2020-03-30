@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookie from "js-cookie";
+import sha256 from 'js-sha256';
 
 
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
@@ -14,6 +15,10 @@ function setUserpass(val) {
 
 function getUserpass() {
   return Cookie.get("userpass");
+}
+
+function hasUserpass() {
+  return Cookie.get("userpass") !== undefined;
 }
 
 async function pookie(url, data) {
@@ -34,7 +39,7 @@ async function pookie(url, data) {
 
 async function searchByCode({ code }) {
   const rsp = await pookie("/search_by_code", { code });
-  if (rsp.status === 200 && rsp.data) {
+  if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data.videos;
   } else {
     return null;
@@ -43,7 +48,7 @@ async function searchByCode({ code }) {
 
 async function getNewlyReleased({ page }) {
   const rsp = await pookie("/new", { page });
-  if (rsp.status === 200 && rsp.data) {
+  if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data;
   } else {
     return null;
@@ -52,7 +57,7 @@ async function getNewlyReleased({ page }) {
 
 async function searchByActress({ actress, withHistoryName }) {
   const rsp = await pookie("/search_by_actress", { actress, history_name: withHistoryName });
-  if (rsp.status === 200 && rsp.data) {
+  if (rsp && rsp.status === 200 && rsp.data) {
     return {
       videos: rsp.data.videos,
       other: rsp.data.other
@@ -64,7 +69,7 @@ async function searchByActress({ actress, withHistoryName }) {
 
 async function actressInfo({ actress }) {
   const rsp = await pookie("/actress_info", { actress })
-  if (rsp.status === 200 && rsp.data) {
+  if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data;
   } else {
     return null;
@@ -73,19 +78,31 @@ async function actressInfo({ actress }) {
 
 async function searchMagnet({ code }) {
   const rsp = await pookie("/search_magnet_by_code", { code });
-  if (rsp.status === 200 && rsp.data) {
+  if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data;
   } else {
     return null;
   }
 }
 
+async function authByPassword({ password }) {
+  const rsp = await axios.post(`${address}/auth_by_password`, { password: sha256.sha256(password) });
+  if (rsp && rsp.status === 200 && rsp.data) {
+    setUserpass(rsp.data)
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export default {
   address,
+  hasUserpass,
   setUserpass,
   searchByCode,
   getNewlyReleased,
   searchByActress,
   actressInfo,
-  searchMagnet
+  searchMagnet,
+  authByPassword
 };

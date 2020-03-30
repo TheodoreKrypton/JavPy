@@ -2,6 +2,7 @@ import React from 'react';
 import useStyles from './styles';
 import Box from '@material-ui/core/Box';
 import VideoCard from './VideoCard';
+import utils from '../../utils';
 
 function getDocumentTop() {
   let scrollTop = 0,
@@ -58,45 +59,50 @@ export default props => {
 
   const { videos, loadNextPage } = props;
 
-  const renderPage = (videosToRender) => {
-    return <Box
+  const renderPage = ({ videosRendered }) => {
+    return (<Box
       className={classes.root}
       display="flex"
       flexWrap="wrap"
       justifyContent="center"
     >
-      {videosToRender.map((video, i) => { return <VideoCard key={i.toString()} video={video}></VideoCard> })}
-    </Box>
-
+      {videosRendered.map((video, i) => { return <VideoCard key={i.toString()} video={video}></VideoCard> })}
+    </Box>)
   }
 
   if (!loadNextPage) {
-    return renderPage(videos)
+    return renderPage({ videosRendered: videos })
   }
 
-  const loadVideos = (() => {
-    let page = 0;
-    return async () => {
-      page++;
-      return await loadNextPage(page);
-    }
-  })();
-
-  const [videosRendered, setVideosRendered] = React.useState([]);
+  const [state, setState] = React.useState({
+    page: 1,
+    videosRendered: [],
+    loading: true
+  })
 
   window.onscroll = () => {
     if (getScrollHeight() === getWindowHeight() + getDocumentTop()) {
-      loadVideos().then((rsp) => {
-        setVideosRendered(videosRendered.concat(rsp));
+      loadNextPage({ page: state.page }).then((rsp) => {
+        if (rsp) {
+          setState(utils.assignState(state, {
+            videosRendered: state.videosRendered.concat(rsp),
+            page: state.page + 1
+          }));
+        }
       })
     }
   };
 
-  if (videosRendered.length === 0) {
-    loadVideos().then((rsp) => {
-      setVideosRendered(rsp);
+  if (state.videosRendered.length === 0) {
+    loadNextPage({ page: state.page }).then((rsp) => {
+      if (rsp) {
+        setState(utils.assignState(state, {
+          videosRendered: rsp,
+          page: state.page + 1
+        }));
+      }
     })
   }
 
-  return renderPage(videosRendered);
+  return renderPage(state);
 }

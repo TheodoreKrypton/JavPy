@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "clipboard": "^2.0.6",
     "js-cookie": "^2.2.1",
+    "js-sha256": "^0.9.0",
     "react": "^16.13.1",
     "react-async": "^10.0.0",
     "react-dom": "^16.13.1",

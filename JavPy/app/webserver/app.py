@@ -176,6 +176,8 @@ def actress_info():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
     res = Functions.get_actress_info(params["actress"])
+    if res is None:
+        return ""
     rsp = jsonify(res.to_dict())
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp

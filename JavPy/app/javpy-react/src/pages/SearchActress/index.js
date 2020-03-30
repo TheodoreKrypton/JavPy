@@ -30,6 +30,9 @@ export default () => {
   }
 
   const renderActressProfile = (actressProfile) => {
+    if (!actressProfile) {
+      return <></>
+    }
     return <ActressProfile info={actressProfile} name={query.get("actress")}></ActressProfile>
   }
 
@@ -53,7 +56,7 @@ export default () => {
   }
 
   const renderVideos = (videos) => {
-    if (!videos) {
+    if (!videos || (!state.loading && videos.length === 0)) {
       return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
     } else {
       return <Videos videos={videos}></Videos>
@@ -62,15 +65,17 @@ export default () => {
 
   const renderPage = ({ actressProfile, historyNames, videos, loading }) => {
     if (loading) {
-      return <LinearProgress color="secondary"></LinearProgress>;
+      return <React.Fragment>
+        <LinearProgress color="secondary"></LinearProgress>
+        {renderActressProfile(actressProfile)}
+        {renderHistoryNames(historyNames)}
+      </React.Fragment>
     } else {
-      return (
-        <React.Fragment>
-          {renderActressProfile(actressProfile)}
-          {renderHistoryNames(historyNames)}
-          {renderVideos(videos)}
-        </React.Fragment>
-      )
+      return <React.Fragment>
+        {renderActressProfile(actressProfile)}
+        {renderHistoryNames(historyNames)}
+        {renderVideos(videos)}
+      </React.Fragment>
     }
   }
 
