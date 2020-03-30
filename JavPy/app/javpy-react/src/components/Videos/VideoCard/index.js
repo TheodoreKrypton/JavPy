@@ -35,7 +35,7 @@ export default props => {
 
   const handleVideoClick = (video) => {
     if (video.video_url) {
-      if (video.video_url.endsWith(".m3u8")) {
+      if (video.video_url.endsWith(".m3u8") || video.video_url.endsWith(".mp4")) {
         window.open(`${api.address}/videoplayer?video_url=${video.video_url}`);
       } else {
         window.open(`${api.address}/redirect_to?url=${video.video_url}`);

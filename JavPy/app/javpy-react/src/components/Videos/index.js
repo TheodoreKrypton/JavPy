@@ -93,7 +93,6 @@ export default props => {
 
   React.useEffect(() => {
     window.onscroll = () => {
-      console.log('fuck')
       unmounted.current = false;
       if (getScrollHeight() === getWindowHeight() + getDocumentTop()) {
         loadMore();

@@ -5,12 +5,22 @@ import utils from '../../utils';
 import HLSSource from './HlsSource';
 
 export default props => {
-  return (
-    <Player playsInline>
-      <HLSSource
-        isVideoChild
-        src={decodeURIComponent(utils.useQuery().get("video_url"))}
-      />
-    </Player>
-  );
+  const video_url = utils.useQuery().get("video_url");
+  if (video_url.endsWith(".m3u8")) {
+    return (
+      <Player playsInline>
+        <HLSSource
+          isVideoChild
+          src={decodeURIComponent(video_url)}
+        />
+      </Player>
+    );
+  } else {
+    return (
+      <Player
+        playsInline
+        src={decodeURIComponent(video_url)}>
+      </Player>
+    )
+  }
 };
