@@ -30,7 +30,7 @@ export default props => {
   };
 
   const handleActressClick = (actress) => {
-    history.push(`/search/actress?actress=${actress}`);
+    window.location.href = `/search/actress?actress=${actress}`;
   }
 
   const handleVideoClick = (video) => {
@@ -68,7 +68,7 @@ export default props => {
             onClose={handleMultipleClose}
           >
             {actress.split(",").map((x, i) => {
-              return <MenuItem key={i.toString()} onClick={() => handleActressClick(x)}>{x}</MenuItem>
+              return <MenuItem key={i.toString()} onClick={() => handleActressClick(x.trim())}>{x.trim()}</MenuItem>
             })}
           </Menu>
         </>
@@ -82,15 +82,19 @@ export default props => {
     }
   }
 
+  const handleImageError = (event) => {
+
+  }
+
   return (
     <Card className={classes.root}>
-
       <CardActionArea onClick={() => handleVideoClick(video)}>
         <LazyLoad>
           <CardMedia
             component="img"
             className={classes.media}
             image={video.preview_img_url}
+            onError={handleImageError}
           />
         </LazyLoad>
         <CardContent className={classes.content}>

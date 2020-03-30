@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "clipboard": "^2.0.6",
+    "hls.js": "^0.13.2",
     "js-cookie": "^2.2.1",
     "js-sha256": "^0.9.0",
     "react": "^16.13.1",
@@ -19,7 +20,8 @@
     "react-infinite-scroller": "^1.2.4",
     "react-lazyload": "^2.6.5",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "video-react": "^0.14.1"
   },
   "scripts": {
     "start": "react-scripts start",

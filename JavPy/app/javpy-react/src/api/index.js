@@ -31,7 +31,7 @@ async function pookie(url, data) {
     }
   }
   return await axios.post(`${address}${url}`, data).catch((err) => {
-    if (err.response.status === 400) {
+    if (!err.response || err.response.status === 400) {
       Cookie.remove("userpass");
     }
   });

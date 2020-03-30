@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import api from '../../api';
 
-export default function FormDialog() {
+export default () => {
   const [input, setInput] = React.useState("");
   const [open, setOpen] = React.useState(!api.hasUserpass());
 

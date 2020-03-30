@@ -19,13 +19,16 @@ export default () => {
     initialized: false
   })
 
+  const unmounted = React.useRef(false);
+
   const handleClickHistoryName = (name) => {
     setState(utils.assignState(state, { videos: [], loading: true }));
     api.searchByActress({ actress: name, withHistoryName: "false" }).then((rsp) => {
-      setState(utils.assignState(state, {
+      setState({
+        ...state,
         videos: rsp && rsp.videos.length ? rsp.videos : null,
         loading: false
-      }));
+      });
     })
   }
 
@@ -47,7 +50,7 @@ export default () => {
         }}>
           <Breadcrumbs aria-label="breadcrumb" >
             {historyNames.map((name, i) => {
-              return <Button key={i.toString()} color="secondary" onClick={() => { handleClickHistoryName(name) }}> {name} </Button>
+              return <Button key={i.toString()} color="secondary" onClick={() => { handleClickHistoryName(name.trim()) }}> {name.trim()} </Button>
             })}
           </Breadcrumbs>
         </div>
@@ -78,30 +81,37 @@ export default () => {
       </React.Fragment>
     }
   }
+  React.useEffect(() => {
+    if (!state.initialized) {
+      Promise.all([
+        api.searchByActress({ actress: query.get("actress"), withHistoryName: "true" }),
+        api.actressInfo({ actress: query.get("actress") })
+      ]).then((rsp) => {
+        if (unmounted.current) {
+          return;
+        }
+        let newState = {};
+        if (rsp[0]) {
+          newState.videos = rsp[0].videos;
+          newState.historyNames = rsp[0].other.history_names;
+        } else {
+          newState.videos = null;
+        }
 
-  if (!state.initialized) {
-    Promise.all([
-      api.searchByActress({ actress: query.get("actress"), withHistoryName: "true" }),
-      api.actressInfo({ actress: query.get("actress") })
-    ]).then((rsp) => {
-      let newState = Object.assign({}, state);
-      if (rsp[0]) {
-        newState.videos = rsp[0].videos;
-        newState.historyNames = rsp[0].other.history_names;
-      } else {
-        newState.videos = null;
-      }
+        if (rsp[1]) {
+          newState.actressProfile = rsp[1];
+        }
 
-      if (rsp[1]) {
-        newState.actressProfile = rsp[1];
-      }
-
-      newState.loading = false;
-      newState.initialized = true;
-      setState(newState);
-    })
-  }
-
+        setState({
+          ...state,
+          ...newState,
+          loading: false,
+          initialized: true
+        })
+      })
+    }
+    return () => { unmounted.current = true }
+  })
   return renderPage(state)
 
 }

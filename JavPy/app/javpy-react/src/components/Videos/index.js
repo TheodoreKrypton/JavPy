@@ -2,7 +2,6 @@ import React from 'react';
 import useStyles from './styles';
 import Box from '@material-ui/core/Box';
 import VideoCard from './VideoCard';
-import utils from '../../utils';
 
 function getDocumentTop() {
   let scrollTop = 0,
@@ -59,7 +58,7 @@ export default props => {
 
   const { videos, loadNextPage } = props;
 
-  const renderPage = ({ videosRendered }) => {
+  function renderPage({ videosRendered }) {
     return (<Box
       className={classes.root}
       display="flex"
@@ -76,33 +75,39 @@ export default props => {
 
   const [state, setState] = React.useState({
     page: 1,
-    videosRendered: [],
-    loading: true
+    videosRendered: []
   })
 
-  window.onscroll = () => {
-    if (getScrollHeight() === getWindowHeight() + getDocumentTop()) {
-      loadNextPage({ page: state.page }).then((rsp) => {
-        if (rsp) {
-          setState(utils.assignState(state, {
-            videosRendered: state.videosRendered.concat(rsp),
-            page: state.page + 1
-          }));
-        }
-      })
-    }
-  };
+  const unmounted = React.useRef(false);
 
-  if (state.videosRendered.length === 0) {
+  function loadMore() {
     loadNextPage({ page: state.page }).then((rsp) => {
-      if (rsp) {
-        setState(utils.assignState(state, {
-          videosRendered: rsp,
+      if (rsp && !unmounted.current) {
+        setState({
+          videosRendered: state.videosRendered.concat(rsp),
           page: state.page + 1
-        }));
+        });
       }
     })
   }
+
+  React.useEffect(() => {
+    window.onscroll = () => {
+      console.log('fuck')
+      unmounted.current = false;
+      if (getScrollHeight() === getWindowHeight() + getDocumentTop()) {
+        loadMore();
+      }
+    }
+    if (state.videosRendered.length === 0) {
+      loadMore();
+    }
+
+    return () => {
+      unmounted.current = true;
+      window.onscroll = null;
+    }
+  });
 
   return renderPage(state);
 }
