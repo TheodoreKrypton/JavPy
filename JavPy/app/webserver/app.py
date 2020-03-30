@@ -45,7 +45,7 @@ def before_request():
 def auth_by_password():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
-    if auth.check_password(params["password"]):
+    if auth.check_password(params["password"], request.remote_addr):
         cookie = auth.generate_cookie(request)
         return cookie
     else:

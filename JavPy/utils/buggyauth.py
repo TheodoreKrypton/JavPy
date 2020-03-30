@@ -21,7 +21,9 @@ white_lists_single = [
 registered_cookie = set()
 
 
-def check_password(hashed):
+def check_password(hashed, ip):
+    if not check_ip(ip):
+        return False
     if hashed_password == hashed:
         return True
     return False
