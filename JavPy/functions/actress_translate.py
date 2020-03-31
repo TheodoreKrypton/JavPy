@@ -1,4 +1,4 @@
-from JavPy.utils.requester import spawn_many, Task
+from JavPy.utils.requester import executor, wait_until
 from JavPy.functions.sources import Sources
 from JavPy.utils.common import cache
 
@@ -7,23 +7,8 @@ class ActressTranslate:
     @staticmethod
     @cache
     def translate2jp(actress):
-        res = list(
-            filter(
-                lambda x: x,
-                spawn_many(
-                    [
-                        Task(source.translate2jp, actress)
-                        for source in Sources.TranslateEn2Jp
-                    ]
-                ).wait_for_one_finished(),
-            )
-        )
-        if not res:
-            return None
-        else:
-            return res[0]
+        return wait_until((executor.submit(source.translate2jp, actress) for source in Sources.TranslateEn2Jp))
 
 
 if __name__ == "__main__":
-    print(Sources.TranslateEn2Jp)
     print(ActressTranslate.translate2jp("Eimi Fukada"))

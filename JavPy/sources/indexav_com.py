@@ -2,7 +2,7 @@ import requests
 from JavPy.sources.BaseSource import ISearchByActress, IGetBrief
 import bs4
 from JavPy.functions.datastructure import Brief
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import noexcept
 from JavPy.utils.config import proxy
 
 
@@ -47,7 +47,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         code = columns[4].next.strip()
         actress = ", ".join((x.text.strip() for x in columns[2].find_all(name="span")))
         title = columns[3].text.strip()
-        img, _ = try_evaluate(lambda: columns[3].a.attrs["rel"][0])
+        img = noexcept(lambda: columns[3].a.attrs["rel"][0])
         release_date = columns[1].text.strip()
 
         brief = Brief()

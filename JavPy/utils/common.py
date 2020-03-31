@@ -1,18 +1,17 @@
 import datetime
 import functools
 import re
+from typing import Iterable
 
 version = "0.3.8"
 
 
-def try_evaluate(lambda_expression, default=None):
-    def evaluate(expression):
-        try:
-            return expression(), None
-        except Exception as ex:
-            return default, ex
-
-    return evaluate(lambda_expression)
+def noexcept(lambda_expression, default=None, return_exception=False):
+    try:
+        res = lambda_expression()
+        return res if not return_exception else (res, None)
+    except Exception as ex:
+        return default if not return_exception else (default, ex)
 
 
 def cache(func):
@@ -62,7 +61,7 @@ def assign(origin, new):
     return origin
 
 
-def conclude(objects):
+def conclude(objects: Iterable):
     if objects is None:
         return None
     objects = list(filter(lambda x: x, objects))

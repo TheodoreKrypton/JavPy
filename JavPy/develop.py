@@ -9,4 +9,4 @@ if __name__ == "__main__":
     # run()
 
     # run web server
-    app.app.run("0.0.0.0", 8081, threaded=True)
+    app.app.run("0.0.0.0", 8081, use_reloader=True, threaded=True)

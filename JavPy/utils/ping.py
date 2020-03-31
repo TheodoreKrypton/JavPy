@@ -1,11 +1,14 @@
 import requests
-from JavPy.utils.requester import Task, spawn_many
+from JavPy.utils.requester import executor
+from JavPy.utils.config import proxy
+from JavPy.utils.common import noexcept
 
 
 def ping(url, n=1):
     latencies = list(map(lambda rsp: rsp.elapsed.microseconds, filter(
-        lambda rsp: rsp and rsp.status_code == 200, spawn_many(
-            (Task(requests.head, url) for _ in range(n))).wait_for_all_finished()
+        lambda rsp: rsp and rsp.status_code == 200, executor.map(
+            lambda x: noexcept(lambda: requests.head(x, proxies=proxy)), (url for _ in range(n))
+        )
     )))
     return 0 if not latencies else sum(latencies) / len(latencies)
 

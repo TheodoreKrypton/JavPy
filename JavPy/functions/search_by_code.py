@@ -1,16 +1,15 @@
 from JavPy.functions.sources import Sources
-from JavPy.utils.requester import spawn_many, Task
-from JavPy.utils.common import conclude
+from JavPy.utils.requester import executor, wait_until
 from JavPy.functions.datastructure import AV
 
 
 class SearchByCode:
     @classmethod
     def search(cls, code) -> AV:
-        res = spawn_many(
-            (Task(source.search_by_code, code) for source in Sources.SearchByCode)
-        ).wait_until(lambda x: x.preview_img_url)
-        return conclude(res)
+        return wait_until(
+            (executor.submit(x.search_by_code, code) for x in Sources.SearchByCode),
+            condition=lambda x: x.video_url
+        )
 
 
 if __name__ == "__main__":

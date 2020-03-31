@@ -8,7 +8,8 @@ import {
   BrowserRouter,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  IndexRoute
 } from "react-router-dom";
 import SearchVideo from './pages/SearchVideo';
 import SearchActress from './pages/SearchActress';
@@ -31,17 +32,19 @@ class App extends React.Component {
                 <SearchBar></SearchBar>
                 <div>
                   <Switch>
-                    <Redirect exact path="/" to="/new" />
-                    <Route exact path="/new">
+                    <Route exact path="/">
                       <New></New>
                     </Route>
-                    <Route exact path="/search/video">
+                    <Route path="/new">
+                      <New></New>
+                    </Route>
+                    <Route path="/search/video">
                       <SearchVideo></SearchVideo>
                     </Route>
-                    <Route exact path="/search/actress">
+                    <Route path="/search/actress">
                       <SearchActress></SearchActress>
                     </Route>
-                    <Route exact path="/search/magnet">
+                    <Route path="/search/magnet">
                       <SearchMagnet></SearchMagnet>
                     </Route>
                   </Switch>

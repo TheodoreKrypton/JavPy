@@ -4,11 +4,13 @@ import bs4
 import json
 from JavPy.embed import decode
 from JavPy.functions.datastructure import AV, Brief
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import noexcept
 import datetime
 import cloudscraper
 from JavPy.utils.config import proxy
 from urllib.parse import urlencode, quote_plus
+from JavPy.utils.requester import executor, wait_until
+import requests
 
 
 class JavMostCom(ISearchByCode, INewlyReleased):
@@ -19,13 +21,55 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         return 0
 
     @classmethod
+    def __try_one_button(mcs, button, value, main_rsp):
+        params = re.search(
+            r"select_part\((.+?)\)", button.a.attrs["onclick"]
+        ).group(1)
+        tokens = params.split(",")
+        group = tokens[1].replace("'", "")
+        part = tokens[0].replace("'", "")
+        _code = tokens[4].replace("'", "")
+        code2 = tokens[5].replace("'", "")
+        code3 = tokens[6].replace("'", "")
+        sound = re.search("'sound':'(.+?)'", main_rsp.text).group(1)
+
+        data = urlencode({
+            'group': group,
+            'part': part,
+            'code': _code,
+            'code2': code2,
+            'code3': code3,
+            'value': value,
+            'sound': sound
+        }, quote_via=quote_plus)
+
+        rsp = mcs.__client.post(
+            "https://www5.javmost.com/get_movie_source/",
+            headers={'content-type': "application/x-www-form-urlencoded; charset=UTF-8"},
+            data=data,
+            proxies=proxy
+        )
+
+        json_obj = json.loads(rsp.text)
+        url = json_obj["data"][0].strip()
+        url = decode(url)
+        if not url:
+            return None
+
+        if "avgle" in "url":
+            if "This video is not available on this platform." in requests.get(url).text:
+                return None
+
+        return url
+
+    @classmethod
     def search_by_code(mcs, code):
         url = "http://www5.javmost.com/" + code + "/"
         main_rsp = mcs.__client.get(url, proxies=proxy)
         if main_rsp.status_code != 200:
             return None
 
-        img, _ = try_evaluate(
+        img = noexcept(
             lambda: re.search(
                 r"<meta property=\"og:image\" content=\"(.+?)\"", main_rsp.text
             ).group(1)
@@ -41,53 +85,13 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         bs = bs4.BeautifulSoup(main_rsp.text, "lxml")
 
         buttons = bs.select(".tab-overflow")[0].find_all(name="li")[1:-1]
-        success = False
 
         var_value = re.search("'value':(.+?),", main_rsp.text).group(1)
         value = re.search("var %s = '(.+?)'" % var_value, main_rsp.text).group(1)
 
-        for button in buttons:
-            params = re.search(
-                r"select_part\((.+?)\)", button.a.attrs["onclick"]
-            ).group(1)
-            tokens = params.split(",")
-            group = tokens[1].replace("'", "")
-            part = tokens[0].replace("'", "")
-            _code = tokens[4].replace("'", "")
-            code2 = tokens[5].replace("'", "")
-            code3 = tokens[6].replace("'", "")
-            sound = re.search("'sound':'(.+?)'", main_rsp.text).group(1)
+        url = wait_until([executor.submit(mcs.__try_one_button, button, value, main_rsp) for button in buttons])
 
-            data = urlencode({
-                'group': group,
-                'part': part,
-                'code': _code,
-                'code2': code2,
-                'code3': code3,
-                'value': value,
-                'sound': sound
-            }, quote_via=quote_plus)
-
-            rsp = mcs.__client.post(
-                "https://www5.javmost.com/get_movie_source/",
-                headers={'content-type': "application/x-www-form-urlencoded; charset=UTF-8"},
-                data=data,
-                proxies=proxy
-            )
-
-            json_obj = json.loads(rsp.text)
-            url = json_obj["data"][0].strip()
-
-            url = decode(url)
-
-            if not url:
-                continue
-
-            if mcs.__client.get(url, proxies=proxy).status_code == 200:
-                success = True
-                break
-
-        if not success:
+        if not url:
             return None
 
         av = AV()
@@ -112,26 +116,24 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
     @staticmethod
     def get_brief_from_a_card(card_tag):
-        release_date, _ = try_evaluate(
+        release_date = noexcept(
             lambda: datetime.datetime.strptime(
                 re.search(r"\d\d\d\d-\d\d-\d\d", card_tag.text).group(0), "%Y-%m-%d"
             )
         )
 
-        actress = list(
-            map(
-                lambda x: x.text,
-                card_tag.find_all(name="a", attrs={"class": "btn-danger"}),
-            )
-        )
+        actress = list(map(
+            lambda x: x.text,
+            card_tag.find_all(name="a", attrs={"class": "btn-danger"})
+        ))
 
-        img, _ = try_evaluate(lambda: card_tag.find(name="img").attrs["data-src"])
+        img = noexcept(lambda: card_tag.find(name="img").attrs["data-src"])
         if not img.startswith("http"):
             img = "http:" + img
 
         brief = Brief()
         brief.preview_img_url = img
-        brief.title, _ = try_evaluate(lambda: card_tag.find(name="h5").text.strip(), "")
+        brief.title = noexcept(lambda: card_tag.find(name="h5").text.strip(), "")
         brief.actress = ", ".join(actress)
         brief.release_date = release_date
         brief.code = card_tag.find(name="h4").text.strip()

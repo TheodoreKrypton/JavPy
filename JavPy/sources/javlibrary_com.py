@@ -1,6 +1,6 @@
 from JavPy.sources.BaseSource import INewlyReleased, IGetBrief
 import cloudscraper
-from JavPy.utils.requester import spawn_many, Task
+from JavPy.utils.requester import executor, wait_until
 import re
 from JavPy.functions.datastructure import AV, Brief
 import datetime
@@ -18,23 +18,20 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
 
     @classmethod
     def get_newly_released(mcs, page):
-        major_info_req = Task(
+        major_info_req = executor.submit(
             mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?mode=2&page=%d" % page,
             proxies=proxy
         )
-        dates_req = Task(
+        dates_req = executor.submit(
             mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?list&mode=2&page=%d" % page,
             proxies=proxy
         )
-        major_info_rsp, dates_rsp = spawn_many(
-            (major_info_req, dates_req)
-        ).wait_for_all_finished()
-        major_info = mcs.parse_major_info(major_info_rsp)
+        major_info = mcs.parse_major_info(major_info_req.result())
         dates = map(
             lambda d: datetime.datetime.strptime(d, "%Y-%m-%d"),
-            filter(lambda x: "-" in x, re.findall("<td>(.+?)</td>", dates_rsp.text)),
+            filter(lambda x: "-" in x, re.findall("<td>(.+?)</td>", dates_req.result().text)),
         )
 
         for i, date in enumerate(dates):

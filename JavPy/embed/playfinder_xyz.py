@@ -24,5 +24,6 @@ class playfinder_xyz(BaseEmbed):
             return True
         return False
 
+
 if __name__ == '__main__':
-    print(playfinder_xyz.decode("https://playfinder.xyz/v/7j6mgsgxe601k3g#poster=https://findercdn.me/files/sksk-023.jpg"))
+    print(playfinder_xyz.decode("https://playfinder.xyz/v/7q970kx-wog#poster=https://findercdn.me/cdn/movie/s1no-1style-ssni-351-yoshitaka-nene-the-adviser-of-the-bad-female-teacher-was-a-humiliation-tennis-club-with-only-devil-pupils_1542526435.png"))

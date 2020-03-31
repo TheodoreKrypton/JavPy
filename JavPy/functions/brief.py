@@ -1,16 +1,15 @@
 from JavPy.utils.common import conclude
-from JavPy.utils.requester import spawn_many, Task
+from JavPy.utils.requester import executor, wait_until
 from JavPy.functions.sources import Sources
 
 
 class Brief:
     @staticmethod
     def get_brief(code):
-        return conclude(
-            spawn_many(
-                (Task(source.get_brief, code) for source in Sources.Brief)
-            ).wait_until(lambda res: res.preview_img_url)
-        )
+        return conclude(wait_until(
+            [executor.submit(source.get_brief, code) for source in Sources.Brief],
+            lambda res: res.preview_img_url
+        ))
 
 
 if __name__ == '__main__':

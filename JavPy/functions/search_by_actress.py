@@ -2,7 +2,7 @@ import JavPy.sources  # do not remove this line
 from JavPy.functions.sources import Sources
 from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
-from JavPy.utils.requester import spawn, Task, spawn_many
+from JavPy.utils.requester import executor, wait_until, wait
 
 
 class SearchByActress:
@@ -26,19 +26,13 @@ class SearchByActress:
         if lang == "en":
             actress = ActressTranslate.translate2jp(actress)
         if actress:
-            movies = spawn_many(
-                Task(source.search_by_actress, actress, up_to)
-                for source in Sources.SearchByActress
-            )
+            videos = [executor.submit(source.search_by_actress, actress, up_to)
+                      for source in Sources.SearchByActress]
             if history_name:
-                names = spawn(HistoryNames.get_history_names, actress)
-                result = movies.wait_for_one_finished(), names.wait_for_result()
+                names = executor.submit(HistoryNames.get_history_names, actress)
+                return wait_until(videos), names.result()
             else:
-                result = movies.wait_for_one_finished(), None
-
-            return result[0][0], result[1]
-        else:
-            return [], None
+                return wait_until(videos), None
 
 
 if __name__ == '__main__':

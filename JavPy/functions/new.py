@@ -2,7 +2,7 @@ from JavPy.functions.sources import Sources
 import datetime
 from typing import List
 from functools import reduce
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import noexcept
 
 Sources.NewlyReleased.sort(key=lambda x: x.priority())
 
@@ -51,21 +51,28 @@ class New:
     def __find_usable_source(cls, page):
         cls.which_source = 0
         for i, source in enumerate(Sources.NewlyReleased):
-            res, ex = try_evaluate(lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page))
-            if (not res) or ex:
+            try:
+                res = Sources.NewlyReleased[cls.which_source].get_newly_released(page)
+                if not res:
+                    continue
+                else:
+                    cls.which_source = i
+                    return res
+            except Exception:
                 continue
-            else:
-                cls.which_source = i
-                return res
         raise Exception("all sources are down")
 
     @classmethod
     def __get_newly_released_from_sources(cls, page):
         if cls.which_source != -1:
-            res, ex = try_evaluate(lambda: Sources.NewlyReleased[cls.which_source].get_newly_released(page))
-            if (not res) or ex:
+            try:
+                res = Sources.NewlyReleased[cls.which_source].get_newly_released(page)
+                if not res:
+                    return cls.__find_usable_source(page)
+                else:
+                    return res
+            except Exception:
                 return cls.__find_usable_source(page)
-            return res
         else:
             return cls.__find_usable_source(page)
 

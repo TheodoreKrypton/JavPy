@@ -40,7 +40,6 @@ class INewlyReleased(ABCMeta, metaclass=RegisterInterface):
     @classmethod
     @abstractmethod
     def test_newly_released(mcs):
-        print(mcs.get_newly_released(2))
         assert mcs.get_newly_released(2)
 
 

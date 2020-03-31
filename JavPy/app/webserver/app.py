@@ -5,6 +5,7 @@ from flask import (
     request,
     render_template,
     send_from_directory,
+    send_file,
     abort,
     redirect,
     Response,
@@ -13,7 +14,7 @@ from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import spawn
+from JavPy.utils.requester import executor, wait_for_all
 import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
 from JavPy.utils.common import urldecode
@@ -23,9 +24,7 @@ from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-# web_dist_path = base_path + "/app/web/dist"
-web_dist_path = base_path + "/app/javpy-react/build/"
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, static_folder=base_path + '/app/javpy-react/build/static', template_folder=base_path + "/app/javpy-react/build")
 CORS(app, resources=r"/*")
 
 
@@ -79,26 +78,12 @@ def update_config():
 
 @app.route("/")
 def index():
-    return send_static("index.html")
+    return render_template('index.html')
 
 
-@app.route("/<path:path>")
-def send_static(path):
-    print(path)
-    if not os.path.exists(web_dist_path + "/" + path):
-        return send_from_directory(web_dist_path, "index.html")
-    else:
-        return send_from_directory(web_dist_path, path)
-
-
-@app.route("/static/css/<path:path>")
-def send_css(path):
-    return send_from_directory(web_dist_path + "/static/css", path)
-
-
-@app.route("/static/js/<path:path>")
-def send_js(path):
-    return send_from_directory(web_dist_path + "/static/js", path)
+@app.route("/manifest.json")
+def manifest_json():
+    return send_from_directory(base_path + '/app/javpy-react/build/', 'manifest.json')
 
 
 @app.route("/search_by_code", methods=["POST"])
@@ -124,9 +109,9 @@ def search_by_actress():
     print(params)
     actress = params["actress"]
     history_name = params["history_name"] == "true"
-    briefs, names = spawn(
+    briefs, names = wait_for_all([executor.submit(
         Functions.search_by_actress, actress, None, history_name
-    ).wait_for_result()
+    )])
 
     res = {
         "videos": [brief.to_dict() for brief in briefs],
