@@ -1,2 +1,2 @@
-recursive-include JavPy/app/javpy-react/build/
+recursive-include JavPy/app/javpy-react/build *
 include JavPy/sources/categories.json
