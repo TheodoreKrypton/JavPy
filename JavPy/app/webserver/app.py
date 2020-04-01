@@ -78,7 +78,7 @@ def update_config():
 
 @app.route("/")
 def index():
-    return send_from_directory(template_folder, "index.html")
+    return render_template("index.html")
 
 
 @app.route("/<path:path>")
