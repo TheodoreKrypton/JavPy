@@ -9,7 +9,14 @@ from JavPy.embed.javcl_me import javcl_me
 embeds = [fembed, avgle, smartshare_tv, hydrax_net, playfinder_xyz, javcl_me]
 
 
+black_list = ["drive.google.com"]
+
+
 def decode(url):
+    for pattern in black_list:
+        if pattern in url:
+            return None
+
     for embed in embeds:
         if embed.pattern(url):
             return embed.decode(url)
