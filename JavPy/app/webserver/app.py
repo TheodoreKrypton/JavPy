@@ -5,7 +5,6 @@ from flask import (
     request,
     render_template,
     send_from_directory,
-    send_file,
     abort,
     redirect,
     Response,
@@ -14,17 +13,18 @@ from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import executor, wait_for_all
 import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
-from JavPy.utils.common import urldecode
 from copy import deepcopy
 import requests
 from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-app = Flask(__name__, static_folder=base_path + '/app/javpy-react/build/static', template_folder=base_path + "/app/javpy-react/build")
+static_folder = base_path + '/app/javpy-react/build/static'
+template_folder = base_path + "/app/javpy-react/build"
+
+app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 CORS(app, resources=r"/*")
 
 
@@ -78,12 +78,17 @@ def update_config():
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return send_from_directory(template_folder, "index.html")
 
 
-@app.route("/manifest.json")
-def manifest_json():
-    return send_from_directory(base_path + '/app/javpy-react/build/', 'manifest.json')
+@app.route("/<path:path>")
+def serve_static(path):
+    return send_from_directory(template_folder, path)
+
+#
+# @app.route("/manifest.json")
+# def manifest_json():
+#     return send_from_directory(base_path + '/app/javpy-react/build/', 'manifest.json')
 
 
 @app.route("/search_by_code", methods=["POST"])
@@ -93,7 +98,9 @@ def search_by_code():
     res = {"videos": None, "other": None}
     if params["code"]:
         try:
-            res["videos"] = [Functions.search_by_code(params["code"]).to_dict()]
+            videos = Functions.search_by_code(params["code"])
+            if videos:
+                res["videos"] = [videos.to_dict()]
             rsp = jsonify(res)
         except AttributeError:
             rsp = make_response("")
@@ -109,9 +116,7 @@ def search_by_actress():
     print(params)
     actress = params["actress"]
     history_name = params["history_name"] == "true"
-    briefs, names = wait_for_all([executor.submit(
-        Functions.search_by_actress, actress, None, history_name
-    )])
+    briefs, names = Functions.search_by_actress(actress, None, history_name)
 
     res = {
         "videos": [brief.to_dict() for brief in briefs],
@@ -201,11 +206,3 @@ def open_url():
     rsp = redirect(request.args["url"])
     rsp.headers["origin"] = ""
     return rsp
-
-
-@app.route("/render_in_iframe")
-def render_in_iframe():
-    print(urldecode(request.args["url"], "utf-8"))
-    return render_template(
-        "iframe.html", video_url=urldecode(request.args["url"], "utf-8")
-    )

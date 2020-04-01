@@ -5,57 +5,68 @@ import './App.css';
 import theme from './theme';
 import { ThemeProvider } from '@material-ui/styles';
 import {
-  BrowserRouter,
   Switch,
   Route,
-  Redirect,
-  IndexRoute
+  Redirect
 } from "react-router-dom";
 import SearchVideo from './pages/SearchVideo';
 import SearchActress from './pages/SearchActress';
 import SearchMagnet from './pages/SearchMagnet';
 import Login from './pages/Login';
-import VideoPlayer from './pages/VideoPlayer'
+import VideoPlayer from './pages/VideoPlayer';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
+import RouteHandler from './RouteHandler';
+import IFrame from './pages/IFrame';
 
 class App extends React.Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      RouteHandler(prevProps, this.props);
+    }
+  }
+
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/videoplayer">
-            <VideoPlayer></VideoPlayer>
-          </Route>
-          <Route>
-            <ThemeProvider theme={theme}>
+      <Switch>
+        <Route exact path="/videoplayer">
+          <VideoPlayer></VideoPlayer>
+        </Route>
+        <Route exact path="/iframe">
+          <IFrame></IFrame>
+        </Route>
+        <Route>
+          <ThemeProvider theme={theme}>
+            <div>
+              <Login></Login>
+              <SearchBar></SearchBar>
               <div>
-                <Login></Login>
-                <SearchBar></SearchBar>
-                <div>
-                  <Switch>
-                    <Route exact path="/">
-                      <New></New>
-                    </Route>
-                    <Route path="/new">
-                      <New></New>
-                    </Route>
-                    <Route path="/search/video">
-                      <SearchVideo></SearchVideo>
-                    </Route>
-                    <Route path="/search/actress">
-                      <SearchActress></SearchActress>
-                    </Route>
-                    <Route path="/search/magnet">
-                      <SearchMagnet></SearchMagnet>
-                    </Route>
-                  </Switch>
-                </div>
+                <Switch>
+                  <Redirect exact path="/" to="/new" />
+                  <Route path="/new">
+                    <New></New>
+                  </Route>
+                  <Route path="/search/video">
+                    <SearchVideo></SearchVideo>
+                  </Route>
+                  <Route path="/search/actress">
+                    <SearchActress></SearchActress>
+                  </Route>
+                  <Route path="/search/magnet">
+                    <SearchMagnet></SearchMagnet>
+                  </Route>
+                </Switch>
               </div>
-            </ThemeProvider >
-          </Route>
-        </Switch>
-      </BrowserRouter>
+            </div>
+          </ThemeProvider >
+        </Route>
+      </Switch>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

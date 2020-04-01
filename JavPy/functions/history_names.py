@@ -1,4 +1,4 @@
-from JavPy.utils.requester import executor, wait_for_all
+from JavPy.utils.requester import submit, wait_for_all
 from functools import reduce
 from JavPy.utils.common import cache
 from JavPy.functions.sources import Sources
@@ -11,7 +11,8 @@ class HistoryNames:
         result = list(
             filter(
                 lambda x: x,
-                wait_for_all([executor.submit(src.get_history_names, actress) for src in Sources.HistoryNames])
+                wait_for_all([submit(src.get_history_names, actress)
+                              for src in Sources.HistoryNames])
             )
         )
         if len(result) == 0:

@@ -30,13 +30,16 @@ export default props => {
   };
 
   const handleActressClick = (actress) => {
-    window.location.href = `/search/actress?actress=${actress}`;
+    history.push(`/search/actress?actress=${actress}`);
+    window.location.reload();
   }
 
   const handleVideoClick = (video) => {
     if (video.video_url) {
       if (video.video_url.endsWith(".m3u8") || video.video_url.endsWith(".mp4")) {
-        window.open(`${api.address}/videoplayer?video_url=${video.video_url}`);
+        window.open(`${api.address}/#/videoplayer?video_url=${video.video_url}`);
+      } else if (video.video_url.includes("hydrax.net")) {
+        window.open(`${api.address}/#/iframe?video_url=${video.video_url}`);
       } else {
         window.open(`${api.address}/redirect_to?url=${video.video_url}`);
       }

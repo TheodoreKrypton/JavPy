@@ -9,7 +9,7 @@ import datetime
 import cloudscraper
 from JavPy.utils.config import proxy
 from urllib.parse import urlencode, quote_plus
-from JavPy.utils.requester import executor, wait_until
+from JavPy.utils.requester import submit, wait_until
 import requests
 
 
@@ -89,7 +89,7 @@ class JavMostCom(ISearchByCode, INewlyReleased):
         var_value = re.search("'value':(.+?),", main_rsp.text).group(1)
         value = re.search("var %s = '(.+?)'" % var_value, main_rsp.text).group(1)
 
-        url = wait_until([executor.submit(mcs.__try_one_button, button, value, main_rsp) for button in buttons])
+        url = wait_until([submit(mcs.__try_one_button, button, value, main_rsp) for button in buttons])
 
         if not url:
             return None
@@ -152,4 +152,5 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 
 if __name__ == "__main__":
-    JavMostCom.test()
+    # JavMostCom.test()
+    print(JavMostCom.search_by_code("HND-816").to_dict())

@@ -1,6 +1,6 @@
 from JavPy.sources.BaseSource import INewlyReleased, IGetBrief
 import cloudscraper
-from JavPy.utils.requester import executor, wait_until
+from JavPy.utils.requester import submit, wait_until
 import re
 from JavPy.functions.datastructure import AV, Brief
 import datetime
@@ -18,12 +18,12 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
 
     @classmethod
     def get_newly_released(mcs, page):
-        major_info_req = executor.submit(
+        major_info_req = submit(
             mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?mode=2&page=%d" % page,
             proxies=proxy
         )
-        dates_req = executor.submit(
+        dates_req = submit(
             mcs.__client.get,
             "http://www.javlibrary.com/cn/vl_newrelease.php?list&mode=2&page=%d" % page,
             proxies=proxy

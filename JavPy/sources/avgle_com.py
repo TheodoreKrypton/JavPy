@@ -23,4 +23,5 @@ class AVGleCom(ISearchByCode):
 
 
 if __name__ == "__main__":
-    AVGleCom.test()
+    # AVGleCom.test()
+    print(AVGleCom.search_by_code("SKSK-024").to_dict())

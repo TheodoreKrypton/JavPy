@@ -26,7 +26,7 @@ class IndexAVCom(ISearchByActress, IGetBrief):
     @classmethod
     def get_brief(mcs, code):
         url = "https://indexav.com/search?keyword=" + code
-        rsp = requests.get(url, verify=False, proxies=proxy)
+        rsp = requests.get(url, proxies=proxy)
 
         if rsp.status_code != 200:
             return None

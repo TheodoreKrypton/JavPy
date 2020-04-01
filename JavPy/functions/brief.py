@@ -1,16 +1,13 @@
-from JavPy.utils.common import conclude
-from JavPy.utils.requester import executor, wait_until
+from JavPy.utils.requester import submit, wait_for_all
 from JavPy.functions.sources import Sources
+from JavPy.utils.common import conclude
 
 
 class Brief:
     @staticmethod
     def get_brief(code):
-        return conclude(wait_until(
-            [executor.submit(source.get_brief, code) for source in Sources.Brief],
-            lambda res: res.preview_img_url
-        ))
+        return conclude(wait_for_all([submit(source.get_brief, code) for source in Sources.Brief]))
 
 
 if __name__ == '__main__':
-    print(Brief.get_brief("ABP-123").to_dict())
+    print(Brief.get_brief("YST-217").to_dict())

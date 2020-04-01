@@ -2,7 +2,7 @@ import JavPy.sources  # do not remove this line
 from JavPy.functions.sources import Sources
 from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
-from JavPy.utils.requester import executor, wait_until, wait
+from JavPy.utils.requester import submit, wait_until
 
 
 class SearchByActress:
@@ -26,10 +26,10 @@ class SearchByActress:
         if lang == "en":
             actress = ActressTranslate.translate2jp(actress)
         if actress:
-            videos = [executor.submit(source.search_by_actress, actress, up_to)
+            videos = [submit(source.search_by_actress, actress, up_to)
                       for source in Sources.SearchByActress]
             if history_name:
-                names = executor.submit(HistoryNames.get_history_names, actress)
+                names = submit(HistoryNames.get_history_names, actress)
                 return wait_until(videos), names.result()
             else:
                 return wait_until(videos), None

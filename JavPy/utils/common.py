@@ -54,10 +54,12 @@ def get_func_full_name(func):
 
 
 def assign(origin, new):
-    for k in new.__dict__.keys():
-        v = getattr(new, k)
+    for k in new.__slots__:
+        if k.startswith("__"):
+            k = k[2:]
+        v = new.__getattribute__(k)
         if v:
-            setattr(origin, k, v)
+            origin.__setattr__(k, v)
     return origin
 
 

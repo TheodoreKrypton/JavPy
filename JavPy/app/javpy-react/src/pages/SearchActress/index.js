@@ -8,7 +8,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Button from '@material-ui/core/Button';
 import { LinearProgress } from '@material-ui/core';
 
-export default () => {
+export default (props) => {
   const query = utils.useQuery();
 
   const [state, setState] = React.useState({
@@ -22,7 +22,11 @@ export default () => {
   const unmounted = React.useRef(false);
 
   const handleClickHistoryName = (name) => {
-    setState(utils.assignState(state, { videos: [], loading: true }));
+    setState({
+      ...state,
+      videos: [],
+      loading: true
+    });
     api.searchByActress({ actress: name, withHistoryName: "false" }).then((rsp) => {
       setState({
         ...state,
@@ -81,6 +85,7 @@ export default () => {
       </React.Fragment>
     }
   }
+
   React.useEffect(() => {
     if (!state.initialized) {
       Promise.all([
@@ -109,9 +114,21 @@ export default () => {
           initialized: true
         })
       })
+    } else {
+      if (utils.globalCache.searchActress.recover === true) {
+        utils.globalCache.searchActress.recover = false;
+        window.scrollTo(0, utils.globalCache.searchActress.scrollY);
+      }
     }
-    return () => { unmounted.current = true }
+
+    window.onscroll = utils.debounce(() => {
+      utils.globalCache.searchActress.scrollY = utils.getDocumentTop();
+    }, 300)
+
+    return () => {
+      unmounted.current = true;
+      window.onscroll = null;
+    }
   })
   return renderPage(state)
-
 }

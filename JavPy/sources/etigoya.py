@@ -3,7 +3,7 @@ import requests
 import bs4
 import re
 from JavPy.utils.common import noexcept
-from JavPy.utils.requester import executor, wait_until
+from JavPy.utils.requester import submit, wait_until
 from JavPy.utils.config import proxy
 
 
@@ -26,7 +26,7 @@ class Etigoya(IHistoryNames):
             return []
 
         res = wait_until(
-            [executor.submit(mcs.get_history_names_by_li, li) for li in lis],
+            [submit(mcs.get_history_names_by_li, li) for li in lis],
             condition=lambda rsp: actress in rsp
         )
 

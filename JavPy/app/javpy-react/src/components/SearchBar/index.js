@@ -14,8 +14,8 @@ export default () => {
       return
     }
     window.location.href = input.includes("-") ?
-      `/search/video?code=${input.trim()}` :
-      `/search/actress?actress=${input.trim()}&history_name=true`;
+      `/#/search/video?code=${input.trim()}` :
+      `/#/search/actress?actress=${input.trim()}&history_name=true`;
   }
 
   function handleGoHome() {

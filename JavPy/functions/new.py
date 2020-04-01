@@ -2,7 +2,6 @@ from JavPy.functions.sources import Sources
 import datetime
 from typing import List
 from functools import reduce
-from JavPy.utils.common import noexcept
 
 Sources.NewlyReleased.sort(key=lambda x: x.priority())
 

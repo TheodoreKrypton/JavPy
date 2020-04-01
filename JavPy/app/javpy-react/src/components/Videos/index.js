@@ -2,83 +2,49 @@ import React from 'react';
 import useStyles from './styles';
 import Box from '@material-ui/core/Box';
 import VideoCard from './VideoCard';
+import utils from '../../utils';
 
-function getDocumentTop() {
-  let scrollTop = 0,
-    bodyScrollTop = 0,
-    documentScrollTop = 0;
-
-  if (document.body) {
-    bodyScrollTop = document.body.scrollTop;
-  }
-
-  if (document.documentElement) {
-    documentScrollTop = document.documentElement.scrollTop;
-  }
-
-  scrollTop =
-    bodyScrollTop - documentScrollTop > 0
-      ? bodyScrollTop
-      : documentScrollTop;
-  return scrollTop;
-}
-
-function getWindowHeight() {
-  let windowHeight = 0;
-  if (document.compatMode === "CSS1Compat") {
-    windowHeight = document.documentElement.clientHeight;
-  } else {
-    windowHeight = document.body.clientHeight;
-  }
-
-  return windowHeight;
-}
-
-function getScrollHeight() {
-  let scrollHeight = 0,
-    bodyScrollHeight = 0,
-    documentScrollHeight = 0;
-
-  if (document.body) {
-    bodyScrollHeight = document.body.scrollHeight;
-  }
-
-  if (document.documentElement) {
-    documentScrollHeight = document.documentElement.scrollHeight;
-  }
-  scrollHeight =
-    bodyScrollHeight - documentScrollHeight > 0
-      ? bodyScrollHeight
-      : documentScrollHeight;
-  return scrollHeight;
-}
 
 export default props => {
   const classes = useStyles();
 
-  const { videos, loadNextPage } = props;
+  const { videos, loadNextPage, onUpdate, father } = props;
+  const fatherCache = father ? utils.globalCache[father] : undefined;
 
   function renderPage({ videosRendered }) {
-    return (<Box
-      className={classes.root}
-      display="flex"
-      flexWrap="wrap"
-      justifyContent="center"
-    >
-      {videosRendered.map((video, i) => { return <VideoCard key={i.toString()} video={video}></VideoCard> })}
-    </Box>)
+    return (
+      <React.Fragment>
+        <Box
+          className={classes.root}
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="center"
+        >
+          {videosRendered.map((video, i) => { return <VideoCard key={i.toString()} video={video}></VideoCard> })}
+        </Box>
+      </React.Fragment>
+    )
   }
 
   if (!loadNextPage) {
     return renderPage({ videosRendered: videos })
   }
 
-  const [state, setState] = React.useState({
-    page: 1,
-    videosRendered: []
-  })
+  const [state, setState] = React.useState(fatherCache ? {
+    page: fatherCache.initialPage,
+    videosRendered: fatherCache.videos,
+  } : {
+      page: 1,
+      videosRendered: [],
+    })
 
   const unmounted = React.useRef(false);
+
+  function update(things) {
+    if (onUpdate) {
+      onUpdate(things)
+    }
+  }
 
   function loadMore() {
     loadNextPage({ page: state.page }).then((rsp) => {
@@ -92,12 +58,23 @@ export default props => {
   }
 
   React.useEffect(() => {
-    window.onscroll = () => {
+    update({
+      videos: state.videosRendered,
+      initialPage: state.page
+    })
+    if (fatherCache.recover) {
+      window.scrollTo(0, fatherCache.scrollY);
+      fatherCache.recover = false;
+    }
+
+    window.onscroll = utils.debounce(() => {
+      update({ scrollY: utils.getDocumentTop() })
       unmounted.current = false;
-      if (getScrollHeight() === getWindowHeight() + getDocumentTop()) {
+      if (utils.getScrollHeight() === utils.getWindowHeight() + utils.getDocumentTop()) {
         loadMore();
       }
-    }
+    }, 300);
+
     if (state.videosRendered.length === 0) {
       loadMore();
     }
@@ -107,6 +84,10 @@ export default props => {
       window.onscroll = null;
     }
   });
+
+  if (!state.initialized) {
+    setState({ ...state, initialized: true })
+  }
 
   return renderPage(state);
 }
