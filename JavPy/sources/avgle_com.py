@@ -13,7 +13,6 @@ class AVGleCom(ISearchByCode):
         av = AV()
         av.title = rsp["response"]["videos"][0]["title"]
         av.video_url = rsp["response"]["videos"][0]["video_url"]
-        print(av.video_url)
         av.code = code
         av.preview_img_url = rsp["response"]["videos"][0]["preview_url"]
         return av
@@ -24,4 +23,5 @@ class AVGleCom(ISearchByCode):
 
 
 if __name__ == "__main__":
-    AVGleCom.test()
+    # AVGleCom.test()
+    print(AVGleCom.search_by_code("SKSK-024").to_dict())

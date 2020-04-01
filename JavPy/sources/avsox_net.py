@@ -2,7 +2,7 @@ import requests
 import bs4
 from JavPy.functions.datastructure import Brief
 import re
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import noexcept
 from JavPy.sources.BaseSource import IGetBrief
 from JavPy.utils.config import proxy
 
@@ -32,9 +32,9 @@ class AVSoxNet(IGetBrief):
         img = movie.select(".screencap", limit=1)[0].a.img
         brief.title = img.attrs["title"]
 
-        brief.release_date = try_evaluate(
+        brief.release_date = noexcept(
             lambda: re.search(mcs.__release_date_pattern, str(movie)).group(1), ""
-        )[0]
+        )
 
         brief.actress = ", ".join(
             x.text for x in bs.select("#avatar-waterfall", limit=1)[0].find_all("span")

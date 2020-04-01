@@ -1,5 +1,5 @@
 import datetime
-from JavPy.utils.common import try_evaluate, assign
+from JavPy.utils.common import noexcept, assign
 from typing import Union, Optional, List
 
 
@@ -23,7 +23,7 @@ class AV:
         if isinstance(date, datetime.datetime):
             self.__release_date = date
         else:
-            self.__release_date, _ = try_evaluate(
+            self.__release_date = noexcept(
                 lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None
             )
 
@@ -59,7 +59,7 @@ class Brief:
         if isinstance(date, datetime.datetime):
             self.__release_date = date
         else:
-            self.__release_date, _ = try_evaluate(
+            self.__release_date = noexcept(
                 lambda: datetime.datetime.strptime(date, "%Y-%m-%d"), None
             )
 

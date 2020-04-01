@@ -7,7 +7,7 @@ from JavPy.sources.BaseSource import (
 import requests
 import bs4
 from JavPy.functions.datastructure import Actress, Brief
-from JavPy.utils.common import try_evaluate
+from JavPy.utils.common import noexcept
 import datetime
 from JavPy.utils.config import proxy
 
@@ -33,7 +33,7 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
             return None
 
         # cache for later parsing actress info, None for no url
-        url, _ = try_evaluate(lambda: box.a.attrs["href"])
+        url = noexcept(lambda: box.a.attrs["href"])
         detail_url = "http://warashi-asian-pornstars.fr/%s" % url
         mcs.__actress_detail_url[name] = detail_url
         mcs.__actress_detail_url[jp_name] = detail_url

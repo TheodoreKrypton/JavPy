@@ -21,7 +21,9 @@ white_lists_single = [
 registered_cookie = set()
 
 
-def check_password(hashed):
+def check_password(hashed, ip):
+    if not check_ip(ip):
+        return False
     if hashed_password == hashed:
         return True
     return False
@@ -50,8 +52,6 @@ def check_request(request):
         return True
     if not check_ip(request.remote_addr):
         return False
-    if not password:
-        return True
     data = json.loads(request.data.decode("utf-8"))
     if "userpass" not in data or data["userpass"] not in registered_cookie:
         print(registered_cookie)

@@ -3,14 +3,31 @@ import requests
 from JavPy.utils.config import proxy
 import re
 
+# according to https://www.youav.com/css/object.js
+_button2server = {
+    1: 7,
+    2: 8,
+    3: 2,
+    101: 2,
+    7: 4
+}
+
 
 class youav_com(BaseEmbed):
     @staticmethod
     def decode(url):
         rsp = requests.get(url, proxies=proxy)
         pid = re.search(r'var video_id = "(\d+)"', rsp.text).group(1)
-        server = re.search(r'<button id="btn(\d+)"', rsp.text).group(1)
+        button = re.search(r'<button id="btn(\d+)"', rsp.text).group(1)
+        if int(button) in _button2server:
+            server = str(_button2server[int(button)])
+        else:
+            server = button
         rsp = requests.get("https://www.youav.com/ajax/hls.php?server=%s&pid=%s" % (server, pid), proxies=proxy)
+
+        if rsp.text.startswith("http"):
+            return rsp.text
+
         m3u8 = re.search('file: "(.+?)"', rsp.text).group(1)
         return m3u8
 

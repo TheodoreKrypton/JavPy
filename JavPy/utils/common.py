@@ -1,18 +1,17 @@
 import datetime
 import functools
 import re
+from typing import Iterable
 
-version = "0.3.8"
+version = "0.4.0"
 
 
-def try_evaluate(lambda_expression, default=None):
-    def evaluate(expression):
-        try:
-            return expression(), None
-        except Exception as ex:
-            return default, ex
-
-    return evaluate(lambda_expression)
+def noexcept(lambda_expression, default=None, return_exception=False):
+    try:
+        res = lambda_expression()
+        return res if not return_exception else (res, None)
+    except Exception as ex:
+        return default if not return_exception else (default, ex)
 
 
 def cache(func):
@@ -55,14 +54,16 @@ def get_func_full_name(func):
 
 
 def assign(origin, new):
-    for k in new.__dict__.keys():
-        v = getattr(new, k)
+    for k in new.__slots__:
+        if k.startswith("__"):
+            k = k[2:]
+        v = new.__getattribute__(k)
         if v:
-            setattr(origin, k, v)
+            origin.__setattr__(k, v)
     return origin
 
 
-def conclude(objects):
+def conclude(objects: Iterable):
     if objects is None:
         return None
     objects = list(filter(lambda x: x, objects))

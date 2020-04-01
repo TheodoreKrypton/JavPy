@@ -6,7 +6,7 @@ from JavPy.functions.datastructure import AV, Brief
 from JavPy.functions.magnet import Magnet
 from JavPy.functions.history_names import HistoryNames
 from JavPy.functions.actress_info import ActressInfo
-from JavPy.utils.requester import spawn_many, Task, spawn
+from JavPy.utils.requester import submit, wait_for_all
 import os
 import json
 from JavPy.utils.common import cache
@@ -19,11 +19,13 @@ class Functions:
     @staticmethod
     @cache
     def search_by_code(code):
-        av, brief_info = spawn_many(
-            (Task(SearchByCode.search, code), Task(Functions.get_brief, code))
-        ).wait_for_all_finished()
+        av = submit(SearchByCode.search, code)
+        brief_info = submit(Functions.get_brief, code)
+
+        av = av.result()
         if av:
             res = av
+            brief_info = brief_info.result()
             if brief_info:
                 res.actress = brief_info.actress if brief_info.actress else ""
                 res.release_date = brief_info.release_date
@@ -61,7 +63,7 @@ class Functions:
     @staticmethod
     @cache
     def get_magnet(code):
-        return spawn(Magnet.get_magnet, code).wait_for_result()
+        return submit(Magnet.get_magnet, code).result()
 
     @staticmethod
     @cache
@@ -81,3 +83,7 @@ class Functions:
     @cache
     def get_actress_info(actress):
         return ActressInfo.get_actress_info(actress)
+
+
+if __name__ == '__main__':
+    print(Functions.search_by_code("SKSK-024").to_dict())

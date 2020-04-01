@@ -13,18 +13,18 @@ from flask_cors import CORS
 from JavPy.functions import Functions
 import json
 import os
-from JavPy.utils.requester import spawn
 import JavPy.utils.config as config
 import JavPy.utils.buggyauth as auth
-from JavPy.utils.common import urldecode
 from copy import deepcopy
 import requests
 from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-web_dist_path = base_path + "/app/web/dist"
-app = Flask(__name__, template_folder="templates")
+static_folder = base_path + '/app/javpy-react/build/static'
+template_folder = base_path + "/app/javpy-react/build"
+
+app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 CORS(app, resources=r"/*")
 
 
@@ -45,7 +45,7 @@ def before_request():
 def auth_by_password():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
-    if auth.check_password(params["password"]):
+    if auth.check_password(params["password"], request.remote_addr):
         cookie = auth.generate_cookie(request)
         return cookie
     else:
@@ -70,6 +70,7 @@ def update_config():
     config.Config.save_config()
 
     import importlib
+
     importlib.reload(config)
     importlib.reload(auth)
     return ""
@@ -77,15 +78,17 @@ def update_config():
 
 @app.route("/")
 def index():
-    return send_static("index.html")
+    return send_from_directory(template_folder, "index.html")
 
 
 @app.route("/<path:path>")
-def send_static(path):
-    if not os.path.exists(web_dist_path + "/" + path):
-        return send_from_directory(web_dist_path, "index.html")
-    else:
-        return send_from_directory(web_dist_path, path)
+def serve_static(path):
+    return send_from_directory(template_folder, path)
+
+#
+# @app.route("/manifest.json")
+# def manifest_json():
+#     return send_from_directory(base_path + '/app/javpy-react/build/', 'manifest.json')
 
 
 @app.route("/search_by_code", methods=["POST"])
@@ -95,7 +98,9 @@ def search_by_code():
     res = {"videos": None, "other": None}
     if params["code"]:
         try:
-            res["videos"] = [Functions.search_by_code(params["code"]).to_dict()]
+            videos = Functions.search_by_code(params["code"])
+            if videos:
+                res["videos"] = [videos.to_dict()]
             rsp = jsonify(res)
         except AttributeError:
             rsp = make_response("")
@@ -111,9 +116,7 @@ def search_by_actress():
     print(params)
     actress = params["actress"]
     history_name = params["history_name"] == "true"
-    briefs, names = spawn(
-        Functions.search_by_actress, actress, None, history_name
-    ).wait_for_result()
+    briefs, names = Functions.search_by_actress(actress, None, history_name)
 
     res = {
         "videos": [brief.to_dict() for brief in briefs],
@@ -176,6 +179,8 @@ def actress_info():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
     res = Functions.get_actress_info(params["actress"])
+    if res is None:
+        return ""
     rsp = jsonify(res.to_dict())
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
@@ -184,7 +189,7 @@ def actress_info():
 # dmm.co.jp blocks direct image request. so use this proxy when there is a loading error.
 @app.route("/img")
 def img():
-    src = request.args['src']
+    src = request.args["src"]
     content = requests.get(src, proxies=proxy).content
     if src.endswith("jpg") or src.endswith("jpeg"):
         return Response(content, mimetype="image/jpeg")
@@ -198,12 +203,6 @@ def img():
 # avoid the main window being redirect to annoying ads pages.
 @app.route("/redirect_to")
 def open_url():
-    rsp = redirect(request.args['url'])
+    rsp = redirect(request.args["url"])
     rsp.headers["origin"] = ""
     return rsp
-
-
-@app.route("/render_in_iframe")
-def render_in_iframe():
-    print(urldecode(request.args['url'], 'utf-8'))
-    return render_template("iframe.html", video_url=urldecode(request.args['url'], 'utf-8'))

@@ -20,6 +20,7 @@ class avgle(BaseEmbed):
             + "/"
             + urllib.parse.quote(title.encode("utf-8"))
         )
+
         return url
 
     @staticmethod
