@@ -11,7 +11,8 @@ Docker | [![Auto Docker Build](https://img.shields.io/docker/cloud/automated/whe
 Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20chat-blue?style=social&logo=telegram)](https://t.me/JavPyGroup) 
 
 
-**Attention**: This project has dropped support for Python2, and all `python` command below refer to Python3.5 or higher
+**Attention**: 
+* This project has dropped support for Python2, and all `python` command below refer to Python3.5 or higher
 
 ## Quick Start
 
@@ -55,7 +56,6 @@ open http://localhost:8081 in explorer and enjoy driving!
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
 
 $ cd JavPy/JavPy/app/web/
-$ sudo npm install -g @vue/cli
 $ npm install
 $ npm run build
 
@@ -82,7 +82,7 @@ $ PYTHONPATH=. python JavPy/develop.py
 Front End:
 ```
 $ cd JavPy/JavPy/app/web/
-$ npm run serve
+$ npm start
 ```
 
 **Attention**: Contributors are advised to modify the port to 8081 in `src/api/index.js` **when debugging** and make sure they recover it before releasing. 
