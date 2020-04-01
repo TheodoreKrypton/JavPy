@@ -15,4 +15,4 @@ class SearchByCode:
 if __name__ == "__main__":
     # print(Search.search_by_code("DFE-023").to_dict())
     # print(Search.search_by_actress("原更紗", 30))
-    print(SearchByCode.search("ABP-231").video_url)
+    print(SearchByCode.search("ABP-123").video_url)

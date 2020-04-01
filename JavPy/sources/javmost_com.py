@@ -60,7 +60,13 @@ class JavMostCom(ISearchByCode, INewlyReleased):
             if "This video is not available on this platform." in requests.get(url).text:
                 return None
 
-        return url
+        if url.endswith(".m3u8") or url.endswith(".mp4"):
+            return url
+
+        if requests.head(url).status_code == 200:
+            return url
+
+        return None
 
     @classmethod
     def search_by_code(mcs, code):
@@ -153,4 +159,4 @@ class JavMostCom(ISearchByCode, INewlyReleased):
 
 if __name__ == "__main__":
     # JavMostCom.test()
-    print(JavMostCom.search_by_code("HND-816").to_dict())
+    print(JavMostCom.search_by_code("ABP-123").to_dict())
