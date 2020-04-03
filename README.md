@@ -2,7 +2,7 @@
 
 Indicator|Status
 :---: | :---:
-Online Demo | [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy) 
+Online Demo | [![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat&svg=1)](https://javpy.herokuapp.com) [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy) 
 Ubuntu & Mac OS | ![Build Status](https://github.com/TheodoreKrypton/JavPy/workflows/JavPy%20Build%20Test/badge.svg)
 Windows | [![Build Status](https://theodorekrypton.visualstudio.com/JavPy/_apis/build/status/JavPy-Windows?branchName=release)](https://theodorekrypton.visualstudio.com/JavPy/_build/latest?definitionId=3&branchName=release)
 Coverage | [![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/release/graph/badge.svg)](https://codecov.io/gh/TheodoreKrypton/JavPy)
