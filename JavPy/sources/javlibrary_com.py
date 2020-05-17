@@ -89,4 +89,5 @@ class JavLibraryCom(INewlyReleased, IGetBrief):
 
 
 if __name__ == "__main__":
-    JavLibraryCom.test()
+    # JavLibraryCom.test()
+    print(JavLibraryCom.get_brief("SSNI-790").to_dict())

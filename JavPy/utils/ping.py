@@ -3,6 +3,10 @@ from JavPy.utils.requester import executor, map_f, PlaceHolder
 from JavPy.utils.config import proxy
 
 
+def test(url):
+    return requests.head(url, proxies=proxy).status_code == 200
+
+
 def ping(url, n=5):
     latencies = list(map(lambda rsp: rsp.elapsed.microseconds, filter(
         lambda rsp: rsp and rsp.status_code == 200, executor.map(

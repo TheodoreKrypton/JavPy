@@ -3,6 +3,7 @@ from JavPy.functions.sources import Sources
 from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
 from JavPy.utils.requester import submit, wait_until
+from JavPy.functions.actress_info import ActressInfo
 
 
 class SearchByActress:
@@ -20,20 +21,29 @@ class SearchByActress:
         return lang
 
     @classmethod
-    def search(cls, actress, up_to, history_name=False):
+    def search(cls, actress, up_to, with_profile=False):
         lang = cls.__guess_lang(actress)
 
         if lang == "en":
             actress = ActressTranslate.translate2jp(actress)
         if actress:
-            videos = [submit(source.search_by_actress, actress, up_to)
-                      for source in Sources.SearchByActress]
-            if history_name:
+            videos = [
+                submit(source.search_by_actress, actress, up_to)
+                for source in Sources.SearchByActress
+            ]
+            if with_profile:
+                profile = submit(ActressInfo.get_actress_info, actress)
                 names = submit(HistoryNames.get_history_names, actress)
-                return wait_until(videos), names.result()
+                names = names.result()
+                profile = profile.result()
+                print(names, profile.to_dict())
+                profile.other["history_names"] = list(
+                    set(names).union(set(profile.other["history_names"]))
+                )
+                return wait_until(videos), profile
             else:
                 return wait_until(videos), None
 
 
-if __name__ == '__main__':
-    print(SearchByActress.search("飯岡かなこ", None, True))
+if __name__ == "__main__":
+    print(SearchByActress.search("Eimi Fukada", None, True))

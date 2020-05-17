@@ -10,4 +10,4 @@ class Brief:
 
 
 if __name__ == '__main__':
-    print(Brief.get_brief("YST-217").to_dict())
+    print(Brief.get_brief("SSNI-790").to_dict())

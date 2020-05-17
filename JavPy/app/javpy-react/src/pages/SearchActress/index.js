@@ -27,7 +27,7 @@ export default (props) => {
       videos: [],
       loading: true
     });
-    api.searchByActress({ actress: name, withHistoryName: "false" }).then((rsp) => {
+    api.searchByActress({ actress: name, withProfile: "false" }).then((rsp) => {
       setState({
         ...state,
         videos: rsp && rsp.videos.length ? rsp.videos : null,
@@ -40,7 +40,7 @@ export default (props) => {
     if (!actressProfile) {
       return <></>
     }
-    return <ActressProfile info={actressProfile} name={query.get("actress")}></ActressProfile>
+    return <ActressProfile profile={actressProfile} name={query.get("actress")}></ActressProfile>
   }
 
   const renderHistoryNames = (historyNames) => {
@@ -88,28 +88,14 @@ export default (props) => {
 
   React.useEffect(() => {
     if (!state.initialized) {
-      Promise.all([
-        api.searchByActress({ actress: query.get("actress"), withHistoryName: "true" }),
-        api.actressInfo({ actress: query.get("actress") })
-      ]).then((rsp) => {
+      api.searchByActress({ actress: query.get("actress"), withProfile: "true" }).then((rsp) => {
         if (unmounted.current) {
           return;
-        }
-        let newState = {};
-        if (rsp[0]) {
-          newState.videos = rsp[0].videos;
-          newState.historyNames = rsp[0].other.history_names;
-        } else {
-          newState.videos = null;
-        }
-
-        if (rsp[1]) {
-          newState.actressProfile = rsp[1];
         }
 
         setState({
           ...state,
-          ...newState,
+          ...rsp,
           loading: false,
           initialized: true
         })

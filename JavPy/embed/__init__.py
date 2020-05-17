@@ -6,7 +6,7 @@ from JavPy.embed.playfinder_xyz import playfinder_xyz
 from JavPy.embed.javcl_me import javcl_me
 
 
-embeds = [fembed, avgle, smartshare_tv, hydrax_net, playfinder_xyz, javcl_me]
+embeds = [avgle, hydrax_net]
 
 
 def decode(url):

@@ -7,7 +7,7 @@ import utils from '../utils';
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
 // only for developement
-// address = `${window.location.protocol}//${window.location.hostname}:8081`;
+address = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 
 function setUserpass(val) {
@@ -70,23 +70,30 @@ async function getNewlyReleased({ page }) {
   }
 }
 
-async function searchByActress({ actress, withHistoryName }) {
+async function searchByActress({ actress, withProfile }) {
   if (utils.globalCache.searchActress.videos[actress] !== undefined) {
     return new Promise((resolve) => {
       resolve({
         videos: utils.globalCache.searchActress.videos[actress],
-        other: {
-          history_name: utils.globalCache.searchActress.historyNames[actress]
-        }
+        actressProfile: utils.globalCache.searchActress.actressProfile[actress],
+        historyNames: utils.globalCache.searchActress.historyNames[actress]
       });
     })
   }
 
-  const rsp = await pookie("/search_by_actress", { actress, history_name: withHistoryName });
+  const rsp = await pookie("/search_by_actress", { actress, with_profile: withProfile });
   if (rsp && rsp.status === 200 && rsp.data) {
     utils.globalCache.searchActress.videos[actress] = rsp.data.videos;
 
-    const historyNames = rsp.data.other.history_names;
+    const profile = rsp.data.profile;
+
+    if (profile) {
+      utils.globalCache.searchActress.actressProfile[actress] = profile;
+    } else {
+      utils.globalCache.searchActress.actressProfile[actress] = null;
+    }
+
+    const historyNames = rsp.data.history_names;
     if (historyNames) {
       utils.globalCache.searchActress.historyNames[actress] = historyNames;
       for (let i = 0; i < historyNames.length; i++) {
@@ -96,27 +103,15 @@ async function searchByActress({ actress, withHistoryName }) {
 
     return {
       videos: rsp.data.videos,
-      other: rsp.data.other
+      actressProfile: rsp.data.profile,
+      historyNames: rsp.data.history_names
     }
-  } else {
-    return null;
-  }
-}
-
-async function actressInfo({ actress }) {
-  if (utils.globalCache.searchActress.profile[actress] !== undefined) {
-    return new Promise((resolve) => {
-      resolve(utils.globalCache.searchActress.profile[actress]);
-    })
   }
 
-  const rsp = await pookie("/actress_info", { actress })
-  if (rsp && rsp.status === 200 && rsp.data) {
-    utils.globalCache.searchActress.profile[actress] = rsp.data;
-    return rsp.data;
-  } else {
-    utils.globalCache.searchActress.profile[actress] = null;
-    return null;
+  return {
+    videos: null,
+    actressProfile: null,
+    historyNames: []
   }
 }
 
@@ -146,7 +141,6 @@ export default {
   searchByCode,
   getNewlyReleased,
   searchByActress,
-  actressInfo,
   searchMagnet,
   authByPassword
 };

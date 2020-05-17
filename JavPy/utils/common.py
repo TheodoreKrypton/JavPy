@@ -3,7 +3,7 @@ import functools
 import re
 from typing import Iterable
 
-version = "0.4.0"
+version = "0.4.1"
 
 
 def noexcept(lambda_expression, default=None, return_exception=False):
