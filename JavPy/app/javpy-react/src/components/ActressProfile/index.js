@@ -20,9 +20,9 @@ function formatDate(date) {
 export default (props) => {
   const classes = useStyles();
 
-  const { name, info } = props;
+  const { name, profile } = props;
 
-  if (!info) {
+  if (!profile) {
     return <></>
   }
 
@@ -34,20 +34,20 @@ export default (props) => {
             {name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Birthdate: {formatDate(info.birth_date)}
+            Birthdate: {formatDate(profile.birth_date)}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Height: {info.height}
+            Height: {profile.height}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Weight: {info.weight}
+            Weight: {profile.weight}
           </Typography>
         </CardContent>
       </div>
       <CardMedia
         component="img"
         className={classes.cover}
-        image={info.img}
+        image={profile.img}
         title="Live from space album cover"
       />
     </Card>

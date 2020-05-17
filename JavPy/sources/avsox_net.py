@@ -55,4 +55,5 @@ class AVSoxNet(IGetBrief):
 
 
 if __name__ == "__main__":
-    AVSoxNet.test()
+    # AVSoxNet.test()
+    print(AVSoxNet.get_brief("ARM-868").to_dict())

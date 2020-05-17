@@ -101,19 +101,19 @@ class Magnet:
 
 
 class Actress:
-    __slots__ = ['history_names', 'birth_date', 'img', 'height', 'weight', 'other']
+    __slots__ = ['birth_date', 'img', 'height', 'weight', 'other']
 
     def __init__(self):
-        self.history_names = []
         self.birth_date = None
         self.img = ""
         self.height = ""
         self.weight = ""
-        self.other = {}
+        self.other = {
+            "history_names": []
+        }
 
     def to_dict(self):
         return {
-            "history_names": self.history_names,
             "birth_date": self.birth_date,
             "img": self.img,
             "height": self.height,

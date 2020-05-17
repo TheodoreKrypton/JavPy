@@ -13,7 +13,7 @@ const globalCache = {
   },
   searchActress: {
     recover: false,
-    profile: {},
+    actressProfile: {},
     historyNames: {},
     videos: {},
     scrollY: null

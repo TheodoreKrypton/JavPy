@@ -10,9 +10,10 @@ from JavPy.functions.datastructure import Actress, Brief
 from JavPy.utils.common import noexcept
 import datetime
 from JavPy.utils.config import proxy
+from JavPy.utils.ping import test
 
 
-class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
+class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchByActress):
     __actress_detail_url = {}
 
     @classmethod
@@ -21,7 +22,44 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
 
     @classmethod
     def get_brief(mcs, code):
-        pass
+        url = "http://warashi-asian-pornstars.fr/en/s-12/search"
+
+        payload = "recherche_critere=v&recherche_valeur=" + code
+        headers = {
+            'content-type': "application/x-www-form-urlencoded"
+        }
+
+        response = requests.post(url, data=payload, headers=headers, proxies=proxy)
+        bs = bs4.BeautifulSoup(response.text, "lxml")
+        div = bs.select(".resultat-film")[0]
+        url = "http://warashi-asian-pornstars.fr" + div.a.attrs['href']
+
+        response = requests.get(url)
+        bs = bs4.BeautifulSoup(response.text, "lxml")
+        div = bs.select("#fiche-film-infos")[0]
+        ps = div.find_all(name='p')
+
+        brief = Brief()
+        brief.preview_img_url = "http://warashi-asian-pornstars.fr" + bs.select('video')[0].attrs["poster"]
+        brief.code = code
+
+        for p in ps:
+            text = p.text
+            if ":" not in text:
+                continue
+            tokens = text.split(":")
+            if len(tokens) != 2:
+                continue
+            k, v = tokens
+            if k == "original title":
+                brief.title = v.strip()
+            if k == "release date":
+                brief.release_date = datetime.datetime.strptime(v.strip(), "%B %d, %Y")
+
+        div = bs.select("#casting-f")[0]
+        brief.actress = ",".join((p.text for p in div.select(".ja")))
+
+        return brief
 
     @classmethod
     def __check_name_in_box(mcs, name, box):
@@ -106,7 +144,7 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
             names = also_known_as.find_all(name="li")
             history_names.update((name.find_all(name="span")[1].text for name in names))
 
-        actress_info.history_names = list(history_names)
+        actress_info.other["history_names"] = list(history_names)
 
         # get other info
         ps = info_field.find_all(name="p")
@@ -140,4 +178,5 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo):
 
 
 if __name__ == "__main__":
-    WarashiAsianPornStarsFr.test()
+    # WarashiAsianPornStarsFr.test()
+    print(WarashiAsianPornStarsFr.get_brief("SKSK-024").to_dict())

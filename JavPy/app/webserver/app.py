@@ -21,7 +21,7 @@ from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-static_folder = base_path + '/app/javpy-react/build/static'
+static_folder = base_path + "/app/javpy-react/build/static"
 template_folder = base_path + "/app/javpy-react/build"
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
@@ -115,13 +115,21 @@ def search_by_actress():
     params = json.loads(request.data.decode("utf-8"))
     print(params)
     actress = params["actress"]
-    history_name = params["history_name"] == "true"
-    briefs, names = Functions.search_by_actress(actress, None, history_name)
+    with_profile = params["with_profile"] == "true"
+    briefs, profile = Functions.search_by_actress(actress, None, with_profile)
 
-    res = {
-        "videos": [brief.to_dict() for brief in briefs],
-        "other": {"history_names": names},
-    }
+    if with_profile:
+        history_names = profile.other["history_names"]
+
+        res = {
+            "videos": [brief.to_dict() for brief in briefs],
+            "profile": profile.to_dict(),
+            "history_names": history_names,
+        }
+
+    else:
+        res = {"videos": [brief.to_dict() for brief in briefs]}
+
     rsp = jsonify(res)
     rsp.headers["Access-Control-Allow-Origin"] = "*"
     return rsp
