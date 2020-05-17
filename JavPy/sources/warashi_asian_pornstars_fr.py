@@ -72,7 +72,7 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
 
         # cache for later parsing actress info, None for no url
         url = noexcept(lambda: box.a.attrs["href"])
-        detail_url = "http://warashi-asian-pornstars.fr/%s" % url
+        detail_url = "http://warashi-asian-pornstars.fr%s" % url
         mcs.__actress_detail_url[name] = detail_url
         mcs.__actress_detail_url[jp_name] = detail_url
         return jp_name
@@ -123,7 +123,11 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
                 "http://warashi-asian-pornstars.fr/"
                 + image.find(name="img").attrs["src"]
             )
-
+        else:
+            image = bs.select("#casting-profil-preview")
+            if image:
+                actress_info.img = "http://warashi-asian-pornstars.fr" + image[0].figure.img.attrs["src"]
+                return actress_info
         info_field = bs.select("#pornostar-profil-infos")
 
         if not info_field:
@@ -141,7 +145,7 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
         also_known_as = info_field.select("#pornostar-profil-noms-alternatifs")
         if also_known_as:
             also_known_as = also_known_as[0]
-            names = also_known_as.find_all(name="li")
+            names = filter(lambda x: "span" in str(x), also_known_as.find_all(name="li"))
             history_names.update((name.find_all(name="span")[1].text for name in names))
 
         actress_info.other["history_names"] = list(history_names)
@@ -179,4 +183,4 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
 
 if __name__ == "__main__":
     # WarashiAsianPornStarsFr.test()
-    print(WarashiAsianPornStarsFr.get_brief("SKSK-024").to_dict())
+    print(WarashiAsianPornStarsFr.get_actress_info("唯川みさき").to_dict())

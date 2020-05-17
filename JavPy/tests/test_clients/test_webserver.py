@@ -45,14 +45,13 @@ def test_search_by_code(code):
 def test_search_by_actress(actress):
     rv = client.post(
         "/search_by_actress",
-        data=json.dumps({"actress": actress, "history_name": "true", "userpass": get_userpass()})
+        data=json.dumps({"actress": actress, "with_profile": "true", "userpass": get_userpass()})
     )
     assert rv.status_code == 200
     rsp = json.loads(rv.data.decode("utf-8"))
     assert rsp
-    assert "other" in rsp
-    assert "history_names" in rsp["other"]
-    assert len(rsp["other"]["history_names"]) > 0
+    assert "history_names" in rsp
+    assert len(rsp["history_names"]) > 0
     assert "videos" in rsp
     assert len(rsp["videos"]) > 0
 
@@ -77,7 +76,6 @@ def test_newly_released(data):
 if __name__ == "__main__":
     # test_static_files()
     # test_search_by_code()
-    # test_search_by_actress()
+    test_search_by_actress()
     # test_search_magnet_by_code()
     # test_newly_released()
-    print(get_userpass())

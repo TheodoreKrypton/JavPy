@@ -4,6 +4,7 @@ from JavPy.functions.actress_translate import ActressTranslate
 from JavPy.functions.history_names import HistoryNames
 from JavPy.utils.requester import submit, wait_until
 from JavPy.functions.actress_info import ActressInfo
+from JavPy.functions.datastructure import Actress
 
 
 class SearchByActress:
@@ -36,10 +37,13 @@ class SearchByActress:
                 names = submit(HistoryNames.get_history_names, actress)
                 names = names.result()
                 profile = profile.result()
-                print(names, profile.to_dict())
-                profile.other["history_names"] = list(
-                    set(names).union(set(profile.other["history_names"]))
-                )
+                if profile is None:
+                    profile = Actress()
+                    profile.other["history_names"] = names
+                else:
+                    profile.other["history_names"] = list(
+                        set(names).union(set(profile.other["history_names"]))
+                    )
                 return wait_until(videos), profile
             else:
                 return wait_until(videos), None
