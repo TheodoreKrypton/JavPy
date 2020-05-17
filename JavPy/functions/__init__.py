@@ -86,4 +86,5 @@ class Functions:
 
 
 if __name__ == '__main__':
-    print(Functions.search_by_code("SKSK-024").to_dict())
+    # print(Functions.search_by_code("SKSK-024").to_dict())
+    print(Functions.search_by_actress("川合まゆ", None))
