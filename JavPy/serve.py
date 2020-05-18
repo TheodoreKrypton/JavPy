@@ -4,6 +4,7 @@ import os
 import time
 import threading
 import sys
+import argparse
 
 print(
     r"""
@@ -18,7 +19,7 @@ print(
 
 
 def open_browser(port):
-    time.sleep(5)
+    time.sleep(3)
     url = "http://localhost:" + str(port)
 
     if "win32" in sys.platform:
@@ -29,9 +30,13 @@ def open_browser(port):
         os.system("open " + url)
 
 
-def serve(port=8081):
-    threading.Thread(target=open_browser, args=(port,)).start()
-    app.run("0.0.0.0", port, threaded=True)
+def serve():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, nargs='?', default="0.0.0.0", help="specify which ip should the app listen to")
+    parser.add_argument("--port", type=int, nargs='?', default=8081, help="specify which port should the app listen to")
+    args = parser.parse_args()
+    threading.Thread(target=open_browser, args=(args.port,)).start()
+    app.run("0.0.0.0", args.port, threaded=True)
 
 
 def serve_tg(token):

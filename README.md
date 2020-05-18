@@ -64,6 +64,25 @@ $ source ~/.bashrc
 
 $ javpy
 ```
+### Commandline Options
+
+```bash
+$ javpy --help
+
+                       __            ____
+                      / /___ __   __/ __ \__  __
+                 __  / / __ `/ | / / /_/ / / / /
+                / /_/ / /_/ /| |/ / ____/ /_/ /
+                \____/\__,_/ |___/_/    \__, /
+                                       /____/
+
+usage: javpy [-h] [--ip [IP]] [--port [PORT]]
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --ip [IP]      specify which ip should the app listen to
+  --port [PORT]  specify which port should the app listen to
+```
 
 ### Contributors:
 ```bash
