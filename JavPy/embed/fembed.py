@@ -11,7 +11,7 @@ class fembed(BaseEmbed):
         url = "http://www.fembed.com/api/source/" + code
         rsp = requests.post(url, proxies=proxy)
         json_obj = json.loads(rsp.text)
-        url = "http://www.fembed.com" + json_obj["data"][0]["file"]
+        url = json_obj["data"][0]["file"]
         rsp = requests.get(url, allow_redirects=False, proxies=proxy)
         return rsp.headers["Location"]
 
