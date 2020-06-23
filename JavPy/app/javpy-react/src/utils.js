@@ -9,7 +9,11 @@ const globalCache = {
     page: 1,
     videosRendered: []
   },
-  searchActress: {},
+  searchActress: {
+    videos: {},
+    actressProfile: {},
+    historyNames: {}
+  },
   videos: {}
 };
 
