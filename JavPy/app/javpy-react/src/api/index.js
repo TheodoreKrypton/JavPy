@@ -7,7 +7,7 @@ import utils from '../utils';
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
 // only for developement
-address = `${window.location.protocol}//${window.location.hostname}:8081`;
+// address = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 
 const setUserpass = (val) => {

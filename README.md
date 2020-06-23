@@ -137,11 +137,11 @@ This library fetches information from various websites, but most of them are blo
 ### Configurations
 #### `ip-whitelist` and `password`
 
-**如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，并**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面右上角的设置按钮配置选项。
+**如果你将服务部署在一个远程机器**，像是云虚拟专用服务器上，你可能会担心网站被其他未经许可的人访问。在**0.2.5**发布版后，JavPy会自动创建一个配置文件`~/.JavPy/config.json`。你可以**将你的私人ip或ip段**添加到文件中，并**创建一个密码**。未被认证的访问将被拦截并得到一个400错误响应。你也可以在页面左上角的设置按钮配置选项。
 
 ----
 
-**If you want to run the server on a remote machine** like a cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file and **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top right of tha web page.
+**If you want to run the server on a remote machine** like a cloud VPS, you may be worry about the website being accessed by unauthorised people. After release **0.2.5**, JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file and **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top left of tha web page.
 
 #### `proxy`
 
@@ -154,6 +154,11 @@ This library fetches information from various websites, but most of them are blo
 If you need to use a proxy, simply set the `proxy` field in the `~/.JavPy/config.json`. Currently both socks5 and http proxies are supported.
 
 Example: `proxy: "http://127.0.0.1:1080"`
+
+
+**注意：**若使用docker进行服务，请务必记得在退出docker前将config文件保存，不管是通过`docker cp`进行备份或通过`docker commit`提交修改。
+
+**Attention:** If you are serving with docker, please don't forget to save your config file before exiting the container. You can either backup the config file with `docker cp` or save your changes into an image with `docker commit`.
 
 ## Telegram Bot
 

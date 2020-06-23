@@ -64,5 +64,5 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
 if __name__ == "__main__":
     # IndexAVCom.test()
-    # print(IndexAVCom.get_brief("YMDD-192").to_dict())
-    print(IndexAVCom.search_by_actress("飯岡かなこ", up_to=None)[0].to_dict())
+    print(IndexAVCom.get_brief("YMDD-192").to_dict())
+    # print(IndexAVCom.search_by_actress("飯岡かなこ", up_to=None)[0].to_dict())
