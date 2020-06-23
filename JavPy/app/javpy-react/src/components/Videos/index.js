@@ -8,10 +8,15 @@ import utils from '../../utils';
 export default props => {
   const classes = useStyles();
 
-  const { videos, loadNextPage, onUpdate, father } = props;
-  const fatherCache = father ? utils.globalCache[father] : undefined;
+  const { initialState, loadNextPage } = props;
 
-  function renderPage({ videosRendered }) {
+  const [page, setPage] = React.useState(initialState.page);
+  const [videosRendered, setVideosRendered] = React.useState(initialState.videosRendered);
+  const [initialized, setInitialized] = React.useState(false);
+
+  // const [loading, setLoading] = React.useState(false);
+
+  const renderPage = () => {
     return (
       <React.Fragment>
         <Box
@@ -20,74 +25,44 @@ export default props => {
           flexWrap="wrap"
           justifyContent="center"
         >
-          {videosRendered.map((video, i) => { return <VideoCard key={i.toString()} video={video}></VideoCard> })}
+          {videosRendered.map((video, i) => { return <VideoCard key={i.toString()} video={video} ></VideoCard> })}
         </Box>
       </React.Fragment>
-    )
+    );
   }
 
   if (!loadNextPage) {
-    return renderPage({ videosRendered: videos })
-  }
-
-  const [state, setState] = React.useState(fatherCache ? {
-    page: fatherCache.initialPage,
-    videosRendered: fatherCache.videos,
-  } : {
-      page: 1,
-      videosRendered: [],
-    })
-
-  const unmounted = React.useRef(false);
-
-  function update(things) {
-    if (onUpdate) {
-      onUpdate(things)
-    }
-  }
-
-  function loadMore() {
-    loadNextPage({ page: state.page }).then((rsp) => {
-      if (rsp && !unmounted.current) {
-        setState({
-          videosRendered: state.videosRendered.concat(rsp),
-          page: state.page + 1
-        });
-      }
-    })
+    return renderPage();
   }
 
   React.useEffect(() => {
-    update({
-      videos: state.videosRendered,
-      initialPage: state.page
-    })
-    if (fatherCache.recover) {
-      window.scrollTo(0, fatherCache.scrollY);
-      fatherCache.recover = false;
-    }
+    (async () => {
+      if (!initialized) {
+        window.onscroll = utils.debounce(() => {
+          initialState.scrollY = utils.getDocumentTop();
+          if (utils.getScrollHeight() === utils.getWindowHeight() + utils.getDocumentTop()) {
+            initialState.page = page + 1;
+            setPage(initialState.page);
+          }
+        }, 100);
 
-    window.onscroll = utils.debounce(() => {
-      update({ scrollY: utils.getDocumentTop() })
-      unmounted.current = false;
-      if (utils.getScrollHeight() === utils.getWindowHeight() + utils.getDocumentTop()) {
-        loadMore();
+        if (initialState.scrollY) {
+          window.scrollTo(0, initialState.scrollY);
+        }
+
+        setInitialized(true);
       }
-    }, 300);
-
-    if (state.videosRendered.length === 0) {
-      loadMore();
-    }
-
+      const rsp = await loadNextPage({ page });
+      if (rsp) {
+        initialState.videosRendered = videosRendered.concat(rsp);
+        setVideosRendered(initialState.videosRendered);
+      }
+    })()
     return () => {
-      unmounted.current = true;
-      window.onscroll = null;
+      delete window.onscroll;
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
-  if (!state.initialized) {
-    setState({ ...state, initialized: true })
-  }
-
-  return renderPage(state);
+  return renderPage();
 }

@@ -12,11 +12,11 @@ class IndexAVCom(ISearchByActress, IGetBrief):
         url = "https://indexav.com/actor/" + actress
         rsp = requests.get(url, verify=False, proxies=proxy)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
-        cards = bs.select(".card")[:-1]
+        cards = bs.select(".video_column")
 
         res = []
         for card in cards:
-            brief = mcs.__get_brief_by_card(card)
+            brief = mcs.__get_brief_from_card(card)
             if brief:
                 res.append(brief)
             if up_to and len(res) >= up_to:
@@ -37,18 +37,16 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             return None
         if "Sad, cannot find any video in database" in cards[0].text:
             return None
-        return mcs.__get_brief_by_card(cards[0])
+        return mcs.__get_brief_from_card(cards[0])
 
     @staticmethod
-    def __get_brief_by_card(card):
-        columns = card.select(".column")
-        if not columns:  # like 飯岡かなこ
-            return None
-        code = columns[4].next.strip()
-        actress = ", ".join((x.text.strip() for x in columns[2].find_all(name="span")))
-        title = columns[3].text.strip()
-        img = noexcept(lambda: columns[3].a.attrs["rel"][0])
-        release_date = columns[1].text.strip()
+    def __get_brief_from_card(card):
+        code = card.select(".tag.is-link.is-light")[0].text.strip()
+        actress = ", ".join((x.text.strip() for x in card.select(".tag.is-primary.is-light")))
+        h5 = card.select(".title")[0]
+        title = h5.text.strip()
+        img = noexcept(lambda: h5.a.attrs["rel"][0])
+        release_date = card.select("footer")[0].p.text.strip()
 
         brief = Brief()
         brief.title = title
@@ -67,3 +65,4 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 if __name__ == "__main__":
     # IndexAVCom.test()
     print(IndexAVCom.get_brief("YMDD-192").to_dict())
+    # print(IndexAVCom.search_by_actress("飯岡かなこ", up_to=None)[0].to_dict())

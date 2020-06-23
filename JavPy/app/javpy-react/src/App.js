@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchBar from './components/SearchBar'
 import New from './pages/New'
 import './App.css';
 import theme from './theme';
@@ -18,6 +17,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import RouteHandler from './RouteHandler';
 import IFrame from './pages/IFrame';
+import TopArea from './components/TopArea';
 
 class App extends React.Component {
   static propTypes = {
@@ -43,7 +43,7 @@ class App extends React.Component {
           <ThemeProvider theme={theme}>
             <div>
               <Login></Login>
-              <SearchBar></SearchBar>
+              <TopArea></TopArea>
               <div>
                 <Switch>
                   <Redirect exact path="/" to="/new" />

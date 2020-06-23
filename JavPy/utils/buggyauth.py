@@ -6,8 +6,10 @@ import json
 
 
 sessions = set()
-password = Config.config["password"]
-hashed_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
+if "hashed-password" in Config.config:
+    hashed_password = Config.config["hashed-password"]
+else:
+    hashed_password = hashlib.sha256(Config.config["password"].encode("utf-8")).hexdigest()
 white_lists_ranges = [
     ipaddr.IPv4Network(ip_ranges)
     for ip_ranges in Config.config["ip-whitelist"]
