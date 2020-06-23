@@ -10,19 +10,19 @@ let address = `${window.location.protocol}//${window.location.hostname}:${window
 address = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 
-function setUserpass(val) {
+const setUserpass = (val) => {
   Cookie.set("userpass", val);
 }
 
-function getUserpass() {
+const getUserpass = () => {
   return Cookie.get("userpass");
 }
 
-function hasUserpass() {
+const hasUserpass = () => {
   return Cookie.get("userpass") !== undefined;
 }
 
-async function pookie(url, data) {
+const pookie = async (url, data) => {
   const userpass = getUserpass();
   if (!userpass) {
     return
@@ -32,7 +32,15 @@ async function pookie(url, data) {
   } else {
     data = { userpass }
   }
-  return await axios.post(`${address}${url}`, data).catch((err) => {
+
+  try {
+    const rsp = await axios.post(`${address}${url}`, data);
+    if (rsp) {
+      return rsp;
+    } else {
+      return null;
+    }
+  } catch (err) {
     if (!err.response || err.response.status === 400) {
       Cookie.remove("userpass");
       if (!utils.globalCache.refreshed) {
@@ -41,14 +49,12 @@ async function pookie(url, data) {
         utils.globalCache.refreshed = false;
       }
     }
-  });
+  }
 }
 
-async function searchByCode({ code }) {
+const searchByCode = async ({ code }) => {
   if (utils.globalCache.videos[code] !== undefined) {
-    return new Promise((resolve) => {
-      resolve(utils.globalCache.videos[code]);
-    })
+    return utils.globalCache.videos[code];
   }
 
   const rsp = await pookie("/search_by_code", { code });
@@ -61,7 +67,7 @@ async function searchByCode({ code }) {
   }
 }
 
-async function getNewlyReleased({ page }) {
+const getNewlyReleased = async ({ page }) => {
   const rsp = await pookie("/new", { page });
   if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data;
@@ -70,7 +76,7 @@ async function getNewlyReleased({ page }) {
   }
 }
 
-async function searchByActress({ actress, withProfile }) {
+const searchByActress = async ({ actress, withProfile }) => {
   if (utils.globalCache.searchActress.videos[actress] !== undefined) {
     return new Promise((resolve) => {
       resolve({
@@ -115,7 +121,7 @@ async function searchByActress({ actress, withProfile }) {
   }
 }
 
-async function searchMagnet({ code }) {
+const searchMagnet = async ({ code }) => {
   const rsp = await pookie("/search_magnet_by_code", { code });
   if (rsp && rsp.status === 200 && rsp.data) {
     return rsp.data;
@@ -124,13 +130,34 @@ async function searchMagnet({ code }) {
   }
 }
 
-async function authByPassword({ password }) {
+const authByPassword = async ({ password }) => {
   const rsp = await axios.post(`${address}/auth_by_password`, { password: sha256.sha256(password) });
   if (rsp && rsp.status === 200 && rsp.data) {
     setUserpass(rsp.data)
     return true;
   } else {
     return false;
+  }
+}
+
+const getConfigurations = async () => {
+  const rsp = await pookie("/get_config");
+  if (rsp && rsp.status === 200 && rsp.data) {
+    return rsp.data;
+  } else {
+    return null;
+  }
+}
+
+const updateConfigurations = async (data) => {
+  if (data.password) {
+    data.password = sha256.sha256(data.password);
+  }
+  const rsp = await pookie("/update_config", data);
+  if (rsp && rsp.status === 200 && rsp.data) {
+    return rsp.data;
+  } else {
+    return null;
   }
 }
 
@@ -142,5 +169,7 @@ export default {
   getNewlyReleased,
   searchByActress,
   searchMagnet,
-  authByPassword
+  authByPassword,
+  getConfigurations,
+  updateConfigurations
 };

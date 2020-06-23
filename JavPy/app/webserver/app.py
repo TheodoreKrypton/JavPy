@@ -55,8 +55,7 @@ def auth_by_password():
 @app.route("/get_config", methods=["POST"])
 def get_config():
     cfg = deepcopy(config.Config.config)
-    if "password" in cfg:
-        del cfg["password"]
+    cfg["password"] = ""
     return json.dumps(cfg)
 
 
@@ -64,9 +63,9 @@ def get_config():
 def update_config():
     data = json.loads(request.data.decode("utf-8"))
     if data["password"]:
-        config.Config.set_config("password", data["password"])
-    config.Config.set_config("ip-blacklist", data["ipBlacklist"])
-    config.Config.set_config("ip-whitelist", data["ipWhitelist"])
+        config.Config.set_config("hashed-password", data["password"])
+    config.Config.set_config("ip-blacklist", data["ip-blacklist"])
+    config.Config.set_config("ip-whitelist", data["ip-whitelist"])
     config.Config.save_config()
 
     import importlib

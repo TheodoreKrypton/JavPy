@@ -66,7 +66,7 @@ export default (props) => {
     if (!videos || (!state.loading && videos.length === 0)) {
       return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
     } else {
-      return <Videos videos={videos}></Videos>
+      return <Videos initialState={{ videosRendered: videos }}></Videos>
     }
   }
 

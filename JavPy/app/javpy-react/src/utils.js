@@ -6,18 +6,10 @@ function useQuery() {
 
 const globalCache = {
   new: {
-    recover: false,
-    videos: null,
-    initialPage: null,
-    scrollY: null
+    page: 1,
+    videosRendered: []
   },
-  searchActress: {
-    recover: false,
-    actressProfile: {},
-    historyNames: {},
-    videos: {},
-    scrollY: null
-  },
+  searchActress: {},
   videos: {}
 };
 

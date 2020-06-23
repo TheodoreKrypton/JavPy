@@ -22,7 +22,7 @@ export default () => {
     window.location.href = "/"
   }
 
-  let [input, setInput] = React.useState("");
+  const [input, setInput] = React.useState("");
 
   return (
     <Paper className={classes.root}>

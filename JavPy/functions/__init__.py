@@ -15,6 +15,11 @@ from functools import lru_cache
 LRU_CACHE_MAX_SIZE = None
 
 
+sources = {
+    
+}
+
+
 class Functions:
     @staticmethod
     @cache

@@ -5,19 +5,7 @@ import utils from '../../utils';
 
 
 export default (props) => {
-  if (utils.globalCache.new.videos === null) {
-    utils.globalCache.new.videos = [];
-  }
-
-  if (utils.globalCache.new.initialPage === null) {
-    utils.globalCache.new.initialPage = 1;
-  }
-
-  const handleUpdate = (update) => {
-    utils.globalCache.new = { ...utils.globalCache.new, ...update }
-  }
-
   return (
-    <Videos loadNextPage={api.getNewlyReleased} father="new" onUpdate={handleUpdate}></Videos>
+    <Videos loadNextPage={api.getNewlyReleased} initialState={utils.globalCache.new}></Videos>
   )
 }

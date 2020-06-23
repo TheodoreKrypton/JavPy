@@ -5,7 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './styles';
 
-function formatDate(date) {
+const formatDate = (date) => {
   if (!date) {
     return ""
   }
@@ -48,7 +48,6 @@ export default (props) => {
         component="img"
         className={classes.cover}
         image={profile.img}
-        title="Live from space album cover"
       />
     </Card>
   );
