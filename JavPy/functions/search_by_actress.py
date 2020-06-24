@@ -48,6 +48,8 @@ class SearchByActress:
             else:
                 return wait_until(videos), None
 
+        return [], None
+
 
 if __name__ == "__main__":
     print(SearchByActress.search("Eimi Fukada", None, True))

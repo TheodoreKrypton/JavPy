@@ -12,7 +12,6 @@ export default props => {
 
   const [page, setPage] = React.useState(initialState.page);
   const [videosRendered, setVideosRendered] = React.useState(initialState.videosRendered);
-  const [initialized, setInitialized] = React.useState(false);
 
   // const [loading, setLoading] = React.useState(false);
 
@@ -31,36 +30,40 @@ export default props => {
     );
   }
 
-  if (!loadNextPage) {
-    return renderPage();
-  }
+  React.useEffect(() => {
+    if (!window.onwheel) {
+      window.onwheel = utils.debounce(() => {
+        initialState.scrollY = utils.getDocumentTop();
+        if (loadNextPage && utils.getScrollHeight() === utils.getWindowHeight() + utils.getDocumentTop()) {
+          setPage(++initialState.page);
+        }
+      }, 100)
+    }
+  });
 
   React.useEffect(() => {
+    if (initialState.scrollY) {
+      window.scrollTo(0, initialState.scrollY);
+    }
+
+    return () => {
+      window.onwheel = null;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  React.useEffect(() => {
+    if (!loadNextPage) {
+      return;
+    }
     (async () => {
-      if (!initialized) {
-        window.onscroll = utils.debounce(() => {
-          initialState.scrollY = utils.getDocumentTop();
-          if (utils.getScrollHeight() === utils.getWindowHeight() + utils.getDocumentTop()) {
-            initialState.page = page + 1;
-            setPage(initialState.page);
-          }
-        }, 100);
-
-        if (initialState.scrollY) {
-          window.scrollTo(0, initialState.scrollY);
-        }
-
-        setInitialized(true);
-      }
       const rsp = await loadNextPage({ page });
       if (rsp) {
-        initialState.videosRendered = videosRendered.concat(rsp);
-        setVideosRendered(initialState.videosRendered);
+        const videos = videosRendered.concat(rsp);
+        initialState.videosRendered = videos;
+        setVideosRendered(videos);
       }
     })()
-    return () => {
-      delete window.onscroll;
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 

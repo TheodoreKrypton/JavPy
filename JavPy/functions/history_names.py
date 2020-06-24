@@ -24,4 +24,4 @@ class HistoryNames:
 
 
 if __name__ == '__main__':
-    print(HistoryNames.get_history_names("天海こころ"))
+    print(HistoryNames.get_history_names("夏希のあ"))

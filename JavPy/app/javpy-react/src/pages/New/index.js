@@ -6,6 +6,6 @@ import utils from '../../utils';
 
 export default (props) => {
   return (
-    <Videos loadNextPage={api.getNewlyReleased} initialState={utils.globalCache.new}></Videos>
+    <Videos loadNextPage={api.getNewlyReleased} initialState={utils.globalCache.page.new}></Videos>
   )
 }
