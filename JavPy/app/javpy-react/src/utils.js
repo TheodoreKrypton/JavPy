@@ -5,11 +5,17 @@ function useQuery() {
 }
 
 const globalCache = {
-  new: {
-    page: 1,
-    videosRendered: []
+  page: {
+    new: {
+      page: 1,
+      videosRendered: []
+    },
+    searchActress: {
+      page: 1,
+      videosRendered: []
+    }
   },
-  searchActress: {
+  actress: {
     videos: {},
     actressProfile: {},
     historyNames: {}

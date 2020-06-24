@@ -16,7 +16,7 @@ export default () => {
     if (loading) {
       return <LinearProgress color="secondary" />
     } else {
-      if (videos === null) {
+      if (!videos) {
         return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
       } else {
         return <Videos initialState={{ videosRendered: videos }}></Videos>
@@ -31,11 +31,7 @@ export default () => {
         const rsp = await api.searchByCode({ code });
         if (rsp) {
           setVideos(rsp);
-        } else {
-          setVideos(null);
         }
-      } catch (err) {
-        setVideos(null);
       } finally {
         setLoading(false);
       }

@@ -5,7 +5,7 @@ import SearchBar from '../SearchBar';
 export default () => {
   return (
     <React.Fragment>
-      <table>
+      <table style={{ position: "fixed", top: 0, zIndex: 1 }}>
         <tbody>
           <tr>
             <td>

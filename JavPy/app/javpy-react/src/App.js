@@ -15,7 +15,6 @@ import Login from './pages/Login';
 import VideoPlayer from './pages/VideoPlayer';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import RouteHandler from './RouteHandler';
 import IFrame from './pages/IFrame';
 import TopArea from './components/TopArea';
 
@@ -25,9 +24,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      RouteHandler(prevProps, this.props);
-    }
+
   }
 
   render() {
@@ -44,7 +41,7 @@ class App extends React.Component {
             <div>
               <Login></Login>
               <TopArea></TopArea>
-              <div>
+              <div style={{ position: "absolute", top: 70, width: "100%" }}>
                 <Switch>
                   <Redirect exact path="/" to="/new" />
                   <Route path="/new">

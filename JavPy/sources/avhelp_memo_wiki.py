@@ -50,8 +50,10 @@ class AVHelpMemoWiki(IHistoryNames):
 
         current_name = re.search("名前.*?：(.+?)\n", pre)
         if current_name:
-            current_name = re.sub("[（(].+?[)）]", "", current_name.group(1))
-            names.append(current_name)
+            current_name = list(filter(lambda x: x, [
+                name.strip() for name in re.split("[（(／)）]", current_name.group(1))
+            ]))
+            names.extend(current_name)
 
         return names
 
@@ -75,4 +77,5 @@ class AVHelpMemoWiki(IHistoryNames):
 
 
 if __name__ == "__main__":
-    AVHelpMemoWiki.test()
+    # AVHelpMemoWiki.test()
+    print(AVHelpMemoWiki.get_history_names("夏希のあ"))

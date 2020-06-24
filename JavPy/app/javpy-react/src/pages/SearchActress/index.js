@@ -11,110 +11,82 @@ import { LinearProgress } from '@material-ui/core';
 export default (props) => {
   const query = utils.useQuery();
 
-  const [state, setState] = React.useState({
-    historyNames: [],
-    videos: [],
-    actressProfile: null,
-    loading: true,
-    initialized: false
-  })
-
-  const unmounted = React.useRef(false);
+  const [historyNames, setHistoryNames] = React.useState([]);
+  const [videos, setVideos] = React.useState([]);
+  const [actressProfile, setActressProfile] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
   const handleClickHistoryName = (name) => {
-    setState({
-      ...state,
-      videos: [],
-      loading: true
-    });
+    setVideos([]);
+    setLoading(true);
     api.searchByActress({ actress: name, withProfile: "false" }).then((rsp) => {
-      setState({
-        ...state,
-        videos: rsp && rsp.videos.length ? rsp.videos : null,
-        loading: false
-      });
+      if (rsp) {
+        setVideos(rsp.data);
+      }
+    }).finally(() => {
+      setLoading(false);
     })
   }
 
-  const renderActressProfile = (actressProfile) => {
-    if (!actressProfile) {
-      return <></>
-    }
+  const renderActressProfile = () => {
     return <ActressProfile profile={actressProfile} name={query.get("actress")}></ActressProfile>
   }
 
-  const renderHistoryNames = (historyNames) => {
-    if (!historyNames) {
-      return <></>
-    } else {
-      return (
-        <div style={{
-          display: "table",
-          margin: "0 auto"
-        }}>
-          <Breadcrumbs aria-label="breadcrumb" >
-            {historyNames.map((name, i) => {
-              return <Button key={i.toString()} color="secondary" onClick={() => { handleClickHistoryName(name.trim()) }}> {name.trim()} </Button>
-            })}
-          </Breadcrumbs>
-        </div>
-      )
-    }
+  const renderHistoryNames = () => {
+    return (
+      <div style={{
+        display: "table",
+        margin: "0 auto"
+      }}>
+        <Breadcrumbs>
+          {historyNames.map((name, i) => {
+            return <Button key={i.toString()} color="secondary" onClick={() => { handleClickHistoryName(name.trim()) }}> {name.trim()} </Button>
+          })}
+        </Breadcrumbs>
+      </div>
+    )
   }
 
-  const renderVideos = (videos) => {
-    if (!videos || (!state.loading && videos.length === 0)) {
+  const VIDEOS_PER_PAGE = 16;
+
+  const loadNextPage = ({ page }) => {
+    console.log(videos.slice((page - 1) * VIDEOS_PER_PAGE, page * VIDEOS_PER_PAGE))
+    return videos.slice((page - 1) * VIDEOS_PER_PAGE, page * VIDEOS_PER_PAGE);
+  }
+
+  const renderVideos = () => {
+    if (loading) {
+      return <></>
+    } else if (!videos) {
       return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
     } else {
-      return <Videos initialState={{ videosRendered: videos }}></Videos>
-    }
-  }
-
-  const renderPage = ({ actressProfile, historyNames, videos, loading }) => {
-    if (loading) {
-      return <React.Fragment>
-        <LinearProgress color="secondary"></LinearProgress>
-        {renderActressProfile(actressProfile)}
-        {renderHistoryNames(historyNames)}
-      </React.Fragment>
-    } else {
-      return <React.Fragment>
-        {renderActressProfile(actressProfile)}
-        {renderHistoryNames(historyNames)}
-        {renderVideos(videos)}
-      </React.Fragment>
+      return <Videos initialState={utils.globalCache.page.searchActress} loadNextPage={loadNextPage}></Videos>
     }
   }
 
   React.useEffect(() => {
-    if (!state.initialized) {
-      api.searchByActress({ actress: query.get("actress"), withProfile: "true" }).then((rsp) => {
-        if (unmounted.current) {
-          return;
+    (async () => {
+      try {
+        setLoading(true);
+        const rsp = await api.searchByActress({ actress: query.get("actress"), withProfile: "true" });
+        if (rsp) {
+          setVideos(rsp.videos);
+          setHistoryNames(rsp.historyNames);
+          setActressProfile(rsp.actressProfile);
         }
-
-        setState({
-          ...state,
-          ...rsp,
-          loading: false,
-          initialized: true
-        })
-      })
-    } else {
-      if (utils.globalCache.searchActress.recover === true) {
-        utils.globalCache.searchActress.recover = false;
-        window.scrollTo(0, utils.globalCache.searchActress.scrollY);
+      } finally {
+        setLoading(false);
       }
-    }
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    window.onscroll = utils.debounce(() => {
-      utils.globalCache.searchActress.scrollY = utils.getDocumentTop();
-    }, 300)
-
-    return () => {
-      unmounted.current = true;
-      window.onscroll = null;
-    }
-  })
-  return renderPage(state)
+  return (
+    <React.Fragment>
+      {loading ? <LinearProgress color="secondary"></LinearProgress> : <></>}
+      {actressProfile ? renderActressProfile() : <></>}
+      {historyNames ? renderHistoryNames() : <></>}
+      {renderVideos()}
+    </React.Fragment>
+  )
 }

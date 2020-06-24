@@ -7,7 +7,7 @@ import utils from '../utils';
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
 // only for developement
-// address = `${window.location.protocol}//${window.location.hostname}:8081`;
+address = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 
 const setUserpass = (val) => {
@@ -77,47 +77,44 @@ const getNewlyReleased = async ({ page }) => {
 }
 
 const searchByActress = async ({ actress, withProfile }) => {
-  if (utils.globalCache.searchActress.videos[actress] !== undefined) {
-    return new Promise((resolve) => {
-      resolve({
-        videos: utils.globalCache.searchActress.videos[actress],
-        actressProfile: utils.globalCache.searchActress.actressProfile[actress],
-        historyNames: utils.globalCache.searchActress.historyNames[actress]
-      });
-    })
+  if (utils.globalCache.actress.videos[actress] !== undefined) {
+    return {
+      videos: utils.globalCache.actress.videos[actress],
+      actressProfile: utils.globalCache.actress.actressProfile[actress],
+      historyNames: utils.globalCache.actress.historyNames[actress]
+    }
   }
 
   const rsp = await pookie("/search_by_actress", { actress, with_profile: withProfile });
-  if (rsp && rsp.status === 200 && rsp.data) {
-    utils.globalCache.searchActress.videos[actress] = rsp.data.videos;
+  if (!rsp || !rsp.data) {
+    return;
+  }
 
-    const profile = rsp.data.profile;
+  // cache videos
+  utils.globalCache.actress.videos[actress] = rsp.data.videos;
 
-    if (profile) {
-      utils.globalCache.searchActress.actressProfile[actress] = profile;
-    } else {
-      utils.globalCache.searchActress.actressProfile[actress] = null;
-    }
+  // cache profile
+  const profile = rsp.data.profile;
 
-    const historyNames = rsp.data.history_names;
-    if (historyNames) {
-      utils.globalCache.searchActress.historyNames[actress] = historyNames;
-      for (let i = 0; i < historyNames.length; i++) {
-        utils.globalCache.searchActress.historyNames[historyNames[i]] = historyNames;
-      }
-    }
+  if (profile) {
+    utils.globalCache.actress.actressProfile[actress] = profile;
+  } else {
+    utils.globalCache.actress.actressProfile[actress] = null;
+  }
 
-    return {
-      videos: rsp.data.videos,
-      actressProfile: rsp.data.profile,
-      historyNames: rsp.data.history_names
+  // cache history names
+  const historyNames = rsp.data.history_names;
+  if (historyNames) {
+    utils.globalCache.actress.historyNames[actress] = historyNames;
+    for (let i = 0; i < historyNames.length; i++) {
+      utils.globalCache.actress.historyNames[historyNames[i]] = historyNames;
     }
   }
 
   return {
-    videos: null,
-    actressProfile: null,
-    historyNames: []
+    videos: rsp.data.videos,
+    actressProfile: rsp.data.profile,
+    historyNames: rsp.data.history_names
   }
 }
 
