@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 import subprocess
 from JavPy.utils.common import version
 import os
-import sys
 
-print(os.environ)
 
-if "GITHUB_RUN_NUMBER" in os.environ and "build" in sys.argv:
+if "GITHUB_WORKFLOW" in os.environ and \
+        os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
+        "GITHUB_RUN_NUMBER" in os.environ:
     primary, secondary, _ = version.split(".")
     build_id = os.environ["GITHUB_RUN_NUMBER"]
     ver = "%s.%s.%s" % (primary, secondary, build_id)
