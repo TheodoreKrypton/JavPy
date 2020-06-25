@@ -1,4 +1,4 @@
-name: JavPy Build Test
+name: Regular Test
 
 on: 
   push:
