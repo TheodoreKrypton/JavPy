@@ -6,7 +6,7 @@ import pkg_resources
 try:
     javpy_version = pkg_resources.get_distribution("JavPy").version
 except pkg_resources.DistributionNotFound:
-    javpy_version = version
+    from JavPy.utils.common import version as javpy_version
 
 
 class Config:
