@@ -1,6 +1,15 @@
 from setuptools import setup, find_packages
 import subprocess
 from JavPy.utils.common import version
+import os
+import sys
+
+if "BUILD_ID" in os.environ and "build" in sys.argv:
+    primary, secondary, _ = version.split(".")
+    build_id = os.environ["BUILD_ID"]
+    ver = "%s.%s.%s" % (primary, secondary, build_id)
+else:
+    ver = version
 
 try:
     output = subprocess.check_output("node --version", shell=True)
@@ -16,11 +25,11 @@ with open("requirements.txt") as f:
 
 setup(
     name="JavPy",
-    version=version,
+    version=ver,
     description="漂移过弯",
     author="Theodore Krypton",
     author_email="wheatcarrier@gmail.com",
-    license="MIT License",
+    license="Apache-2.0 License",
     packages=find_packages(),
     url="https://github.com/TheodoreKrypton/JavPy",
     install_requires=install_req,

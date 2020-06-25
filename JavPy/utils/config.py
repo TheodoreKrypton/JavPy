@@ -1,7 +1,9 @@
 import os
 import json
-from JavPy.utils.common import version as javpy_version
 from packaging import version
+import pkg_resources
+
+javpy_version = pkg_resources.get_distribution("JavPy").version
 
 
 class Config:
@@ -66,6 +68,10 @@ class Config:
 
 if os.path.exists(os.path.join(Config.config_path, "config.json")):
     config = Config.read_config()
+    if config["version"] != javpy_version:
+        Config.set_config("version", javpy_version)
+        Config.save_config()
+        config = Config.read_config()
 
 else:
     Config.config = {
