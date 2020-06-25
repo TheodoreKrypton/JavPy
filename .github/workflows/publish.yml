@@ -6,7 +6,7 @@ on:
       - githubactions
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
 
     steps:

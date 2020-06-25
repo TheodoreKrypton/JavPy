@@ -4,6 +4,8 @@ from JavPy.utils.common import version
 import os
 import sys
 
+print(os.environ)
+
 if "GITHUB_RUN_NUMBER" in os.environ and "build" in sys.argv:
     primary, secondary, _ = version.split(".")
     build_id = os.environ["GITHUB_RUN_NUMBER"]
