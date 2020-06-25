@@ -4,9 +4,9 @@ from JavPy.utils.common import version
 import os
 import sys
 
-if "BUILD_ID" in os.environ and "build" in sys.argv:
+if "GITHUB_RUN_NUMBER" in os.environ and "build" in sys.argv:
     primary, secondary, _ = version.split(".")
-    build_id = os.environ["BUILD_ID"]
+    build_id = os.environ["GITHUB_RUN_NUMBER"]
     ver = "%s.%s.%s" % (primary, secondary, build_id)
 else:
     ver = version
@@ -33,7 +33,6 @@ setup(
     packages=find_packages(),
     url="https://github.com/TheodoreKrypton/JavPy",
     install_requires=install_req,
-    setup_requires=install_req,
     entry_points={"console_scripts": ["javpy = JavPy.serve:serve"]},
     include_package_data=True,
     exclude_package_data={"": [".gitignore"]},
