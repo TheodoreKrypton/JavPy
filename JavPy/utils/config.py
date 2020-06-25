@@ -3,7 +3,10 @@ import json
 from packaging import version
 import pkg_resources
 
-javpy_version = pkg_resources.get_distribution("JavPy").version
+try:
+    javpy_version = pkg_resources.get_distribution("JavPy").version
+except pkg_resources.DistributionNotFound:
+    javpy_version = version
 
 
 class Config:
