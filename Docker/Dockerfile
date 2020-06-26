@@ -1,13 +1,24 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV PYTHONIOENCODING=utf8
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-pip && \
-    apt-get install -y --no-install-recommends nodejs && \
-    apt-get install -y --no-install-recommends python3-setuptools && \
-    pip3 install -U JavPy && \
-    apt-get remove -y --auto-remove python3-pip && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        python3-pip \
+        nodejs \
+        npm \
+        python3-setuptools \
+        git && \
+    git clone --depth 1 https://github.com/TheodoreKrypton/JavPy.git && \
+    cd /JavPy/JavPy/app/javpy-react/ && npm install && npm run build && \
+    cd /JavPy && \
+    pip3 install -r requirements.txt && \
+    VERSION=$(git tag --points-at HEAD | cut -c 2-) python3 setup.py install && \
+    cd / && rm -rf /JavPy && \
+    apt-get autoremove -y --purge \
+        python3-pip \
+        npm \
+        git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

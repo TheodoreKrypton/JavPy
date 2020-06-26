@@ -3,7 +3,8 @@ import subprocess
 from JavPy.utils.common import version
 import os
 
-
+if "VERSION" in os.environ:
+    ver = os.environ["version"]
 if "GITHUB_WORKFLOW" in os.environ and \
         os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
         "GITHUB_RUN_NUMBER" in os.environ:
