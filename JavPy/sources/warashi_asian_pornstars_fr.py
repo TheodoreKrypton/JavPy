@@ -30,6 +30,8 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
     def __get_brief_from_tr(mcs, tr):
         brief = Brief()
         brief.preview_img_url = noexcept(lambda: tr.attrs["data-img"])
+        if brief.preview_img_url and brief.preview_img_url.startswith("/"):
+            brief.preview_img_url = "http://warashi-asian-pornstars.fr" + brief.preview_img_url
         tds = tr.select("td")
         brief.title = tds[1].text.strip()
         brief.code = tds[2].text.upper()
