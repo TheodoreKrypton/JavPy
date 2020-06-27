@@ -7,8 +7,8 @@ from JavPy.app.tgbot.server import (
     start,
     Interactive,
 )
-from JavPy.utils.testing import *
 from JavPy.utils.config import proxy
+import pytest
 
 
 class MockGlobals:
@@ -94,7 +94,7 @@ mock_bot = MockBot()
 mock_chat = MockChat(mock_user, mock_bot)
 
 
-@testing(code=("JUY-805", "040219_01", "SSNI-351"))
+@pytest.mark.parametrize("code", ["JUY-805", "040219_01", "SSNI-351"])
 def test_search_by_code(code):
     mock_message = MockMessage(mock_user, mock_chat.id, "/search")
     mock_update = MockUpdate(mock_message)
@@ -110,7 +110,7 @@ def test_search_by_code(code):
     )
 
 
-@testing(command=("ABP-123 -o".split(),))
+@pytest.mark.parametrize("command", ["ABP-123 -o".split()])
 def test_search_by_code_exception(command):
     mock_message = MockMessage(mock_user, mock_chat.id, "/search")
     mock_update = MockUpdate(mock_message)
@@ -119,7 +119,7 @@ def test_search_by_code_exception(command):
     assert "Sorry, Wrong Usage" in received[0]["text"]
 
 
-@testing(command=("桃乃木かな -m on -u 10".split(),))
+@pytest.mark.parametrize("command", ["桃乃木かな -m on -u 10".split()])
 def test_search_by_actress(command):
     mock_message = MockMessage(mock_user, mock_chat.id, "/search")
     mock_update = MockUpdate(mock_message)
@@ -132,7 +132,7 @@ def test_search_by_actress(command):
     assert False
 
 
-@testing(command=("桃乃木かな -m 1 -u 10a".split(), "桃乃木かな -n 1".split()))
+@pytest.mark.parametrize("command", ["桃乃木かな -m 1 -u 10a".split(), "桃乃木かな -n 1".split()])
 def test_search_by_actress_exception(command):
     mock_message = MockMessage(mock_user, mock_chat.id, "/search")
     mock_update = MockUpdate(mock_message)
@@ -141,7 +141,7 @@ def test_search_by_actress_exception(command):
     assert "Search by name of an actress" in received[0]["text"]
 
 
-@testing(code=("ABP-231", "ABP-123", "SSNI-351"))
+@pytest.mark.parametrize("code", ["ABP-231", "ABP-123", "SSNI-351"])
 def test_brief(code):
     mock_message = MockMessage(mock_user, mock_chat.id, "/brief")
     mock_update = MockUpdate(mock_message)
@@ -151,7 +151,7 @@ def test_brief(code):
     assert requests.get(received[0]["photo"], proxies=proxy).status_code == 200
 
 
-@testing(code=("3408371-dirty-nun-fucks-the-gardener",))
+@pytest.mark.parametrize("code", ["3408371-dirty-nun-fucks-the-gardener"])
 def test_brief_without_img(code):
     mock_message = MockMessage(mock_user, mock_chat.id, "/brief")
     mock_update = MockUpdate(mock_message)
@@ -160,9 +160,7 @@ def test_brief_without_img(code):
     assert len(received) == 1
 
 
-@testing(
-    command=("ABP-231 -a".split(), "ABP-231 -l jp".split(), "CRAZY-114514".split())
-)
+@pytest.mark.parametrize("command", ["ABP-231 -a".split(), "ABP-231 -l jp".split(), "CRAZY-114514".split()])
 def test_brief_exception(command):
     mock_message = MockMessage(mock_user, mock_chat.id, "/brief")
     mock_update = MockUpdate(mock_message)
@@ -171,7 +169,7 @@ def test_brief_exception(command):
     assert "Sorry, No Video Found" in received[0]["text"]
 
 
-@testing(code=("ABP-231", "ABP-123", "SSNI-351"))
+@pytest.mark.parametrize("code", ["ABP-231", "ABP-123", "SSNI-351"])
 def test_magnet(code):
     mock_message = MockMessage(mock_user, mock_chat.id, "/magnet")
     mock_update = MockUpdate(mock_message)
@@ -180,7 +178,7 @@ def test_magnet(code):
     assert len(received) > 0
 
 
-@testing(params=("-m 1 -u 20".split()))
+@pytest.mark.parametrize("params", ["-m 1 -u 20".split()])
 def test_new(params):
     mock_message = MockMessage(mock_user, mock_chat.id, "/new")
     mock_update = MockUpdate(mock_message)
@@ -192,16 +190,15 @@ def test_new(params):
     assert False
 
 
-@testing(param=("-a 1 -b 20".split(), "-m 1 -u 10a".split()))
-def test_new_exception(param):
+@pytest.mark.parametrize("params", ["-a 1 -b 20".split(), "-m 1 -u 10a".split()])
+def test_new_exception(params):
     mock_message = MockMessage(mock_user, mock_chat.id, "/new")
     mock_update = MockUpdate(mock_message)
-    get_new(mock_bot, mock_update, param)
+    get_new(mock_bot, mock_update, params)
     received = mock_user.look_received()
     assert "Get newly released videos" in received[0]["text"]
 
 
-@testing()
 def test_interactive():
     def interactive_assert(message, condition):
         interactive_mock_message = MockMessage(mock_user, mock_chat.id, message)
