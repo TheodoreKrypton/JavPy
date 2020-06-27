@@ -30,5 +30,5 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pytest -n 4 --ignore=".\JavPy\app\web" .\JavPy\tests\test_clients\
+      pytest -n 4 .\JavPy\tests\test_clients\
     displayName: 'test'
