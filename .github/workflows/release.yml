@@ -1,0 +1,51 @@
+name: Make Release
+
+on:
+  pull_request:
+    branches:
+      - release
+
+jobs:
+  release:
+    name: Release
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Set Node.js 12.x
+      uses: actions/setup-node@v1.1.0
+      with:
+        node-version: 12.x
+
+    - name: Set up Python
+      uses: actions/setup-python@v1.0.0
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Test with pytest
+      continue-on-error: false
+      run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
+
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage.xml
+
+    - name: Make Release
+      continue-on-error: false
+      run: python deployment/release.py
+
+    - name: automerge
+      uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        MERGE_METHOD: "rebase"

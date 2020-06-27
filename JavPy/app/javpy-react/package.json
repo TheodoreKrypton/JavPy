@@ -18,7 +18,6 @@
     "react": "^16.13.1",
     "react-async": "^10.0.0",
     "react-dom": "^16.13.1",
-    "react-infinite-scroller": "^1.2.4",
     "react-json-view": "^1.19.1",
     "react-lazyload": "^2.6.5",
     "react-router-dom": "^5.1.2",
