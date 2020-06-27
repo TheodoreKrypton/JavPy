@@ -1,8 +1,6 @@
 name: Regular Test
 
-on: 
-  push:
-  pull_request:
+on:
   schedule:
     - cron: '0 0 * * *'
 
@@ -11,9 +9,11 @@ jobs:
     name: ${{ matrix.python-version }} @ ${{ matrix.platform }}
     strategy:
       max-parallel: 4
+      fail-fast: false
+      continue-on-error: false
       matrix:
         platform: [ubuntu-latest, macOS-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python: [3.5, 3.6, 3.7, 3.8]
         
     runs-on: ${{ matrix.platform }}
 
@@ -21,27 +21,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Set Node.js 10.x
+    - name: Set Node.js 12.x
       uses: actions/setup-node@v1.1.0
       with:
-        node-version: 10.x
+        node-version: 12.x
 
-    - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.platform }}
+    - name: Set up Python ${{ matrix.python }} on ${{ matrix.platform }}
       uses: actions/setup-python@v1.0.0
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python }}
 
-    - name: Install dependencies on Python ${{ matrix.python-version }} on ${{ matrix.platform }}
+    - name: Install dependencies on Python ${{ matrix.python }} on ${{ matrix.platform }}
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Test with pytest
-      run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
-
-    - name: upload coverage
-      if: job.name == '3.7 @ ubuntu-latest'
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: ./coverage.xml
+      run: pytest --ignore=JavPy/app/web JavPy/tests/test_clients/

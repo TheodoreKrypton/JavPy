@@ -13,7 +13,7 @@ RUN apt-get update && \
     cd /JavPy/JavPy/app/javpy-react/ && npm install && npm run build && \
     cd /JavPy && \
     pip3 install -r requirements.txt && \
-    VERSION=$(git tag --points-at HEAD | cut -c 2-) python3 setup.py install && \
+    DOCKER=1 VERSION=$(git tag --points-at HEAD | cut -c 2-) python3 setup.py install && \
     cd / && rm -rf /JavPy && \
     apt-get autoremove -y --purge \
         python3-pip \

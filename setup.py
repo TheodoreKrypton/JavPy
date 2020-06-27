@@ -1,16 +1,12 @@
 from setuptools import setup, find_packages
 import subprocess
 from JavPy.utils.common import version
-import os
+from deployment import docker, github
 
-if "VERSION" in os.environ:
-    ver = os.environ["version"]
-if "GITHUB_WORKFLOW" in os.environ and \
-        os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
-        "GITHUB_RUN_NUMBER" in os.environ:
-    primary, secondary = version.split(".")
-    build_id = os.environ["GITHUB_RUN_NUMBER"]
-    ver = "%s.%s.%s" % (primary, secondary, build_id)
+if docker.in_build():
+    ver = docker.generate_version()
+elif github.in_publish():
+    ver = github.get_current_tag()[1:].strip()
 else:
     ver = version
 
