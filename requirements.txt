@@ -11,3 +11,4 @@ ipaddr
 pycryptodome
 cloudscraper
 pysocks
+pebble

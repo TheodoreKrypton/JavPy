@@ -1,15 +1,15 @@
-from concurrent.futures import ThreadPoolExecutor
+from pebble import ThreadPool
 from concurrent.futures import as_completed
 from concurrent.futures import wait
 from JavPy.utils.common import noexcept
 from functools import reduce
 
-executor = ThreadPoolExecutor(max_workers=40)
+executor = ThreadPool(max_workers=40)
 PlaceHolder = object()
 
 
 def submit(func, *args, **kwargs):
-    return executor.submit(noexcept, lambda: func(*args, **kwargs))
+    return executor.schedule(noexcept, (lambda: func(*args, **kwargs),))
 
 
 def map_f(func, *fixed_args, **fixed_kwargs):
@@ -40,6 +40,8 @@ def wait_until(fs, condition=lambda x: x is not None, timeout=60):
         if result is None:
             continue
         if condition(result):
+            for f in fs:
+                f.cancel()
             return result
     return None
 
