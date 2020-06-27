@@ -26,11 +26,11 @@ jobs:
       architecture: 'x64'
 
   - script: |
-      python -m pip install --upgrade pip && pip install -r requirements.txt
-      curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      python -m pip install --upgrade pip && pip install -r requirements.txt && pip install -r test-requirements.txt
+      curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
       sudo apt-get install nodejs -y
     displayName: 'Install dependencies'
 
   - script: |
-      pytest --ignore=JavPy/app/web JavPy/tests/test_clients/
+      pytest -n 4 --ignore=JavPy/app/web JavPy/tests/test_clients/
     displayName: 'test'
