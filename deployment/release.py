@@ -1,6 +1,5 @@
 from deployment import github
-import os
 
 if github.in_release():
-    print(os.environ)
+    github.merge_to_release()
     github.make_release()

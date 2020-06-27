@@ -41,12 +41,6 @@ jobs:
         token: ${{secrets.CODECOV_TOKEN}}
         file: ./coverage.xml
 
-    - name: Make Release
+    - name: Merge and Make Release
       continue-on-error: false
       run: PYTHONPATH=. GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} python deployment/release.py
-
-    - name: Merge Pull Request
-      uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        MERGE_METHOD: "rebase"

@@ -37,7 +37,7 @@ def get_current_tag():
 def make_release():
     rsp = requests.post("https://api.github.com/repos/TheodoreKrypton/JavPy/releases", data=json.dumps({
         "tag_name": "v%s" % generate_version(),
-        "target_commitish": "master",
+        "target_commitish": "release",
         "name": "Enjoy Driving!",
         "body": "",
         "draft": False,
@@ -47,4 +47,18 @@ def make_release():
     })
 
     if rsp.status_code != 201:
+        exit(-1)
+
+
+def merge_to_release():
+    with open(os.environ["GITHUB_EVENT_PATH"]) as fp:
+        obj = json.loads(fp.read())
+        pull_number = obj["pull_request"]["number"]
+    rsp = requests.put(
+        "https://api.github.com/repos/TheodoreKrypton/JavPy/pulls/{}/merge".format(pull_number),
+        data=json.dumps({"merge_method": "squash"}),
+        headers={"Authorization": "token %s" % os.environ["GITHUB_TOKEN"]}
+    )
+
+    if rsp.status_code != 200:
         exit(-1)
