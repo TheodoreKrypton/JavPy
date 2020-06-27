@@ -100,7 +100,6 @@ def test_search_by_code(code):
     mock_update = MockUpdate(mock_message)
     search(mock_bot, mock_update, [code])
     received = mock_user.look_received()
-    assert len(received) == 1
     assert requests.get(received[0]["photo"], proxies=proxy).status_code == 200
     assert (
         requests.get(
@@ -139,7 +138,6 @@ def test_search_by_actress_exception(command):
     mock_update = MockUpdate(mock_message)
     search(mock_bot, mock_update, command)
     received = mock_user.look_received()
-    print(received[0]["text"])
     assert "Search by name of an actress" in received[0]["text"]
 
 
@@ -160,7 +158,6 @@ def test_brief_without_img(code):
     get_brief(mock_bot, mock_update, [code])
     received = mock_user.look_received()
     assert len(received) == 1
-    print(received)
 
 
 @testing(

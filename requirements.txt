@@ -7,11 +7,7 @@ urllib3
 Flask
 flask-cors
 lxml
-codecov
-codacy-coverage
 ipaddr
 pycryptodome
 cloudscraper
 pysocks
-pytest
-pytest-cov
