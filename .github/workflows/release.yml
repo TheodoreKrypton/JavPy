@@ -33,7 +33,7 @@ jobs:
 
     - name: Test with pytest
       continue-on-error: false
-      run: pytest -n 4 --looponfail --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
+      run: pytest -n 4 --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
 
     - name: Upload Coverage
       uses: codecov/codecov-action@v1.0.3
