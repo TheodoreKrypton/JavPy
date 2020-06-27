@@ -117,6 +117,9 @@ def search_by_actress():
     with_profile = params["with_profile"] == "true"
     briefs, profile = Functions.search_by_actress(actress, None, with_profile)
 
+    if not briefs and profile is None:
+        return "", 404
+
     if with_profile:
         history_names = profile.other["history_names"]
 

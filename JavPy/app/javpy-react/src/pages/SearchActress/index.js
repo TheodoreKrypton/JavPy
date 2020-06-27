@@ -50,14 +50,14 @@ export default (props) => {
   const VIDEOS_PER_PAGE = 16;
 
   const loadNextPage = ({ page }) => {
-    console.log(videos.slice((page - 1) * VIDEOS_PER_PAGE, page * VIDEOS_PER_PAGE))
     return videos.slice((page - 1) * VIDEOS_PER_PAGE, page * VIDEOS_PER_PAGE);
   }
 
   const renderVideos = () => {
+    console.log(loading, videos);
     if (loading) {
       return <></>
-    } else if (!videos) {
+    } else if (!videos || videos.length === 0) {
       return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
     } else {
       return <Videos initialState={utils.globalCache.page.searchActress} loadNextPage={loadNextPage}></Videos>
