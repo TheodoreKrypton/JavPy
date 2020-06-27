@@ -1,15 +1,12 @@
 from setuptools import setup, find_packages
 import subprocess
 from JavPy.utils.common import version
-import os
+from deployment import docker, github
 
-
-if "GITHUB_WORKFLOW" in os.environ and \
-        os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
-        "GITHUB_RUN_NUMBER" in os.environ:
-    primary, secondary = version.split(".")
-    build_id = os.environ["GITHUB_RUN_NUMBER"]
-    ver = "%s.%s.%s" % (primary, secondary, build_id)
+if docker.in_build():
+    ver = docker.generate_version()
+elif github.in_publish():
+    ver = github.get_current_tag()[1:].strip()
 else:
     ver = version
 
@@ -19,7 +16,7 @@ try:
 except Exception as ex:
     print(ex)
     print("please install Node.JS first at https://nodejs.org/en/")
-    exit(0)
+    exit(-1)
 
 with open("requirements.txt") as f:
     install_req = f.read().splitlines()
@@ -28,7 +25,7 @@ with open("requirements.txt") as f:
 setup(
     name="JavPy",
     version=ver,
-    description="漂移过弯",
+    description="Watch and explore Japanese AV in a Pythonic way!",
     author="Theodore Krypton",
     author_email="wheatcarrier@gmail.com",
     license="Apache-2.0 License",
@@ -40,7 +37,7 @@ setup(
     exclude_package_data={"": [".gitignore"]},
     python_requires=">=3.5",
     classifiers=[
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache-2.0 License",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",

@@ -18,7 +18,25 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
 
     @classmethod
     def search_by_actress(mcs, actress, up_to):
-        pass
+        if actress not in mcs.__actress_detail_url:
+            mcs.translate2jp(actress)
+        url = mcs.__actress_detail_url[actress].replace("/s-2-0/", "/s-2-4/")
+        rsp = requests.get(url)
+        bs = bs4.BeautifulSoup(rsp.text, "lxml")
+        trs = bs.select("table")[0].select("tr")[1:]
+        return [mcs.__get_brief_from_tr(tr) for tr in trs]
+
+    @classmethod
+    def __get_brief_from_tr(mcs, tr):
+        brief = Brief()
+        brief.preview_img_url = noexcept(lambda: tr.attrs["data-img"])
+        if brief.preview_img_url and brief.preview_img_url.startswith("/"):
+            brief.preview_img_url = "http://warashi-asian-pornstars.fr" + brief.preview_img_url
+        tds = tr.select("td")
+        brief.title = tds[1].text.strip()
+        brief.code = tds[2].text.upper()
+        brief.release_date = tds[5].text.strip()
+        return brief
 
     @classmethod
     def get_brief(mcs, code):
@@ -183,4 +201,4 @@ class WarashiAsianPornStarsFr(ITranslateEn2Jp, IActressInfo, IGetBrief, ISearchB
 
 if __name__ == "__main__":
     # WarashiAsianPornStarsFr.test()
-    print(WarashiAsianPornStarsFr.get_actress_info("唯川みさき").to_dict())
+    print(WarashiAsianPornStarsFr.search_by_actress("唯川みさき", None))

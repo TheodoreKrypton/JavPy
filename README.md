@@ -32,9 +32,8 @@ https://nodejs.org/en/download/
 $ pip install JavPy
 $ javpy
 ```
-
+or download the JavPy whl release from [pypi](https://pypi.org/project/JavPy/#files), and
 ```bash
-# or download the JavPy whl release in the release page, and
 $ pip install JavPy-x.x.x-py2.py3-none-any.whl
 $ javpy
 ```
@@ -103,8 +102,6 @@ Front End:
 $ cd JavPy/JavPy/app/web/
 $ npm start
 ```
-
-**Attention**: Contributors are advised to modify the port to 8081 in `src/api/index.js` **when debugging** and make sure they recover it before releasing. 
 
 ## 简介/Introduction
 

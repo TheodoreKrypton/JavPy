@@ -6,7 +6,8 @@ import utils from '../utils';
 
 let address = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 
-if (process.env.NODE_ENV === 'development') {
+if (process && process.env.NODE_ENV === 'development') {
+  console.log("development")
   address = `${window.location.protocol}//${window.location.hostname}:8081`;
 }
 
