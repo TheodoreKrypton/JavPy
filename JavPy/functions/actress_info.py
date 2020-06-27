@@ -9,5 +9,5 @@ class ActressInfo:
 
 
 if __name__ == "__main__":
-    print(ActressInfo.get_actress_info("唯川みさき"))
+    print(ActressInfo.get_actress_info("Akane Souma"))
     # print(ActressInfo.get_actress_info("Eimi Fukada").to_dict())
