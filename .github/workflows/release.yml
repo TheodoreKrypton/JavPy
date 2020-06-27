@@ -8,8 +8,6 @@ on:
 jobs:
   release:
     name: Release
-    strategy:
-      continue-on-error: false
 
     runs-on: ubuntu-latest
 
@@ -33,6 +31,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Test with pytest
+      continue-on-error: false
       run: pytest --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
 
     - name: Upload Coverage
@@ -42,6 +41,7 @@ jobs:
         file: ./coverage.xml
 
     - name: Make Release
+      continue-on-error: false
       run: python deployment/release.py
 
     - name: automerge

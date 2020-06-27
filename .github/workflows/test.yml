@@ -10,7 +10,6 @@ jobs:
     strategy:
       max-parallel: 4
       fail-fast: false
-      continue-on-error: false
       matrix:
         platform: [ubuntu-latest, macOS-latest]
         python: [3.5, 3.6, 3.7, 3.8]
