@@ -18,12 +18,12 @@ jobs:
     - name: Set Node.js 12.x
       uses: actions/setup-node@v1.1.0
       with:
-        node-version: 12.x
+        version: 12.x
 
     - name: Set up Python
       uses: actions/setup-python@v1.0.0
       with:
-        python-version: 3.7
+        version: 3.7
 
     - name: Install dependencies
       run: |
@@ -45,7 +45,7 @@ jobs:
       continue-on-error: false
       run: PYTHONPATH=. python deployment/release.py
 
-    - name: automerge
+    - name: Merge Pull Request
       uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

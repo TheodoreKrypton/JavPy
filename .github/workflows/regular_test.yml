@@ -23,12 +23,12 @@ jobs:
     - name: Set Node.js 12.x
       uses: actions/setup-node@v1.1.0
       with:
-        node-version: 12.x
+        version: 12.x
 
     - name: Set up Python ${{ matrix.python }} on ${{ matrix.platform }}
       uses: actions/setup-python@v1.0.0
       with:
-        python-version: ${{ matrix.python }}
+        version: ${{ matrix.python }}
 
     - name: Install dependencies on Python ${{ matrix.python }} on ${{ matrix.platform }}
       run: |

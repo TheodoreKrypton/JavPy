@@ -15,7 +15,7 @@ def in_publish():
 
 def in_release():
     if "GITHUB_WORKFLOW" in os.environ and \
-            os.environ["GITHUB_WORKFLOW"] == "Release" and \
+            os.environ["GITHUB_WORKFLOW"] == "Make Release" and \
             "GITHUB_RUN_NUMBER" in os.environ:
         return True
     return False
