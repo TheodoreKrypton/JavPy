@@ -29,4 +29,4 @@ jobs:
 
     - name: Test with pytest
       continue-on-error: false
-      run: pytest --ignore=JavPy/app/web JavPy/tests/test_clients/
+      run: pytest -n 4 --ignore=JavPy/app/web JavPy/tests/test_clients/test_webserver.py
