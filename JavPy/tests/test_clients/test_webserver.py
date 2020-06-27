@@ -32,7 +32,7 @@ def test_search_by_code(code):
     rsp = json.loads(rv.data.decode("utf-8"))
     assert len(rsp["videos"]) == 1
     assert requests.get(rsp["videos"][0]["video_url"], proxies=proxy).status_code == 200
-    print("fuck")
+
 
 @pytest.mark.parametrize("actress", ["川合まゆ", "唯川みさき", "瀬奈まお", "原更紗", "Nao Jinguuji", "Eimi Fukada"])
 def test_search_by_actress(actress):

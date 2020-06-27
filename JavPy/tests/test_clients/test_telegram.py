@@ -94,7 +94,7 @@ mock_bot = MockBot()
 mock_chat = MockChat(mock_user, mock_bot)
 
 
-@pytest.mark.parametrize("code", ["JUY-805", "040219_01", "SSNI-351"])
+@pytest.mark.parametrize("code", ["ABP-231", "ABP-123", "SSNI-351"])
 def test_search_by_code(code):
     mock_message = MockMessage(mock_user, mock_chat.id, "/search")
     mock_update = MockUpdate(mock_message)
