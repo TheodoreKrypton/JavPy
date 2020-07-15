@@ -54,7 +54,6 @@ export default (props) => {
   }
 
   const renderVideos = () => {
-    console.log(loading, videos);
     if (loading) {
       return <></>
     } else if (!videos || videos.length === 0) {

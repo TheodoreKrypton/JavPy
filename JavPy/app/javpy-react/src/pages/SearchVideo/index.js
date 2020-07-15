@@ -16,7 +16,7 @@ export default () => {
     if (loading) {
       return <LinearProgress color="secondary" />
     } else {
-      if (!videos) {
+      if (!videos || videos.length === 0) {
         return <Alert severity="error">Sorry. Cannot find the requested resources.</Alert>
       } else {
         return <Videos initialState={{ videosRendered: videos }}></Videos>

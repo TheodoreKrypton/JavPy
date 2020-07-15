@@ -7,8 +7,7 @@ import subprocess
 
 def in_publish():
     if "GITHUB_WORKFLOW" in os.environ and \
-            os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
-            "GITHUB_RUN_NUMBER" in os.environ:
+            os.environ["GITHUB_WORKFLOW"] == "Publish Python Package":
         return True
     return False
 
@@ -31,6 +30,8 @@ def get_current_tag():
     output = subprocess.check_output("git tag --points-at HEAD")
     if not output.startswith("v"):
         exit(-1)
+
+    print(output)
     return output
 
 

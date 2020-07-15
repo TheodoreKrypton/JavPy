@@ -22,7 +22,6 @@ def map_f(func, *fixed_args, **fixed_kwargs):
             args = list(fixed_args[0:args_place_holders[0]]) + args
         if args_place_holders[-1] != len(fixed_args) - 1:
             args = args + list(fixed_args[args_place_holders[-1]+1:])
-        print(args)
         args = reduce(lambda args1, args2: args1 + [None] + args2, args)
 
     def processor(*x, **kwx):
