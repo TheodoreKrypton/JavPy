@@ -1,9 +1,8 @@
 name: Publish Python Package
 
 on:
-  release:
-    types:
-      - released
+  repository_dispatch:
+    types: publish
 
 jobs:
   publish:

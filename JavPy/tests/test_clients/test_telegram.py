@@ -1,3 +1,8 @@
+import shutil
+import os
+if "GITHUB_WORKFLOW" in os.environ:
+    shutil.rmtree(os.path.join(os.path.expanduser("~"), ".JavPy"), ignore_errors=True)
+
 import requests
 from JavPy.app.tgbot.server import (
     search,
