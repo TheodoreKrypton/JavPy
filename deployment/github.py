@@ -54,12 +54,18 @@ def merge_to_release():
         exit(-1)
 
     delete_branch()
+    publish()
 
 
 def delete_branch():
+    print("https://api.github.com/repos/octocat/Hello-World/git/{}".format(os.environ["GITHUB_REF"]))
     requests.delete(
         "https://api.github.com/repos/octocat/Hello-World/git/{}".format(os.environ["GITHUB_REF"]),
         headers={"Authorization": "token %s" % os.environ["GITHUB_TOKEN"]}
     )
 
 
+def publish():
+    requests.post("https://api.github.com/repos/TheodoreKrypton/JavPy/dispatches", data={
+        "event_type": "publish",
+    })
