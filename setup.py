@@ -37,7 +37,7 @@ setup(
     exclude_package_data={"": [".gitignore"]},
     python_requires=">=3.5",
     classifiers=[
-        "License :: OSI Approved :: Apache-2.0 License",
+        "License :: OSI Approved :: Apache Software License v2.0",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
