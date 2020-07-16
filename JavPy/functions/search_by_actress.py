@@ -37,6 +37,7 @@ class SearchByActress:
                 names = submit(HistoryNames.get_history_names, actress)
                 names = names.result()
                 profile = profile.result()
+                print(profile)
                 if profile is None:
                     profile = Actress()
                     profile.other["history_names"] = names
