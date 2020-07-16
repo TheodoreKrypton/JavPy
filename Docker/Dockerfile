@@ -10,8 +10,10 @@ RUN apt-get update && \
         python3-setuptools \
         git && \
     git clone --depth 1 https://github.com/TheodoreKrypton/JavPy.git && \
+    cd /JavPy && \
+    git submodule init && \
     git submodule update && \
-    cd /JavPy/JavPy/app/webfe/ && npm install && npm run build && \
+    cd /JavPy/app/webfe/ && npm install && npm run build && \
     cd /JavPy && \
     pip3 install -r requirements.txt && \
     DOCKER=1 VERSION=$(git tag --points-at HEAD | cut -c 2-) python3 setup.py install && \
