@@ -13,7 +13,7 @@ RUN apt-get update && \
     cd /JavPy && \
     git submodule init && \
     git submodule update && \
-    cd /JavPy/app/webfe/ && npm install && npm run build && \
+    cd /JavPy/JavPy/app/webfe/ && npm install && npm run build && \
     cd /JavPy && \
     pip3 install -r requirements.txt && \
     DOCKER=1 VERSION=$(git tag --points-at HEAD | cut -c 2-) python3 setup.py install && \
