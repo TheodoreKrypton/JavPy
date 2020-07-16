@@ -10,6 +10,10 @@ class AVGleCom(ISearchByCode):
     def search_by_code(mcs, code):
         url = "https://api.avgle.com/v1/search/" + code + "/0?limit=1"
         rsp = json.loads(requests.get(url, proxies=proxy).text)
+
+        if not code.lower() in rsp["response"]["videos"][0]["title"].lower():
+            return None
+
         av = AV()
         av.title = rsp["response"]["videos"][0]["title"]
         av.video_url = rsp["response"]["videos"][0]["video_url"]

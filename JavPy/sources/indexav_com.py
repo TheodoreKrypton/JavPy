@@ -4,12 +4,40 @@ import bs4
 from JavPy.functions.datastructure import Brief
 from JavPy.utils.common import noexcept
 from JavPy.utils.config import proxy
+from JavPy.utils.requester import submit, wait_for_all
+from functools import reduce
 
 
 class IndexAVCom(ISearchByActress, IGetBrief):
     @classmethod
     def search_by_actress(mcs, actress, up_to):
         url = "https://indexav.com/actor/" + actress
+        rsp = requests.get(url, verify=False, proxies=proxy)
+        bs = bs4.BeautifulSoup(rsp.text, "lxml")
+        ul = bs.select(".pagination-list")
+        if len(ul) == 0:
+            return mcs.__search_by_actress_in_page(actress, 1)
+        else:
+            return reduce(
+                lambda x1, x2: x1 + x2,
+                filter(
+                    lambda x: x,
+                    wait_for_all(
+                        [
+                            submit(
+                                mcs.__search_by_actress_in_page,
+                                actress,
+                                int(page.text.strip()),
+                            )
+                            for page in ul[0].find_all("li")
+                        ]
+                    ),
+                ),
+            )
+
+    @classmethod
+    def __search_by_actress_in_page(mcs, actress, n):
+        url = "https://indexav.com/actor/{}?page={}".format(actress, n)
         rsp = requests.get(url, verify=False, proxies=proxy)
         bs = bs4.BeautifulSoup(rsp.text, "lxml")
         cards = bs.select(".video_column")
@@ -19,8 +47,6 @@ class IndexAVCom(ISearchByActress, IGetBrief):
             brief = mcs.__get_brief_from_card(card)
             if brief:
                 res.append(brief)
-            if up_to and len(res) >= up_to:
-                return res
         return res
 
     @classmethod
@@ -42,7 +68,9 @@ class IndexAVCom(ISearchByActress, IGetBrief):
     @staticmethod
     def __get_brief_from_card(card):
         code = card.select(".tag.is-link.is-light")[0].text.strip()
-        actress = ", ".join((x.text.strip() for x in card.select(".tag.is-primary.is-light")))
+        actress = ", ".join(
+            (x.text.strip() for x in card.select(".tag.is-primary.is-light"))
+        )
         h5 = card.select(".title")[0]
         title = h5.text.strip()
         img = noexcept(lambda: h5.a.attrs["rel"][0])
@@ -64,5 +92,5 @@ class IndexAVCom(ISearchByActress, IGetBrief):
 
 if __name__ == "__main__":
     # IndexAVCom.test()
-    print(IndexAVCom.get_brief("YMDD-192").to_dict())
-    # print(IndexAVCom.search_by_actress("飯岡かなこ", up_to=None)[0].to_dict())
+    # print(IndexAVCom.get_brief("YMDD-192").to_dict())
+    print(IndexAVCom.search_by_actress("波多野結衣", up_to=None))

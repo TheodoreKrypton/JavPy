@@ -25,9 +25,10 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        cd JavPy/app/javpy-react/
+        git submodule update
+        cd JavPy/app/webfe/
         npm install
         npm run build
         cd ../../../
-        python setup.py bdist_wheel --universal
+        VERSION=$(git tag --points-at HEAD | cut -c 2-) python setup.py bdist_wheel --universal
         twine upload dist/*
