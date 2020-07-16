@@ -52,3 +52,14 @@ def merge_to_release():
 
     if rsp.status_code != 200:
         exit(-1)
+
+    delete_branch()
+
+
+def delete_branch():
+    requests.delete(
+        "https://api.github.com/repos/octocat/Hello-World/git/{}".format(os.environ["GITHUB_REF"]),
+        headers={"Authorization": "token %s" % os.environ["GITHUB_TOKEN"]}
+    )
+
+
