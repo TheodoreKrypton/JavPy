@@ -65,13 +65,8 @@ def merge_to_release():
 
 
 def delete_branch():
-    print(
-        "https://api.github.com/repos/octocat/Hello-World/git/{}".format(
-            os.environ["SOURCE_BRANCH"]
-        )
-    )
     requests.delete(
-        "https://api.github.com/repos/octocat/Hello-World/git/{}".format(
+        "https://api.github.com/repos/TheodoreKrypton/JavPy/git/refs/heads/{}".format(
             os.environ["SOURCE_BRANCH"]
         ),
         headers={"Authorization": "token %s" % os.environ["GITHUB_TOKEN"]},
