@@ -1,14 +1,13 @@
 import os
-from JavPy.utils.common import version
 import requests
 import json
-import subprocess
+from JavPy.utils.common import version
+from deployment.docker import generate_version
 
 
 def in_publish():
     if "GITHUB_WORKFLOW" in os.environ and \
-            os.environ["GITHUB_WORKFLOW"] == "Publish Python Package" and \
-            "GITHUB_RUN_NUMBER" in os.environ:
+            os.environ["GITHUB_WORKFLOW"] == "Publish Python Package":
         return True
     return False
 
@@ -21,22 +20,13 @@ def in_release():
     return False
 
 
-def generate_version():
+def make_release():
     primary, secondary = version.split(".")
     build_id = os.environ["GITHUB_RUN_NUMBER"]
-    return "%s.%s.%s" % (primary, secondary, build_id)
+    release_tag = "%s.%s.%s" % (primary, secondary, build_id)
 
-
-def get_current_tag():
-    output = subprocess.check_output("git tag --points-at HEAD")
-    if not output.startswith("v"):
-        exit(-1)
-    return output
-
-
-def make_release():
     rsp = requests.post("https://api.github.com/repos/TheodoreKrypton/JavPy/releases", data=json.dumps({
-        "tag_name": "v%s" % generate_version(),
+        "tag_name": "v%s" % release_tag,
         "target_commitish": "release",
         "name": "Enjoy Driving!",
         "body": "",

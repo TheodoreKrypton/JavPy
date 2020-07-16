@@ -1,2 +1,1 @@
-recursive-include JavPy/app/javpy-react/build *
-include JavPy/sources/categories.json
+recursive-include JavPy/app/webfe/build *

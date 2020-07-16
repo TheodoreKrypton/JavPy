@@ -8,4 +8,4 @@ class Magnet:
 
 
 if __name__ == '__main__':
-    print(Magnet.get_magnet("ABP-123"))
+    print(Magnet.get_magnet("CJOB-065"))

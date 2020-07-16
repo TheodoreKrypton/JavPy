@@ -1,5 +1,3 @@
-
-
 from JavPy.sources.BaseSource import IHistoryNames
 import requests
 from JavPy.utils.common import urlencode
@@ -32,7 +30,8 @@ class AVHelpMemoWiki(IHistoryNames):
             if not content_block_1:
                 return []
             content_block_1 = content_block_1[0]
-            moved_to = re.search('<span.+?href="(.+?)".+?へ移動する', str(content_block_1), re.S)
+            moved_to = re.search(
+                '<span.+?href="(.+?)".+?へ移動する', str(content_block_1), re.S)
             moved_to = moved_to.group(1)
             rsp = requests.get(moved_to, proxies=proxy)
             pre = re.search(r"<pre.+?</pre>", rsp.text, re.S).group(0)
@@ -46,7 +45,8 @@ class AVHelpMemoWiki(IHistoryNames):
             # like 原更紗
             names_str = re.sub("[（(].+?[)）]", "／", names_str)
             # ・ like 瀬奈まお,笹倉杏
-            names.extend(filter(lambda x: x, re.split("[／・]|&amp;", names_str)))
+            names.extend(
+                filter(lambda x: x, re.split("[／・]|&amp;", names_str)))
 
         current_name = re.search("名前.*?：(.+?)\n", pre)
         if current_name:

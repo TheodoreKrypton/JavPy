@@ -21,8 +21,8 @@ from JavPy.utils.config import proxy
 
 
 base_path = "/".join(os.path.abspath(__file__).replace("\\", "/").split("/")[:-3])
-static_folder = base_path + "/app/javpy-react/build/static"
-template_folder = base_path + "/app/javpy-react/build"
+static_folder = base_path + "/app/webfe/build/static"
+template_folder = base_path + "/app/webfe/build"
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 CORS(app, resources=r"/*")

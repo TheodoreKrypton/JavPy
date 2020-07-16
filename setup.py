@@ -6,7 +6,7 @@ from deployment import docker, github
 if docker.in_build():
     ver = docker.generate_version()
 elif github.in_publish():
-    ver = github.get_current_tag()[1:].strip()
+    ver = github.generate_version()
 else:
     ver = version
 

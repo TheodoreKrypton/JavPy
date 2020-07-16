@@ -1,0 +1,3 @@
+[submodule "JavPy/app/webfe"]
+	path = JavPy/app/webfe
+	url = https://github.com/TheodoreKrypton/JavPy-webfe.git
