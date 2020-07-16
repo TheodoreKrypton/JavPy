@@ -1,3 +1,7 @@
+import shutil
+import os
+shutil.rmtree(os.path.join(os.path.expanduser("~"), ".JavPy"), ignore_errors=True)
+
 import requests
 from JavPy.app.tgbot.server import (
     search,

@@ -1,3 +1,7 @@
+import shutil
+import os
+shutil.rmtree(os.path.join(os.path.expanduser("~"), ".JavPy"), ignore_errors=True)
+
 import json
 import requests
 from JavPy.app.webserver.app import app, template_folder
