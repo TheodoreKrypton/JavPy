@@ -9,6 +9,11 @@ except pkg_resources.DistributionNotFound:
     from JavPy.utils.common import version as javpy_version
 
 
+import shutil
+if "GITHUB_WORKFLOW" in os.environ:
+    shutil.rmtree(os.path.join(os.path.expanduser("~"), ".JavPy"), ignore_errors=True)
+
+
 class Config:
     user_path = os.path.expanduser("~")
     config_path = os.path.join(user_path, ".JavPy")

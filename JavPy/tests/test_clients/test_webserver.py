@@ -1,8 +1,3 @@
-import shutil
-import os
-if "GITHUB_WORKFLOW" in os.environ:
-    shutil.rmtree(os.path.join(os.path.expanduser("~"), ".JavPy"), ignore_errors=True)
-
 import json
 import requests
 from JavPy.app.webserver.app import app, template_folder
