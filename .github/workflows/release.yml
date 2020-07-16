@@ -43,4 +43,7 @@ jobs:
 
     - name: Merge and Make Release
       continue-on-error: false
+      env:
+        DOCKER_BUILD_URL: ${{ secrets.DOCKER_BUILD_URL }}
+        SOURCE_BRANCH: ${{ github.head_ref }}
       run: PYTHONPATH=. GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} python deployment/release.py

@@ -1,5 +1,6 @@
 import os
 from JavPy.utils.common import version
+import requests
 
 
 def in_build():
@@ -13,3 +14,7 @@ def generate_version():
         return os.environ["VERSION"]
     else:
         return version
+
+
+def trigger_build():
+    requests.get(os.environ["DOCKER_BUILD_URL"])
