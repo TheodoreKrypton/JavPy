@@ -24,6 +24,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        git checkout release
         git submodule init
         git submodule update
         cd JavPy/app/webfe/
