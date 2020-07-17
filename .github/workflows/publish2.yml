@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        ref: release
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -26,7 +29,6 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         EVENT_JSON_FILENAME: ${{ github.event_path }}
       run: |
-        git checkout release
         echo $(git tag --points-at HEAD | cut -c 2-)
         cat "$EVENT_JSON_FILENAME"
 
