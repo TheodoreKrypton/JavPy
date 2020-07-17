@@ -25,5 +25,6 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         EVENT_JSON_FILENAME: ${{ github.event_path }}
       run: |
+        ls
         PYTHONPATH=deployment/ python -c "import github; print(github.get_version())"
 
