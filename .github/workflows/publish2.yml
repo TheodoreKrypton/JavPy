@@ -24,4 +24,4 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        PYTHONPATH=deployment/ python -c "import os; import sys; print(os.path.exists('deployment'), sys.path)import github; print(github.get_version())"
+        PYTHONPATH=deployment/ python -c "import os; import sys; print(os.path.exists('deployment'), sys.path); import github; print(github.get_version())"
