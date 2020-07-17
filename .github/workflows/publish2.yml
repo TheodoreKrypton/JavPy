@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      with:
-        ref: release
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
