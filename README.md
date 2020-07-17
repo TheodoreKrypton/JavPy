@@ -16,15 +16,15 @@ Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20cha
 
 ## Contents
 
-* [Introduction](#简介/introduction)
-* [Quick Start](#Quick Start)
-  * [pip](#With pip)
-  * [docker](#with docker)
-  * [git](#with git)
-  * [Command Line Options](#command line options)
-  * [For Contributors](#Contributors)
-* [Web UI](#Web)
-* [Telegram Bot](#telegram bot)
+* [Introduction](#简介introduction)
+* [Quick Start](#quick-start)
+  * [pip](#with-pip)
+  * [docker](#with-docker)
+  * [git](#with-git)
+  * [Command Line Options](#command-line-options)
+  * [For Contributors](#contributors)
+* [Web UI](#web)
+* [Telegram Bot](#telegram-bot)
 * [Acknowledgements](#Acknowledgements)
 
 ## 简介/Introduction
