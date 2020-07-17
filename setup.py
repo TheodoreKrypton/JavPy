@@ -3,10 +3,8 @@ import subprocess
 from JavPy.utils.common import version
 from deployment import docker, github
 
-if docker.in_build():
-    ver = docker.generate_version()
-elif github.in_publish():
-    ver = github.generate_version()
+if docker.in_build() or github.in_publish():
+    ver = github.get_version()
 else:
     ver = version
 
@@ -34,7 +32,7 @@ setup(
     install_requires=install_req,
     entry_points={"console_scripts": ["javpy = JavPy.serve:serve"]},
     include_package_data=True,
-    exclude_package_data={"": [".gitignore"]},
+    exclude_package_data={"": [".gitignore", "deployment"]},
     python_requires=">=3.5",
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
