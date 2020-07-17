@@ -98,17 +98,7 @@ $ docker run -p 8081:8081 -v config.json:/root/.JavPy/config.json wheatcarrier/j
 ### With Git
 ```bash
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
-$ cd JavPy
-$ git submodule init
-$ git submodule add
-
-$ cd JavPy/JavPy/app/webfe/
-$ npm install
-$ npm run build
-
-$ python setup.py install
-$ source ~/.bashrc
-
+$ cd JavPy && ./deployment/build.sh
 $ javpy
 ```
 ### Command Line Options
