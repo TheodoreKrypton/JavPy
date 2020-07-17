@@ -18,9 +18,9 @@ Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20cha
 
 * [Introduction](#简介introduction)
 * [Quick Start](#quick-start)
-  * [pip](#with-pip)
-  * [docker](#with-docker)
-  * [git](#with-git)
+  * [pip `pip install JavPy`](#with-pip)
+  * [docker `docker pull wheatcarrier/javpy:latest`](#with-docker)
+  * [git `git clone https://github.com/TheodoreKrypton/JavPy.git`](#with-git)
   * [Command Line Options](#command-line-options)
   * [For Contributors](#contributors)
 * [Web UI](#web)
