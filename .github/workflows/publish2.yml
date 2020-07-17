@@ -23,8 +23,5 @@ jobs:
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        EVENT_JSON_FILENAME: ${{ github.event_path }}
       run: |
-        ls
-        PYTHONPATH=deployment/ python -c "import github; print(github.get_version())"
-
+        PYTHONPATH=deployment/ python -c "import os; import sys; print(os.path.exists('deployment'), sys.path)import github; print(github.get_version())"
