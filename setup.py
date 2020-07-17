@@ -32,7 +32,7 @@ setup(
     install_requires=install_req,
     entry_points={"console_scripts": ["javpy = JavPy.serve:serve"]},
     include_package_data=True,
-    exclude_package_data={"": [".gitignore"]},
+    exclude_package_data={"": [".gitignore", "deployment"]},
     python_requires=">=3.5",
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
