@@ -3,10 +3,8 @@ import subprocess
 from JavPy.utils.common import version
 from deployment import docker, github
 
-if docker.in_build():
-    ver = docker.generate_version()
-elif github.in_publish():
-    ver = github.generate_version()
+if docker.in_build() or github.in_publish():
+    ver = github.get_version()
 else:
     ver = version
 

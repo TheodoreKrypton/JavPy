@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: release
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -24,12 +27,11 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        git checkout release
         git submodule init
         git submodule update
         cd JavPy/app/webfe/
         npm install
         npm run build
         cd ../../../
-        VERSION=$(git tag --points-at HEAD | cut -c 2-) python setup.py bdist_wheel --universal
+        python setup.py bdist_wheel --universal
         twine upload dist/*

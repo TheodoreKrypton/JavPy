@@ -2,7 +2,9 @@ import os
 import requests
 import json
 from JavPy.utils.common import version
-from deployment.docker import generate_version
+
+
+API_URL = "https://api.github.com/repos/TheodoreKrypton/JavPy"
 
 
 def in_publish():
@@ -79,3 +81,9 @@ def publish():
         data=json.dumps({"event_type": "publish", "client_payload": {}}),
         headers={"Authorization": "token %s" % os.environ["GITHUB_TOKEN"]},
     )
+
+
+def get_version():
+    rsp = requests.get("https://api.github.com/repos/TheodoreKrypton/JavPy/git/refs/tags")
+    tags = json.loads(rsp.text)
+    return tags[-1]["ref"].split("/")[-1][1:]
