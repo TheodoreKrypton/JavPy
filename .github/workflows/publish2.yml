@@ -29,6 +29,5 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         EVENT_JSON_FILENAME: ${{ github.event_path }}
       run: |
-        echo "$(git describe --tags $(git rev-list --tags --max-count=1))"
-        cat "$EVENT_JSON_FILENAME"
+        python -c "from deployment import github; print(github.get_version())"
 
