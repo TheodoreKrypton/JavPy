@@ -20,7 +20,7 @@ Discussion | [![Telegram Chat](https://img.shields.io/badge/JavPy-telegram%20cha
 
 * Linux, Mac OS:
 ```bash
-$ curl -sL https://deb.nodesource.com/setup_10.x | bash -
+$ curl -sL https://deb.nodesource.com/setup_12.x | bash -
 $ apt-get install nodejs -y
 ```
 
@@ -50,11 +50,20 @@ $ docker run -p 8081:8081 wheatcarrier/javpy:latest
 ```
 open http://localhost:8081 in explorer and enjoy driving!
 
+or if you would like to use a configuration file outside the container,
+```bash
+$ docker run -p 8081:8081 -v config.json:/root/.JavPy/config.json wheatcarrier/javpy:latest
+```
+
+
 ### With Git
 ```bash
 $ git clone https://github.com/TheodoreKrypton/JavPy.git
+$ cd JavPy
+$ git submodule init
+$ git submodule add
 
-$ cd JavPy/JavPy/app/web/
+$ cd JavPy/JavPy/app/webfe/
 $ npm install
 $ npm run build
 
@@ -84,22 +93,17 @@ optional arguments:
 ```
 
 ### Contributors:
-```bash
-$ git clone https://github.com/TheodoreKrypton/JavPy.git
-
-$ cd JavPy/JavPy/app/javpy-react/
-$ npm install
-```
-
 Back End:
 ```
+$ git clone https://github.com/TheodoreKrypton/JavPy.git
 $ cd JavPy
 $ PYTHONPATH=. python JavPy/develop.py
 ```
 
 Front End:
 ```
-$ cd JavPy/JavPy/app/web/
+$ git clone https://github.com/TheodoreKrypton/JavPy-webfe.git
+$ npm install
 $ npm start
 ```
 
