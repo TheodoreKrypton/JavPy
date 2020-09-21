@@ -67,7 +67,12 @@ jobs:
         asset_path: javpy-macos.zip
         asset_name: javpy-macos.zip
         asset_content_type: application/zip
+    
+    - name: Clear zip files
+      run: rm *.zip
 
-    - run: npm publish
+    - name: Publish to NPM      
+      uses: pascalgn/npm-publish-action@06e0830ea83eea10ed4a62654eeaedafb8bf50fc
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
