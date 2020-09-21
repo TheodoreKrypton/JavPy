@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    continue-on-error: false
 
     steps:
     - uses: actions/checkout@v2
@@ -18,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: npm install --only=prod
     - name: Build binaries
-      run: npm run build
+      run: npm install -g pkg && npm run build
 
     - name: Create Release
       uses: actions/create-release@v1
@@ -37,3 +38,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./build/*
+    
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
