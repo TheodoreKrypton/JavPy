@@ -24,11 +24,11 @@ jobs:
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
-      run: echo ::set-env name=VERSION::$(npm version | grep -oP "javpy: '\K.+?(?=')")
+      run: npm version | grep -oP "javpy: '\K.+?(?=')" > VERSION
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.VERSION }}
+        tag_name: ${{ cat VERSION }}
         release_name: Enjoy Driving!
         draft: false
         prerelease: false
