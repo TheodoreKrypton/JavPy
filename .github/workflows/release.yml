@@ -22,7 +22,7 @@ jobs:
       run: npm install -g pkg && npm run build
     
     - name: Get version
-      run: echo "::set-env name=VERSION::$(bash ./deployment/get_version.sh)"
+      run: echo "::set-env name=VERSION::v$(bash ./deployment/get_version.sh)"
 
     - name: Create Release
       id: create_release
@@ -44,7 +44,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/javpy-win.zip
+        asset_path: javpy-win.zip
         asset_name: javpy-win.zip
         asset_content_type: application/zip
     
@@ -54,7 +54,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/javpy-linux.zip
+        asset_path: javpy-linux.zip
         asset_name: javpy-linux.zip
         asset_content_type: application/zip
 
@@ -64,7 +64,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/javpy-macos.zip
+        asset_path: javpy-macos.zip
         asset_name: javpy-macos.zip
         asset_content_type: application/zip
 
