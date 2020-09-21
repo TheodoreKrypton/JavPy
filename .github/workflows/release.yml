@@ -27,7 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.GITHUB_SHA }}
+        tag_name: $GITHUB_SHA
         release_name: Enjoy Driving!
         draft: false
         prerelease: false

@@ -1,0 +1,1 @@
+web: npm install --only=prod && javpy --port $PORT
