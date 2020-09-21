@@ -20,11 +20,14 @@ jobs:
       run: npm install --only=prod
     - name: Build binaries
       run: npm install -g pkg && npm run build
+    
+    - name: Get version
+      run: ::set-env name=VERSION::$(bash ./deployment/get_version.sh)
 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
-      run: ::set-env name=VERSION::$(bash ./deployment/get_version.sh)
+      
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
