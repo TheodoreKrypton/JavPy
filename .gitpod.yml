@@ -1,0 +1,8 @@
+image:
+  wheatcarrier/javpy
+
+tasks:
+  ./javpy-linux
+ports:
+  - port: 8081
+    onOpen: open-browser
