@@ -24,10 +24,11 @@ jobs:
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
+      run: echo ::set-env name=VERSION::$(npm version | grep -oP "javpy: '\K.+?(?=')")
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: $GITHUB_SHA
+        tag_name: ${{ env.VERSION }}
         release_name: Enjoy Driving!
         draft: false
         prerelease: false
@@ -38,7 +39,7 @@ jobs:
     - name: Upload Windows
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ npm version | grep -oP "javpy: '\K.+?(?=')" }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./build/javpy-win.zip
