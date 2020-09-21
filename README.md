@@ -1,8 +1,12 @@
 # JavPy
 
 ![Github Actions](https://github.com/TheodoreKrypton/javpy/workflows/test/badge.svg)
-![codecov](https://codecov.io/gh/TheodoreKrypton/javpy/branch/master/graph/badge.svg)
+![codecov](https://codecov.io/gh/TheodoreKrypton/JavPy/branch/release/graph/badge.svg)
 ![npm](https://img.shields.io/npm/v/javpy)
+
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TheodoreKrypton/JavPy/tree/release)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/TheodoreKrypton/JavPy)
 
 ![](preview.png)
 

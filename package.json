@@ -1,11 +1,12 @@
 {
   "name": "javpy",
   "version": "0.7.6",
-  "description": "JavPy in Node.js",
+  "description": "Enjoy driving on a Javascriptive (originally Pythonic) way to Japanese AV!",
   "scripts": {
     "test": "mocha ./test/test.js --timeout 60000",
     "coverage": "nyc --reporter=lcov mocha --timeout 60000 && codecov -t ${CODECOV_TOKEN}",
     "build": "pkg . --out-path=./build/",
+    "heroku-postbuild": "echo Skip build on Heroku",
     "install": "npm run install-fe",
     "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe"
   },
