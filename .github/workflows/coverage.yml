@@ -1,0 +1,21 @@
+name: smalltest
+
+on: [push, pull_request]
+  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node 12
+      uses: actions/setup-node@v1
+      with:
+        version: 12
+    - name: Install dependencies
+      run: npm install
+    - name: Coverage
+      run: npm run coverage
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

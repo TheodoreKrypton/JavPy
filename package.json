@@ -1,6 +1,6 @@
 {
   "name": "javpy",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "JavPy in Node.js",
   "scripts": {
     "test": "mocha ./test/test.js --timeout 60000",
