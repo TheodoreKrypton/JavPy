@@ -7,18 +7,18 @@
     "coverage": "nyc --reporter=lcov mocha --timeout 60000 && codecov -t ${CODECOV_TOKEN}",
     "build": "pkg . --out-path=./build/",
     "install": "npm run install-fe",
-    "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe#websocket"
+    "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheodoreKrypton/javscript.git"
+    "url": "git+https://github.com/TheodoreKrypton/JavPy.git"
   },
   "author": "Wheat Carrier",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/TheodoreKrypton/javscript/issues"
+    "url": "https://github.com/TheodoreKrypton/JavPy/issues"
   },
-  "homepage": "https://github.com/TheodoreKrypton/javscript#readme",
+  "homepage": "https://github.com/TheodoreKrypton/JavPy#readme",
   "devDependencies": {
     "codecov": "^3.7.2",
     "cross-env": "^7.0.2",
