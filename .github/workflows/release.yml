@@ -22,16 +22,15 @@ jobs:
       run: npm install -g pkg && npm run build
     
     - name: Get version
-      run: ::set-env name=VERSION::$(bash ./deployment/get_version.sh)
+      run: bash ./deployment/get_version.sh > VERSION
 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
-      
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.VERSION }}
+        tag_name: ${{ $(cat VERSION) }}
         release_name: Enjoy Driving!
         draft: false
         prerelease: false
