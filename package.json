@@ -1,0 +1,51 @@
+{
+  "name": "javpy",
+  "version": "0.7.4",
+  "description": "JavPy in Node.js",
+  "scripts": {
+    "test": "mocha ./test/test.js --timeout 60000",
+    "coverage": "nyc --reporter=lcov mocha --timeout 60000 && codecov -t ${CODECOV_TOKEN}",
+    "build": "pkg . --out-path=./build/",
+    "install": "npm run install-fe",
+    "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe#websocket"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheodoreKrypton/javscript.git"
+  },
+  "author": "Wheat Carrier",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TheodoreKrypton/javscript/issues"
+  },
+  "homepage": "https://github.com/TheodoreKrypton/javscript#readme",
+  "devDependencies": {
+    "codecov": "^3.7.2",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "pkg": "^4.4.9"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bunyan-sfdx-no-dtrace": "^1.8.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ip-range-check": "^0.2.0",
+    "js-sha256": "^0.9.0",
+    "jsdom": "^16.3.0",
+    "unzip-stream": "^0.3.0",
+    "ws": "^7.3.1",
+    "yargs": "^16.0.3"
+  },
+  "pkg": {
+    "scripts": "./bin/javpy.js",
+    "assets": "./frontend/node_modules/javpy-react/build/"
+  },
+  "bin": {
+    "javpy": "./bin/javpy.js"
+  }
+}

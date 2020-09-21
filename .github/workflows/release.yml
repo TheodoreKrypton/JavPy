@@ -1,49 +1,39 @@
-name: Make Release
+name: release
 
 on:
-  pull_request:
+  push:
     branches:
       - release
 
 jobs:
   release:
-    name: Release
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
-    - name: Set Node.js 12.x
-      uses: actions/setup-node@v1.1.0
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
       with:
-        version: 12.x
-
-    - name: Set up Python
-      uses: actions/setup-python@v1.0.0
-      with:
-        version: 3.7
-
+        node-version: 12
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r test-requirements.txt
+      run: npm install --only=prod
+    - name: Build binaries
+      run: npm run build
 
-    - name: Test with pytest
-      continue-on-error: false
-      run: pytest -n 4 --ignore=JavPy/app/web --cov=JavPy --cov-report=xml JavPy/tests/test_clients/
-
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: ./coverage.xml
-
-    - name: Merge and Make Release
-      continue-on-error: false
+    - name: Create Release
+      uses: actions/create-release@v1
       env:
-        DOCKER_BUILD_URL: ${{ secrets.DOCKER_BUILD_URL }}
-        SOURCE_BRANCH: ${{ github.head_ref }}
-      run: PYTHONPATH=. GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} python deployment/release.py
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Enjoy Driving!
+        draft: false
+        prerelease: false
+    
+    - name: Upload 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/*
