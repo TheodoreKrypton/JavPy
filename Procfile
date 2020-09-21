@@ -1,1 +1,1 @@
-web: pip install JavPy && javpy --port ${PORT}
+web: npm install --only=prod && javpy --port $PORT
