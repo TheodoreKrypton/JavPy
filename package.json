@@ -1,8 +1,9 @@
 {
   "name": "javpy",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Enjoy driving on a Javascriptive (originally Pythonic) way to Japanese AV!",
   "scripts": {
+    "dev": "node ./bin/javpy.js --browser=false",
     "test": "mocha ./test/test.js --timeout 60000",
     "coverage": "nyc --reporter=lcov mocha --timeout 60000 && codecov -t ${CODECOV_TOKEN}",
     "build": "pkg . --out-path=./build/",
