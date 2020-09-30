@@ -1,6 +1,6 @@
 {
   "name": "javpy",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Enjoy driving on a Javascriptive (originally Pythonic) way to Japanese AV!",
   "scripts": {
     "dev": "node ./bin/javpy.js --browser=false",
