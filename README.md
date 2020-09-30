@@ -82,9 +82,6 @@ Example: `proxy: "http://127.0.0.1:1080"`
 ------------------
 
 <div align=center id="Acknowledgements">
-
-
-
 *Acknowledgements*
 
 *This project does not include any stored or static data, and all the data it presents are collected realtime and automatically from the websites below. Internet data are public but messy and collecting them is a tiring work. Appreciate them for their offering precious and high quality data.*

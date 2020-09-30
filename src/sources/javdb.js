@@ -81,9 +81,9 @@ const searchMagnet = async (code) => {
 
 const getNewlyReleased = async (page) => {
   const censoredUrl = `/?page=${page}&vft=0`;
-  const uncensoredUrl = `/uncensored?page=${page}&vft=0`;
+  // const uncensoredUrl = `/uncensored?page=${page}&vft=0`;
 
-  return (await Promise.allSettled([censoredUrl, uncensoredUrl].map(
+  const responses = await Promise.allSettled([censoredUrl].map(
     (url) => requester.get(url).then((rsp) => {
       const dom = new JSDOM(rsp.data).window.document;
       return [...dom.querySelector('#videos').querySelectorAll('.grid-item')].map((video) => {
@@ -95,7 +95,13 @@ const getNewlyReleased = async (page) => {
         return av;
       });
     }).catch(() => []),
-  ))).reduce((a, b) => a.value.concat(b.value));
+  ));
+
+  if (responses.length > 1) {
+    return responses.reduce((a, b) => a.value.concat(b.value));
+  }
+
+  return responses.value;
 };
 
 module.exports = {
