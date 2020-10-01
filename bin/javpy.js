@@ -12,6 +12,11 @@ const { argv } = yargs
     default: 8081,
     type: 'int',
   })
+  .option('browser', {
+    description: 'open browser automatically',
+    default: true,
+    type: 'bool',
+  })
   .help()
   .alias('help', 'h');
 
@@ -27,4 +32,4 @@ const openBrowser = () => {
   }
 };
 
-server.run(argv.port, openBrowser);
+server.run(argv.port, argv.browser === 'false' ? undefined : openBrowser);

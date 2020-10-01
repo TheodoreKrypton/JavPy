@@ -3,7 +3,7 @@ const utils = require('./utils');
 
 const getActressProfile = async (ws, reqId, { actress }) => {
   try {
-    const rsp = sources.warashiAsianPornstarsFr.getActressProfile(actress);
+    const rsp = await sources.warashiAsianPornstarsFr.getActressProfile(actress);
     if (rsp) {
       ws.send(JSON.stringify({ response: rsp, reqId }));
     } else {
