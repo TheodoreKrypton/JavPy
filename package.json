@@ -3,7 +3,7 @@
   "version": "0.7.8",
   "description": "Enjoy driving on a Javascriptive (originally Pythonic) way to Japanese AV!",
   "scripts": {
-    "dev": "node ./bin/javpy.js --browser=false",
+    "dev": "node ./bin/javpy.js --browser=false --public=true",
     "test": "mocha ./test/test.js --timeout 60000",
     "coverage": "nyc --reporter=lcov mocha --timeout 60000 && codecov -t ${CODECOV_TOKEN}",
     "build": "pkg . --out-path=./build/",
@@ -36,9 +36,11 @@
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "form-data": "^3.0.0",
     "ip-range-check": "^0.2.0",
     "js-sha256": "^0.9.0",
     "jsdom": "^16.3.0",
+    "memfs": "^3.2.0",
     "unzip-stream": "^0.3.0",
     "ws": "^7.3.1",
     "yargs": "^16.0.3"
