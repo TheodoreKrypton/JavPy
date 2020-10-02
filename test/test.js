@@ -19,7 +19,7 @@ describe('functions', function () {
   describe('get_brief', function () {
     it('should not say not found', async function () {
       const ws = new WS();
-      await functions.searchByCode(ws, '', { code: 'ABP-123' });
+      await functions.getBrief(ws, '', { code: 'ABP-123' });
       assert.notStrictEqual(ws.responses.length, 0);
       assert.notStrictEqual(JSON.parse(ws.responses[0]).response, 'not found');
     });
@@ -55,6 +55,16 @@ describe('functions', function () {
       assert.notStrictEqual(JSON.parse(ws.responses[0]).response, 'not found');
     });
   });
+
+  describe('get_actress_profile', function () {
+    it('should have something', async function () {
+      const ws = new WS();
+      await functions.getActressProfile(ws, '', { actress: '深田えいみ' });
+      assert.notStrictEqual(ws.responses.length, 0);
+      assert.notStrictEqual(JSON.parse(ws.responses[0]).response, 'not found');
+    });
+  });
+
   describe('get_newly_released', function () {
     it('should have something', async function () {
       const ws = new WS();
