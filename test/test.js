@@ -75,11 +75,9 @@ describe('functions', function () {
     it('should have something', async function () {
       const ws = new WS();
       const rsp = await axios.get('https://i.imgur.com/t0JcBh1.jpg', { responseType: 'arraybuffer' });
-      console.log(rsp.data);
       const dataUrl = `data:image/jpeg;base64,${Buffer.from(rsp.data).toString('base64')}`;
       console.log(dataUrl);
       await functions.searchActressByImage(ws, '', { image: dataUrl });
-      console.log(ws.responses);
       assert.notStrictEqual(ws.responses.length, 0);
     });
   });
