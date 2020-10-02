@@ -2,18 +2,8 @@ const axios = require('axios');
 const http = require('http');
 const https = require('https');
 const { default: Axios } = require('axios');
-const { JSDOM } = require('jsdom');
 
-let ua = null;
-
-const getUserAgent = async () => {
-  if (!ua) {
-    const rsp = await Axios.get('https://user-agents.net/browsers/chromium');
-    const dom = new JSDOM(rsp.data).window.document;
-    ua = dom.querySelector('.agents_list').querySelector('li').textContent;
-  }
-  return ua;
-};
+const ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/85.0.4183.59 Chrome/85.0.4183.59 Safari/537.36';
 
 module.exports = {
   requester: (baseUrl) => {
@@ -25,15 +15,15 @@ module.exports = {
 
     const makeConfig = (config) => {
       if (!config) {
-        return { headers: { 'User-Agent': getUserAgent() } };
+        return { headers: { 'User-Agent': ua } };
       }
 
       if (!config.headers) {
-        return { headers: { 'User-Agent': getUserAgent() }, ...config };
+        return { headers: { 'User-Agent': ua }, ...config };
       }
 
       if (!config.headers['User-Agent']) {
-        return { ...config, headers: { 'User-Agent': getUserAgent(), ...config.headers } };
+        return { ...config, headers: { 'User-Agent': ua, ...config.headers } };
       }
       return config;
     };

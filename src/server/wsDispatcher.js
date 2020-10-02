@@ -3,7 +3,9 @@ const auth = require('./authenticate');
 const { logger } = require('./log');
 
 const dispatch = (ws, msg) => {
-  logger.info({ ws: msg });
+  if (!msg.message || !msg.message.args || !msg.message.args.image) {
+    logger.info({ ws: msg });
+  }
 
   try {
     const { message, reqId, userpass } = msg;
@@ -22,6 +24,7 @@ const dispatch = (ws, msg) => {
       get_aliases: functions.getAliases,
       get_actress_profile: functions.getActressProfile,
       get_brief: functions.getBrief,
+      search_actress_by_image: functions.searchActressByImage,
     };
 
     if (routes[api]) {

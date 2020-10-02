@@ -15,8 +15,19 @@ const getNameInCard = (name, card) => {
     return null;
   }
 
-  if (!card.textContent.toLowerCase().includes(name)) {
-    return null;
+  const content = card.textContent.toLowerCase();
+
+  if (!content.includes(name)) {
+    const tokens = name.split(/\s+/);
+    if (tokens.length === 2) {
+      const [firstName, lastName] = tokens;
+      console.log(`${lastName} ${firstName}`);
+      console.log(content);
+      console.log(content.includes(`${lastName} ${firstName}`));
+      if (!content.includes(`${lastName} ${firstName}`)) {
+        return null;
+      }
+    }
   }
 
   const title = card.querySelector('p').textContent.toLowerCase();

@@ -1,4 +1,4 @@
-name: smalltest
+name: coverage
 
 on: [push, pull_request]
   

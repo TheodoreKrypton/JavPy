@@ -1,29 +1,24 @@
-const Axios = require('axios').default;
+const FormData = require('form-data');
+const { fs } = require('memfs');
+const { JSDOM } = require('jsdom');
 const utils = require('./utils');
-const ds = require('../ds');
 
-const requester = utils.requester('https://api.avgle.com');
+const requester = utils.requester('https://xslist.org');
 
-const searchByCode = async (code) => {
-  const rsp = await requester.get(`/v1/search/${code}/0?limit=1`);
-  const video = rsp.data.response.videos[0];
-
-  const testVideo = await Axios.get(encodeURI(video.video_url), { maxRedirects: 0 });
-  if (testVideo.status === 301) {
-    return null;
-  }
-
-  if (video.title.toLowerCase().includes(code.toLowerCase())) {
-    const av = new ds.AV();
-    av.title = video.title;
-    av.video_url = video.video_url;
-    av.code = code;
-    av.preview_img_url = video.preview_url;
-    return av;
-  }
-  return null;
+const searchActressByImage = async (image) => {
+  const blob = Buffer.from(image.split(',')[1], 'base64');
+  const fileName = `/${Math.random()}`;
+  fs.writeFileSync(fileName, blob);
+  const formData = new FormData();
+  formData.append('pic', fs.createReadStream(fileName));
+  const rsp = await requester.post('/search/pic', formData, { headers: formData.getHeaders() });
+  const dom = new JSDOM(rsp.data).window.document;
+  return [...dom.querySelectorAll('a')].map((a) => {
+    const tokens = a.text.split('-');
+    return tokens.length === 3 ? tokens[1].trim() : tokens[0].trim();
+  });
 };
 
 module.exports = {
-  searchByCode,
+  searchActressByImage,
 };

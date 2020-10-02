@@ -19,16 +19,16 @@
 
 ## 简介/Introduction
 
-这是一个用来搜索日本 AV 相关信息的 NodeJS App，目前提供一个基于WebSocket的Web客户端页面。
+这是一个用来搜索日本 AV 相关信息的 NodeJS app，目前提供一个基于WebSocket的Web客户端页面。
 
-这个App从多个网站爬取信息，但多数目标网站在一些特定地区都被禁止访问。为了更好的使用体验，建议将这个库运行在互联网管制较少的地区，如美国，日本等。
+这个app从多个网站爬取信息，但多数目标网站在一些特定地区都被禁止访问。为了更好的使用体验，建议将这个库运行在互联网管制较少的地区，如美国，日本等。
 
 
 ---
 
-This is a NodeJS App for searching Japanese AVs related information. This project temporarily only provides a WebSocket based web page as interface.
+This is a NodeJS app for searching Japanese AVs related information. This project temporarily only provides a WebSocket based web page as interface.
 
-This App fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
+This app fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
 
 ## Quick Start
 

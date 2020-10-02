@@ -5,6 +5,7 @@ const { searchMagnet } = require('./searchMagnet');
 const { getActressProfile } = require('./getActressProfile');
 const { getAliases } = require('./getAliases');
 const { getBrief } = require('./getBrief');
+const { searchActressByImage } = require('./searchActressByImage');
 
 module.exports = {
   searchByActress,
@@ -14,4 +15,5 @@ module.exports = {
   getActressProfile,
   getAliases,
   getBrief,
+  searchActressByImage,
 };

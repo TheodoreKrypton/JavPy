@@ -3,6 +3,7 @@
 const yargs = require('yargs');
 const { exec } = require('child_process');
 const os = require('os');
+const auth = require('../src/server/authenticate');
 const server = require('../src/server');
 
 const { argv } = yargs
@@ -15,6 +16,11 @@ const { argv } = yargs
   .option('browser', {
     description: 'open browser automatically',
     default: true,
+    type: 'bool',
+  })
+  .option('public', {
+    description: 'public mode does not require authentications',
+    default: false,
     type: 'bool',
   })
   .help()
@@ -31,5 +37,9 @@ const openBrowser = () => {
     exec(`open ${url}`);
   }
 };
+
+if (argv.public === 'true') {
+  auth.setPublic();
+}
 
 server.run(argv.port, argv.browser === 'false' ? undefined : openBrowser);
