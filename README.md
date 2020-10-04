@@ -21,14 +21,28 @@
 
 这是一个用来搜索日本 AV 相关信息的 NodeJS app，目前提供一个基于WebSocket的Web客户端页面。
 
-这个app从多个网站爬取信息，但多数目标网站在一些特定地区都被禁止访问。为了更好的使用体验，建议将这个库运行在互联网管制较少的地区，如美国，日本等。
+这个app从多个网站爬取信息，但多数目标网站在一些特定地区都被禁止访问。为了更好的使用体验，建议将这个app运行在互联网管制较少的地区，如美国，日本等。
 
+这个app提供以下功能：
 
+* 每日最新影片
+* 由番号找在基本信息及在线观看链接
+* 由番号找磁力链接
+* 由演员日文/英文名找演员信息，历史艺名及出演影片
+* 由演员照片/电影截图找演员
 ---
 
 This is a NodeJS app for searching Japanese AVs related information. This project temporarily only provides a WebSocket based web page as interface.
 
-This app fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet restrictions, like the USA, Japan, etc.
+This app fetches information from various websites, but most of them are blocked in some regions. To experience a better travel, please host the service in somewhere having lesser Internet cencorships, like the USA, Japan, etc.
+
+This app provides functions listed below,
+
+* Newly released movies
+* Search basic information and streaming links with movie code
+* Search magnet links with movie code
+* Search actress information, aliases and movies with Japanese / Romaji name.
+* Actress facial recognition.
 
 ## Quick Start
 
