@@ -1,5 +1,5 @@
 const express = require('express');
-const fs = require('fs');
+const expressStaticGzip = require('express-static-gzip');
 const sha256 = require('js-sha256');
 const cors = require('cors');
 const path = require('path');
@@ -46,14 +46,9 @@ const beforeRequest = (req, res, next) => {
 
 app.use(beforeRequest);
 
-const FRONTEND_ROOT = path.join(argv.fe ? argv.fe : path.join(__dirname, '../../frontend/node_modules/javpy-react'), 'build/');
+const FRONTEND_ROOT = path.join(argv.fe ? argv.fe : path.join(__dirname, '../../frontend/'), 'build/');
 
-app.get('/', (req, res) => {
-  fs.createReadStream(`${FRONTEND_ROOT}/index.html`)
-    .pipe(res);
-});
-
-app.use(express.static(FRONTEND_ROOT));
+app.use('/', expressStaticGzip(FRONTEND_ROOT));
 
 // app.post('/', (req, res) => {
 //   const { message } = req.body;

@@ -9,7 +9,7 @@
     "build": "pkg . --out-path=./build/",
     "heroku-postbuild": "echo Skip build on Heroku",
     "install": "npm run install-fe",
-    "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe"
+    "install-fe": "npm install --prefix frontend --only=prod TheodoreKrypton/JavPy-webfe && npm install --no-save gzipper && gzipper compress ./frontend/node_modules/javpy-react/build ./frontend/build"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-static-gzip": "^2.0.8",
     "form-data": "^3.0.0",
     "ip-range-check": "^0.2.0",
     "js-sha256": "^0.9.0",
@@ -47,7 +48,7 @@
   },
   "pkg": {
     "scripts": "./bin/javpy.js",
-    "assets": "./frontend/node_modules/javpy-react/build/"
+    "assets": "./frontend/build/"
   },
   "bin": {
     "javpy": "./bin/javpy.js"
