@@ -9,21 +9,26 @@ const wss = new WebSocket.Server({ path: '/ws/', server });
 server.on('request', httpDispatcher);
 
 wss.on('connection', (ws) => {
-  console.log('connected');
+  // eslint-disable-next-line no-param-reassign
+  ws.isAlive = true;
+  ws.on('pong', () => {
+    // eslint-disable-next-line no-param-reassign
+    ws.isAlive = true;
+  });
   ws.on('message', (message) => {
     wsDispatcher.dispatch(ws, JSON.parse(message));
   });
 });
 
-function noop() { }
-
 const interval = setInterval(() => {
+  console.log(wss.clients.size);
   wss.clients.forEach((ws) => {
+    console.log(ws.isAlive);
     if (ws.isAlive === false) return ws.terminate();
 
     // eslint-disable-next-line no-param-reassign
     ws.isAlive = false;
-    ws.ping(noop);
+    ws.ping(() => { });
   });
 }, 60 * 60 * 1000);
 
