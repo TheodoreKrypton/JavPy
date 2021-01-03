@@ -76,22 +76,35 @@ $ docker run -p 8081:8081 wheatcarrier/javpy:latest
 
 **If you want to run the server on a remote machine** like a cloud VPS, you may be worry about the website being accessed by unauthorised people. JavPy will automatically create a configuration file  `~/.JavPy/config.json` on its first run. You can **add your personal IPs or IP ranges** into the file and **create a password**. Unauthorised access will then be blocked and get a response of Error 400. You can also set the configuration with the settings button on the top left of tha web page.
 
-### `proxy`
-
-如果你需要使用代理，请在`~/.JavPy/config.json`中设置`proxy`这一项，目前可以支持socks5与http代理
-
-例子：`proxy: "http://127.0.0.1:1080"`
-
-----
-
-If you need to use a proxy, simply set the `proxy` field in the `~/.JavPy/config.json`. Currently both socks5 and http proxies are supported.
-
-Example: `proxy: "http://127.0.0.1:1080"`
-
 
 **注意：**若使用docker进行服务，请务必记得在退出docker前将config文件保存，不管是通过`docker cp`进行备份或通过`docker commit`提交修改。
 
+----
+
 **Attention:** If you are serving with docker, please don't forget to save your config file before exiting the container. You can either backup the config file with `docker cp` or save your changes into an image with `docker commit`.
+
+## Using Proxy
+
+如果你需要设置代理，请设置 `PROXY` 环境变量，例如：
+```bash
+PROXY=localhost:1080 javpy  # 同时设置 http 及 https 代理
+```
+或分别地，
+```bash
+HTTP_PROXY=localhost:1080 HTTPS_PROXY=localhost:1081 javpy
+```
+
+----
+
+If you need to use a proxy, please set the `PROXY` environment variable. For example,
+```bash
+PROXY=localhost:1080 javpy  # for both http and https proxies
+```
+or separately,
+```bash
+HTTP_PROXY=localhost:1080 HTTPS_PROXY=localhost:1081 javpy
+```
+
 
 ------------------
 

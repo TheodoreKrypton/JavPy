@@ -101,7 +101,7 @@ const getNewlyReleased = async (page) => {
     return responses.reduce((a, b) => a.value.concat(b.value));
   }
 
-  return responses.value;
+  return responses[0].value;
 };
 
 module.exports = {
