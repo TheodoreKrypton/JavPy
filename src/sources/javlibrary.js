@@ -42,7 +42,6 @@ const getNewlyReleased = async (page) => {
 
 const getBrief = async (code) => {
   let rsp = await requester.get(encodeURI(`/ja/vl_searchbyid.php?keyword=${code}`));
-  console.log(rsp);
   if (!rsp) {
     return null;
   }
