@@ -76,7 +76,3 @@ module.exports = {
   getNewlyReleased,
   getBrief,
 };
-
-(async () => {
-  console.log(await getBrief('GVH-188'));
-})();
