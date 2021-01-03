@@ -26,12 +26,17 @@ module.exports = {
       httpsProxyConfig = { ...httpsProxyConfig, host, port };
     }
 
-    const requester = axios.create({
+    const requesterConfig = {
       timeout: 60000,
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new HttpsProxyAgent(httpsProxyConfig),
-      proxy: httpProxyConfig,
-    });
+    };
+
+    if (httpProxyConfig.host) {
+      requesterConfig.proxy = httpProxyConfig;
+    }
+
+    const requester = axios.create(requesterConfig);
 
     const makeConfig = (config) => {
       if (!config) {
