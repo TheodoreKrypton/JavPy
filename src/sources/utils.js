@@ -1,42 +1,34 @@
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 const http = require('http');
-const { default: Axios } = require('axios');
 
 const ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/85.0.4183.59 Chrome/85.0.4183.59 Safari/537.36';
 
 module.exports = {
   requester: (baseUrl) => {
-    let httpProxyConfig = {};
-    let httpsProxyConfig = {};
+    let httpProxyConfig;
+    let httpsProxyConfig;
 
     if (process.env.PROXY) {
-      const [host, port] = process.env.PROXY.split(':');
-      httpProxyConfig = { ...httpProxyConfig, host, port };
-      httpsProxyConfig = { ...httpsProxyConfig, host, port };
+      process.env.http_proxy = process.env.proxy;
+      process.env.https_proxy = process.env.proxy;
     }
 
-    if (process.env.HTTP_PROXY) {
-      const [host, port] = process.env.HTTP_PROXY.split(':');
-      httpProxyConfig = { ...httpProxyConfig, host, port };
+    if (process.env.http_proxy) {
+      const [host, port] = process.env.http_proxy.split(':');
+      httpProxyConfig = { host, port };
     }
 
-    if (process.env.HTTPS_PROXY) {
-      const [host, port] = process.env.HTTPS_PROXY.split(':');
-      httpsProxyConfig = { ...httpsProxyConfig, host, port };
+    if (process.env.https_proxy) {
+      const [host, port] = process.env.https_proxy.split(':');
+      httpsProxyConfig = { host, port };
     }
-
-    const requesterConfig = {
+    const requester = axios.create({
       timeout: 60000,
       httpAgent: new http.Agent({ keepAlive: true }),
-      httpsAgent: new HttpsProxyAgent(httpsProxyConfig),
-    };
-
-    if (httpProxyConfig.host) {
-      requesterConfig.proxy = httpProxyConfig;
-    }
-
-    const requester = axios.create(requesterConfig);
+      httpsAgent: new HttpsProxyAgent({ ...(httpsProxyConfig || {}), keepAlive: true }),
+      proxy: httpProxyConfig,
+    });
 
     const makeConfig = (config) => {
       if (!config) {
@@ -57,13 +49,14 @@ module.exports = {
       get(url, config) {
         const u = url.startsWith('http') ? url : `${baseUrl}${url}`;
         return requester.get(u, makeConfig(config))
-          .catch((err) => console.error(`${baseUrl} => ${err.message} `));
+          .catch((err) => console.error(`${baseUrl}${url} => ${err.message} `));
       },
 
       post(url, data, config) {
         const u = url.startsWith('http') ? url : `${baseUrl} ${url} `;
+        console.log(data);
         return requester.post(u, data, makeConfig(config))
-          .catch((err) => console.error(`${baseUrl} => ${err.message} `));
+          .catch((err) => console.error(`${baseUrl}${url} => ${err.message} `));
       },
     };
   },
@@ -78,7 +71,7 @@ module.exports = {
 
   testUrl: async (url) => {
     try {
-      const rsp = await Axios.head(url);
+      const rsp = await axios.head(url);
       return rsp.status >= 200 < 400;
     } catch {
       return false;

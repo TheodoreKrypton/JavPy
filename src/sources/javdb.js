@@ -13,7 +13,7 @@ const urlCache = {};
 const getUrl = async (code) => {
   if (urlCache[code] === undefined) {
     const rsp = await requester.get(`/videos/search_autocomplete.json?q=${encodeURI(code)}`);
-    if (rsp.data.length === 0 || !rsp.data[0].title.toLowerCase().includes(code.toLowerCase())) {
+    if (rsp.data.length === 0 || !rsp.data[0].meta.toLowerCase().includes(code.toLowerCase())) {
       urlCache[code] = null;
     } else {
       urlCache[code] = `/v/${rsp.data[0].uid}`;
@@ -91,7 +91,7 @@ const getNewlyReleased = async (page) => {
         av.title = video.querySelector('.video-title').textContent.trim();
         av.code = video.querySelector('.uid').textContent.trim();
         av.release_date = video.querySelector('.meta').textContent.trim();
-        av.preview_img_url = utils.noexcept(() => video.querySelector('img').getAttribute('data-src'));
+        av.preview_img_url = utils.noexcept(() => video.querySelector('img').getAttribute('data-src').replace('/thumbs/', '/covers/'));
         return av;
       });
     }).catch(() => []),

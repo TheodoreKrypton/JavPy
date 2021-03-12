@@ -67,8 +67,9 @@ const searchByCode = async (code) => {
   const value = encodeURIComponent(rsp.data.match(`var ${varValue} = '(.+?)'`)[1]);
   const sound = rsp.data.match(regexes.sound)[1];
 
-  return buttons.map((button) => (async () => {
+  return (await Promise.allSettled(buttons.map((button) => (async () => {
     const url = await tryOneButton(button, value, sound);
+    console.log(url);
     if (url) {
       const av = new ds.AV();
       av.preview_img_url = previewImgUrl;
@@ -80,7 +81,7 @@ const searchByCode = async (code) => {
       return av;
     }
     return null;
-  })());
+  })()))).map((button) => button.value);
 };
 
 const getNewlyReleased = async (page) => {
@@ -106,6 +107,10 @@ const getNewlyReleased = async (page) => {
     return av;
   });
 };
+
+(async () => {
+  console.log(await searchByCode('SSNI-989'));
+})();
 
 module.exports = {
   searchByCode,
