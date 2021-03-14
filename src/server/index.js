@@ -21,9 +21,7 @@ wss.on('connection', (ws) => {
 });
 
 const interval = setInterval(() => {
-  console.log(wss.clients.size);
   wss.clients.forEach((ws) => {
-    console.log(ws.isAlive);
     if (ws.isAlive === false) return ws.terminate();
 
     // eslint-disable-next-line no-param-reassign

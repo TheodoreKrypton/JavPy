@@ -21,9 +21,6 @@ const getNameInCard = (name, card) => {
     const tokens = name.split(/\s+/);
     if (tokens.length === 2) {
       const [firstName, lastName] = tokens;
-      console.log(`${lastName} ${firstName}`);
-      console.log(content);
-      console.log(content.includes(`${lastName} ${firstName}`));
       if (!content.includes(`${lastName} ${firstName}`)) {
         return null;
       }

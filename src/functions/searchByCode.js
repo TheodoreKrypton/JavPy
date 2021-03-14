@@ -20,6 +20,7 @@ const searchByCode = async (ws, reqId, { code }) => {
       sources.youav,
       sources.highporn,
       sources.javhdporn,
+      sources.javfull,
     ], targets)
       .map(([source, target]) => [[source, target.toUpperCase()], [source, target.toLowerCase()]])
       .reduce((input1, input2) => input1.concat(input2))
@@ -28,7 +29,6 @@ const searchByCode = async (ws, reqId, { code }) => {
           if (!rsp) {
             return;
           }
-
           if (Array.isArray(rsp)) {
             await Promise.allSettled(rsp.map((av) => av.then((response) => {
               if (response) {

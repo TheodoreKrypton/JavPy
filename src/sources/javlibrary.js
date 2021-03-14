@@ -48,7 +48,7 @@ const getBrief = async (code) => {
   let matched = rsp.data.match(regexes.url);
   if (!matched) {
     const dom = new JSDOM(rsp.data).window.document;
-    rsp = await requester.get(`/ja${dom.querySelector('.video').querySelector('.a').href.slice(1)}`);
+    rsp = await requester.get(`/ja${dom.querySelector('.video').querySelector('a').href.slice(1)}`);
     matched = rsp.data.match(regexes.url);
     if (!matched) {
       return null;

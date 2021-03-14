@@ -13,7 +13,7 @@ const searchByCode = async (code) => {
     return null;
   }
 
-  if (video.title.toLowerCase().includes(code.toLowerCase())) {
+  if (utils.titleIncludes(video.title, code)) {
     const av = new ds.AV();
     av.title = video.title;
     av.video_url = video.video_url;
