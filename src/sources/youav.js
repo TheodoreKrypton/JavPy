@@ -57,10 +57,6 @@ const searchByCode = async (code) => {
   }
 };
 
-(async () => {
-  console.log(await searchByCode('JUL-462'));
-})();
-
 module.exports = {
   searchByCode,
 };

@@ -5,22 +5,14 @@ const ds = require('../ds');
 const requester = utils.requester('https://javfull.net');
 
 const searchByCode = async (code) => {
-  let html = null;
-  try {
-    const rsp = await requester.get(`/?s=${encodeURI(code)}`);
-    html = rsp.data;
-  } catch (err) {
-    html = err.response.data;
-  }
-  const dom = new JSDOM(html, { resources: 'usable', runScripts: 'dangerously' });
-  const item = dom.window.document.querySelector('.item');
-  if (!item) {
-    return null;
-  }
+  const rsp = await requester.get(`/${code}/`);
+  const html = rsp.data;
+  const dom = new JSDOM(html).window.document;
   const av = new ds.AV();
+  av.title = utils.noexcept(() => dom.querySelector('h1').textContent);
   av.code = code;
-  av.preview_img_url = utils.noexcept(() => item.querySelector('img').src);
-  av.video_url = utils.noexcept(() => item.querySelector('a').href);
+  av.preview_img_url = utils.noexcept(() => dom.querySelector('.iframeplayer').getAttribute('data-bg').match(/url\('(.+?)'\)/)[1]);
+  av.video_url = `https://javfull.net/${code}/`;
   return av;
 };
 

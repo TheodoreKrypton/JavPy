@@ -8,7 +8,7 @@ const searchByActress = async (ws, reqId, { actress }) => {
       // eslint-disable-next-line no-param-reassign
       actress = await sources.warashiAsianPornstarsFr.translate2Jp(actress);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
     if (!actress) {
       utils.notFound(ws, reqId);

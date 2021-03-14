@@ -9,6 +9,7 @@ const javbus = require('./javbus');
 const javlibrary = require('./javlibrary');
 const javdb = require('./javdb');
 const xslist = require('./xslist');
+const javfull = require('./javfull');
 
 module.exports = {
   javmost,
@@ -22,4 +23,5 @@ module.exports = {
   javlibrary,
   javdb,
   xslist,
+  javfull,
 };
