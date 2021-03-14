@@ -87,22 +87,22 @@ $ docker run -p 8081:8081 wheatcarrier/javpy:latest
 
 如果你需要设置代理，请设置 `PROXY` 环境变量，例如：
 ```bash
-PROXY=localhost:1080 javpy  # 同时设置 http 及 https 代理
+proxy=localhost:1080 javpy  # 同时设置 http 及 https 代理
 ```
 或分别地，
 ```bash
-HTTP_PROXY=localhost:1080 HTTPS_PROXY=localhost:1081 javpy
+http_proxy=localhost:1080 https_proxy=localhost:1081 javpy
 ```
 
 ----
 
 If you need to use a proxy, please set the `PROXY` environment variable. For example,
 ```bash
-PROXY=localhost:1080 javpy  # for both http and https proxies
+proxy=localhost:1080 javpy  # for both http and https proxies
 ```
 or separately,
 ```bash
-HTTP_PROXY=localhost:1080 HTTPS_PROXY=localhost:1081 javpy
+http_proxy=localhost:1080 https_proxy=localhost:1081 javpy
 ```
 
 
