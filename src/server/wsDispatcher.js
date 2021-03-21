@@ -4,7 +4,7 @@ const { logger } = require('./log');
 
 const dispatch = (ws, msg) => {
   if (!msg.message || !msg.message.args || !msg.message.args.image) {
-    logger.info({ request: msg });
+    logger.info({ ws: msg });
   }
 
   try {

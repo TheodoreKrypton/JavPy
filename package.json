@@ -1,6 +1,6 @@
 {
   "name": "javpy",
-  "version": "0.7.13",
+  "version": "0.7.14",
   "description": "Enjoy driving on a Javascriptive (originally Pythonic) way to Japanese AV!",
   "scripts": {
     "dev": "node ./bin/javpy.js --browser=false --public=true",
@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "bunyan-sfdx-no-dtrace": "^1.8.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-static-gzip": "^2.0.8",
@@ -44,6 +43,7 @@
     "jsdom": "^16.3.0",
     "memfs": "^3.2.0",
     "unzip-stream": "^0.3.0",
+    "winston": "^3.3.3",
     "ws": "^7.3.1",
     "yargs": "^16.0.3"
   },
