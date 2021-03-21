@@ -1,25 +1,19 @@
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const bunyan = require('bunyan-sfdx-no-dtrace');
+const { createLogger, format, transports } = require('winston');
 
-const logPath = `${os.homedir()}${path.sep}.JavPy${path.sep}logs`;
+const fmt = format.printf(({
+  level,
+  message,
+  label,
+  timestamp,
+}) => `${timestamp} [${label}] ${level}: ${JSON.stringify(message)}`);
 
-if (!fs.existsSync(logPath)) {
-  fs.mkdirSync(logPath, { recursive: true });
-}
-
-const logger = bunyan.createLogger({
-  name: 'javpy',
-  streams: [
-    { stream: process.stdout },
-    {
-      type: 'rotating-file',
-      path: `${logPath}${path.sep}javpy.log`,
-      period: '1d',
-      count: 30,
-    },
-  ],
+const logger = createLogger({
+  format: format.combine(
+    format.label({ label: 'javpy' }),
+    format.timestamp(),
+    fmt,
+  ),
+  transports: [new transports.Console()],
 });
 
 module.exports = {

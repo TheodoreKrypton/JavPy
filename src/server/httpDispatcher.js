@@ -1,6 +1,5 @@
 const express = require('express');
 const expressStaticGzip = require('express-static-gzip');
-const sha256 = require('js-sha256');
 const cors = require('cors');
 const path = require('path');
 const yargs = require('yargs');
@@ -31,7 +30,7 @@ const beforeRequest = (req, res, next) => {
       body: req.body,
     },
   });
-  if (req.method !== 'POST' || req.originalUrl === '/auth_by_password') {
+  if (req.method !== 'POST' || req.originalUrl === '/auth_by_password' || req.originalUrl === '/is_public') {
     next();
     return;
   }
@@ -63,17 +62,29 @@ app.get('/redirect_to', (req, res) => {
 });
 
 app.post('/auth_by_password', (req, res) => {
-  const ip = req.connection.remoteAddress;
+  const ip = req.socket.remoteAddress;
   const { password } = req.body;
-  if (!auth.checkIP(ip) || !auth.checkPassword(password)) {
+
+  const token = auth.authenticate(ip, password);
+
+  if (token === null) {
     res.status(400);
     res.send('rejected');
     return;
   }
 
-  const plain = [ip, password, new Date().time].join('/');
-  const token = sha256.sha256(plain).slice(0, 24);
-  auth.addToken(token);
+  res.send(token);
+});
+
+app.post('/is_public', (req, res) => {
+  const ip = req.socket.remoteAddress;
+  const token = auth.authenticate(ip, null);
+  if (token === null) {
+    res.status(400);
+    res.send('rejected');
+    return;
+  }
+
   res.send(token);
 });
 

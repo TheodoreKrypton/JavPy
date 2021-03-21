@@ -2,30 +2,39 @@ const ipRangeCheck = require('ip-range-check');
 const sha256 = require('js-sha256');
 const config = require('./config');
 
-let publicMode = false;
-const setPublic = () => {
-  publicMode = true;
-};
+const [isPublic, setPublic] = (() => {
+  let publicMode = false;
+  return [() => publicMode, () => { publicMode = true; }];
+})();
 
-const tokens = new Set();
-let hashedPassword = '';
-if (config.config['hashed-password']) {
-  hashedPassword = config.config['hashed-password'];
-} else {
-  hashedPassword = sha256.sha256(config.config.password);
-}
+const [hasToken, addToken] = (() => {
+  const tokens = new Set();
+  return [(token) => tokens.has(token), (token) => tokens.add(token)];
+})();
 
-const addToken = (token) => {
-  tokens.add(token);
-};
+const hashedPassword = (() => {
+  if (config.config['hashed-password']) {
+    return config.config['hashed-password'];
+  }
+  return sha256.sha256(config.config.password);
+})();
+
+const genToken = (ip, password) => sha256.sha256(`${ip}/${password}/${new Date().time}`).slice(0, 24);
 const checkPassword = (password) => hashedPassword === password;
-const checkIP = (ip) => ipRangeCheck(ip, config.config['ip-whitelist']);
-const checkToken = (token) => publicMode || tokens.has(token);
+const checkIP = (ip) => isPublic() || ipRangeCheck(ip, config.config['ip-whitelist']);
+const checkToken = (token) => isPublic() || hasToken(token);
+
+const authenticate = (ip, password) => {
+  if ((isPublic() && password === null) || (checkIP(ip) && checkPassword(password))) {
+    const token = genToken(ip, password);
+    addToken(token);
+    return token;
+  }
+  return null;
+};
 
 module.exports = {
-  checkPassword,
+  authenticate,
   checkToken,
-  checkIP,
-  addToken,
   setPublic,
 };
