@@ -9,7 +9,7 @@
     "build": "pkg . --out-path=./build/",
     "heroku-postbuild": "echo Skip build on Heroku",
     "install": "npm run install-fe",
-    "install-fe": "npm install --prefix frontend --only=prod https://github.com/TheodoreKrypton/javpy-webfe && npm install --no-save gzipper && gzipper compress ./frontend/node_modules/javpy-react/build ./frontend/build"
+    "install-fe": "npm install --prefix frontend --only=prod https://github.com/TheodoreKrypton/javpy-webfe/tarball/master && npm install --no-save gzipper && gzipper compress ./frontend/node_modules/javpy-react/build ./frontend/build"
   },
   "repository": {
     "type": "git",
